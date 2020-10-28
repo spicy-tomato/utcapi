@@ -1,11 +1,11 @@
 <?php
 
     class CSDL
-    {
-        private string $host     = 'localhost';
-        private string $db_name  = 'qldt';
-        private string $username = 'root';
-        private string $password = 'uncrush0nu?..manjaro';
+    
+        private string $host     = 'sql106.epizy.com';
+        private string $db_name  = 'epiz_27035084_qldt';
+        private string $username = 'epiz_27035084';
+        private string $password = '4AKOBXoarp';
 
         public PDO $ket_noi;
 
