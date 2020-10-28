@@ -1,7 +1,7 @@
 <?php
 
     class CSDL
-    
+    {
         private string $host     = 'sql106.epizy.com';
         private string $db_name  = 'epiz_27035084_qldt';
         private string $username = 'epiz_27035084';
