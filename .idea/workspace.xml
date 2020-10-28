@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c96bd170-2aa9-4637-a6b5-56e221e4e151" name="Default Changelist" comment="" />
+    <list default="true" id="c96bd170-2aa9-4637-a6b5-56e221e4e151" name="Default Changelist" comment="Commit">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/csdl.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/csdl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dang_nhap.php" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +17,9 @@
   </component>
   <component name="ComposerSettings">
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpServers">
     <servers>
@@ -24,6 +32,7 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1jMaDMfG5Nq7Tq5XEHRFjWqfTRr" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -39,7 +48,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -76,12 +85,24 @@
       <workItem from="1603682855849" duration="273000" />
       <workItem from="1603715399618" duration="5227000" />
       <workItem from="1603794667786" duration="24987000" />
-      <workItem from="1603862585368" duration="4876000" />
+      <workItem from="1603862585368" duration="8802000" />
     </task>
+    <task id="LOCAL-00001" summary="Commit">
+      <created>1603878828147</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1603878828147</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit" />
   </component>
   <component name="WindowStateProjectService">
     <state x="80" y="220" key="#Deployment" timestamp="1603616457300">
@@ -121,18 +142,20 @@
     </state>
     <state x="293" y="277" key="#com.intellij.ide.util.MemberChooser/0.36.1920.1044@0.36.1920.1044" timestamp="1603625646022" />
     <state x="293" y="279" key="#com.intellij.ide.util.MemberChooser/0.38.1920.1042@0.38.1920.1042" timestamp="1603798084996" />
-    <state x="698" y="308" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1603648596782">
-      <screen x="0" y="36" width="1920" height="1044" />
+    <state x="698" y="309" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1603879504061">
+      <screen x="0" y="38" width="1920" height="1042" />
     </state>
     <state x="698" y="308" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.36.1920.1044@0.36.1920.1044" timestamp="1603648596782" />
+    <state x="698" y="309" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.38.1920.1042@0.38.1920.1042" timestamp="1603879504061" />
     <state x="361" y="337" key="#com.jetbrains.php.refactoring.extractMethod.PhpExtractMethodDialog#function0" timestamp="1603648530248">
       <screen x="0" y="36" width="1920" height="1044" />
     </state>
     <state x="361" y="337" key="#com.jetbrains.php.refactoring.extractMethod.PhpExtractMethodDialog#function0/0.36.1920.1044@0.36.1920.1044" timestamp="1603648530248" />
-    <state x="267" y="316" key="FileChooserDialogImpl" timestamp="1603616561073">
-      <screen x="0" y="36" width="1920" height="1044" />
+    <state x="267" y="317" key="FileChooserDialogImpl" timestamp="1603878721877">
+      <screen x="0" y="38" width="1920" height="1042" />
     </state>
     <state x="267" y="316" key="FileChooserDialogImpl/0.36.1920.1044@0.36.1920.1044" timestamp="1603616561073" />
+    <state x="267" y="317" key="FileChooserDialogImpl/0.38.1920.1042@0.38.1920.1042" timestamp="1603878721877" />
     <state width="1294" height="276" key="GridCell.Tab.0.bottom" timestamp="1603866374089">
       <screen x="0" y="38" width="1920" height="1042" />
     </state>
@@ -198,24 +221,36 @@
     </state>
     <state x="265" y="484" width="420" height="147" key="NewPhpFileDialog/0.36.1920.1044@0.36.1920.1044" timestamp="1603648867771" />
     <state x="265" y="485" key="NewPhpFileDialog/0.38.1920.1042@0.38.1920.1042" timestamp="1603820640388" />
-    <state x="0" y="38" width="1920" height="1042" key="SettingsEditor" timestamp="1603824378484">
+    <state x="0" y="38" width="1920" height="1042" key="SettingsEditor" timestamp="1603882690988">
       <screen x="0" y="38" width="1920" height="1042" />
     </state>
     <state x="97" y="278" width="1280" height="729" key="SettingsEditor/0.36.1920.1044@0.36.1920.1044" timestamp="1603648417030" />
-    <state x="0" y="38" width="1920" height="1042" key="SettingsEditor/0.38.1920.1042@0.38.1920.1042" timestamp="1603824378484" />
+    <state x="0" y="38" width="1920" height="1042" key="SettingsEditor/0.38.1920.1042@0.38.1920.1042" timestamp="1603882690988" />
+    <state x="560" y="295" key="Vcs.Push.Dialog.v2" timestamp="1603881965125">
+      <screen x="0" y="38" width="1920" height="1042" />
+    </state>
+    <state x="560" y="295" key="Vcs.Push.Dialog.v2/0.38.1920.1042@0.38.1920.1042" timestamp="1603881965125" />
     <state x="381" y="502" key="com.intellij.database.run.ParametersPanel.Standalone" timestamp="1603636718085">
       <screen x="0" y="36" width="1920" height="1044" />
     </state>
     <state x="381" y="502" key="com.intellij.database.run.ParametersPanel.Standalone/0.36.1920.1044@0.36.1920.1044" timestamp="1603636718085" />
+    <state x="724" y="475" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603878730078">
+      <screen x="0" y="38" width="1920" height="1042" />
+    </state>
+    <state x="724" y="475" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.38.1920.1042@0.38.1920.1042" timestamp="1603878730078" />
     <state x="86" y="38" key="com.jetbrains.php.config.phpInfo.PhpInfo.PhpInfoDialog" timestamp="1603813485245">
       <screen x="0" y="38" width="1920" height="1042" />
     </state>
     <state x="86" y="38" key="com.jetbrains.php.config.phpInfo.PhpInfo.PhpInfoDialog/0.38.1920.1042@0.38.1920.1042" timestamp="1603813485245" />
-    <state x="876" y="180" width="639" height="767" key="find.popup" timestamp="1603819548925">
+    <state x="876" y="180" width="639" height="767" key="find.popup" timestamp="1603882593276">
       <screen x="0" y="38" width="1920" height="1042" />
     </state>
     <state x="160" y="174" width="639" height="768" key="find.popup/0.36.1920.1044@0.36.1920.1044" timestamp="1603682887604" />
-    <state x="876" y="180" width="639" height="767" key="find.popup/0.38.1920.1042@0.38.1920.1042" timestamp="1603819548925" />
+    <state x="876" y="180" width="639" height="767" key="find.popup/0.38.1920.1042@0.38.1920.1042" timestamp="1603882593276" />
+    <state x="769" y="471" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1603879146478">
+      <screen x="0" y="38" width="1920" height="1042" />
+    </state>
+    <state x="769" y="471" key="git4idea.remote.GitConfigureRemotesDialog/0.38.1920.1042@0.38.1920.1042" timestamp="1603879146478" />
     <state x="674" y="333" key="refactoring.ChangeSignatureDialog" timestamp="1603822883557">
       <screen x="0" y="38" width="1920" height="1042" />
     </state>
@@ -224,10 +259,10 @@
       <screen x="0" y="36" width="1920" height="1044" />
     </state>
     <state x="144" y="256" key="run.anything.popup/0.36.1920.1044@0.36.1920.1044" timestamp="1603616709072" />
-    <state x="143" y="268" width="672" height="677" key="search.everywhere.popup" timestamp="1603803991012">
+    <state x="143" y="268" width="672" height="677" key="search.everywhere.popup" timestamp="1603882679130">
       <screen x="0" y="38" width="1920" height="1042" />
     </state>
     <state x="143" y="266" width="672" height="678" key="search.everywhere.popup/0.36.1920.1044@0.36.1920.1044" timestamp="1603648996340" />
-    <state x="143" y="268" width="672" height="677" key="search.everywhere.popup/0.38.1920.1042@0.38.1920.1042" timestamp="1603803991012" />
+    <state x="143" y="268" width="672" height="677" key="search.everywhere.popup/0.38.1920.1042@0.38.1920.1042" timestamp="1603882679130" />
   </component>
 </project>
