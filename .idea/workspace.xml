@@ -4,21 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c96bd170-2aa9-4637-a6b5-56e221e4e151" name="Default Changelist" comment="Commit">
-      <change afterPath="$PROJECT_DIR$/api-v2/class/sinh_vien_controller.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-v2/class/tkb_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5fd76615-b437-41bf-b45f-0c5a675c5e36.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5fd76615-b437-41bf-b45f-0c5a675c5e36/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+    <list default="true" id="c96bd170-2aa9-4637-a6b5-56e221e4e151" name="Default Changelist" comment="API-v2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/class/sinh_vien_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/class/sinh_vien_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/sinh_vien.php" beforeDir="false" afterPath="$PROJECT_DIR$/class/sinh_vien.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/tkb.php" beforeDir="false" afterPath="$PROJECT_DIR$/class/tkb.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/csdl.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/csdl.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +115,7 @@
       <workItem from="1611229536592" duration="333000" />
       <workItem from="1611229897481" duration="6091000" />
       <workItem from="1611311546779" duration="3705000" />
-      <workItem from="1611324811597" duration="592000" />
+      <workItem from="1611324811597" duration="1697000" />
     </task>
     <task id="LOCAL-00001" summary="Commit">
       <created>1603878828147</created>
@@ -137,7 +124,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603878828147</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="API-v2">
+      <created>1611325725291</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1611325725291</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,6 +151,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commit" />
+    <MESSAGE value="API-v2" />
+    <option name="LAST_COMMIT_MESSAGE" value="API-v2" />
   </component>
 </project>
