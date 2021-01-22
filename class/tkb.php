@@ -1,44 +1,69 @@
 <?php
-    include "./sinh_vien.php";
+    include_once "sinh_vien.php";
 
     class TKB
     {
-        private const bang_hoc_phan  = "Lop_hoc_phan";
-        private const bang_sinh_vien = "Sinh_vien";
-        private PDO      $ket_noi;
+        private const bang_hoc_phan = "schedules";
+        private const bang_sinh_vien = "student";
+        private const bang_quan_he = "participate";
 
-        public function __construct (PDO $ket_noi)
+        private string $ma_sv;
+        private PDO $ket_noi;
+
+        public function __construct(PDO $ket_noi, string $ma_sv)
         {
             $this->ket_noi = $ket_noi;
+            $this->ma_sv   = $ma_sv;
         }
 
-        // SUA O DAY
-
-        public function hienThi (string $ma_sv, string $nam_hoc, int $hoc_ky) : array
+        public function hienThiTatCa(): array
         {
-            $sqlQuery
-                = /** @lang MySQL */
+            $sqlQuery =
                 "SELECT
-                    hp.*, sv.*
+                    hp.*, sv.*, qh.*
                 FROM
                     " . self::bang_hoc_phan . " hp,
-                    " . self::bang_sinh_vien . " sv
+                    " . self::bang_sinh_vien . " sv,
+                    " . self::bang_quan_he . " qh
                 WHERE
-                        ma_sv = :ma_sv
-                    AND sv.ma_lop_hoc_phan = hp.ma_lop_hoc_phan
-                    AND hp.nam_hoc = :nam_hoc
-                    AND hp.hoc_ky = :hoc_ky";
+                        sv.ID_Student = :ma_sv
+                    AND qh.ID_Student = :ma_sv
+                    AND hp.ID_Module_Class = qh.ID_Module_Class";
+
+            try {
+                $stmt = $this->ket_noi->prepare($sqlQuery);
+                $stmt->execute([':ma_sv' => $this->ma_sv]);
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } catch (PDOException $loi) {
+                exit($loi->getMessage());
+            }
+        }
+
+        public function hienThi(string $from, string $to): array
+        {
+            $sqlQuery =
+                "SELECT
+                    hp.*, sv.*, qh.*
+                FROM
+                    " . self::bang_hoc_phan . " hp,
+                    " . self::bang_sinh_vien . " sv,
+                    " . self::bang_quan_he . " qh
+                WHERE
+                        sv.ID_Student = :ma_sv
+                    AND qh.ID_Student = :ma_sv
+                    AND hp.ID_Module_Class = qh.ID_Module_Class
+                    AND hp.Day_Schedules >= :from
+                    AND hp.Day_Schedules <= :to";
 
             try {
                 $stmt = $this->ket_noi->prepare($sqlQuery);
                 $stmt->execute([
-                                   ':ma_sv'   => $ma_sv,
-                                   ':nam_hoc' => $nam_hoc,
-                                   ':hoc_ky'  => $hoc_ky ]);
+                    ':ma_sv' => $this->ma_sv,
+                    ':from' => $from,
+                    ':to' => $to]);
 
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-            catch (PDOException $loi){
+            } catch (PDOException $loi) {
                 exit($loi->getMessage());
             }
         }

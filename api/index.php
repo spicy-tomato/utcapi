@@ -1,7 +1,7 @@
 <?php
-    include "../config/csdl.php";
-    include "./class/tkb_controller.php";
-    include "./class/sinh_vien_controller.php";
+    include_once "../config/csdl.php";
+    include_once "./class/tkb_controller.php";
+    include_once "./class/sinh_vien_controller.php";
 
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
@@ -15,6 +15,8 @@
 
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $uri = explode('/', $uri);
+
+//    var_dump($uri);
 
     switch ($uri[4]){
         case 'sv':

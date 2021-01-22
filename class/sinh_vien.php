@@ -2,7 +2,7 @@
 
     class SinhVien
     {
-        private const bang_csdl = "Thong_tin_sinh_vien";
+        private const bang_csdl = "student";
         private PDO $ket_noi;
 
         public function __construct (PDO $ket_noi)
@@ -15,12 +15,12 @@
             $sqlQuery
                 = /** @lang text */
                 "SELECT 
-                    ma_sv,
-                    mat_khau,
-                    ho_ten,
-                    ma_lop 
+                    ID_Student,
+                    Student_Name,
+                    ID_class
                 FROM 
                     " . self::bang_csdl;
+
 
             try {
                 $stmt = $this->ket_noi->prepare($sqlQuery);
@@ -38,14 +38,13 @@
             $sqlQuery
                 = /** @lang text */
                 "SELECT
-                    ma_sv,
-                    mat_khau,
-                    ho_ten,
-                    ma_lop
+                    ID_Student,
+                    Student_Name,
+                    ID_class
                 FROM 
                     " . self::bang_csdl . "
                 WHERE
-                    ma_sv = :ma_sv
+                    ID_Student = :ma_sv
                 LIMIT 0, 1";
 
             try {

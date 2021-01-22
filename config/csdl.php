@@ -2,10 +2,10 @@
 
     class CSDL
     {
-        private string $host     = 'sql106.epizy.com';
-        private string $db_name  = 'epiz_27035084_qldt';
-        private string $username = 'epiz_27035084';
-        private string $password = '4AKOBXoarp';
+        private string $host     = 'localhost';
+        private string $db_name  = 'nckh';
+        private string $username = 'root';
+        private string $password = '';
 
         public PDO $ket_noi;
 
@@ -15,11 +15,13 @@
         {
             try {
                 $this->ket_noi = new PDO(
-                    "mysql:host=" . $this->host .
-                    ";dbname=" . $this->db_name,
+                    "mysql:charset=utf8mb4;
+                    host=$this->host;
+                    dbname=$this->db_name",
                     $this->username,
                     $this->password
                 );
+                $this->ket_noi->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $this->ket_noi->exec("set names utf8");
             }
             catch (PDOException $loi){

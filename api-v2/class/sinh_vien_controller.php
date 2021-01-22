@@ -1,5 +1,6 @@
 <?php
-    include_once "./../class/sinh_vien.php";
+
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/utcapi/config/csdl.php";
 
     class SinhVienController
     {
@@ -16,7 +17,6 @@
             $this->ma_sv                = $ma_sv;
 
             $this->sinh_vien = new SinhVien($ket_noi);
-//            echo($ma_sv);
         }
 
         public function xuLyTruyVan () : void

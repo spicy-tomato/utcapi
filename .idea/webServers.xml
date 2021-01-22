@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="4b857540-f816-4862-87eb-73249d14e91c" name="localhost" url="http://localhost/utcapi">
-        <fileTransfer mountedRoot="$PROJECT_DIR$" accessType="MOUNT" port="0" />
+      <webServer id="4b857540-f816-4862-87eb-73249d14e91c" name="localhost" url="http://localhost:80">
+        <fileTransfer mountedRoot="D:\xampp\htdocs\utcapi" accessType="MOUNT" port="0" />
       </webServer>
     </option>
   </component>
