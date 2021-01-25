@@ -4,7 +4,7 @@
 
     class LoginInfo
     {
-        private const bang_csdl = "student";
+        private const bang_csdl = "Student";
         private PDO $ket_noi;
         private string $ma_sv;
         private string $password;

@@ -3,9 +3,10 @@
 
     class TKB
     {
-        private const bang_hoc_phan = "schedules";
-        private const bang_sinh_vien = "student";
-        private const bang_quan_he = "participate";
+        private const bang_lop_hoc_phan = "Module_Class";
+        private const bang_hoc_phan = "Schedules";
+        private const bang_sinh_vien = "Student";
+        private const bang_quan_he = "Participate";
 
         private string $ma_sv;
         private PDO $ket_noi;
@@ -20,15 +21,21 @@
         {
             $sqlQuery =
                 "SELECT
-                    hp.*, sv.*, qh.*
+                    hp.ID_Module_Class,
+                    lhp.Module_Class_Name,
+                    hp.ID_Room,
+                    hp.Shift_Schedules,
+                    hp.Day_Schedules
                 FROM
                     " . self::bang_hoc_phan . " hp,
                     " . self::bang_sinh_vien . " sv,
-                    " . self::bang_quan_he . " qh
+                    " . self::bang_quan_he . " qh,
+                    " . self::bang_lop_hoc_phan . " lhp
                 WHERE
                         sv.ID_Student = :ma_sv
                     AND qh.ID_Student = :ma_sv
-                    AND hp.ID_Module_Class = qh.ID_Module_Class";
+                    AND hp.ID_Module_Class = qh.ID_Module_Class
+                    AND hp.ID_Module_Class = lhp.ID_Module_Class";
 
             try {
                 $stmt = $this->ket_noi->prepare($sqlQuery);

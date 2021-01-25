@@ -2,7 +2,7 @@
 
     class SinhVien
     {
-        private const bang_csdl = "student";
+        private const bang_csdl = "Student";
         private PDO $ket_noi;
 
         public function __construct (PDO $ket_noi)
