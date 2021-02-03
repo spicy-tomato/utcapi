@@ -3,7 +3,7 @@
     class CSDL
     {
         private string $host     = 'localhost';
-        private string $db_name  = 'nckh';
+        private string $db_name  = 'id13927650_nckh';
         private string $username = 'root';
         private string $password = '';
 
