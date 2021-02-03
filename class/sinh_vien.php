@@ -5,12 +5,12 @@
         private const bang_csdl = "Student";
         private PDO $ket_noi;
 
-        public function __construct (PDO $ket_noi)
+        public function __construct(PDO $ket_noi)
         {
             $this->ket_noi = $ket_noi;
         }
 
-        public function timTatCa () : array
+        public function timTatCa(): array
         {
             $sqlQuery
                 = /** @lang text */
@@ -27,13 +27,12 @@
                 $stmt->execute();
 
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-            catch (PDOException $loi){
+            } catch (PDOException $loi) {
                 exit($loi->getMessage());
             }
         }
 
-        public function tim (string $ma_sv) : array
+        public function tim(string $ma_sv): array
         {
             $sqlQuery
                 = /** @lang text */
@@ -49,16 +48,15 @@
 
             try {
                 $stmt = $this->ket_noi->prepare($sqlQuery);
-                $stmt->execute([ ':ma_sv' => $ma_sv ]);
+                $stmt->execute([':ma_sv' => $ma_sv]);
 
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-            catch (PDOException $loi){
+            } catch (PDOException $loi) {
                 exit($loi->getMessage());
             }
         }
 
-        public function them (array $thong_tin) : void
+        public function them(array $thong_tin): void
         {
             $sqlQuery
                 = /** @lang text */
@@ -73,18 +71,17 @@
             try {
                 $stmt = $this->ket_noi->prepare($sqlQuery);
                 $stmt->execute([
-                                   ':ma_sv'    => $thong_tin['ma_sv'],
-                                   ':mat_khau' => $thong_tin['mat_khau'],
-                                   ':ho_ten'   => $thong_tin['ho_ten'],
-                                   ':ma_lop'   => $thong_tin['ma_lop'],
-                               ]);
-            }
-            catch (PDOException $loi){
+                    ':ma_sv' => $thong_tin['ma_sv'],
+                    ':mat_khau' => $thong_tin['mat_khau'],
+                    ':ho_ten' => $thong_tin['ho_ten'],
+                    ':ma_lop' => $thong_tin['ma_lop'],
+                ]);
+            } catch (PDOException $loi) {
                 exit($loi->getMessage());
             }
         }
 
-        public function capNhat (string $ma_sv, array $thong_tin) : void
+        public function capNhat(string $ma_sv, array $thong_tin): void
         {
             $sqlQuery
                 = /** @lang text */
@@ -101,18 +98,17 @@
             try {
                 $stmt = $this->ket_noi->prepare($sqlQuery);
                 $stmt->execute([
-                                   ':ma_sv'    => $ma_sv,
-                                   ':mat_khau' => $thong_tin['mat_khau'],
-                                   ':ho_ten'   => $thong_tin['ho_ten'],
-                                   ':ma_lop'   => $thong_tin['ma_lop'],
-                               ]);
-            }
-            catch (PDOException $loi){
+                    ':ma_sv' => $ma_sv,
+                    ':mat_khau' => $thong_tin['mat_khau'],
+                    ':ho_ten' => $thong_tin['ho_ten'],
+                    ':ma_lop' => $thong_tin['ma_lop'],
+                ]);
+            } catch (PDOException $loi) {
                 exit($loi->getMessage());
             }
         }
 
-        public function xoa (string $ma_sv) : void
+        public function xoa(string $ma_sv): void
         {
             $sqlQuery
                 = /** @lang text */
@@ -124,9 +120,8 @@
 
             try {
                 $stmt = $this->ket_noi->prepare($sqlQuery);
-                $stmt->execute([ ':ma_sv' => $ma_sv ]);
-            }
-            catch (PDOException $loi){
+                $stmt->execute([':ma_sv' => $ma_sv]);
+            } catch (PDOException $loi) {
                 exit($loi->getMessage());
             }
         }

@@ -4,9 +4,10 @@
     class TKB
     {
         private const bang_lop_hoc_phan = "Module_Class";
-        private const bang_hoc_phan = "Schedules";
+        private const bang_tkb = "Schedules";
         private const bang_sinh_vien = "Student";
         private const bang_quan_he = "Participate";
+        private const bang_hoc_phan = "Module";
 
         private string $ma_sv;
         private PDO $ket_noi;
@@ -21,21 +22,23 @@
         {
             $sqlQuery =
                 "SELECT
-                    hp.ID_Module_Class,
-                    lhp.Module_Class_Name,
-                    hp.ID_Room,
-                    hp.Shift_Schedules,
-                    hp.Day_Schedules
+                    tkb.ID_Module_Class,
+                    hp.Module_Name,
+                    tkb.ID_Room,
+                    tkb.Shift_Schedules,
+                    tkb.Day_Schedules
                 FROM
-                    " . self::bang_hoc_phan . " hp,
+                    " . self::bang_hoc_phan . " hp ,
+                    " . self::bang_tkb . " tkb,
                     " . self::bang_sinh_vien . " sv,
                     " . self::bang_quan_he . " qh,
                     " . self::bang_lop_hoc_phan . " lhp
                 WHERE
                         sv.ID_Student = :ma_sv
                     AND qh.ID_Student = :ma_sv
-                    AND hp.ID_Module_Class = qh.ID_Module_Class
-                    AND hp.ID_Module_Class = lhp.ID_Module_Class";
+                    AND tkb.ID_Module_Class = qh.ID_Module_Class
+                    AND tkb.ID_Module_Class = lhp.ID_Module_Class
+                    AND hp.ID_Module = lhp.ID_Module";
 
             try {
                 $stmt = $this->ket_noi->prepare($sqlQuery);
@@ -52,7 +55,7 @@
                 "SELECT
                     hp.*, sv.*, qh.*
                 FROM
-                    " . self::bang_hoc_phan . " hp,
+                    " . self::bang_tkb . " hp,
                     " . self::bang_sinh_vien . " sv,
                     " . self::bang_quan_he . " qh
                 WHERE
