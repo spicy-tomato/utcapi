@@ -7,10 +7,10 @@
     <list default="true" id="c96bd170-2aa9-4637-a6b5-56e221e4e151" name="Default Changelist" comment="API-v2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-v2/tkb.php" beforeDir="false" afterPath="$PROJECT_DIR$/api-v2/tkb.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/login_info.php" beforeDir="false" afterPath="$PROJECT_DIR$/class/login_info.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/class/sinh_vien.php" beforeDir="false" afterPath="$PROJECT_DIR$/class/sinh_vien.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/class/tkb.php" beforeDir="false" afterPath="$PROJECT_DIR$/class/tkb.php" afterDir="false" />
     </list>
+    <list id="6f16b451-f20a-4a11-9c58-a32a5e288ca6" name="Changes by WRBKOR23" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,6 +20,11 @@
     <execution />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="An" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -31,8 +36,15 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/class/sinh_vien.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/index.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/class/login_info.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/api-v2/ok.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/class/tkb.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/api-v2/tkb.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/api-v2/index.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/api-v2/login.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/config/csdl.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
   </component>
   <component name="PhpServers">
     <servers>
@@ -46,7 +58,7 @@
   </component>
   <component name="ProjectId" id="1jMaDMfG5Nq7Tq5XEHRFjWqfTRr" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="1" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -64,7 +76,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Confirmation" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="ReaderModeSettings">
@@ -90,6 +102,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="PHP Script.sinh_vien_controller.php" />
+        <item itemvalue="PHP Script.sinh_vien_controller.php" />
+        <item itemvalue="PHP Script.sinh_vien_controller.php" />
+        <item itemvalue="PHP Script.sinh_vien_controller.php" />
         <item itemvalue="PHP Script.sinh_vien_controller.php" />
       </list>
     </recent_temporary>
@@ -121,7 +137,15 @@
       <workItem from="1611311546779" duration="3705000" />
       <workItem from="1611324811597" duration="1885000" />
       <workItem from="1611543878755" duration="3789000" />
-      <workItem from="1611554931459" duration="5466000" />
+      <workItem from="1611554931459" duration="6076000" />
+      <workItem from="1611584723851" duration="1764000" />
+      <workItem from="1611739571436" duration="47000" />
+      <workItem from="1611739641996" duration="337000" />
+      <workItem from="1611740771707" duration="225000" />
+      <workItem from="1612186251752" duration="348000" />
+      <workItem from="1612186624631" duration="3451000" />
+      <workItem from="1612314949814" duration="50000" />
+      <workItem from="1612315029343" duration="6760000" />
     </task>
     <task id="LOCAL-00001" summary="Commit">
       <created>1603878828147</created>
@@ -144,7 +168,21 @@
       <option name="project" value="LOCAL" />
       <updated>1611326822573</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="API-v2">
+      <created>1611563807009</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1611563807009</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Change database name">
+      <created>1612316024519</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1612316024519</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,7 +193,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -163,8 +213,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Commit" />
     <MESSAGE value="API-v2" />
-    <option name="LAST_COMMIT_MESSAGE" value="API-v2" />
+    <MESSAGE value="Change database name" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change database name" />
   </component>
 </project>
