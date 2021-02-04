@@ -2,8 +2,6 @@
     function shared_header(string $title): void
     {
         echo '
-<!doctype html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -16,6 +14,66 @@
     <title>' . $title . '</title>
 </head>
 ';
+    }
+
+
+    function shared_navbar(): void
+    {
+        $nav1_class  = 'nav-link';
+        $nav2_class  = 'nav-link';
+        $nav3_class  = 'nav-link';
+        $current_nav = ' active';
+
+        $home_link  = '/utcapi/ui/home';
+        $form1_link = '/utcapi/ui/forms/deparment-class';
+        $form2_link = '/utcapi/ui/forms/module-class';
+        $form3_link = '/utcapi/ui/forms/student';
+
+        if (stripos($_SERVER['REQUEST_URI'], 'deparment-class') !== false) {
+            $nav1_class .= $current_nav;
+        } else if (stripos($_SERVER['REQUEST_URI'], 'module-class') !== false) {
+            $nav2_class .= $current_nav;
+        } else if (stripos($_SERVER['REQUEST_URI'], 'student') !== false) {
+            $nav3_class .= $current_nav;
+        }
+
+        echo '
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark px-5">
+      <a href="' . $home_link . '" class="navbar-brand">Trang chủ</a>
+      <div class="collapse navbar-collapse d-flex justify-content-between">
+        <ul class="navbar-nav">
+          <li class="navbar-item">
+            <a href="' . $form1_link . '" class="' . $nav1_class . '">Khoá - Khoa - Lớp</a>
+          </li>
+          <li class="navbar-item">
+            <a href="' . $form2_link . '" class="' . $nav2_class . '">Lớp học phần</a>
+          </li>
+          <li class="navbar-item">
+            <a href="' . $form3_link . '" class="' . $nav3_class . '">Sinh viên</a>
+          </li>
+        </ul>
+
+        <div class="dropdown">
+          <button type="button"
+                  class="btn btn-secondary dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  id="dropdownMenuButton">
+            ' . $_SESSION["department_name"] . '
+            <i class="fas fa-cogs"></i>
+          </button>
+          <ul class="dropdown-menu mr-5" aria-labelledby="dropdownMenuButton">
+            <li><a href="" class="dropdown-item">Cài đặt</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a href="logout.php" class="dropdown-item">Đăng xuất</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>';
     }
 
 
