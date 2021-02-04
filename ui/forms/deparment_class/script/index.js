@@ -84,12 +84,12 @@ function getClass()
     {
         if (all_faculty.checked)
         {
-            url = "../../../api/index.php/getclass?academic_year=all&faculty=all";
+            url = "../../../api-v2/department_class.php/class?academic_year=all&faculty=all";
             tableHead = ["CK", "CNTT", "CT", "DDT", "GDQP", "GDTC", "KHCB", "KTXD", "LLCT", "VTKT"]
         }
         else
         {
-            url = "../../../api/index.php/getclass?academic_year=all";
+            url = "../../../api-v2/department_class.php/getclass?academic_year=all";
 
             for (let i = 0; i < checkBoxes2.length; i++)
             {
@@ -105,7 +105,7 @@ function getClass()
     {
         if (all_faculty.checked)
         {
-            url = "../../../api/index.php/getclass?faculty=all";
+            url = "../../../api-v2/department_class.php/getclass?faculty=all";
             tableHead = ["CK", "CNTT", "CT", "DDT", "GDQP", "GDTC", "KHCB", "KTXD", "LLCT", "VTKT"]
 
 
@@ -119,7 +119,7 @@ function getClass()
         }
         else
         {
-            url = "../../../api/index.php/getclass";
+            url = "../../../api-v2/department_class.php/getclass";
 
             for (let i = 0; i < checkBoxes1.length; i++)
             {
