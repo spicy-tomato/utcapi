@@ -6,9 +6,10 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
     shield();
     shared_header('Trang chủ');
-    shared_navbar();
 ?>
 <body>
+    <?php shared_navbar();
+    ?>
 
   <main>
 

@@ -6,9 +6,10 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
     shield();
     shared_header('Thông báo cho lớp học phần');
-    shared_navbar();
 ?>
 <body>
+    <?php shared_navbar();
+    ?>
 
   <main>
 

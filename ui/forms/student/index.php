@@ -7,10 +7,10 @@
 
     shield();
     shared_header('Thông báo cho sinh viên');
-    shared_navbar();
 ?>
 <body>
-
+    <?php shared_navbar();
+    ?>
   <main>
 
   </main>
