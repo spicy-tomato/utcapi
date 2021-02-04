@@ -2,8 +2,9 @@
     include_once "../config/csdl.php";
     include_once "./class/tkb_controller.php";
     include_once "./class/sinh_vien_controller.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/utcapi/api-v2/class/DepartmentClassController.php";
 
-    header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
     header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
     header("Access-Control-Max-Age: 3600");
@@ -15,8 +16,6 @@
 
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $uri = explode('/', $uri);
-
-//    var_dump($uri);
 
     switch ($uri[4]){
         case 'sv':
@@ -42,6 +41,17 @@
             $tkb_controller = new TKBController($ket_noi, $phuong_thuc_truy_van, $ma_sv, $nam_hoc, $hoc_ky);
             $tkb_controller->xuLyTruyVan();
             break;
+
+        case 'getclass':
+            $phuong_thuc_truy_van = $_SERVER['REQUEST_METHOD'];
+
+            $csdl    = new CSDL();
+            $ket_noi = $csdl->KetNoi();
+
+            $department_class_controller = new DepartmentClassController($ket_noi, $phuong_thuc_truy_van);
+            $department_class_controller->xuLyTruyVan();
+            break;
+
 
         default:
             http_response_code(404);

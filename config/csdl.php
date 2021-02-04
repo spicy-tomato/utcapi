@@ -3,9 +3,9 @@
     class CSDL
     {
         private string $host     = 'localhost';
-        private string $db_name  = 'id13927650_nckh';
+        private string $db_name  = 'nckh';
         private string $username = 'root';
-        private string $password = '';
+        private string $password = 'hai210501';
 
         public PDO $ket_noi;
 
