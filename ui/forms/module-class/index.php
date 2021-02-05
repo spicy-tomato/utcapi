@@ -4,13 +4,13 @@
 <?php
     session_start();
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
-
     shield();
-    shared_header('Thông báo cho sinh viên');
+    shared_header('Thông báo cho lớp học phần');
 ?>
 <body>
     <?php shared_navbar();
     ?>
+
   <main>
 
   </main>
