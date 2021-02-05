@@ -2,7 +2,7 @@
 
 
 include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/csdl.php";
-include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/DepartmentClass.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/department_class.php";
 
 $db   = new CSDL();
 $conn = $db->KetNoi();
@@ -17,18 +17,18 @@ switch ($_SERVER["REQUEST_METHOD"])
         {
             if (isset($_GET["faculty"]))
             {
-                $res = $department_class->getALL();
+                $res = $department_class->getAll();
             }
             else
             {
-                $res = $department_class->getALLAcademic_Year();
+                $res = $department_class->getAllAcademic_Year();
             }
         }
         else
         {
             if (isset($_GET["faculty"]))
             {
-                $res = $department_class->getALlFaculty();
+                $res = $department_class->getAllFaculty();
             }
             else
             {

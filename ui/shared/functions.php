@@ -1,4 +1,7 @@
 <?php
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/csdl.php";
+
+
     function shared_header(string $title): void
     {
         echo '
@@ -78,6 +81,15 @@
 
     function shared_form(): void
     {
+        echo '
+        <div class="form-group">
+          <label for="title"><legend>Tiêu đề:</legend></label>
+          <input type="text" class="form-control" id="title">
+        </div>
+        <div class="form-group mt-4">
+          <label for="content"><legend>Nội dung:</legend></label>
+          <textarea id="content" cols="30" rows="10" class="form-control"></textarea>
+        </div>';
     }
 
     function shield()
@@ -85,4 +97,12 @@
         if (!isset($_SESSION['department_name'])) {
             header('Location: ' . $_SERVER['DOCUMENT_ROOT'] . '/utcapi/ui/login');
         }
+    }
+
+
+    function getAllModuleClass(){
+        $db   = new CSDL();
+        $conn = $db->KetNoi();
+
+
     }

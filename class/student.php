@@ -1,6 +1,6 @@
 <?php
 
-    class SinhVien
+    class Student
     {
         private const bang_csdl = "Student";
         private PDO $ket_noi;
