@@ -65,47 +65,47 @@
           <legend>Khoa:</legend>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" id="all_faculty" value="all" onclick="tickAll(this)">
-            <label for="all_faculty form-check-label">Chọn tất cả</label>
+            <label for="all_faculty" class="form-check-label">Chọn tất cả</label>
           </div>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" name="faculty" value="CK" id="CK">
-            <label for="CK form-check-label">Cơ khí</label>
+            <label for="CK" class="form-check-label">Cơ khí</label>
           </div>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" name="faculty" value="CNTT" id="CNTT">
-            <label for="CNTT form-check-label">Công nghệ thông tin</label>
+            <label for="CNTT" class="form-check-label">Công nghệ thông tin</label>
           </div>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" name="faculty" value="CT" id="CT">
-            <label for="CT form-check-label">Công trình</label>
+            <label for="CT" class="form-check-label">Công trình</label>
           </div>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" name="faculty" value="DDT" id="DDT">
-            <label for="DDT form-check-label">Điện điện tử</label>
+            <label for="DDT" class="form-check-label">Điện điện tử</label>
           </div>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" name="faculty" value="GDQP" id="GDQP">
-            <label for="GDQP form-check-label">Giáo dục quốc phòng</label>
+            <label for="GDQP" class="form-check-label">Giáo dục quốc phòng</label>
           </div>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" name="faculty" value="GDTC" id="GDTC">
-            <label for="GDTC form-check-label">Giáo dục thể chất</label>
+            <label for="GDTC" class="form-check-label">Giáo dục thể chất</label>
           </div>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" name="faculty" value="KHCB" id="KHCB">
-            <label for="KHCB form-check-label">Khoa học cơ bản</label>
+            <label for="KHCB" class="form-check-label">Khoa học cơ bản</label>
           </div>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" name="faculty" value="KTXD" id="KTXD">
-            <label for="KTXD form-check-label">Kỹ thuật xây dựng</label>
+            <label for="KTXD" class="form-check-label">Kỹ thuật xây dựng</label>
           </div>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" name="faculty" value="LLCT" id="LLCT">
-            <label for="LLCT form-check-label">Lý luận chính trị</label>
+            <label for="LLCT" class="form-check-label">Lý luận chính trị</label>
           </div>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" name="faculty" value="VTKT" id="VTKT">
-            <label for="VTKT form-check-label">Vận tải kinh tế</label>
+            <label for="VTKT" class="form-check-label">Vận tải kinh tế</label>
           </div>
         </div>
 
