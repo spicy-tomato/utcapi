@@ -8,21 +8,21 @@ for (let i = 0; i < checkBox.length; i++)
     {
         if (!this.checked && this.value !== "all")
         {
-            document.getElementsByClassName(this.name)[1].checked = false;
+            document.getElementsByClassName(this.name)[0].checked = false;
         }
         else if (this.checked && this.value !== "all")
         {
             let checkBoxes = document.getElementsByName(this.name);
             let flag = true;
-            for (let i = 0; i < checkBoxes.length; i++)
+            for (let j = 0; j < checkBoxes.length; j++)
             {
-                if (!checkBoxes[i].checked)
+                if (!checkBoxes[j].checked)
                 {
                     flag = false;
                     break;
                 }
             }
-            document.getElementsByClassName(this.name)[1].checked = flag
+            document.getElementsByClassName(this.name)[0].checked = flag
         }
 
         if (!isChecked())
@@ -64,7 +64,7 @@ function isChecked()
 
 function tickAll(src)
 {
-    let checkBoxes = document.getElementsByName(src.className);
+    let checkBoxes = document.getElementsByName(src.classList[0]);
     for (let i = 0; i < checkBoxes.length; i++)
     {
         checkBoxes[i].checked = src.checked;
