@@ -1,4 +1,6 @@
 <?php
+
+
     session_start();
     include_once '../shared/functions.php';
     shield();
@@ -11,7 +13,7 @@
       <div class="collapse navbar-collapse d-flex justify-content-between">
         <ul class="navbar-nav">
           <li class="navbar-item">
-            <a href="" class="nav-link">Form 1</a>
+            <a href="../forms/department_class/" class="nav-link">Form 1</a>
           </li>
           <li class="navbar-item">
             <a href="" class="nav-link">Form 2</a>
