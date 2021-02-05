@@ -14,7 +14,7 @@
         {
             $sql = "
                     SELECT 
-                       Academic_Year, ID_Faculty, ID_Class
+                        Academic_Year, ID_Faculty, ID_Class
                     FROM " . self::db_table . " 
                     ORDER BY 
                         Academic_Year ASC,
@@ -39,7 +39,7 @@
 
             $sql = "
                     SELECT 
-                           Academic_Year, ID_Faculty, ID_Class 
+                        Academic_Year, ID_Faculty, ID_Class 
                     FROM " . self::db_table . " 
                     WHERE
                         ID_Faculty IN (" . $str . ")
@@ -66,7 +66,7 @@
 
             $sql  = "
                     SELECT 
-                           Academic_Year, ID_Faculty, ID_Class
+                        Academic_Year, ID_Faculty, ID_Class
                     FROM " . self::db_table . " 
                     WHERE 
                         Academic_Year IN (" . $str . ")
@@ -98,7 +98,7 @@
 
             $sql  = "
                     SELECT 
-                           Academic_Year, ID_Faculty, ID_Class 
+                        Academic_Year, ID_Faculty, ID_Class 
                     FROM " . self::db_table . " 
                     WHERE 
                         Academic_Year IN (" . $str[0] . ") AND

@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER["DOCUMENT_ROOT"] . "/utcapi/config/csdl.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/utcapi/config/db.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/utcapi/class/department_class.php";
 
 class DepartmentClassController

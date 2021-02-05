@@ -1,5 +1,6 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/csdl.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/module_class.php";
 
 
     function shared_header(string $title): void
@@ -100,9 +101,10 @@
     }
 
 
-    function getAllModuleClass(){
-        $db   = new CSDL();
-        $conn = $db->KetNoi();
+    function getAllModuleClass() : array{
+        $db   = new Database();
+        $conn = $db->connect();
 
-
+        $moduleClass = new ModuleClass($conn);
+        return $moduleClass->getAll();
     }

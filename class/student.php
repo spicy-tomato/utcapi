@@ -2,15 +2,15 @@
 
     class Student
     {
-        private const bang_csdl = "Student";
-        private PDO $ket_noi;
+        private const db_table = "Student";
+        private PDO $conn;
 
-        public function __construct(PDO $ket_noi)
+        public function __construct(PDO $conn)
         {
-            $this->ket_noi = $ket_noi;
+            $this->conn = $conn;
         }
 
-        public function timTatCa(): array
+        public function get(): array
         {
             $sqlQuery
                 = /** @lang text */
@@ -19,11 +19,11 @@
                     Student_Name,
                     ID_class
                 FROM 
-                    " . self::bang_csdl;
+                    " . self::db_table;
 
 
             try {
-                $stmt = $this->ket_noi->prepare($sqlQuery);
+                $stmt = $this->conn->prepare($sqlQuery);
                 $stmt->execute();
 
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -41,13 +41,13 @@
                     Student_Name,
                     ID_class
                 FROM 
-                    " . self::bang_csdl . "
+                    " . self::db_table . "
                 WHERE
                     ID_Student = :ma_sv
                 LIMIT 0, 1";
 
             try {
-                $stmt = $this->ket_noi->prepare($sqlQuery);
+                $stmt = $this->conn->prepare($sqlQuery);
                 $stmt->execute([':ma_sv' => $ma_sv]);
 
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -61,7 +61,7 @@
             $sqlQuery
                 = /** @lang text */
                 "INSERT INTO
-                    " . self::bang_csdl . "
+                    " . self::db_table . "
                 SET
                     ma_sv    = :ma_sv,
                     mat_khau = :mat_khau,
@@ -69,7 +69,7 @@
                     ma_lop   = :ma_lop";
 
             try {
-                $stmt = $this->ket_noi->prepare($sqlQuery);
+                $stmt = $this->conn->prepare($sqlQuery);
                 $stmt->execute([
                     ':ma_sv' => $thong_tin['ma_sv'],
                     ':mat_khau' => $thong_tin['mat_khau'],
@@ -86,7 +86,7 @@
             $sqlQuery
                 = /** @lang text */
                 "UPDATE 
-                    " . self::bang_csdl . "
+                    " . self::db_table . "
                 SET
                     mat_khau = :mat_khau,
                     ho_ten   = :ho_ten,
@@ -96,7 +96,7 @@
                 LIMIT 0, 1";
 
             try {
-                $stmt = $this->ket_noi->prepare($sqlQuery);
+                $stmt = $this->conn->prepare($sqlQuery);
                 $stmt->execute([
                     ':ma_sv' => $ma_sv,
                     ':mat_khau' => $thong_tin['mat_khau'],
@@ -113,13 +113,13 @@
             $sqlQuery
                 = /** @lang text */
                 "DELETE FROM
-                    " . self::bang_csdl . "
+                    " . self::db_table . "
                 WHERE
                     ma_sv = :ma_sv
                 LIMIT 0, 1";
 
             try {
-                $stmt = $this->ket_noi->prepare($sqlQuery);
+                $stmt = $this->conn->prepare($sqlQuery);
                 $stmt->execute([':ma_sv' => $ma_sv]);
             } catch (PDOException $loi) {
                 exit($loi->getMessage());
