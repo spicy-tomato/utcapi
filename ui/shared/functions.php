@@ -74,7 +74,7 @@
       </div>
     </nav>
   </header>
-  <div class="mt-4"></div>';
+  <div class="mt-4 mb-4" style="height: 50px"></div>';
     }
 
 
