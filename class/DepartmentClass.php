@@ -14,7 +14,7 @@ class DepartmentClass
     public function getALL(): array
     {
         $sql = "select Academic_Year, ID_Faculty, ID_Class from " . self::bang_csdl ;
-        $sql .= " order by Academic_Year asc, ID_Class asc";
+        $sql .= " order by Academic_Year asc, ID_Faculty asc, ID_Class asc";
         $stmt = $this->ket_noi->prepare($sql);
         $stmt->execute();
 
@@ -33,7 +33,7 @@ class DepartmentClass
         $str= rtrim($str, ",");
 
         $sql = "select Academic_Year, ID_Faculty, ID_Class from " . self::bang_csdl . " where ";
-        $sql .= "ID_Faculty in (" . $str . ") order by Academic_Year asc, ID_Class asc";
+        $sql .= "ID_Faculty in (" . $str . ") order by Academic_Year asc, ID_Faculty asc, ID_Class asc";
         $stmt = $this->ket_noi->prepare($sql);
         $stmt->execute($arr);
 
@@ -52,7 +52,7 @@ class DepartmentClass
         $str= rtrim($str, ",");
 
         $sql = "select Academic_Year, ID_Faculty, ID_Class from " . self::bang_csdl . " where ";
-        $sql .= "Academic_Year in (" . $str . ") order by Academic_Year asc, ID_Class asc";
+        $sql .= "Academic_Year in (" . $str . ") order by Academic_Year asc, ID_Faculty asc, ID_Class asc";
         $stmt = $this->ket_noi->prepare($sql);
         $stmt->execute($arr);
 
@@ -77,7 +77,7 @@ class DepartmentClass
         }
 
         $sql = "select Academic_Year, ID_Faculty, ID_Class from " . self::bang_csdl . " where Academic_Year in (" .$str[0];
-        $sql .= ") and ID_Faculty in (" . $str[1] . ") order by Academic_Year asc, ID_Class asc";
+        $sql .= ") and ID_Faculty in (" . $str[1] . ") order by Academic_Year asc, ID_Faculty asc, ID_Class asc";
         $stmt = $this->ket_noi->prepare($sql);
         $stmt->execute($arr);
 

@@ -13,7 +13,7 @@
       <?php shared_navbar();
       ?>
     <div>
-      <form action="temp.php" method="POST" onsubmit="return false">
+      <form onsubmit="return false">
         <div class="form-group">
           <label for="title">Tiêu đề</label>
           <input type="text" class="form-control" id="title">

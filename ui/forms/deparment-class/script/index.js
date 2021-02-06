@@ -27,10 +27,7 @@ for (let i = 0; i < checkBox.length; i++)
 
         if (!isChecked())
         {
-            if (document.querySelector("table"))
-            {
-                document.querySelector("table").remove();
-            }
+            document.querySelector(".class").innerHTML = "";
             return;
         }
 
@@ -171,58 +168,74 @@ function fetchData(url, conditions, tableHead)
 
 function createTable(data, tableHead)
 {
-    if (document.querySelector("table"))
+    document.querySelector(".class").innerHTML = "";
+
+    if (data.length === 0)
     {
-        document.querySelector("table").remove();
+        return;
     }
 
-    let table = document.createElement("table");
+    let html = "<p>"+data[0]["Academic_Year"]+"</p><table>";
+    let tempAcademmic_Year = data[0]["Academic_Year"];
+    let tempFaculty = "";
+    let j = 0;
 
-    let html = "<tr>";
-    for (let i=0; i<tableHead.length; i++)
+    for (let i=0; i<data.length; i++)
     {
-        html += "<th>"+tableHead[i]+"</th>";
-    }
-    html += "</tr>";
-    let aca_year = "";
-
-    while (data.length !== 0)
-    {
-        html += "<tr>";
-        for (let i=0; i<tableHead.length; i++)
+        if (data[i]["Academic_Year"] !== tempAcademmic_Year)
         {
-
-            if (data.length > 0 && i === 0)
+            for (; j<8; j++)
             {
-                aca_year = data[0]["Academic_Year"]
+                html += "<td></td>";
             }
 
-            for (let j=0; j<data.length; j++)
-            {
-
-                if (data[j]["Academic_Year"] !== aca_year)
-                {
-                    break;
-                }
-                if (data[j]["ID_Faculty"] === tableHead[i])
-                {
-                    html += "<td>";
-                    html += "<input type=\"checkbox\" class=\"class\" name=\"class\" value=\"";
-                    html += data[j]["ID_Class"]+"\" id=\""+data[j]["ID_Class"]+"\">"
-                    html += "<label for=\""+data[j]["ID_Class"]+"\">"+data[j]["ID_Class"]+"</label>";
-                    html += "</td>";
-                    data.splice(j, 1);
-                    j--;
-                    i++;
-                }
-            }
-            if (i < tableHead.length)
-            {
-                html += "<td>____________</td>";
-            }
+            html += "</tr>";
+            j = 0;
+            html += "</table><p>"+data[i]["Academic_Year"]+"</p><table>";
+            html += ""
+            tempAcademmic_Year = data[i]["Academic_Year"];
         }
-        html += "</tr>";
+
+        if (j === 0)
+        {
+            tempFaculty = data[i]["ID_Faculty"];
+            html += "<tr><td>"+tempFaculty+"</td>";
+            html += "<td><input type=\"checkbox\" class=\""+tempAcademmic_Year+tempFaculty+" form-check-input\"";
+            html += " value=\"all\" id=\""+tempAcademmic_Year+tempFaculty+"\" onclick=\"tickAll(this)\">"
+            html += "<label for=\""+tempAcademmic_Year+tempFaculty+"\" class=\"form-check-label\">Chọn tất cả</label></td>"
+            j += 2;
+        }
+
+        if (data[i]["ID_Faculty"] !== tempFaculty)
+        {
+            tempFaculty = data[i]["ID_Faculty"];
+
+            for (; j<8; j++)
+            {
+                html += "<td></td>";
+            }
+
+            html += "<tr><td>"+tempFaculty+"</td>";
+            html += "<td><input type=\"checkbox\" class=\""+tempAcademmic_Year+tempFaculty+" form-check-input\"";
+            html += " value=\"all\" id=\""+tempAcademmic_Year+tempFaculty+"\" onclick=\"tickAll(this)\">"
+            html += "<label for=\""+tempAcademmic_Year+tempFaculty+"\" class=\"form-check-label\">Chọn tất cả</label></td>"
+            j = 2;
+        }
+        html += "<td>";
+        html += "<input type=\"checkbox\" class=\""+tempAcademmic_Year+tempFaculty;
+        html += "\" name=\""+tempAcademmic_Year+tempFaculty+"\" value=\"";
+        html += data[i]["ID_Class"]+"\" id=\""+data[i]["ID_Class"]+"\">"
+        html += "<label for=\""+data[i]["ID_Class"]+"\">"+data[i]["ID_Class"]+"</label>";
+        html += "</td>";
+
+        if (j === 7)
+        {
+            j = 0;
+            html += "</tr>"
+            continue;
+        }
+        j++;
     }
-    table.innerHTML = html;
-    document.querySelector(".class").appendChild(table);
+    html += "</table>";
+    document.querySelector(".class").innerHTML = html;
 }
