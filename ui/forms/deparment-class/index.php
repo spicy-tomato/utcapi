@@ -106,7 +106,7 @@
 
         <div class="class"></div>
 
-        <button name="button">Gửi</button>
+        <button name="button" type="submit" class="btn btn-primary">Gửi</button>
       </form>
 
     </main>
