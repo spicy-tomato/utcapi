@@ -10,23 +10,20 @@
 <body>
   <div class="container">
 
-      <?php shared_navbar();
-      ?>
-    <div>
-      <form onsubmit="return false">
-        <div class="form-group">
-          <label for="title">Tiêu đề</label>
-          <input type="text" class="form-control" id="title">
-        </div>
-        <div class="form-group">
-          <label for="content">Nội dung</label>
-          <textarea id="content" cols="30" rows="10" class="form-control"></textarea>
-        </div>
+      <?php shared_navbar(); ?>
 
-        <div class="form-group">
+    <main>
+      <form action="temp.php" method="POST" onsubmit="return false">
+
+          <?php shared_form(); ?>
+
+        <div class="form-group mt-4">
           <legend>Khoá:</legend>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" value="all" id="all_academic_year"
+            <input type="checkbox"
+                   class="academic_year form-check-input"
+                   id="all_academic_year"
+                   value="all"
                    onclick="tickAll(this)">
             <label for="all_academic_year" class="form-check-label">Chọn tất cả</label>
           </div>
@@ -64,7 +61,11 @@
         <div class="form-group">
           <legend>Khoa:</legend>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="faculty form-check-input" id="all_faculty" value="all" onclick="tickAll(this)">
+            <input type="checkbox"
+                   class="faculty form-check-input"
+                   id="all_faculty"
+                   value="all"
+                   onclick="tickAll(this)">
             <label for="all_faculty" class="form-check-label">Chọn tất cả</label>
           </div>
           <div class="form-check form-check-inline">
@@ -111,12 +112,13 @@
 
         <div class="class"></div>
 
-        <button name="button">Gửi</button>
+        <button name="button" type="submit" class="btn btn-primary">Gửi</button>
       </form>
 
-    </div>
+    </main>
+
   </div>
-  <script src="script/index.js"></script>
+  <script src="script/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
           crossorigin="anonymous"></script>

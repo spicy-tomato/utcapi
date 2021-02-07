@@ -1,5 +1,5 @@
 <?php
-    include_once "../class/tkb.php";
+    include_once "../class/schedule.php";
 
     class TKBController
     {
@@ -9,7 +9,7 @@
         private string $hoc_ky;
         private string $phuong_thuc_truy_van;
 
-        private TKB $tkb;
+        private Schedule $tkb;
 
         public function __construct (PDO $ket_noi, string $phuong_thuc_truy_van, string $ma_sv, string $nam_hoc, int $hoc_ky)
         {
@@ -19,7 +19,7 @@
             $this->nam_hoc              = $nam_hoc;
             $this->hoc_ky               = $hoc_ky;
 
-            $this->tkb = new TKB($ket_noi);
+            $this->tkb = new Schedule($ket_noi);
         }
 
         public function xuLyTruyVan () : void

@@ -1,5 +1,5 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/tkb.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/schedule.php";
 
     class TKBController
     {
@@ -9,7 +9,7 @@
         private string $hoc_ky;
         private string $phuong_thuc_truy_van;
 
-        private TKB $tkb;
+        private Schedule $schedule;
 
         public function __construct(PDO $ket_noi, string $phuong_thuc_truy_van, string $ma_sv, string $nam_hoc, int $hoc_ky)
         {
@@ -19,7 +19,7 @@
             $this->nam_hoc              = $nam_hoc;
             $this->hoc_ky               = $hoc_ky;
 
-            $this->tkb = new TKB($ket_noi);
+            $this->schedule = new Schedule($ket_noi);
         }
 
         public function xuLyTruyVan(): void
@@ -44,7 +44,7 @@
         {
             // Loi o day, hay sua TKB::hienThi(...)
 
-            $du_lieu = $this->tkb->hienThi($this->ma_sv, $this->nam_hoc, $this->hoc_ky);
+            $du_lieu = $this->schedule->hienThi($this->ma_sv, $this->nam_hoc, $this->hoc_ky);
             if (!$du_lieu) {
                 return $this->khongTimThay();
             }

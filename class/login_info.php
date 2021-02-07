@@ -5,22 +5,22 @@
     class LoginInfo
     {
         private const bang_csdl = "Department_Account";
-        private PDO $ket_noi;
+        private PDO $conn;
         private string $username;
         private string $password;
         private string $department_name;
 
-        public function __construct(PDO $ket_noi, string $username, string $password)
+        public function __construct(PDO $conn, string $username, string $password)
         {
-            $this->ket_noi  = $ket_noi;
+            $this->conn  = $conn;
             $this->username = $username;
             $this->password = $password;
         }
 
         public function login(): bool
         {
-            $sqlQuery =
-                "SELECT Notification_Department_Name
+            $sqlQuery = "
+                SELECT Notification_Department_Name
                 FROM 
                     " . self::bang_csdl . "
                 WHERE
@@ -29,7 +29,7 @@
                 LIMIT 0, 1";
 
             try {
-                $stmt = $this->ket_noi->prepare($sqlQuery);
+                $stmt = $this->conn->prepare($sqlQuery);
                 $stmt->execute([
                     ':username' => $this->username,
                     ':password' => $this->password
