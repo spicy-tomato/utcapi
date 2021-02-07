@@ -1,5 +1,5 @@
 <?php
-    include_once "../config/csdl.php";
+    include_once "../config/db.php";
     include_once "./class/tkb_controller.php";
     include_once "./class/sinh_vien_controller.php";
     include_once $_SERVER["DOCUMENT_ROOT"] . "/utcapi/api-v2/class/DepartmentClassController.php";
@@ -22,8 +22,8 @@ header("Access-Control-Allow-Origin: *");
             $ma_sv                = $uri[5] ?? "";
             $phuong_thuc_truy_van = $_SERVER['REQUEST_METHOD'];
 
-            $csdl    = new CSDL();
-            $ket_noi = $csdl->KetNoi();
+            $csdl    = new Database();
+            $ket_noi = $csdl->connect();
 
             $sinh_vien_controller = new SinhVienController($ket_noi, $phuong_thuc_truy_van, $ma_sv);
             $sinh_vien_controller->xuLyTruyVan();
@@ -35,8 +35,8 @@ header("Access-Control-Allow-Origin: *");
             $hoc_ky               = (int) $uri[7] ?? 0;
             $phuong_thuc_truy_van = $_SERVER['REQUEST_METHOD'];
 
-            $csdl    = new CSDL();
-            $ket_noi = $csdl->KetNoi();
+            $csdl    = new Database();
+            $ket_noi = $csdl->connect();
 
             $tkb_controller = new TKBController($ket_noi, $phuong_thuc_truy_van, $ma_sv, $nam_hoc, $hoc_ky);
             $tkb_controller->xuLyTruyVan();
@@ -45,8 +45,8 @@ header("Access-Control-Allow-Origin: *");
         case 'getclass':
             $phuong_thuc_truy_van = $_SERVER['REQUEST_METHOD'];
 
-            $csdl    = new CSDL();
-            $ket_noi = $csdl->KetNoi();
+            $csdl    = new Database();
+            $ket_noi = $csdl->connect();
 
             $department_class_controller = new DepartmentClassController($ket_noi, $phuong_thuc_truy_van);
             $department_class_controller->xuLyTruyVan();
