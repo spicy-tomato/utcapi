@@ -1,6 +1,7 @@
 const checkBox = document.querySelectorAll("input");
 let checkBoxes1 = document.getElementsByName("academic_year");
 let checkBoxes2 = document.getElementsByName("faculty");
+let _class = [];
 
 for (let i = 0; i < checkBox.length; i++)
 {
@@ -27,12 +28,17 @@ for (let i = 0; i < checkBox.length; i++)
 
         if (!isChecked())
         {
-            document.querySelector(".class").innerHTML = "";
+            reset();
             return;
         }
 
         getClass();
     });
+}
+function reset()
+{
+    document.querySelector(".class").innerHTML = "";
+    _class = [];
 }
 
 function isChecked()
@@ -64,14 +70,17 @@ function tickAll(src)
     let checkBoxes = document.getElementsByName(src.classList[0]);
     for (let i = 0; i < checkBoxes.length; i++)
     {
-        checkBoxes[i].checked = src.checked;
+        if (checkBoxes[i].checked !== src.checked)
+        {
+            checkBoxes[i].checked = src.checked;
+        }
     }
 }
 
 
 function getClass()
 {
-    let url = "";
+    let url;
     let academic_year = {};
     let faculty = {};
     let conditions  = [];
@@ -82,7 +91,7 @@ function getClass()
         if (all_faculty.checked)
         {
             url = "../../../api-v2/department_class.php/class?academic_year=all&faculty=all";
-            tableHead = ["CK", "CNTT", "CT", "DDT", "GDQP", "GDTC", "KHCB", "KTXD", "LLCT", "VTKT"]
+            // tableHead = ["CK", "CNTT", "CT", "DDT", "GDQP", "GDTC", "KHCB", "KTXD", "LLCT", "VTKT"]
         }
         else
         {
@@ -93,7 +102,7 @@ function getClass()
                 if (checkBoxes2[i].checked)
                 {
                     faculty[checkBoxes2[i].value] = checkBoxes2[i].value;
-                    tableHead.push(checkBoxes2[i].value);
+                    // tableHead.push(checkBoxes2[i].value);
                 }
             }
         }
@@ -103,7 +112,7 @@ function getClass()
         if (all_faculty.checked)
         {
             url = "../../../api-v2/department_class.php/getclass?faculty=all";
-            tableHead = ["CK", "CNTT", "CT", "DDT", "GDQP", "GDTC", "KHCB", "KTXD", "LLCT", "VTKT"]
+            // tableHead = ["CK", "CNTT", "CT", "DDT", "GDQP", "GDTC", "KHCB", "KTXD", "LLCT", "VTKT"]
 
 
             for (let i = 0; i < checkBoxes1.length; i++)
@@ -131,7 +140,7 @@ function getClass()
                 if (checkBoxes2[i].checked)
                 {
                     faculty[checkBoxes2[i].value] = checkBoxes2[i].value;
-                    tableHead.push(checkBoxes2[i].value);
+                    // tableHead.push(checkBoxes2[i].value);
                 }
             }
 
@@ -168,7 +177,7 @@ function fetchData(url, conditions, tableHead)
 
 function createTable(data, tableHead)
 {
-    document.querySelector(".class").innerHTML = "";
+    reset();
 
     if (data.length === 0)
     {
@@ -194,16 +203,25 @@ function createTable(data, tableHead)
             html += "</table><p>"+data[i]["Academic_Year"]+"</p><table>";
             html += ""
             tempAcademmic_Year = data[i]["Academic_Year"];
+            tempFaculty = "";
         }
 
         if (j === 0)
         {
-            tempFaculty = data[i]["ID_Faculty"];
-            html += "<tr><td>"+tempFaculty+"</td>";
-            html += "<td><input type=\"checkbox\" class=\""+tempAcademmic_Year+tempFaculty+" form-check-input\"";
-            html += " value=\"all\" id=\""+tempAcademmic_Year+tempFaculty+"\" onclick=\"tickAll(this)\">"
-            html += "<label for=\""+tempAcademmic_Year+tempFaculty+"\" class=\"form-check-label\">Chọn tất cả</label></td>"
-            j += 2;
+            if (tempFaculty === data[i]["ID_Faculty"])
+            {
+                html += "<td></td>";
+                j++;
+            }
+            else
+            {
+                tempFaculty = data[i]["ID_Faculty"];
+                html += "<tr><td>"+tempFaculty+"</td>";
+                html += "<td><input type=\"checkbox\" class=\""+tempAcademmic_Year+tempFaculty+" form-check-input\"";
+                html += " value=\"all\" id=\""+tempAcademmic_Year+tempFaculty+"\" onclick=\"tickAllForClass(this)\">"
+                html += "<label for=\""+tempAcademmic_Year+tempFaculty+"\" class=\"form-check-label\">Chọn tất cả</label></td>"
+                j += 2;
+            }
         }
 
         if (data[i]["ID_Faculty"] !== tempFaculty)
@@ -217,7 +235,7 @@ function createTable(data, tableHead)
 
             html += "<tr><td>"+tempFaculty+"</td>";
             html += "<td><input type=\"checkbox\" class=\""+tempAcademmic_Year+tempFaculty+" form-check-input\"";
-            html += " value=\"all\" id=\""+tempAcademmic_Year+tempFaculty+"\" onclick=\"tickAll(this)\">"
+            html += " value=\"all\" id=\""+tempAcademmic_Year+tempFaculty+"\" onclick=\"tickAllForClass(this)\">"
             html += "<label for=\""+tempAcademmic_Year+tempFaculty+"\" class=\"form-check-label\">Chọn tất cả</label></td>"
             j = 2;
         }
@@ -238,4 +256,60 @@ function createTable(data, tableHead)
     }
     html += "</table>";
     document.querySelector(".class").innerHTML = html;
+
+    createClass();
+}
+
+function createClass()
+{
+    let checkBoxClass = document.querySelectorAll("input");
+
+    for (let i = 20; i < checkBoxClass.length; i++)
+    {
+        checkBoxClass[i].addEventListener("change", function ()
+        {
+            if (!this.checked && this.value !== "all")
+            {
+                _class.splice(-_class.lastIndexOf(this.value), 1);
+                document.getElementsByClassName(this.name)[0].checked = false;
+            }
+            else if (this.checked && this.value !== "all")
+            {
+                _class.push(this.value);
+
+                let checkBoxes = document.getElementsByName(this.name);
+                let flag = true;
+                for (let j = 0; j < checkBoxes.length; j++)
+                {
+                    if (!checkBoxes[j].checked)
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+                document.getElementsByClassName(this.name)[0].checked = flag
+            }
+        });
+    }
+}
+
+function tickAllForClass(src)
+{
+    let checkBoxes = document.getElementsByName(src.classList[0]);
+    console.log(checkBoxes.length)
+    for (let i = 0; i < checkBoxes.length; i++)
+    {
+        if (checkBoxes[i].checked !== src.checked)
+        {
+            checkBoxes[i].checked = src.checked;
+            if (src.checked)
+            {
+                _class.push(checkBoxes[i].value);
+            }
+            else
+            {
+                _class.splice(_class.lastIndexOf(checkBoxes[i].value), 1);
+            }
+        }
+    }
 }
