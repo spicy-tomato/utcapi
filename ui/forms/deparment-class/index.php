@@ -20,7 +20,10 @@
         <div class="form-group mt-4">
           <legend>Khoá:</legend>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" value="all" id="all_academic_year"
+            <input type="checkbox"
+                   class="academic_year form-check-input"
+                   id="all_academic_year"
+                   value="all"
                    onclick="tickAll(this)">
             <label for="all_academic_year" class="form-check-label">Chọn tất cả</label>
           </div>
@@ -58,7 +61,10 @@
         <div class="form-group">
           <legend>Khoa:</legend>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="faculty form-check-input" id="all_faculty" value="all"
+            <input type="checkbox"
+                   class="faculty form-check-input"
+                   id="all_faculty"
+                   value="all"
                    onclick="tickAll(this)">
             <label for="all_faculty" class="form-check-label">Chọn tất cả</label>
           </div>

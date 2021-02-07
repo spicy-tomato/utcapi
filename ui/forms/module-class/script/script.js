@@ -1,18 +1,15 @@
 const moduleClassId = $('#module-class-id')
-
 let moduleClassIdList = []
-
-var CustomSelectionAdapter = $.fn.select2.amd.require('select2/selection/customSelectionAdapter')
+let CustomSelectionAdapter = $.fn.select2.amd.require('select2/selection/customSelectionAdapter')
 
 //  Get data from database
-
 async function fetchData() {
-    let url = '../../../api-v2/get_module_class.php'
-    let data = await fetch(
-        url,
-        {
-            method: 'GET'
-        })
+    const baseUrl = '../../../api-v2/get_module_class.php'
+    const init = {
+        method: 'GET'
+    }
+
+    let data = await fetch(baseUrl, init)
         .then((response) => response.json())
 
     return data
@@ -35,7 +32,7 @@ $(document).ready(async () => {
         selectionAdapter: CustomSelectionAdapter,
         allowClear: false,
         selectionContainer: $('#list')
-    }).on('select2:select', function (e) {
+    }).on('select2:select', e => {
         moduleClassIdList.splice(e.params.data['id'], 1)
     })
 })
