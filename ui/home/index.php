@@ -8,8 +8,7 @@
     shared_header('Trang chủ');
 ?>
 <body>
-    <?php shared_navbar();
-    ?>
+    <?php shared_navbar(); ?>
 
   <main>
 

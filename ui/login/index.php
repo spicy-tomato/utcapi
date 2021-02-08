@@ -5,7 +5,6 @@
     session_start();
 
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/login_info.php";
     include_once '../shared/functions.php';
 
     if (isset($_SESSION['department_name'])){
