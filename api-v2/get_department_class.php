@@ -9,23 +9,8 @@
     $department_class = new DepartmentClass($conn);
 
     switch ($_SERVER["REQUEST_METHOD"]) {
-        case "POST":
-            if (isset($_GET["academic_year"])) {
-                if (isset($_GET["faculty"])) {
-                    $res = $department_class->getAll();
-                }
-                else {
-                    $res = $department_class->getAllAcademic_Year();
-                }
-            }
-            else {
-                if (isset($_GET["faculty"])) {
-                    $res = $department_class->getAllFaculty();
-                }
-                else {
-                    $res = $department_class->get();
-                }
-            }
+        case "GET":
+            $res = $department_class->getAll();
             break;
 
         default:
