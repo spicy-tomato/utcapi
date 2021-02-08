@@ -1,7 +1,5 @@
 <?php
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/api-v2/class/sinh_vien_controller.php';
-
     class LoginInfo
     {
         private const bang_csdl = "Department_Account";

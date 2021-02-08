@@ -16,7 +16,8 @@
         if ($loginInfo->login()) {
             $_SESSION['department_name'] = $loginInfo->getDepartmentName();
             header('Location: ../home');
-        } else {
+        }
+        else {
             header('Location: index.php?login-failed=true');
         }
     }

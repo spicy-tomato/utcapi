@@ -13,7 +13,7 @@
       <?php shared_navbar(); ?>
 
     <main>
-      <form action="temp.php" method="POST" onsubmit="return false">
+      <form action="" method="POST" onsubmit="return false">
 
           <?php shared_form(); ?>
 

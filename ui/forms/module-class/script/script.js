@@ -4,7 +4,7 @@ let CustomSelectionAdapter = $.fn.select2.amd.require('select2/selection/customS
 
 //  Get data from database
 async function fetchData() {
-    const baseUrl = '../../../api-v2/get_module_class.php'
+    const baseUrl = '../../../api-v2/manage/get_module_class.php'
     const init = {
         method: 'GET'
     }

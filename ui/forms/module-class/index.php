@@ -13,8 +13,6 @@
       <script src="script/dist/js/select2.customSelectionAdapter.min.js"></script>
       <link href="script/dist/css/select2.customSelectionAdapter.css" rel="stylesheet" />
     ');
-    //      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2/customSelectionAdapter.min.js"></script>
-
 ?>
 
 <body style="height: 100vh">
@@ -23,7 +21,7 @@
       <?php shared_navbar(); ?>
 
     <main>
-      <form action="temp.php" autocomplete="off">
+      <form action="" autocomplete="off">
 
           <?php shared_form(); ?>
 
