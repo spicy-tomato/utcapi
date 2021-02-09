@@ -26,6 +26,7 @@ for (let i = 0; i < checkBox.length; i++) {
         } else if (this.checked && this.value !== 'all') {
             let checkBoxes = document.getElementsByName(this.name)
             let flag = true;
+
             for (let j = 0; j < checkBoxes.length; j++) {
                 if (!checkBoxes[j].checked) {
                     flag = false;
@@ -52,6 +53,7 @@ function reset() {
 function isChecked() {
     let flag1 = false;
     let flag2 = false;
+
     for (let i = 0; i < checkBoxes1.length; i++) {
         if (checkBoxes1[i].checked) {
             flag1 = true;
@@ -70,6 +72,7 @@ function isChecked() {
 
 function tickAll(src) {
     let checkBoxes = document.getElementsByName(src.classList[0])
+
     for (let i = 0; i < checkBoxes.length; i++) {
         if (checkBoxes[i].checked !== src.checked) {
             checkBoxes[i].checked = src.checked;
@@ -247,6 +250,7 @@ function addEventToClass() {
 
                 let checkBoxes = document.getElementsByName(this.name);
                 let flag = true;
+
                 for (let j = 0; j < checkBoxes.length; j++) {
                     if (!checkBoxes[j].checked) {
                         flag = false;
