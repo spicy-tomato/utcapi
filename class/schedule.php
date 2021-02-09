@@ -35,7 +35,7 @@
                     sdu.ID_Module_Class = mdcls.ID_Module_Class AND
                     mc.ID_Module = mdcls.ID_Module
                 ORDER BY
-                    sdu.Shift_Schedules ASC";
+                    sdu.Shift_Schedules";
 
             try {
                 $stmt = $this->conn->prepare($sqlQuery);
