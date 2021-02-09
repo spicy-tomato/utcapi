@@ -243,8 +243,6 @@ function addEventToClass() {
             }
         });
     }
-    console.log(selectedClass)
-
 }
 
 function tickAllForClass(src) {
@@ -260,5 +258,4 @@ function tickAllForClass(src) {
             }
         }
     }
-    console.log(selectedClass)
 }
