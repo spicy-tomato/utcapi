@@ -11,27 +11,29 @@
         private string $content;
         private string $typez;
         private string $sender;
+        private array $student_list;
         private ?DateTime $time_start = null;
         private ?DateTime $time_end = null;
         private ?DateTime $expired = null;
 
-        public function __construct(PDO $conn, string $title, string $content, string $typez, string $sender)
+        public function __construct(PDO $conn, array $info, array $student_list)
         {
-            $this->conn    = $conn;
-            $this->title   = $title;
-            $this->content = $content;
-            $this->typez   = $typez;
-            $this->sender  = $sender;
+            $this->conn         = $conn;
+            $this->title        = $info['title'];
+            $this->content      = $info['content'];
+            $this->typez        = $info['typez'];
+            $this->sender       = $info['sender'];
+            $this->student_list = $student_list;
         }
 
-        public function setTime(DateTime $time_start, DateTime $time_end, DateTime $expired)
+        public function setTime(array $time): void
         {
-            $this->time_start = $time_start;
-            $this->time_end   = $time_end;
-            $this->expired    = $expired;
+            $this->time_start = $time['time_start'];
+            $this->time_end   = $time['time_end'];
+            $this->expired    = $time['expired'];
         }
 
-        public function create(): array
+        public function create(): void
         {
             $sqlQuery = null;
             if ($this->time_start === null && $this->time_end === null && $this->expired === null) {
@@ -42,18 +44,22 @@
             }
 
             try {
+                $this->conn->beginTransaction();
+
                 $stmt = $this->conn->prepare($sqlQuery);
                 $stmt->execute();
 
                 $this->id = $this->_getId();
 
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $this->_sendToStudent($this->student_list);
+
             } catch (PDOException $error) {
+                $this->conn->rollBack();
                 exit($error->getMessage());
             }
         }
 
-        public function sendToStudent(array $studentList)
+        private function _sendToStudent(array $studentList): void
         {
             $sqlQuery =
                 "INSERT INTO
@@ -64,8 +70,6 @@
                 ";
 
             try {
-                $this->conn->beginTransaction();
-
                 foreach ($studentList as $student_id) {
                     $stmt = $this->conn->prepare($sqlQuery);
                     $stmt->execute([
