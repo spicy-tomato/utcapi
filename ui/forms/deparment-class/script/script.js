@@ -154,7 +154,7 @@ function createTable(data) {
         return;
     }
 
-    let html = "<p>" + data[0][1] + "</p><table>";
+    let html = "<legend>" + data[0][1] + "</legend><table>";
     let tempAcademmic_Year = data[0][1];
     let tempFaculty = "";
     let j = 0;
@@ -164,11 +164,10 @@ function createTable(data) {
             for (; j < 8; j++) {
                 html += "<td></td>";
             }
+            j = 0;
 
             html += "</tr>";
-            j = 0;
-            html += "</table><p>" + data[i][1] + "</p><table>";
-            html += ""
+            html += "</table><legend>" + data[i][1] + "</legend><table>";
             tempAcademmic_Year = data[i][1];
             tempFaculty = "";
         }
@@ -179,10 +178,16 @@ function createTable(data) {
                 j++;
             } else {
                 tempFaculty = data[i][2];
-                html += "<tr><td>" + tempFaculty + "</td>";
-                html += "<td><input type=\"checkbox\" class=\"" + tempAcademmic_Year + tempFaculty + " form-check-input\"";
-                html += " value=\"all\" id=\"" + tempAcademmic_Year + tempFaculty + "\" onclick=\"tickAllForClass(this)\">"
-                html += "<label for=\"" + tempAcademmic_Year + tempFaculty + "\" class=\"form-check-label\">Chọn tất cả</label></td>"
+                html += "<tr><td><div class=\"form-check form-check-inline\">" + tempFaculty + "</div></td>";
+                html += "<td><div class=\"form-check form-check-inline\">";
+                html += "<input type=\"checkbox\" ";
+                html += "class=\"" + tempAcademmic_Year + tempFaculty + " form-check-input\"";
+                html += "id=\"" + tempAcademmic_Year + tempFaculty + "\" ";
+                html += " value=\"all\" ";
+                html += "\" onclick=\"tickAllForClass(this)\">";
+                html += "<label for=\"" + tempAcademmic_Year + tempFaculty + "\" ";
+                html += "class=\"form-check-label\">Chọn tất cả</label>";
+                html += "</div></td>";
                 j += 2;
             }
         }
@@ -194,18 +199,27 @@ function createTable(data) {
                 html += "<td></td>";
             }
 
-            html += "<tr><td>" + tempFaculty + "</td>";
-            html += "<td><input type=\"checkbox\" class=\"" + tempAcademmic_Year + tempFaculty + " form-check-input\"";
-            html += " value=\"all\" id=\"" + tempAcademmic_Year + tempFaculty + "\" onclick=\"tickAllForClass(this)\">"
-            html += "<label for=\"" + tempAcademmic_Year + tempFaculty + "\" class=\"form-check-label\">Chọn tất cả</label></td>"
+            html += "<tr><td><div class=\"form-check form-check-inline\">" + tempFaculty + "</div></td>";
+            html += "<td><div class=\"form-check form-check-inline\">";
+            html += "<input type=\"checkbox\" ";
+            html += "class=\"" + tempAcademmic_Year + tempFaculty + " form-check-input\"";
+            html += "id=\"" + tempAcademmic_Year + tempFaculty + "\" ";
+            html += "value=\"all\" ";
+            html += "\" onclick=\"tickAllForClass(this)\">";
+            html += "<label for=\"" + tempAcademmic_Year + tempFaculty + "\" ";
+            html += "class=\"form-check-label\">Chọn tất cả</label>";
+            html += "</div></td>";
             j = 2;
         }
-        html += "<td>";
-        html += "<input type=\"checkbox\" class=\"" + tempAcademmic_Year + tempFaculty;
-        html += "\" name=\"" + tempAcademmic_Year + tempFaculty + "\" value=\"";
-        html += data[i][0] + "\" id=\"" + data[i][0] + "\">"
-        html += "<label for=\"" + data[i][0] + "\">" + data[i][0] + "</label>";
-        html += "</td>";
+
+        html += "<td><div class=\"form-check form-check-inline\">";
+        html += "<input type=\"checkbox\" ";
+        html += "class=\"" + tempAcademmic_Year + tempFaculty + "\" ";
+        html += "id=\"" + data[i][0] + "\"";
+        html += "name=\"" + tempAcademmic_Year + tempFaculty + "\" ";
+        html += "value=\"" + data[i][0] + "\">";
+        html += "<label for=\"" + data[i][0] + "\" ";
+        html += "class=\"form-check-label\">" + data[i][0] + "</label></div></td>";
 
         if (j === 7) {
             j = 0;
