@@ -1,6 +1,6 @@
 <?php
 
-    function shared_header(string $title, string $otherTags=''): void
+    function shared_header(string $title, string $otherTags = ''): void
     {
         echo '
         <head>
@@ -13,7 +13,7 @@
           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
                   integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
           <title>' . $title . '</title>
-          ' .$otherTags . '
+          ' . $otherTags . '
         </head>';
     }
 
@@ -32,10 +32,16 @@
 
         if (stripos($_SERVER['REQUEST_URI'], 'deparment-class') !== false) {
             $nav1_class .= $current_nav;
-        } else if (stripos($_SERVER['REQUEST_URI'], 'module-class') !== false) {
-            $nav2_class .= $current_nav;
-        } else if (stripos($_SERVER['REQUEST_URI'], 'student') !== false) {
-            $nav3_class .= $current_nav;
+        }
+        else {
+            if (stripos($_SERVER['REQUEST_URI'], 'module-class') !== false) {
+                $nav2_class .= $current_nav;
+            }
+            else {
+                if (stripos($_SERVER['REQUEST_URI'], 'student') !== false) {
+                    $nav3_class .= $current_nav;
+                }
+            }
         }
 
         echo '
@@ -87,7 +93,7 @@
         </div>
         <div class="form-group mt-4">
           <label for="content"><legend>Nội dung:</legend></label>
-          <textarea id="content" cols="30" rows="10" class="form-control"></textarea>
+          <textarea cols="30" rows="10" class="form-control" id="content"></textarea>
         </div>';
     }
 

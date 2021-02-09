@@ -21,7 +21,7 @@
       <?php shared_navbar(); ?>
 
     <main>
-      <form action="" autocomplete="off">
+      <form action="../../../api-v2/manage/module_class_notification.php" autocomplete="off">
 
           <?php shared_form(); ?>
 
