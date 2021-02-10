@@ -112,7 +112,7 @@
 
         <div class="class"></div>
 
-        <button name="button" type="submit" class="btn btn-primary">Gửi</button>
+        <button name="button" type="submit" class="btn btn-primary" onclick="sendNotification()">Gửi</button>
       </form>
 
     </main>

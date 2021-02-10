@@ -3,7 +3,7 @@
     class Notification
     {
         private const notification_table = "Notification";
-        private const notfication_student_table = "Notification_Student";
+        private const notification_student_table = "Notification_Student";
 
         private PDO $conn;
         private string $id;
@@ -60,7 +60,7 @@
         {
             $sqlQuery =
                 "INSERT INTO
-                    " . self::notfication_student_table . "
+                    " . self::notification_student_table . "
                     (ID_Notification, ID_Student)
                 VALUES
                     (:notification_id, :student_id)

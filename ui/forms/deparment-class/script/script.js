@@ -280,3 +280,22 @@ function tickAllForClass(src) {
         }
     }
 }
+
+function sendNotification()
+{
+    // fetch('../../../api-v2/manage/department_class_notification.php', {
+    //     method: 'POST',
+    //     body: JSON.stringify(selectedClass)
+    // })
+    //     .then(function (response) {
+    //         return response.json()
+    //     })
+    //     .then(function (responseAsJson) {
+    //         allClass = responseAsJson
+    //     })
+    //     .catch(function (error) {
+    //         console.log('Looks like there was a problem: \n', error)
+    //     })
+
+    console.log(JSON.stringify(selectedClass))
+}
