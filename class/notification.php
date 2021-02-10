@@ -114,11 +114,6 @@
 
         private function _getId(): string
         {
-            $sqlQuery = "SELECT LAST_INSERT_ID()";
-
-            $stmt = $this->conn->prepare($sqlQuery);
-            $res = $stmt->execute();
-            var_dump($res);
-            return $res;
+            return $this->conn->lastInsertId();
         }
     }
