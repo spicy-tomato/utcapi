@@ -15,6 +15,7 @@
 
         if ($loginInfo->login()) {
             $_SESSION['department_name'] = $loginInfo->getDepartmentName();
+            $_SESSION['department_id'] = $loginInfo->getDepartmentUsername();
             header('Location: ../home');
         }
         else {

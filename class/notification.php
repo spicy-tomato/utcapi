@@ -44,8 +44,6 @@
             }
 
             try {
-                $this->conn->beginTransaction();
-
                 $stmt = $this->conn->prepare($sqlQuery);
                 $stmt->execute();
 
@@ -54,7 +52,6 @@
                 $this->_sendToStudent($this->student_list);
 
             } catch (PDOException $error) {
-                $this->conn->rollBack();
                 exit($error->getMessage());
             }
         }
@@ -69,12 +66,14 @@
                     (:notification_id, :student_id)
                 ";
 
+            $this->conn->beginTransaction();
+
             try {
                 foreach ($studentList as $student_id) {
                     $stmt = $this->conn->prepare($sqlQuery);
                     $stmt->execute([
-                        'notification_id' => $this->id,
-                        'student_id' => $student_id
+                        ':notification_id' => $this->id,
+                        ':student_id' => $student_id
                     ]);
                 }
 
@@ -93,7 +92,8 @@
                     " . self::notification_table . "
                     (Title, Content, Typez, Sender, Time_Start, Time_End, Expired)
                 VALUES
-                    ({$this->title}, {$this->content}, {$this->typez}, {$this->sender}, {$this->time_start}, {$this->time_end}, {$this->expired}) 
+                    ('{$this->title}', '{$this->content}', '{$this->typez}', '{$this->sender}', 
+                    '{$this->time_start}', '{$this->time_end}', '{$this->expired}') 
                 ";
 
             return $sqlQuery;
@@ -106,7 +106,7 @@
                     " . self::notification_table . "
                     (Title, Content, Typez, Sender)
                 VALUES
-                    ({$this->title}, {$this->content}, {$this->typez}, {$this->sender})
+                    ('{$this->title}', '{$this->content}', '{$this->typez}', '{$this->sender}')
                 ";
 
             return $sqlQuery;
@@ -117,6 +117,8 @@
             $sqlQuery = "SELECT LAST_INSERT_ID()";
 
             $stmt = $this->conn->prepare($sqlQuery);
-            return $stmt->execute();
+            $res = $stmt->execute();
+            var_dump($res);
+            return $res;
         }
     }

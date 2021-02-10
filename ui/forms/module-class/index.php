@@ -12,6 +12,8 @@
       <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
       <script src="script/dist/js/select2.customSelectionAdapter.min.js"></script>
       <link href="script/dist/css/select2.customSelectionAdapter.css" rel="stylesheet" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" type="text/css">
     ');
 ?>
 
@@ -21,7 +23,7 @@
       <?php shared_navbar(); ?>
 
     <main>
-      <form action="../../../api-v2/manage/module_class_notification.php" autocomplete="off">
+      <form action="" autocomplete="off">
 
           <?php shared_form(); ?>
 
@@ -45,7 +47,11 @@
         </div>
 
         <div class="d-flex justify-content-center mt-4">
-          <button name="button" type="submit" class="btn btn-primary">Gửi</button>
+          <button type="button"
+                  class="btn btn-primary"
+                  name="button"
+                  id="submit">Gửi
+          </button>
         </div>
       </form>
     </main>

@@ -27,10 +27,14 @@
 }
 
 .autocomplete-active {
-    background-color: #DodgerBlue !important;
+    background-color: DodgerBlue !important;
     color: #ffffff;
 }
 
 .select2-container--default .select2-results__option[aria-selected=true] {
     display: none; !important;
+}
+
+#toast-container > div {
+    opacity: 1 !important;
 }

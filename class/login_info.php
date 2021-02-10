@@ -2,15 +2,15 @@
 
     class LoginInfo
     {
-        private const bang_csdl = "Department_Account";
+        private const department_account_table = "Department_Account";
         private PDO $conn;
+        private string $department_name;
         private string $username;
         private string $password;
-        private string $department_name;
 
         public function __construct(PDO $conn, string $username, string $password)
         {
-            $this->conn  = $conn;
+            $this->conn     = $conn;
             $this->username = $username;
             $this->password = $password;
         }
@@ -18,9 +18,11 @@
         public function login(): bool
         {
             $sqlQuery = "
-                SELECT Notification_Department_Name
+                SELECT 
+                    Username,
+                    Notification_Department_Name
                 FROM 
-                    " . self::bang_csdl . "
+                    " . self::department_account_table . "
                 WHERE
                     Username = :username AND
                     Password = :password
@@ -49,5 +51,10 @@
         public function getDepartmentName(): string
         {
             return $this->department_name;
+        }
+
+        public function getDepartmentUsername(): string
+        {
+            return $this->username;
         }
     }
