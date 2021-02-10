@@ -1,18 +1,18 @@
-const moduleClassId = $('#module-class-id')
 let moduleClassIdList = []
-let CustomSelectionAdapter = $.fn.select2.amd.require('select2/selection/customSelectionAdapter')
+const moduleClassId = $('#module-class-id')
 
 //  Get data from database
 async function fetchData() {
     const baseUrl = '../../../api-v2/get_module_class.php'
     const init = {
-        method: 'GET'
+        method: 'GET',
+        cache: 'no-cache'
     }
 
-    let data = await fetch(baseUrl, init)
+    let response = await fetch(baseUrl, init)
         .then((response) => response.json())
 
-    return data
+    return response
 }
 
 async function loadData() {
@@ -24,6 +24,8 @@ async function loadData() {
 }
 
 $(document).ready(async () => {
+    const CustomSelectionAdapter = $.fn.select2.amd.require('select2/selection/customSelectionAdapter')
+
     await loadData()
 
     //  Display selected tags
@@ -32,7 +34,27 @@ $(document).ready(async () => {
         selectionAdapter: CustomSelectionAdapter,
         allowClear: false,
         selectionContainer: $('#list')
-    }).on('select2:select', e => {
-        moduleClassIdList.splice(e.params.data['id'], 1)
     })
 })
+
+//  Add selected module classes to form
+function addClassToForm(){
+    let seletedId = moduleClassId.val()
+
+    if (seletedId.length === 0){
+        return
+    }
+
+    let selectedClasses = seletedId.reduce((accumulator, currentValue) => currentValue[currentValue]['text'])
+    console.log(selectedClasses)
+}
+
+//  Send notification info
+async function postData() {
+    const init = {
+        method: 'POST',
+        cache: 'no-cache',
+        body: JSON.stringify()
+    }
+    const reponse = await fetch(url)
+}
