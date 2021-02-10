@@ -7,7 +7,7 @@ let academic_year = [];
 let faculty = [];
 let conditions = [];
 
-fetch('../../../api-v2/get_department_class.php')
+fetch('../../../api-v2/manage/get_department_class.php')
     .then(function (response) {
         return response.json()
     })
