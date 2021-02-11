@@ -1,4 +1,5 @@
 <?php
+
     class Schedule
     {
         private const module_class_table = "Module_Class";
@@ -41,6 +42,7 @@
                 $stmt = $this->conn->prepare($sqlQuery);
                 $stmt->execute([':student_id' => $this->student_id]);
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
             } catch (PDOException $error) {
                 exit($error->getMessage());
             }

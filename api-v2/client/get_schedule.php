@@ -9,7 +9,9 @@
         $res  = null;
         $tkb  = new Schedule($conn, $_GET['id']);
 
-        if (isset($_GET['start']) && isset($_GET['to'])) {
+        if (isset($_GET['start']) &&
+            isset($_GET['to'])) {
+
             $res = $tkb->get($_GET['start'], $_GET['end']);
         }
         else {

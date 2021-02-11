@@ -33,7 +33,7 @@
             $this->expired    = $time['expired'];
         }
 
-        public function create(): bool
+        public function create(): void
         {
             $sqlQuery = null;
             if ($this->time_start === null && $this->time_end === null && $this->expired === null) {
@@ -50,8 +50,6 @@
                 $this->id = $this->_getId();
 
                 $this->_sendToStudent($this->student_list);
-
-                return true;
 
             } catch (PDOException $error) {
                 throw $error;

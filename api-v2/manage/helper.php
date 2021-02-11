@@ -42,7 +42,7 @@
                 FROM
                     " . self::participate_table . "
                 WHERE
-                    ID_Module_Class in (" . $sql . ")
+                    ID_Module_Class IN (" . $sql . ")
                 ";
 
             $stmt = $this->conn->prepare($sqlQuery);
@@ -59,7 +59,7 @@
                 FROM
                     " . self::student_table . "
                 WHERE
-                    ID_Class in (" . $sql . ")
+                    ID_Class IN (" . $sql . ")
                 ";
 
             $stmt = $this->conn->prepare($sqlQuery);

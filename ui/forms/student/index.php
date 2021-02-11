@@ -9,8 +9,7 @@
     shared_header('Thông báo cho sinh viên');
 ?>
 <body>
-    <?php shared_navbar();
-    ?>
+    <?php shared_navbar(); ?>
   <main>
 
   </main>
