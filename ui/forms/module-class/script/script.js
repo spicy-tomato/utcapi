@@ -1,6 +1,12 @@
 let moduleClassIdList = []
 let sender
+
 const moduleClassId = $('#module-class-id')
+const fieldList = {
+    title: 'Tiêu đề',
+    content: 'Nội dung',
+    typez: 'Loại thông báo'
+}
 
 //  Get data from database
 async function fetchData() {
@@ -29,7 +35,7 @@ $(document).ready(async () => {
 
     sender = await getSender()
     await loadData()
-    document.getElementById('submit').addEventListener('click', function (){
+    document.getElementById('submit').addEventListener('click', function () {
         tryPostData()
     })
 
@@ -38,7 +44,8 @@ $(document).ready(async () => {
         data: moduleClassIdList,
         selectionAdapter: CustomSelectionAdapter,
         allowClear: false,
-        selectionContainer: $('#list')
+        selectionContainer: $('#list'),
+        theme: 'bootstrap4'
     })
 })
 
@@ -67,6 +74,31 @@ function getClassList() {
     return selectedClasses
 }
 
+//  Display error if there are some unfullfilled fields
+function canPostData(data) {
+    for (const [field, fieldValue] of Object.entries(data.info)) {
+        if (fieldValue === '') {
+            alertify.error(`Trường "${fieldList[field]}" không được để trống!`)
+                .delay(3)
+                .dismissOthers()
+
+            return false
+        }
+    }
+
+    if (data.class_list === undefined) {
+        alertify.error('Trường "Mã học phần" không được để trống!')
+            .delay(3)
+            .dismissOthers()
+
+        return false
+    }
+
+    return true
+}
+
+/*_________________________________________________*/
+
 //  Send notification info
 async function postData(data) {
     const url = '../../../api-v2/manage/module_class_notification.php'
@@ -94,25 +126,18 @@ function tryPostData() {
         class_list: getClassList()
     }
 
-    let shouldPostData = true
-    console.log(data)
-
-    for (const [field, fieldValue] of Object.entries(data.info)) {
-        if (fieldValue === '') {
-            toastr.info('Trường ' + field + ' không được để trống!', {
-                "debug": false,
-                "positionClass": "toast-top-right",
-                "onclick": null,
-                "fadeIn": 300,
-                "fadeOut": 1000,
-                "timeOut": 5000,
-                "extendedTimeOut": 1000
-            })
-            return
-        }
-    }
-
-    if (shouldPostData) {
-        postData(data).then(response => console.log(response))
+    if (canPostData(data)) {
+        postData(data).then((response) => {
+            if (response.toString() === 'OK') {
+                alertify.success('Thêm thông báo thành công!')
+                    .delay(3)
+                    .dismissOthers()
+            }
+            else {
+                alertify.error('Có lỗi đã xảy ra, hãy thử lại sau!')
+                    .delay(3)
+                    .dismissOthers()
+            }
+        })
     }
 }

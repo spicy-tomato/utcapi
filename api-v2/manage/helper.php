@@ -3,8 +3,8 @@
     class Helper
     {
         private const participate_table = "Participate";
-		private const student_table = "student";
-		private PDO $conn;
+        private const student_table = "student";
+        private PDO $conn;
 
         public function __construct(PDO $conn)
         {
@@ -13,28 +13,28 @@
 
         public function moduleClassListToStudentList($class_list): array
         {
-			$sql = "";
-			foreach ($class_list as $class_id) {
-				$sql .= "'" . $class_id . "',";
-			}
-			$sql = rtrim($sql, ",");
+            $sql = "";
+            foreach ($class_list as $class_id) {
+                $sql .= "'" . $class_id . "',";
+            }
+            $sql = rtrim($sql, ",");
 
-			return array_unique($this->_moduleClassToStudentList($sql));
+            return array_unique($this->_getListFromModuleClass($sql));
         }
 
 
-		public function departmentClassToStudentList ($class_list) : array
-		{
-			$sql = "";
-			foreach ($class_list as $class_id) {
-				$sql .= "'" . $class_id . "',";
-			}
-			$sql = rtrim($sql, ",");
+        public function departmentClassToStudentList($class_list): array
+        {
+            $sql = "";
+            foreach ($class_list as $class_id) {
+                $sql .= "'" . $class_id . "',";
+            }
+            $sql = rtrim($sql, ",");
 
-			return $this->_departmentClassToStudentList($sql);
-		}
+            return $this->_getListFromDepartmentClass($sql);
+        }
 
-        private function _moduleClassToStudentList($sql): array
+        private function _getListFromModuleClass($sql): array
         {
             $sqlQuery =
                 "SELECT
@@ -42,7 +42,7 @@
                 FROM
                     " . self::participate_table . "
                 WHERE
-                    ID_Module_Class in (" . $sql .")
+                    ID_Module_Class in (" . $sql . ")
                 ";
 
             $stmt = $this->conn->prepare($sqlQuery);
@@ -51,10 +51,10 @@
             return $stmt->fetchAll(PDO::FETCH_COLUMN);
         }
 
-		private function _departmentClassToStudentList ($sql) : array
-		{
-			$sqlQuery =
-				"SELECT
+        private function _getListFromDepartmentClass($sql): array
+        {
+            $sqlQuery =
+                "SELECT
                     ID_Student
                 FROM
                     " . self::student_table . "
@@ -62,9 +62,9 @@
                     ID_Class in (" . $sql . ")
                 ";
 
-			$stmt = $this->conn->prepare($sqlQuery);
-			$stmt->execute();
+            $stmt = $this->conn->prepare($sqlQuery);
+            $stmt->execute();
 
-			return $stmt->fetchAll(PDO::FETCH_COLUMN);
-		}
+            return $stmt->fetchAll(PDO::FETCH_COLUMN);
+        }
     }
