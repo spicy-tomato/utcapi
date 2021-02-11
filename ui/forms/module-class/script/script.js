@@ -30,14 +30,12 @@ async function loadData() {
     })
 }
 
-$(document).ready(async () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const CustomSelectionAdapter = $.fn.select2.amd.require('select2/selection/customSelectionAdapter')
 
     sender = await getSender()
     await loadData()
-    document.getElementById('submit').addEventListener('click', function () {
-        tryPostData()
-    })
+    document.getElementById('submit').addEventListener('click', tryPostData)
 
     //  Display selected tags
     moduleClassId.select2({
@@ -129,15 +127,29 @@ function tryPostData() {
     if (canPostData(data)) {
         postData(data).then((response) => {
             if (response.toString() === 'OK') {
-                alertify.success('Thêm thông báo thành công!')
-                    .delay(3)
-                    .dismissOthers()
+                alertify.confirm('Thêm thông báo thành công!')
+                    .setHeader('<i class="fas fa-info-circle"></i> Thông tin')
+                    .setting({
+                        'labels':
+                            {
+                                ok: 'Tạo thông báo mới',
+                                cancel: 'Về trang chủ'
+                            },
+                        'defaultFocusOff': true,
+                        'maximizable': false,
+                        'movable': false,
+                        'pinnable': false,
+                        'onok': () => window.location.reload(),
+                        'oncancel': () => window.location.replace(('../../home/'))
+                    })
             }
             else {
                 alertify.error('Có lỗi đã xảy ra, hãy thử lại sau!')
                     .delay(3)
                     .dismissOthers()
             }
+
+            document.getElementById('submit').removeEventListener('click', tryPostData)
         })
     }
 }
