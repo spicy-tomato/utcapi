@@ -95,8 +95,17 @@
 
     function shield()
     {
-        if (!isset($_SESSION['department_name'])) {
-            header('Location: ' . $_SERVER['DOCUMENT_ROOT'] . '/utcapi/ui/login');
+        if (!isset($_SESSION['department_name']) || !isset($_SESSION['department_id'])) {
+            header('Location: /utcapi/ui/login/');
         }
+
+        $now = time();
+
+        if (isset($_SESSION['time_limit']) && $now > $_SESSION['time_limit']) {
+            session_destroy();
+            header('Location: /utcapi/ui/login/');
+        }
+
+        $_SESSION['time_limit'] = $now + 3600;
     }
 
