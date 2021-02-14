@@ -1,0 +1,11 @@
+{
+    "require": {
+        "php": "^7.4",
+        "kreait/firebase-php": "^5.14"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    }
+}

@@ -33,10 +33,10 @@
         if (stripos($_SERVER['REQUEST_URI'], 'deparment-class') !== false) {
             $nav1_class .= $current_nav;
         }
-        else if (stripos($_SERVER['REQUEST_URI'], 'module-class') !== false) {
+        elseif (stripos($_SERVER['REQUEST_URI'], 'module-class') !== false) {
             $nav2_class .= $current_nav;
         }
-        else if (stripos($_SERVER['REQUEST_URI'], 'student') !== false) {
+        elseif (stripos($_SERVER['REQUEST_URI'], 'student') !== false) {
             $nav3_class .= $current_nav;
         }
 
@@ -108,4 +108,3 @@
 
         $_SESSION['time_limit'] = $now + 3600;
     }
-
