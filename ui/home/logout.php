@@ -1,4 +1,4 @@
 <?php
     session_start();
-    unset($_SESSION['department_name']);
+    session_destroy();
     header('Location: ../login');
