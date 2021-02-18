@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     sender = await getSender()
     await loadData()
-    document.getElementById('submit').addEventListener('click', tryPostData)
+    document.getElementById('submit').addEventListener('click', trySendNotification)
 
     //  Display selected tags
     moduleClassId.select2({
@@ -62,17 +62,17 @@ async function getSender() {
 }
 
 function getClassList() {
-    let seletedId = moduleClassId.val()
+    let selectedId = moduleClassId.val()
 
-    if (seletedId.length === 0) {
+    if (selectedId.length === 0) {
         return
     }
 
-    let selectedClasses = seletedId.map((_class) => moduleClassIdList[_class].text)
+    let selectedClasses = selectedId.map((_class) => moduleClassIdList[_class].text)
     return selectedClasses
 }
-
-//  Display error if there are some unfullfilled fields
+const varToString = varObj => Object.keys(varObj)[1]
+//  Display error if there are some unfulfilled fields
 function canPostData(data) {
     for (const [field, fieldValue] of Object.entries(data.info)) {
         if (fieldValue === '') {
@@ -113,7 +113,7 @@ async function postData(data) {
     return response
 }
 
-function tryPostData() {
+function trySendNotification() {
     const data = {
         info: {
             title: $('#title').val(),
@@ -149,7 +149,7 @@ function tryPostData() {
                     .dismissOthers()
             }
 
-            document.getElementById('submit').removeEventListener('click', tryPostData)
+            document.getElementById('submit').removeEventListener('click', trySendNotification)
         })
     }
 }
