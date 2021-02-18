@@ -1,10 +1,11 @@
 <?php
     require $_SERVER['DOCUMENT_ROOT'] .'/utcapi/vendor/autoload.php';
 
+    use Kreait\Firebase\Exception\FirebaseException;
+    use Kreait\Firebase\Exception\MessagingException;
     use \Kreait\Firebase\Messaging\CloudMessage;
     use \Kreait\Firebase\Messaging\Notification;
     use \Kreait\Firebase\Factory;
-
 
 //    $title = "New title";
 //    $body  = "New body";
@@ -18,8 +19,6 @@
 
     $factory = new Factory();
     $factory = $factory->withServiceAccount($credentials_path);
-
-    var_dump($factory);
 
     $messaging = $factory->createMessaging();
 
@@ -35,9 +34,9 @@
 
     try {
         $messaging->send($message);
-    } catch (\Kreait\Firebase\Exception\MessagingException $e) {
+    } catch (MessagingException $e) {
         echo "Messaging Exception";
-    } catch (\Kreait\Firebase\Exception\FirebaseException $e) {
+    } catch (FirebaseException $e) {
         echo "Firebase Exception";
     }
 
