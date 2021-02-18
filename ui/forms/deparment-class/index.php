@@ -13,7 +13,7 @@ shared_header('Thông báo cho khoá - khoa - lớp', '
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
     ');
 ?>
-<body  onload="prepare()">
+<body>
 <div class="container">
 
     <?php shared_navbar(); ?>

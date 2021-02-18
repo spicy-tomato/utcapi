@@ -12,6 +12,8 @@ let selectedClass = []
 let academicYears = []
 let faculties = []
 
+window.onload = prepare
+
 async function prepare() {
     document.getElementById('all_academic_year').addEventListener('click', tickAllForAcademic_YearAndFaculty)
     document.getElementById('all_faculty').addEventListener('click', tickAllForAcademic_YearAndFaculty)
