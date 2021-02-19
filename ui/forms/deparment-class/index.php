@@ -118,7 +118,11 @@
 
         <div class="class"></div>
 
-        <button name="button" type="button" class="btn btn-primary">Gửi</button>
+        <button type="button"
+                class="btn btn-primary"
+                name="button"
+                id="submit">Gửi
+        </button>
       </form>
 
     </main>
