@@ -194,7 +194,7 @@ function createTable(data) {
         return
     }
 
-    for (const [_academicYear, _faculty: {}] of Object.entries(data)) {
+    for (const [_academicYear, _faculty] of Object.entries(data)) {
         let area = createAcademicYearArea(_academicYear)
         let innerTable = createInnerTable()
 
