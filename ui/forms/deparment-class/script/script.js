@@ -121,8 +121,8 @@ function getConditions() {
     academicYears = []
     faculties = []
 
-    if (all_academic_year.checked) {
-        if (all_faculty.checked) {
+    if ($('#all_academic_year').is(':checked')) {
+        if ($('#all_faculty').is(':checked')) {
             academicYears = ['K54', 'K55', 'K56', 'K57', 'K58', 'K59', 'K60']
             faculties = ['CK', 'CNTT', 'CT', 'DDT', 'GDQP', 'GDTC', 'KHCB', 'KTXD', 'LLCT', 'VTKT']
         }
@@ -137,7 +137,7 @@ function getConditions() {
         }
     }
     else {
-        if (all_faculty.checked) {
+        if ($('#all_faculty').is(':checked')) {
             faculties = ['CK', 'CNTT', 'CT', 'DDT', 'GDQP', 'GDTC', 'KHCB', 'KTXD', 'LLCT', 'VTKT']
 
             for (let i = 0; i < checkBoxes1.length; i++) {
@@ -194,11 +194,11 @@ function createTable(data) {
         return
     }
 
-    for (const [_academicYear, _faculty] of Object.entries(data)) {
+    for (const [_academicYear, _faculty: {}] of Object.entries(data)) {
         let area = createAcademicYearArea(_academicYear)
         let innerTable = createInnerTable()
 
-        for (const [facultyElement, __class] of Object.entries(_faculty)) {
+        for (const [facultyElement, _class] of Object.entries(_faculty)) {
             let rowTag = createRow()
             let columnFacultyTag = createColumn()
             let facultyTag = createFacultyTag(facultyElement)
@@ -212,7 +212,7 @@ function createTable(data) {
             rowTag.appendChild(columnCheckAllTag)
 
             let counter = 2
-            for (const _singleClass of __class) {
+            for (const _singleClass of _class) {
                 selectedClass.push(_singleClass)
 
                 let classTag = createClassTag(_singleClass, _academicYear, facultyElement)
@@ -409,8 +409,8 @@ function canPostData(data) {
 async function trySendNotification() {
     const data = {
         info: {
-            title: title.value,
-            content: content.value,
+            title: $('#title').val(),
+            content: $('#content').val(),
             typez: 'Type',
             sender: sender
         },
