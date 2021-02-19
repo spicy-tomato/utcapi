@@ -8,27 +8,7 @@ const fieldList = {
     typez: 'Loại thông báo'
 }
 
-//  Get data from database
-async function fetchData() {
-    const baseUrl = '../../../api-v2/manage/get_module_class.php'
-    const init = {
-        method: 'GET',
-        cache: 'no-cache'
-    }
-
-    let response = await fetch(baseUrl, init)
-        .then((response) => response.json())
-
-    return response
-}
-
-async function loadData() {
-    let data = await fetchData()
-
-    data.forEach((row, index) => {
-        moduleClassIdList.push({id: index, text: row['ID_Module_Class']})
-    })
-}
+/*_________________________________________________*/
 
 document.addEventListener('DOMContentLoaded', async () => {
     const CustomSelectionAdapter = $.fn.select2.amd.require('select2/selection/customSelectionAdapter')
@@ -49,16 +29,46 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 /*_________________________________________________*/
 
-async function getSender() {
-    const baseUrl = '../../shared/session.php?var=department_id'
+//  Get data from database
+async function fetchData() {
+    const baseUrl = '../../../api-v2/manage/get_module_class.php'
     const init = {
-        method: 'GET'
+        method: 'GET',
+        cache: 'no-cache'
     }
 
     let response = await fetch(baseUrl, init)
-        .then((response) => response.json())
+    let responseJson = await response.json()
 
-    return response
+    return responseJson
+}
+
+async function loadData() {
+    let data = await fetchData()
+
+    data.forEach((row, index) => {
+        moduleClassIdList.push({id: index, text: row['ID_Module_Class']})
+    })
+}
+
+/*_________________________________________________*/
+
+async function getSender() {
+    try {
+        const baseUrl = '../../shared/session.php?var=department_id'
+        const init = {
+            method: 'GET',
+            cache: 'no-cache'
+        }
+
+        const response = await fetch(baseUrl, init)
+        const responseJson = await response.json()
+
+        return responseJson
+
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 function getClassList() {
@@ -71,28 +81,22 @@ function getClassList() {
     let selectedClasses = selectedId.map((_class) => moduleClassIdList[_class].text)
     return selectedClasses
 }
+
 const varToString = varObj => Object.keys(varObj)[1]
+
 //  Display error if there are some unfulfilled fields
-function canPostData(data) {
+function getInvalidField(data) {
     for (const [field, fieldValue] of Object.entries(data.info)) {
         if (fieldValue === '') {
-            alertify.error(`Trường "${fieldList[field]}" không được để trống!`)
-                .delay(3)
-                .dismissOthers()
-
-            return false
+            return fieldList[field]
         }
     }
 
     if (data.class_list === undefined) {
-        alertify.error('Trường "Mã học phần" không được để trống!')
-            .delay(3)
-            .dismissOthers()
-
-        return false
+        return 'Mã học phần'
     }
 
-    return true
+    return null
 }
 
 /*_________________________________________________*/
@@ -108,12 +112,12 @@ async function postData(data) {
     }
 
     const response = await fetch(url, init)
-        .then((response) => response.json())
+    const responseJson = await response.json()
 
-    return response
+    return responseJson
 }
 
-function trySendNotification() {
+async function trySendNotification() {
     const data = {
         info: {
             title: $('#title').val(),
@@ -124,32 +128,49 @@ function trySendNotification() {
         class_list: getClassList()
     }
 
-    if (canPostData(data)) {
-        postData(data).then((response) => {
-            if (response.toString() === 'OK') {
-                alertify.confirm('Thêm thông báo thành công!')
-                    .setHeader('<i class="fas fa-info-circle"></i> Thông tin')
-                    .setting({
-                        'labels':
-                            {
-                                ok: 'Tạo thông báo mới',
-                                cancel: 'Về trang chủ'
-                            },
-                        'defaultFocusOff': true,
-                        'maximizable': false,
-                        'movable': false,
-                        'pinnable': false,
-                        'onok': () => window.location.reload(),
-                        'oncancel': () => window.location.replace(('../../home/'))
-                    })
-            }
-            else {
-                alertify.error('Có lỗi đã xảy ra, hãy thử lại sau!')
-                    .delay(3)
-                    .dismissOthers()
-            }
-
-            document.getElementById('submit').removeEventListener('click', trySendNotification)
-        })
+    let invalidField = getInvalidField(data)
+    if (invalidField !== null) {
+        raiseEmptyFieldError(invalidField)
+        return
     }
+
+    const response = await postData(data)
+    if (response.toString() === 'OK') {
+        raiseSuccess()
+    }
+    else {
+        raiseBackEndError()
+    }
+
+    document.getElementById('submit').removeEventListener('click', trySendNotification)
+}
+
+function raiseSuccess() {
+    alertify.confirm('Thêm thông báo thành công!')
+        .setHeader('<i class="fas fa-info-circle"></i> Thông tin')
+        .setting({
+            'labels':
+                {
+                    ok: 'Tạo thông báo mới',
+                    cancel: 'Về trang chủ'
+                },
+            'defaultFocusOff': true,
+            'maximizable': false,
+            'movable': false,
+            'pinnable': false,
+            'onok': () => window.location.reload(),
+            'oncancel': () => window.location.replace(('../../home/'))
+        })
+}
+
+function raiseEmptyFieldError(field) {
+    alertify.error(`Trường "${field}" không được để trống!`)
+        .delay(3)
+        .dismissOthers()
+}
+
+function raiseBackEndError(){
+    alertify.error('Có lỗi đã xảy ra, hãy thử lại sau!')
+        .delay(3)
+        .dismissOthers()
 }

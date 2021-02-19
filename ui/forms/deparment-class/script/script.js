@@ -12,17 +12,21 @@ let selectedClass = []
 let academicYears = []
 let faculties = []
 
-async function prepare() {
+/*_________________________________________________*/
+
+document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('all_academic_year').addEventListener('click', tickAllForAcademic_YearAndFaculty)
     document.getElementById('all_faculty').addEventListener('click', tickAllForAcademic_YearAndFaculty)
     document.getElementsByName('button')[0].addEventListener('click', trySendNotification)
 
-    await fetchData();
+    await fetchData()
 
     addEventForAcademic_YearAndFaculty()
 
     sender = await getSender()
-}
+})
+
+/*_________________________________________________*/
 
 function tickAllForAcademic_YearAndFaculty() {
     let checkBoxes = document.getElementsByName(this.classList[0])
@@ -40,6 +44,7 @@ async function fetchData() {
             method: 'GET',
             cache: 'no-cache'
         }
+
         let response = await fetch(baseUrl, init)
         allClass = await response.json()
 
@@ -206,7 +211,7 @@ function createTable(data) {
             columnCheckAllTag.appendChild(checkAllTag)
             rowTag.appendChild(columnCheckAllTag)
 
-            let counter = 2;
+            let counter = 2
             for (const _singleClass of __class) {
                 selectedClass.push(_singleClass)
 
@@ -226,7 +231,7 @@ function createTable(data) {
                 columnClassTag.appendChild(classTag)
                 rowTag.appendChild(columnClassTag)
 
-                counter++;
+                counter++
             }
             if (counter < 7) {
                 for (; counter < 8; counter++) {
@@ -242,6 +247,7 @@ function createTable(data) {
     }
 
     addEventToClass()
+    document.getElementsByClassName('class')[0].scrollIntoView(false)
 }
 
 function createAcademicYearArea(academicYear) {
