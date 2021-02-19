@@ -15,7 +15,7 @@
 
         default:
             echo null;
-            die();
+            exit();
     }
 
     echo json_encode($res);

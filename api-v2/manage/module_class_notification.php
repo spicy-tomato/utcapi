@@ -5,7 +5,8 @@
     include_once 'helper.php';
 
     $response = 'No request';
-    $data     = json_decode(file_get_contents('php://input'), true);
+
+    $data = json_decode(file_get_contents('php://input'), true);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
         $data != null) {
@@ -14,9 +15,10 @@
         $conn = $db->connect();
 
         $helper       = new Helper($conn);
-        $student_list = $helper->moduleClassListToStudentList($data['class_list']);
+        $student_list = $helper->getListFromModuleClassList($data['class_list']);
 
         $notification = new Notification($conn, $data['info'], $student_list);
+
         if (isset($_POST['time'])) {
             $notification->setTime($_POST['time']);
         }

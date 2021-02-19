@@ -1,34 +1,35 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
-include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/notification.php";
-include_once 'helper.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/notification.php";
+    include_once 'helper.php';
 
-$response = 'No request';
+    $response = 'No request';
 
-$data = json_decode(file_get_contents('php://input'), true);
+    $data = json_decode(file_get_contents('php://input'), true);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
-    $data != null) {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
+        $data != null) {
 
-    $db = new Database();
-    $conn = $db->connect();
+        $db   = new Database();
+        $conn = $db->connect();
 
-    $helper = new Helper($conn);
-    $student_list = $helper->departmentClassToStudentList($data['class_list']);
-    $notification = new Notification($conn, $data['info'], $student_list);
+        $helper       = new Helper($conn);
+        $student_list = $helper->getListFromDepartmentClass($data['class_list']);
 
-    if (isset($_POST['time'])) {
-        $notification->setTime($_POST['time']);
+        $notification = new Notification($conn, $data['info'], $student_list);
+
+        if (isset($_POST['time'])) {
+            $notification->setTime($_POST['time']);
+        }
+
+        try {
+            $notification->create();
+            $response = 'OK';
+
+        } catch (PDOException $error) {
+            $response = 'Failed';
+        }
     }
 
-    try {
-        $notification->create();
-        $response = 'OK';
-
-    } catch (PDOException $error) {
-        $response = 'Failed';
-    }
-}
-
-echo json_encode($response);
+    echo json_encode($response);
