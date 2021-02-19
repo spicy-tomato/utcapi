@@ -169,7 +169,7 @@ function raiseEmptyFieldError(field) {
         .dismissOthers()
 }
 
-function raiseBackEndError(){
+function raiseBackEndError() {
     alertify.error('Có lỗi đã xảy ra, hãy thử lại sau!')
         .delay(3)
         .dismissOthers()
