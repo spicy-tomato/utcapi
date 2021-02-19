@@ -66,10 +66,17 @@
             $this->student_id_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
         }
 
-        public function getTokenListFromList(): array
+        public function getTokenListFromStudentList(): array
         {
             $sql_of_list = $this->_getSqlOfList($this->student_id_list);
 
+            $listToken = $this->_getTokenListFromStudentList($sql_of_list);
+
+            return $listToken;
+        }
+
+        private function _getTokenListFromStudentList($sql_of_list) : array
+        {
             $sql_query =
                 "SELECT
                     Device_Token
@@ -97,6 +104,5 @@
 
             return $sql;
         }
-
 
     }
