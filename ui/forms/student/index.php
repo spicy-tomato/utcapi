@@ -1,13 +1,15 @@
-<!doctype html>
-<html lang="en">
-
 <?php
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
 
     shield();
-    shared_header('Thông báo cho sinh viên');
 ?>
+<!doctype html>
+<html lang="en">
+
+<?php shared_header('Thông báo cho sinh viên'); ?>
 <body>
     <?php shared_navbar(); ?>
   <main>

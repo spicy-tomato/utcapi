@@ -95,13 +95,17 @@
 
     function shield()
     {
-        if (!isset($_SESSION['department_name']) || !isset($_SESSION['department_id'])) {
+        if (!isset($_SESSION['department_name']) ||
+            !isset($_SESSION['department_id'])) {
+
             header('Location: /utcapi/ui/login/');
         }
 
         $now = time();
 
-        if (isset($_SESSION['time_limit']) && $now > $_SESSION['time_limit']) {
+        if (isset($_SESSION['time_limit']) &&
+            $now > $_SESSION['time_limit']) {
+
             session_destroy();
             header('Location: /utcapi/ui/login/');
         }

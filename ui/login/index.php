@@ -1,18 +1,20 @@
-<!doctype html>
-<html lang="en">
-
 <?php
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
     include_once '../shared/functions.php';
 
     if (isset($_SESSION['department_name'])){
-      header('Location: ../home');
+        header('Location: ../home');
     }
-
-    shared_header("Đăng nhập");
 ?>
+
+<!doctype html>
+<html lang="en">
+
+<?php shared_header("Đăng nhập"); ?>
 
 <body class="text-center cc_cursor bg-light">
   <form method="post" action="login.php" class="form-signin cc_cursor border border-dark mb-4 rounded">

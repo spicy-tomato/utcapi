@@ -2,7 +2,7 @@
 
     class DepartmentClass
     {
-        private const db_table = "class";
+        private const db_table = "Class";
         private PDO $conn;
 
         public function __construct(PDO $conn)
