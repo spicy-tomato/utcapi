@@ -23,15 +23,19 @@
             return $this->student_id_list;
         }
 
-        private function _getListFromModuleClass($sql): void
+        private function _getListFromModuleClass($sql_of_list): void
         {
+            if ($sql_of_list == ''){
+                return;
+            }
+
             $sql_query =
                 "SELECT
                     ID_Student
                 FROM
                     " . self::participate_table . "
                 WHERE
-                    ID_Module_Class IN (" . $sql . ")
+                    ID_Module_Class IN (" . $sql_of_list . ")
                 ";
 
             $stmt = $this->conn->prepare($sql_query);
@@ -49,15 +53,19 @@
             return $this->student_id_list;
         }
 
-        private function _getListFromDepartmentClass($sql): void
+        private function _getListFromDepartmentClass($sql_of_list): void
         {
+            if ($sql_of_list == '') {
+                return;
+            }
+
             $sql_query =
                 "SELECT
                     ID_Student
                 FROM
                     " . self::student_table . "
                 WHERE
-                    ID_Class IN (" . $sql . ")
+                    ID_Class IN (" . $sql_of_list . ")
                 ";
 
             $stmt = $this->conn->prepare($sql_query);
@@ -75,8 +83,12 @@
             return $listToken;
         }
 
-        private function _getTokenListFromStudentList($sql_of_list) : array
+        private function _getTokenListFromStudentList($sql_of_list): array
         {
+            if ($sql_of_list == '') {
+                return [];
+            }
+
             $sql_query =
                 "SELECT
                     Device_Token
@@ -104,5 +116,4 @@
 
             return $sql;
         }
-
     }
