@@ -1,3 +1,6 @@
+import { postDataAndRaiseAlert } from '../../alerts.js'
+import { getSender, fetchData } from '../../shared.js'
+
 let sender
 const fieldList = {
     title: 'Tiêu đề',
@@ -15,11 +18,11 @@ let faculties = []
 /*_________________________________________________*/
 
 document.addEventListener('DOMContentLoaded', async () => {
+    allClass = await fetchData('../../../api-v2/manage/get_department_class.php')
+
     document.getElementById('all_academic_year').addEventListener('click', tickAllForAcademic_YearAndFaculty)
     document.getElementById('all_faculty').addEventListener('click', tickAllForAcademic_YearAndFaculty)
-    document.getElementsByName('button')[0].addEventListener('click', trySendNotification)
-
-    await fetchData()
+    document.getElementById('submit_btn').addEventListener('click', trySendNotification)
 
     addEventForAcademic_YearAndFaculty()
 
@@ -34,22 +37,6 @@ function tickAllForAcademic_YearAndFaculty() {
         if (checkBoxes[i].checked !== this.checked) {
             checkBoxes[i].checked = this.checked
         }
-    }
-}
-
-async function fetchData() {
-    try {
-        const baseUrl = '../../../api-v2/manage/get_department_class.php'
-        const init = {
-            method: 'GET',
-            cache: 'no-cache'
-        }
-
-        let response = await fetch(baseUrl, init)
-        allClass = await response.json()
-
-    } catch (e) {
-        console.log(e)
     }
 }
 
@@ -79,18 +66,6 @@ function addEventForAcademic_YearAndFaculty() {
             getConditions()
         })
     }
-}
-
-async function getSender() {
-    const baseUrl = '../../shared/session.php?var=department_id'
-    const init = {
-        method: 'GET'
-    }
-
-    let response = await fetch(baseUrl, init)
-    let responseAsJson = await response.json()
-
-    return responseAsJson
 }
 
 function isChecked() {
@@ -369,41 +344,18 @@ function addEventToClass() {
     }
 }
 
-async function postData(data) {
-    const url = '../../../api-v2/manage/department_class_notification.php'
-
-    const init = {
-        method: 'POST',
-        cache: 'no-cache',
-        body: JSON.stringify(data)
-    }
-
-    const response = await fetch(url, init)
-    let responseAsJson = await response.json()
-
-    return responseAsJson
-}
-
-function canPostData(data) {
+function getInvalidField(data) {
     for (const [field, fieldValue] of Object.entries(data.info)) {
         if (fieldValue === '') {
-            alertify.error(`Trường "${fieldList[field]}" không được để trống!`)
-                .delay(3)
-                .dismissOthers()
-
-            return false
+            return fieldList[field]
         }
     }
 
-    if (selectedClass.length === 0) {
-        alertify.error('Checkbox chọn lớp không được để trống!')
-            .delay(3)
-            .dismissOthers()
-
-        return false
+    if (data.class_list.length === 0) {
+        return 'Checkbox chọn lớp'
     }
 
-    return true
+    return null
 }
 
 async function trySendNotification() {
@@ -417,30 +369,11 @@ async function trySendNotification() {
         class_list: selectedClass
     }
 
-    if (canPostData(data)) {
-        if (await postData(data) === 'OK') {
-            alertify.confirm('Thêm thông báo thành công!')
-                .setHeader('<i class="fas fa-info-circle"></i> Thông tin')
-                .setting({
-                    'labels':
-                        {
-                            ok: 'Tạo thông báo mới',
-                            cancel: 'Về trang chủ'
-                        },
-                    'defaultFocusOff': true,
-                    'maximizable': false,
-                    'movable': false,
-                    'pinnable': false,
-                    'onok': () => window.location.reload(),
-                    'oncancel': () => window.location.replace(('../../home/'))
-                })
+    const baseUrl = '../../../api-v2/manage/department_class_notification.php'
 
-            document.getElementsByName('button')[0].removeEventListener('click', trySendNotification)
-        }
-        else {
-            alertify.error('Có lỗi đã xảy ra, hãy thử lại sau!')
-                .delay(3)
-                .dismissOthers()
-        }
+    let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField)
+
+    if (madeRequest) {
+        document.getElementById('submit_btn').removeEventListener('click', trySendNotification)
     }
 }

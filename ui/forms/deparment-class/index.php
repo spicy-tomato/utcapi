@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <?php
     session_start();
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
@@ -12,9 +13,11 @@
       <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
       <!-- AlertifyJS Theme -->
-      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
+      <link rel="stylesheet" href="../alert.css">
     ');
 ?>
+
 <body>
   <div class="container">
 
@@ -35,32 +38,32 @@
             <label for="all_academic_year" class="form-check-label">Chọn tất cả</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K54" id="K54">
-            <label for="K54" class="form-check-label">K54</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K55" id="K55">
-            <label for="K55" class="form-check-label">K55</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K56" id="K56">
-            <label for="K56" class="form-check-label">K56</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K57" id="K57">
-            <label for="K57" class="form-check-label">K57</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K58" id="K58">
-            <label for="K58" class="form-check-label">K58</label>
+            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K60" id="K60">
+            <label for="K60" class="form-check-label">K60</label>
           </div>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K59" id="K59">
             <label for="K59" class="form-check-label">K59</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K60" id="K60">
-            <label for="K60" class="form-check-label">K60</label>
+            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K58" id="K58">
+            <label for="K58" class="form-check-label">K58</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K57" id="K57">
+            <label for="K57" class="form-check-label">K57</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K56" id="K56">
+            <label for="K56" class="form-check-label">K56</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K55" id="K55">
+            <label for="K55" class="form-check-label">K55</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K54" id="K54">
+            <label for="K54" class="form-check-label">K54</label>
           </div>
         </div>
         <br>
@@ -118,13 +121,17 @@
 
         <div class="class"></div>
 
-        <button name="button" type="button" class="btn btn-primary">Gửi</button>
+        <button type="button"
+                class="btn btn-primary"
+                name="button"
+                id="submit_btn">Gửi
+        </button>
       </form>
 
     </main>
 
   </div>
-  <script src="script/script.js"></script>
+  <script src="script/script.js" type="module"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
           crossorigin="anonymous"></script>
