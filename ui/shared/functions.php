@@ -14,6 +14,7 @@
           <title>' . $title . '</title>
           ' . $otherTags . '
           <link rel="stylesheet" href="css/style.css">
+          <link rel="stylesheet" href="../../css/style.css">
         </head>';
     }
 
@@ -26,11 +27,11 @@
         $current_nav = ' active';
 
         $home_link  = '/utcapi/ui/home';
-        $form1_link = '/utcapi/ui/forms/deparment-class';
+        $form1_link = '/utcapi/ui/forms/department-class';
         $form2_link = '/utcapi/ui/forms/module-class';
         $form3_link = '/utcapi/ui/forms/student';
 
-        if (stripos($_SERVER['REQUEST_URI'], 'deparment-class') !== false) {
+        if (stripos($_SERVER['REQUEST_URI'], 'department-class') !== false) {
             $nav1_class .= $current_nav;
         }
         elseif (stripos($_SERVER['REQUEST_URI'], 'module-class') !== false) {
@@ -83,13 +84,38 @@
     function shared_form(): void
     {
         echo '
-        <div class="form-group">
-          <label for="title"><legend>Tiêu đề:</legend></label>
-          <input type="text" class="form-control" id="title">
-        </div>
-        <div class="form-group mt-4">
-          <label for="content"><legend>Nội dung:</legend></label>
-          <textarea cols="30" rows="10" class="form-control" id="content"></textarea>
+        <div class="form__">
+          <div class="left">
+            <div class="form-group">
+              <label for="title"><legend>Tiêu đề:</legend></label>
+              <input type="text" class="form-control" id="title">
+            </div>
+            <div class="form-group">
+              <label for="title"><legend>Thể loại:</legend></label><br>
+              <select name="type" id="type">
+                <option value="study">Học tập</option>
+                <option value="fee">Học phí</option>
+                <option value="extracurricular">Ngoại khóa</option>
+                <option value="social_payment">Chi trả xã hội</option>
+                <option value="others">Thông báo khác</option>
+              </select>
+            </div>
+            <div class="form-group mt-4">
+              <label for="content"><legend>Nội dung:</legend></label>
+              <textarea cols="30" rows="10" class="form-control" id="content"></textarea>
+            </div>
+          </div>
+          <div class="right">
+            <label for="title"><legend>Một số mẫu thông báo:</legend></label><br>
+             <select name="template" id="template">
+                <option value="empty"></option>
+                <option value="study">Học tập</option>
+                <option value="fee">Học phí</option>
+                <option value="extracurricular">Ngoại khóa</option>
+                <option value="social_payment">Chi trả xã hội</option>
+                <option value="others">Thông báo khác</option>
+              </select>
+          </div>
         </div>';
     }
 

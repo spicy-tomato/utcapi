@@ -12,7 +12,7 @@
 
         public function getAll(): array
         {
-            $sql = "
+            $sql_query = "
                     SELECT 
                         Academic_Year, ID_Faculty, ID_Class
                     FROM " . self::db_table . " 
@@ -22,7 +22,7 @@
                         ID_Class ASC
                     ";
 
-            $stmt = $this->conn->prepare($sql);
+            $stmt = $this->conn->prepare($sql_query);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
