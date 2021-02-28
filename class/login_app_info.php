@@ -2,7 +2,7 @@
 
 class LoginApp
 {
-    private const db_table = "student";
+    private const db_table = "Student";
     private PDO $conn;
 
     public function __construct (PDO $conn)
@@ -15,7 +15,7 @@ class LoginApp
         $account = json_decode(file_get_contents("php://input"), true);
 
         $sql_query = "
-                SELECT *
+                SELECT * 
                 FROM " . self::db_table . "
                 WHERE 
                     ID_Student = " . $account['ID_Student'];
@@ -26,15 +26,16 @@ class LoginApp
         $response = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$response) {
-            $data['message'] = 'false';
+            $data['message'] = 'failed';
             $data['error'] = 'Your student ID is incorrect';
         }
         else if ($response['Password_Student'] != $account['Password_Student']) {
-            $data['message'] = 'false';
+            $data['message'] = 'failed';
             $data['error'] = 'Your password is incorrect';
         }
         else {
-            $data['message'] = 'true';
+            unset($response['Password_Student']);
+            $data['message'] = 'success';
             $data['info'] = $response;
         }
 
