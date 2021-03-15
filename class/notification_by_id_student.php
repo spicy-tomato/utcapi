@@ -2,7 +2,7 @@
 
     class NotificationByIDStudent
     {
-        private const notification_student_table = "Notification_student";
+        private const notification_student_table = "Notification_Student";
         private const notification_table = "Notification";
 
         private PDO $conn;
@@ -12,7 +12,7 @@
             $this->conn = $conn;
         }
 
-        public function getAll($id_student): array
+        public function getAll(): array
         {
             $sql_query = "
                     SELECT
@@ -29,6 +29,19 @@
             $stmt = $this->conn->prepare($sql_query);
             $stmt->execute();
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = $this->convertID($data);
+
+            return $data;
+        }
+
+        private function convertID($data)
+        {
+            for ($i = 0; $i < count($data); $i++)
+            {
+                $data[$i]["ID_Notification"] = intval($data[$i]["ID_Notification"]);
+            }
+
+            return $data;
         }
     }

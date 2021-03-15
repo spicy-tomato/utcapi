@@ -10,7 +10,7 @@
 
     switch ($_SERVER["REQUEST_METHOD"]) {
         case "GET":
-            $res = $notification_by_id_student->getAll($_GET['ID_Student']);
+            $res = $notification_by_id_student->getAll();
             break;
 
         default:
