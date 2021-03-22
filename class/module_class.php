@@ -2,7 +2,7 @@
 
     class ModuleClass
     {
-        private const db_table = "Module_Class";
+        private const db_table = "Module_class";
         private PDO $conn;
 
         public function __construct(PDO $conn)
@@ -12,7 +12,7 @@
 
         public function getAll(): array
         {
-            $sql =
+            $sql_query =
                 "SELECT 
                     ID_Module_Class, Module_Class_Name
                 FROM 
@@ -21,7 +21,7 @@
                     ID_Module_Class
                 ";
 
-            $stmt = $this->conn->prepare($sql);
+            $stmt = $this->conn->prepare($sql_query);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

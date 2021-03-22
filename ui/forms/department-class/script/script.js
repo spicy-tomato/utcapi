@@ -1,12 +1,7 @@
 import { postDataAndRaiseAlert } from '../../alerts.js'
-import { getSender, fetchData } from '../../shared.js'
+import { getSender, fetchData , autoFillTemplate} from '../../shared.js'
 
 let sender
-const fieldList = {
-    title: 'Tiêu đề',
-    content: 'Nội dung',
-    typez: 'Loại thông báo'
-}
 const checkBox = document.querySelectorAll('input')
 let checkBoxes1 = document.getElementsByName('academic_year')
 let checkBoxes2 = document.getElementsByName('faculty')
@@ -14,6 +9,41 @@ let allClass = []
 let selectedClass = []
 let academicYears = []
 let faculties = []
+
+const fieldList = {
+    title: 'Tiêu đề',
+    content: 'Nội dung',
+    typez: 'Loại thông báo'
+}
+
+const templateNoti = {
+    study: {
+        title: 'Học tập',
+        content: 'Nội dung thông báo học tập',
+        typez: 1
+    },
+    fee: {
+        title: 'Học phí',
+        content: 'Nội dung thông báo học phí',
+        typez: 2
+    },
+    extracurricular: {
+        title: 'Thông báo ngoại khóa',
+        content: 'Nội dung thông báo ngoại khóa',
+        typez: 3
+    },
+    social_payment: {
+        title: 'Chi trả xã hội',
+        content: 'Nội dung thông báo chi trả xã hội',
+        typez: 4
+    },
+    others: {
+        title: 'Thông báo khác',
+        content: 'Nội dung thông báo khác',
+        typez: 5
+    }
+
+}
 
 /*_________________________________________________*/
 
@@ -23,6 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('all_academic_year').addEventListener('click', tickAllForAcademic_YearAndFaculty)
     document.getElementById('all_faculty').addEventListener('click', tickAllForAcademic_YearAndFaculty)
     document.getElementById('submit_btn').addEventListener('click', trySendNotification)
+    document.getElementById('template').addEventListener('change', fillForms)
 
     addEventForAcademic_YearAndFaculty()
 
@@ -376,4 +407,17 @@ async function trySendNotification() {
     if (madeRequest) {
         document.getElementById('submit_btn').removeEventListener('click', trySendNotification)
     }
+}
+
+function fillForms()
+{
+    // switch (template.value) {
+    //     case "study":
+    //         autoFillTemplate(templateNoti.study)
+    // }
+
+    //  let [field, fieldValue] = templateNoti
+    // console.log(fieldValue)
+    autoFillTemplate(templateNoti[template.value])
+
 }

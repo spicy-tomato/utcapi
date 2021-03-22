@@ -1,0 +1,22 @@
+.form__ {
+    display: flex;
+}
+
+.left {
+    width: 60%;
+}
+
+.right {
+    margin-left: 2%;
+    width: 38%;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+}

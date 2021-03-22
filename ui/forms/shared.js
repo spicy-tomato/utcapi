@@ -41,3 +41,10 @@ export async function postData(url, data) {
 
     return responseJson
 }
+
+export function autoFillTemplate(templateNoti)
+{
+    title.value = templateNoti.title
+    type.selectedIndex = templateNoti.typez
+    content.value = templateNoti.content
+}
