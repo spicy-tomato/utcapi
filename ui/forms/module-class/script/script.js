@@ -1,5 +1,5 @@
 import { postDataAndRaiseAlert } from '../../alerts.js'
-import { getSender, fetchData } from '../../shared.js'
+import {getSender, fetchData, autoFillTemplate} from '../../shared.js'
 
 let moduleClassIdList = []
 let sender
@@ -9,6 +9,34 @@ const fieldList = {
     title: 'Tiêu đề',
     content: 'Nội dung',
     typez: 'Loại thông báo'
+}
+
+const templateNoti = {
+    study: {
+        title: 'Học tập',
+        content: 'Nội dung thông báo học tập',
+        typez: 0
+    },
+    fee: {
+        title: 'Học phí',
+        content: 'Nội dung thông báo học phí',
+        typez: 1
+    },
+    extracurricular: {
+        title: 'Thông báo ngoại khóa',
+        content: 'Nội dung thông báo ngoại khóa',
+        typez: 2
+    },
+    social_payment: {
+        title: 'Chi trả xã hội',
+        content: 'Nội dung thông báo chi trả xã hội',
+        typez: 3
+    },
+    others: {
+        title: 'Thông báo khác',
+        content: 'Nội dung thông báo khác',
+        typez: 4
+    }
 }
 
 /*_________________________________________________*/
@@ -21,6 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadData()
 
     document.getElementById('submit_btn').addEventListener('click', trySendNotification)
+    document.getElementById('template').addEventListener('change', fillForms)
 
     //  Display selected tags
     moduleClassId.select2({
@@ -79,7 +108,7 @@ async function trySendNotification() {
         info: {
             title: $('#title').val(),
             content: $('#content').val(),
-            typez: 'Type',
+            typez: $('#type').val(),
             sender: sender
         },
         class_list: getClassList()
@@ -92,4 +121,12 @@ async function trySendNotification() {
     if (madeRequest) {
         document.getElementById('submit_btn').removeEventListener('click', trySendNotification)
     }
+}
+
+/*-------------------------------------------------*/
+
+
+function fillForms()
+{
+    autoFillTemplate(templateNoti[template.value])
 }

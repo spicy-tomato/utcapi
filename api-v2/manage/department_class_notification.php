@@ -12,10 +12,10 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
         $data != null) {
 
-        $db   = new Database();
+        $db = new Database();
         $conn = $db->connect();
 
-        $helper       = new Helper($conn);
+        $helper = new Helper($conn);
         $student_list = $helper->getListFromDepartmentClass($data['class_list']);
 
         $notification = new Notification($conn, $data['info'], $student_list);

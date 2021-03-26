@@ -18,7 +18,7 @@ function raiseSuccess() {
         })
 }
 
-function raiseEmptyFieldError(field) {
+export function raiseEmptyFieldError(field) {
     alertify.error(`Trường "${ field }" không được để trống!`)
         .delay(3)
         .dismissOthers()

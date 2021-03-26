@@ -20,29 +20,28 @@ const templateNoti = {
     study: {
         title: 'Học tập',
         content: 'Nội dung thông báo học tập',
-        typez: 1
+        typez: 0
     },
     fee: {
         title: 'Học phí',
         content: 'Nội dung thông báo học phí',
-        typez: 2
+        typez: 1
     },
     extracurricular: {
         title: 'Thông báo ngoại khóa',
         content: 'Nội dung thông báo ngoại khóa',
-        typez: 3
+        typez: 2
     },
     social_payment: {
         title: 'Chi trả xã hội',
         content: 'Nội dung thông báo chi trả xã hội',
-        typez: 4
+        typez: 3
     },
     others: {
         title: 'Thông báo khác',
         content: 'Nội dung thông báo khác',
-        typez: 5
+        typez: 4
     }
-
 }
 
 /*_________________________________________________*/
@@ -394,7 +393,7 @@ async function trySendNotification() {
         info: {
             title: $('#title').val(),
             content: $('#content').val(),
-            typez: 'Type',
+            typez: $('#type').val(),
             sender: sender
         },
         class_list: selectedClass
@@ -411,13 +410,5 @@ async function trySendNotification() {
 
 function fillForms()
 {
-    // switch (template.value) {
-    //     case "study":
-    //         autoFillTemplate(templateNoti.study)
-    // }
-
-    //  let [field, fieldValue] = templateNoti
-    // console.log(fieldValue)
     autoFillTemplate(templateNoti[template.value])
-
 }

@@ -14,6 +14,16 @@
             $this->conn = $conn;
         }
 
+        public function getStudentIdList () : array
+        {
+            return $this->student_id_list;
+        }
+
+        public function setStudentIdList (array $student_id_list) : void
+        {
+            $this->student_id_list = $student_id_list;
+        }
+
         public function getListFromModuleClassList($class_list): array
         {
             $sql_of_list = $this->_getSqlOfList($class_list);
