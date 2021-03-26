@@ -1,46 +1,51 @@
 <?php
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
 
-class LoginApp
-{
-    private const db_table = "Student";
-    private PDO $conn;
-
-    public function __construct (PDO $conn)
+    class LoginApp
     {
-        $this->conn = $conn;
-    }
+        private const account_table_name = "Account";
+        private const student_table_name = "Student";
+        private PDO $conn;
 
-    public function checkAccount () : array
-    {
-        $account = json_decode(file_get_contents("php://input"), true);
+        public function __construct (PDO $conn)
+        {
+            $this->conn = $conn;
+        }
 
-        $sql_query = "
-                SELECT * 
-                FROM " . self::db_table . "
+        public function checkAccount () : array
+        {
+            $account = json_decode(file_get_contents("php://input"), true);
+
+            $sql_query = "
+                SELECT
+                    s.* 
+                FROM 
+                     " . self::account_table_name . " a, 
+                     " . self::student_table_name . " s 
                 WHERE 
-                    ID_Student = " . $account['ID_Student'];
+                    a.Account_Username = ? AND 
+                    a.Password = ? AND 
+                    s.ID_Student = a.Account_Username";
 
-        $stmt = $this->conn->prepare($sql_query);
-        $stmt->execute();
+            $stmt = $this->conn->prepare($sql_query);
+            $stmt->execute(array($account['ID_Student'], md5($account['Password'])));
 
-        $response = $stmt->fetch(PDO::FETCH_ASSOC);
+            $response = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$response) {
-            $data['message'] = 'failed';
-            $data['error'] = 'Your student ID is incorrect';
+            if (!$response) {
+                $data['message'] = 'failed';
+            }
+            else {
+                $data['message'] = 'success';
+                $data['info'] = $response;
+            }
+
+            return $data;
         }
-        else if ($response['Password_Student'] != $account['Password_Student']) {
-            $data['message'] = 'failed';
-            $data['error'] = 'Your password is incorrect';
-        }
-        else {
-            unset($response['Password_Student']);
-            $data['message'] = 'success';
-            $data['info'] = $response;
-        }
-
-        return $data;
     }
-}
+
+    $db= new Database();
+    $login = new LoginApp($db->connect());
+    var_dump($login->checkAccount());
 
 

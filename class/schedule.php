@@ -24,7 +24,7 @@
                     mc.Module_Name,
                     sdu.ID_Module_Class, sdu.ID_Room, sdu.Shift_Schedules, sdu.Day_Schedules
                 FROM
-                    " . self::module_table . " mc ,
+                    " . self::module_table . " mc,
                     " . self::schedule_table . " sdu,
                     " . self::student_table . " stu,
                     " . self::participate_table . " par,

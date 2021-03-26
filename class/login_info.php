@@ -2,7 +2,9 @@
 
     class LoginInfo
     {
-        private const department_account_table = "Department_Account";
+        private const department_account_table = "Account";
+        private const department_other_department_table = "Other_Department";
+
         private PDO $conn;
         private string $department_name;
         private string $username;
@@ -19,25 +21,27 @@
         {
             $sqlQuery = "
                 SELECT 
-                    Username,
-                    Notification_Department_Name
+                    a.ID, 
+                    od.Other_Department_Name 
                 FROM 
-                    " . self::department_account_table . "
-                WHERE
-                    Username = :username AND
-                    Password = :password
+                    " . self::department_account_table . " a, 
+                    " . self::department_other_department_table . " od 
+                WHERE 
+                    a.Account_Username = :username AND 
+                    a.Password = :password AND 
+                    od.ID = a.ID 
                 LIMIT 0, 1";
 
             try {
                 $stmt = $this->conn->prepare($sqlQuery);
                 $stmt->execute([
                     ':username' => $this->username,
-                    ':password' => $this->password
+                    ':password' => md5($this->password)
                 ]);
 
                 $loggedAccount = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 if (count($loggedAccount) == 1) {
-                    $this->department_name = $loggedAccount[0]['Notification_Department_Name'];
+                    $this->department_name = $loggedAccount[0]['Other_Department_Name'];
                     return true;
                 }
 
