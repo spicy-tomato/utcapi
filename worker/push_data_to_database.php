@@ -82,7 +82,7 @@
                     FROM 
                         Account
                     WHERE 
-                        Account_Username = ?";
+                        Username = ?";
 
             $connect = $this->db->connect();
             $stmt = $connect->prepare($sql);
@@ -98,7 +98,6 @@
             $sql = "";
             switch ($table_name) {
                 case "Student";
-                echo "cha";
                     $sql = self::student_sql . "(";
 
                     if (!$this->isAccountExist($arr["ID_Student"]))
@@ -125,7 +124,13 @@
             }
 
             foreach ($arr as $item) {
-                $sql .= "'" . $item . "',";
+                if ($item != null) {
+                    $sql .= "'" . $item . "',";
+                }
+                else {
+                    $sql .= "NULL,";
+                }
+
             }
 
             $sql = rtrim($sql, ",");

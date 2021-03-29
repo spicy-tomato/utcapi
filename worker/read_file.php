@@ -18,7 +18,7 @@
             }
 
             $json = json_decode($output, true);
-            file_put_contents('PDOErrors.json', $output, FILE_APPEND);
+//            file_put_contents('PDOErrors.json', $output, FILE_APPEND);
 
             return $json;
         }

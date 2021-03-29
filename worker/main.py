@@ -125,7 +125,7 @@ def addSchedule(sheet, id_module_class) -> None:
                     ID_Module_Class=id_module_class,
                     ID_Room=room,
                     Shift_Schedules=shift,
-                    Day_Schedules=curr_day,
+                    Day_Schedules=str(curr_day),
                 )
 
                 schedules_res.append(s)

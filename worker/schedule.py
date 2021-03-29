@@ -10,7 +10,8 @@ class Schedule:
         self.ID_Module_Class = ID_Module_Class
         self.ID_Room = ID_Room
         self.Shift_Schedules = Shift_Schedules
-        self.Day_Schedules = Day_Schedules
+        # d/m/y -> y/m/d
+        self.Day_Schedules = "/".join(Day_Schedules.split("/")[::-1])
         self.Number_Student = Number_Student
 
     def __str__(self) -> str:
@@ -21,7 +22,7 @@ class Schedule:
                     self.ID_Module_Class,
                     self.ID_Room,
                     str(self.Shift_Schedules),
-                    str(self.Day_Schedules),
+                    self.Day_Schedules,
                     str(self.Number_Student),
                 ]
             )
@@ -36,7 +37,7 @@ class Schedule:
                     self.ID_Module_Class,
                     self.ID_Room,
                     str(self.Shift_Schedules),
-                    str(self.Day_Schedules),
+                    self.Day_Schedules,
                     str(self.Number_Student),
                 ]
             )

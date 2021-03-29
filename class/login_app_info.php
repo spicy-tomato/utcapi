@@ -23,9 +23,9 @@
                      " . self::account_table_name . " a, 
                      " . self::student_table_name . " s 
                 WHERE 
-                    a.Account_Username = ? AND 
-                    a.Password = ? AND 
-                    s.ID_Student = a.Account_Username";
+                    a.Username = ? AND 
+                    a.password = ? AND 
+                    s.ID_Student = a.Username";
 
             $stmt = $this->conn->prepare($sql_query);
             $stmt->execute(array($account['ID_Student'], md5($account['Password'])));
@@ -43,9 +43,4 @@
             return $data;
         }
     }
-
-    $db= new Database();
-    $login = new LoginApp($db->connect());
-    var_dump($login->checkAccount());
-
 
