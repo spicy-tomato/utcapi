@@ -1,4 +1,5 @@
 <?php
+
     class Schedule
     {
         private const module_class_table = "Module_Class";
@@ -23,7 +24,7 @@
                     mc.Module_Name,
                     sdu.ID_Module_Class, sdu.ID_Room, sdu.Shift_Schedules, sdu.Day_Schedules
                 FROM
-                    " . self::module_table . " mc ,
+                    " . self::module_table . " mc,
                     " . self::schedule_table . " sdu,
                     " . self::student_table . " stu,
                     " . self::participate_table . " par,
@@ -35,12 +36,13 @@
                     sdu.ID_Module_Class = mdcls.ID_Module_Class AND
                     mc.ID_Module = mdcls.ID_Module
                 ORDER BY
-                    sdu.ShiftSchedules ASC";
+                    sdu.Shift_Schedules";
 
             try {
                 $stmt = $this->conn->prepare($sqlQuery);
                 $stmt->execute([':student_id' => $this->student_id]);
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
             } catch (PDOException $error) {
                 exit($error->getMessage());
             }

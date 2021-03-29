@@ -1,10 +1,8 @@
-import { postDataAndRaiseAlert } from '../../alerts.js'
-import {getSender, fetchData, autoFillTemplate} from '../../shared.js'
+import {postDataAndRaiseAlert, raiseEmptyFieldError} from '../../alerts.js'
+import {getSender, autoFillTemplate} from '../../shared.js'
 
-let moduleClassIdList = []
 let sender
-
-const moduleClassId = $('#module-class-id')
+let fileName = null
 const fieldList = {
     title: 'Tiêu đề',
     content: 'Nội dung',
@@ -39,52 +37,50 @@ const templateNoti = {
     }
 }
 
-/*_________________________________________________*/
+/*-----------------------------------------------*/
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const CustomSelectionAdapter = $.fn.select2.amd.require('select2/selection/customSelectionAdapter')
-
-    sender = await getSender()
-
-    await loadData()
 
     document.getElementById('submit_btn').addEventListener('click', trySendNotification)
     document.getElementById('template').addEventListener('change', fillForms)
+    document.getElementById('confirm').addEventListener('click', uploadFile)
 
-    //  Display selected tags
-    moduleClassId.select2({
-        data: moduleClassIdList,
-        selectionAdapter: CustomSelectionAdapter,
-        allowClear: false,
-        selectionContainer: $('#list'),
-        theme: 'bootstrap4'
-    })
+    sender = await getSender()
 })
 
-/*_________________________________________________*/
+/*--------------------------------------*/
 
-async function loadData() {
-    let data = await fetchData('../../../api-v2/manage/get_module_class.php')
-
-    data.forEach((row, index) => {
-        moduleClassIdList.push({id: index, text: row['ID_Module_Class']})
-    })
-}
-
-/*_________________________________________________*/
-
-function getClassList() {
-    let selectedId = moduleClassId.val()
-
-    if (selectedId.length === 0) {
-        return []
+async function uploadFile() {
+    if (fileUpload.files.length === 0) {
+        raiseEmptyFieldError('File Upload')
+        return
     }
 
-    let selectedClasses = selectedId.map((_class) => moduleClassIdList[_class].text)
-    return selectedClasses
+    let response;
+    let formData = new FormData();
+    formData.append('flag', '0');
+
+    for (let i = 0; i < fileUpload.files.length; i++) {
+        formData.append('file'+1, fileUpload.files[i]);
+    }
+
+    let responseAsJson = await fetch('../../../worker/handle_file_upload.php', {
+        method: 'POST',
+        body: formData
+    });
+
+    response = responseAsJson.json();
+
+    if (response !== 'Failure') {
+        fileName = response
+        alert('The file has been uploaded successfully.');
+    }
+    else {
+        alert('Failed to upload files.');
+    }
 }
 
-/*_________________________________________________*/
+/*---------------------------------------*/
 
 //  Display error if there are some unfulfilled fields
 function getInvalidField(data) {
@@ -94,8 +90,8 @@ function getInvalidField(data) {
         }
     }
 
-    if (data.class_list.length === 0) {
-        return 'Mã học phần'
+    if (fileName === null) {
+        return 'File Upload'
     }
 
     return null
@@ -111,10 +107,10 @@ async function trySendNotification() {
             typez: $('#type').val(),
             sender: sender
         },
-        class_list: getClassList()
+        file_name: fileName
     }
 
-    const baseUrl = '../../../api-v2/manage/module_class_notification.php'
+    const baseUrl = '../../../api-v2/manage/department_class_notification.php'
 
     let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField)
 
@@ -123,10 +119,6 @@ async function trySendNotification() {
     }
 }
 
-/*-------------------------------------------------*/
-
-
-function fillForms()
-{
+function fillForms() {
     autoFillTemplate(templateNoti[template.value])
 }

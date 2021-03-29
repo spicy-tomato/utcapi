@@ -5,16 +5,10 @@
     session_start();
 
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/login_info.php";
     include_once '../shared/functions.php';
 
     if (isset($_SESSION['department_name'])){
       header('Location: ../home');
-    }
-
-    if (isset($_POST['btn-submit']) && isset($_POST['username']) && isset($_POST['password'])) {
-        $db   = new Database();
-        $conn = $db->connect();
     }
 
     shared_header("Đăng nhập");
