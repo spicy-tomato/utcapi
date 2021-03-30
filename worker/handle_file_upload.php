@@ -30,14 +30,14 @@
 //                $work_with_db->setData($data['module_json']);
 //                $work_with_db->pushData("Module");
 
-                $work_with_db->setData($data['module_class_json']);
-                $work_with_db->pushData("Module_Class");
-
-                $work_with_db->setData($data['participate_json']);
-                $work_with_db->pushData("Participate");
+//                $work_with_db->setData($data['module_class_json']);
+//                $work_with_db->pushData("Module_Class");
+//
+//                $work_with_db->setData($data['participate_json']);
+//                $work_with_db->pushData("Participate");
 
                 $work_with_db->setData($data['schedule_json']);
-                $work_with_db->pushData("Schedule");
+                $work_with_db->pushData("Schedules");
 
             }
             $response = 'OK';

@@ -1,6 +1,6 @@
 <?php
 
-    function shared_header(string $title, string $otherTags = ''): void
+    function shared_header (string $title, string $otherTags = '') : void
     {
         echo '
         <head>
@@ -19,15 +19,15 @@
     }
 
 
-    function shared_navbar(): void
+    function shared_navbar () : void
     {
-        $nav1_class  = 'nav-link';
-        $nav2_class  = 'nav-link';
-        $nav3_class  = 'nav-link';
-        $nav4_class  = 'nav-link';
+        $nav1_class = 'nav-link';
+        $nav2_class = 'nav-link';
+        $nav3_class = 'nav-link';
+        $nav4_class = 'nav-link';
         $current_nav = ' active';
 
-        $home_link  = '/utcapi/ui/home';
+        $home_link = '/utcapi/ui/home';
         $form1_link = '/utcapi/ui/forms/department-class';
         $form2_link = '/utcapi/ui/forms/module-class';
         $form3_link = '/utcapi/ui/forms/student';
@@ -42,7 +42,7 @@
         elseif (stripos($_SERVER['REQUEST_URI'], 'student') !== false) {
             $nav3_class .= $current_nav;
         }
-        elseif (stripos($_SERVER['REQUEST_URI'], 'push-data') !== false){
+        elseif (stripos($_SERVER['REQUEST_URI'], 'push-data') !== false) {
             $nav4_class .= $current_nav;
         }
 
@@ -89,7 +89,7 @@
   <div class="mt-4 mb-4" style="height: 50px"></div>';
     }
 
-    function shared_form(): void
+    function shared_form () : void
     {
         echo '
         <div class="form__">
@@ -127,9 +127,11 @@
         </div>';
     }
 
-    function shield()
+    function shield ()
     {
-        if (!isset($_SESSION['department_name']) || !isset($_SESSION['department_id'])) {
+        if (!isset($_SESSION['department_name']) ||
+            !isset($_SESSION['department_id_account'])) {
+
             header('Location: /utcapi/ui/login/');
         }
 
