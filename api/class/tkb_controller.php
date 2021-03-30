@@ -1,5 +1,5 @@
 <?php
-//    include_once "../class/schedule.php";
+//    include_once "../class/student_schedule.php";
 //
 //    class TKBController
 //    {

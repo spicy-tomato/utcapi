@@ -28,7 +28,7 @@
                     s.ID_Student = a.Username";
 
             $stmt = $this->conn->prepare($sql_query);
-            $stmt->execute(array($account['ID_Student'], md5($account['Password'])));
+            $stmt->execute(array($account['ID'], md5($account['Password'])));
 
             $response = $stmt->fetch(PDO::FETCH_ASSOC);
 

@@ -117,7 +117,7 @@ def addSchedule(sheet, id_module_class) -> None:
 
             curr_day = start_day + timedelta(days=int(dow) - 2)
 
-            shift = int(cell_str_arr[3].split(",")[1]) % 3 + 1
+            shift = int(cell_str_arr[3].split(",")[1]) // 3 + 1
             room = cell_str.split(", ")[1].split()[0]
 
             while curr_day <= end_day:

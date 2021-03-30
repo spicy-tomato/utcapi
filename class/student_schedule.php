@@ -1,6 +1,6 @@
 <?php
 
-    class Schedule
+    class StudentSchedule
     {
         private const module_class_table = "Module_Class";
         private const schedule_table = "Schedules";

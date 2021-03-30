@@ -1,11 +1,12 @@
+<?php
+    session_start();
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
+    shield();
+?>
 <!doctype html>
 <html lang="en">
 
 <?php
-    session_start();
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
-
-    shield();
     shared_header('Thông báo cho lớp học phần', '
       <!-- JQuery -->
       <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
