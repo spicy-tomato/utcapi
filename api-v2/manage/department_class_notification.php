@@ -35,7 +35,7 @@
             $response = 'OK';
 
         } catch (PDOException $error) {
-            echo json_decode($error);
+            echo json_encode($error);
 
             $response = 'Failed';
         }

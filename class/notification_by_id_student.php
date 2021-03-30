@@ -4,6 +4,9 @@
     {
         private const notification_student_table = "Notification_Student";
         private const notification_table = "Notification";
+        private const account_table = "Account";
+        private const other_department_table = "Other_Department";
+
 
         private PDO $conn;
 
@@ -17,7 +20,8 @@
             $sql_query = "
                     SELECT
                         ns.ID_Notification,
-                        n.*
+                        n.*,
+                       
                     FROM 
                          " . self::notification_student_table . " ns, 
                          " . self::notification_table . " n 

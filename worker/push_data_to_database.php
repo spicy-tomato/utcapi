@@ -35,7 +35,7 @@
                         VALUES ";
 
         private const schedule_sql = "
-                    INSERT INTO Schedule 
+                    INSERT INTO Schedules 
                     (
                         ID_Module_Class, ID_Room, Shift_Schedules, 
                         Day_Schedules, Number_Student
@@ -118,7 +118,7 @@
                     $sql = self::participate_sql . "(";
                     break;
 
-                case "Schedule":
+                case "Schedules":
                     $sql = self::schedule_sql . "(";
                     break;
             }

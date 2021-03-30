@@ -1,8 +1,10 @@
+<?php
+    session_start();
+?>
 <!doctype html>
 <html lang="en">
 
 <?php
-    session_start();
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
 
     shield();

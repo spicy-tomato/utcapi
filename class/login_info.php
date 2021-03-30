@@ -7,6 +7,7 @@
 
         private PDO $conn;
         private string $department_name;
+        private int $account_id;
         private string $username;
         private string $password;
 
@@ -21,15 +22,15 @@
         {
             $sqlQuery = "
                 SELECT 
-                    a.ID, 
+                    a.id, 
                     od.Other_Department_Name 
                 FROM 
                     " . self::department_account_table . " a, 
                     " . self::department_other_department_table . " od 
                 WHERE 
-                    a.Account_Username = :username AND 
-                    a.Password = :password AND 
-                    od.ID = a.ID 
+                    a.Username = :username AND 
+                    a.password = :password AND 
+                    od.ID = a.id 
                 LIMIT 0, 1";
 
             try {
@@ -42,6 +43,7 @@
                 $loggedAccount = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 if (count($loggedAccount) == 1) {
                     $this->department_name = $loggedAccount[0]['Other_Department_Name'];
+                    $this->account_id = $loggedAccount[0]['id'];
                     return true;
                 }
 
@@ -57,8 +59,8 @@
             return $this->department_name;
         }
 
-        public function getDepartmentUsername(): string
+        public function getAccountID(): string
         {
-            return $this->username;
+            return $this->account_id;
         }
     }

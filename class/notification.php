@@ -90,7 +90,7 @@
             $sqlQuery =
                 "INSERT INTO
                     " . self::notification_table . "
-                    (Title, Content, Typez, Sender, Time_Start, Time_End, Expired)
+                    (Title, Content, Typez, ID_Sender, Time_Start, Time_End, Expired)
                 VALUES
                     ('{$this->title}', '{$this->content}', '{$this->typez}', '{$this->sender}', 
                     '{$this->time_start}', '{$this->time_end}', '{$this->expired}') 
@@ -104,7 +104,7 @@
             $sqlQuery =
                 "INSERT INTO
                     " . self::notification_table . "
-                    (Title, Content, Typez, Sender)
+                    (Title, Content, Typez, ID_Sender)
                 VALUES
                     ('{$this->title}', '{$this->content}', '{$this->typez}', '{$this->sender}')
                 ";
