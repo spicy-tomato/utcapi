@@ -5,18 +5,15 @@
         private const participate_table = "Participate";
         private const student_table = "Student";
         private const device_table = "Device";
+        private const account_table = "Account";
 
         private PDO $conn;
         private array $student_id_list;
+        private array $id_account_list;
 
         public function __construct(PDO $conn)
         {
             $this->conn = $conn;
-        }
-
-        public function getStudentIdList () : array
-        {
-            return $this->student_id_list;
         }
 
         public function setStudentIdList (array $student_id_list) : void
@@ -24,13 +21,11 @@
             $this->student_id_list = $student_id_list;
         }
 
-        public function getListFromModuleClassList($class_list): array
+        public function getListFromModuleClassList($class_list): void
         {
             $sql_of_list = $this->_getSqlOfList($class_list);
 
             $this->_getListFromModuleClass($sql_of_list);
-
-            return $this->student_id_list;
         }
 
         private function _getListFromModuleClass($sql_of_list): void
@@ -54,13 +49,11 @@
             $this->student_id_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
         }
 
-        public function getListFromDepartmentClass($class_list): array
+        public function getListFromDepartmentClass($class_list)
         {
             $sql_of_list = $this->_getSqlOfList($class_list);
 
             $this->_getListFromDepartmentClass($sql_of_list);
-
-            return $this->student_id_list;
         }
 
         private function _getListFromDepartmentClass($sql_of_list): void
@@ -82,6 +75,32 @@
             $stmt->execute();
 
             $this->student_id_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        }
+
+        public function getAccountListFromStudentList() : array
+        {
+            $sql_of_list = $this->_getSqlOfList($this->student_id_list);
+
+            $this->_getAccountListFromStudentList($sql_of_list);
+
+            return $this->id_account_list;
+        }
+
+        private function _getAccountListFromStudentList($sql_of_list)
+        {
+            $sql_query =
+                "SELECT
+                    ID
+                FROM
+                    " . self::student_table . "
+                WHERE
+                    ID_Student IN (" . $sql_of_list . ")
+                ";
+
+            $stmt = $this->conn->prepare($sql_query);
+            $stmt->execute();
+
+            $this->id_account_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
         }
 
         public function getTokenListFromStudentList(): array
