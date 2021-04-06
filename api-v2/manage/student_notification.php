@@ -16,12 +16,12 @@
 //        $conn = $db->connect();
 //
 //        $read_file = new ReadFIle($db);
-//        $student_list = $read_file->getData($data["file_name"]);
+//        $id_account_list = $read_file->getData($data["file_name"]);
 //
 //        $helper = new Helper($conn);
-//        $student_list = $helper->setStudentIdList($data['file_name']);
+//        $id_account_list = $helper->setStudentIdList($data['file_name']);
 //
-//        $notification = new Notification($conn, $data['info'], $student_list);
+//        $notification = new Notification($conn, $data['info'], $id_account_list);
 //
 //        $token_list = $helper->getTokenListFromStudentList();
 //        $firebase_notification = new FirebaseNotification($data['info'], $token_list);

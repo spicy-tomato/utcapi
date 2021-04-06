@@ -1,5 +1,8 @@
 <?php
 
+
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
+
     class StudentSchedule
     {
         private const module_class_table = "Module_Class";
@@ -11,13 +14,13 @@
         private string $student_id;
         private PDO $conn;
 
-        public function __construct(PDO $conn, string $student_id)
+        public function __construct (PDO $conn, string $student_id)
         {
             $this->conn       = $conn;
             $this->student_id = $student_id;
         }
 
-        public function getAll(): array
+        public function getAll ()
         {
             $sqlQuery =
                 "SELECT
@@ -30,7 +33,7 @@
                     " . self::participate_table . " par,
                     " . self::module_class_table . " mdcls
                 WHERE
-                    stu.ID_Student = :student_id AND 
+                    stu.ID_Student = :student_id AND
                     par.ID_Student = :student_id AND
                     sdu.ID_Module_Class = par.ID_Module_Class AND
                     sdu.ID_Module_Class = mdcls.ID_Module_Class AND
@@ -43,12 +46,14 @@
                 $stmt->execute([':student_id' => $this->student_id]);
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            } catch (PDOException $error) {
-                exit($error->getMessage());
+            } catch (PDOException $e) {
+                printError($e);
+
+                return "Failed";
             }
         }
 
-        public function get(string $from, string $to): array
+        public function getByTime (string $from, string $to)
         {
             $sqlQuery =
                 "SELECT
@@ -72,8 +77,10 @@
                     ':to' => $to]);
 
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
-            } catch (PDOException $error) {
-                exit($error->getMessage());
+            } catch (PDOException $e) {
+                printError($e);
+
+                return "Failed";
             }
         }
     }

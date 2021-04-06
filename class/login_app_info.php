@@ -1,5 +1,8 @@
 <?php
+
+
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
 
     class LoginApp
     {
@@ -27,15 +30,27 @@
                     a.password = ? AND 
                     s.ID_Student = a.Username";
 
-            $stmt = $this->conn->prepare($sql_query);
-            $stmt->execute(array($account['ID'], md5($account['Password'])));
 
-            $response = $stmt->fetch(PDO::FETCH_ASSOC);
+            try {
+                $stmt = $this->conn->prepare($sql_query);
+                $stmt->execute(array($account['ID'], md5($account['Password'])));
+
+                $response = $stmt->fetch(PDO::FETCH_ASSOC);
+                unset($response['id']);
+
+            } catch (PDOException $e) {
+                printError($e);
+
+                $data['message'] = 'failed';
+                return $data;
+            }
 
             if (!$response) {
                 $data['message'] = 'failed';
             }
             else {
+                unset($response['ID']);
+
                 $data['message'] = 'success';
                 $data['info'] = $response;
             }

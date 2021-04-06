@@ -1,5 +1,7 @@
 <?php
 
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
+
     class LoginInfo
     {
         private const department_account_table = "Account";
@@ -49,8 +51,10 @@
 
                 return false;
 
-            } catch (PDOException $loi) {
-                exit($loi->getMessage());
+            } catch (PDOException $e) {
+                printError($e);
+
+                return false;
             }
         }
 

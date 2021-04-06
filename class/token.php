@@ -8,14 +8,14 @@
 
         private const device_table = "Device";
 
-        public function __construct(PDO $conn, string $student_id, string $token)
+        public function __construct (PDO $conn, string $student_id, string $token)
         {
             $this->conn       = $conn;
             $this->student_id = $student_id;
             $this->token      = $token;
         }
 
-        public function upsert(): bool
+        public function upsert () : bool
         {
             $current_time = date('Y-m-d H:i:s');
 
@@ -35,7 +35,7 @@
 
                 return true;
 
-            } catch (Exception $error){
+            } catch (Exception $error) {
                 return false;
             }
         }

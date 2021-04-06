@@ -26,7 +26,7 @@
                     $newFileNameArr[] = $newFileName;
                 }
                 else {
-                    $newFileNameArr =  'Failure';
+                    $newFileNameArr = 'Failure';
                 }
             }
 

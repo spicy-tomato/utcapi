@@ -1,5 +1,6 @@
 <?php
-    require $_SERVER['DOCUMENT_ROOT'] .'/utcapi/vendor/autoload.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '/utcapi/vendor/autoload.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
 
     use Kreait\Firebase\Exception\FirebaseException;
     use Kreait\Firebase\Exception\MessagingException;
@@ -13,11 +14,11 @@
         private Messaging $messaging;
         private array $token_list;
         private Notification $notification;
-
-        private const credentials_path = '../../config/firebase_credentials.json';
+        private string $credentials_path;
 
         public function __construct (array $info, array $token_list)
         {
+            $this->credentials_path = $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/firebase_credentials.json';
             $this->_setInfo($info);
             $this->token_list = $token_list;
             $this->_initFactory();
@@ -31,10 +32,8 @@
 
                 try {
                     $this->messaging->send($message);
-                } catch (MessagingException $e) {
-                    echo "Messaging Exception";
-                } catch (FirebaseException $e) {
-                    echo "Firebase Exception";
+                } catch (MessagingException | FirebaseException $e) {
+                    printError($e);
                 }
             }
         }
@@ -51,7 +50,7 @@
         {
             $factory = new Factory();
 
-            $factory = $factory->withServiceAccount(self::credentials_path);
+            $factory         = $factory->withServiceAccount($this->credentials_path);
             $this->messaging = $factory->createMessaging();
         }
     }

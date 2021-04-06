@@ -1,5 +1,8 @@
 <?php
 
+
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
+
     class DepartmentClass
     {
         private const db_table = "Class";
@@ -10,7 +13,7 @@
             $this->conn = $conn;
         }
 
-        public function getAll(): array
+        public function getAll()
         {
             $sql_query = "
                     SELECT 
@@ -22,9 +25,17 @@
                         ID_Class ASC
                     ";
 
-            $stmt = $this->conn->prepare($sql_query);
-            $stmt->execute();
+            try {
+                $stmt = $this->conn->prepare($sql_query);
+                $stmt->execute();
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+            } catch (PDOException $e) {
+                printError($e);
+
+                return "Failed";
+            }
         }
     }
