@@ -4,8 +4,10 @@
 
     class LoginInfo
     {
-        private const department_account_table = "Account";
-        private const department_other_department_table = "Other_Department";
+        private const account_table = "Account";
+        private const other_department_table = "Other_Department";
+        private const faculty_table = "Faculty";
+
 
         private PDO $conn;
         private string $department_name;
@@ -13,26 +15,30 @@
         private string $username;
         private string $password;
 
-        public function __construct(PDO $conn, string $username, string $password)
+        public function __construct (PDO $conn, string $username, string $password)
         {
-            $this->conn     = $conn;
+            $this->conn = $conn;
             $this->username = $username;
             $this->password = $password;
         }
 
-        public function login(): bool
+        public function login () : bool
         {
             $sqlQuery = "
                 SELECT 
                     a.id, 
-                    od.Other_Department_Name 
+                    od.Other_Department_Name, 
+                    od.ID AS O_ID, 
+                    f.Faculty_Name, 
+                    f.ID AS F_ID 
                 FROM 
-                    " . self::department_account_table . " a, 
-                    " . self::department_other_department_table . " od 
+                    " . self::account_table . " a, 
+                    " . self::other_department_table . " od, 
+                    " . self::faculty_table . " f  
                 WHERE 
-                    a.Username = :username AND 
-                    a.password = :password AND 
-                    od.ID = a.id 
+                    (a.Username = :username AND 
+                    a.password = :password) AND 
+                    (od.ID = a.id OR f.ID = a.id) 
                 LIMIT 0, 1";
 
             try {
@@ -43,8 +49,14 @@
                 ]);
 
                 $loggedAccount = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
                 if (count($loggedAccount) == 1) {
-                    $this->department_name = $loggedAccount[0]['Other_Department_Name'];
+                    if ($loggedAccount[0]['id'] == $loggedAccount[0]['O_ID']) {
+                        $this->department_name = $loggedAccount[0]['Other_Department_Name'];
+                    }
+                    else {
+                        $this->department_name = $loggedAccount[0]['Faculty_Name'];
+                    }
                     $this->account_id = $loggedAccount[0]['id'];
                     return true;
                 }
@@ -58,12 +70,12 @@
             }
         }
 
-        public function getDepartmentName(): string
+        public function getDepartmentName () : string
         {
             return $this->department_name;
         }
 
-        public function getAccountID(): string
+        public function getAccountID () : string
         {
             return $this->account_id;
         }
