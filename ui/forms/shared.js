@@ -42,8 +42,16 @@ export async function postData(url, data) {
     return responseJson
 }
 
-export function autoFillTemplate(templateNoti)
-{
+export function changeStatusButton() {
+    if (this.type === 'date') {
+        document.getElementsByClassName(this.id)[0].classList.remove('disable')
+    }
+    else {
+        this.classList.add('disable')
+    }
+}
+
+export function autoFillTemplate(templateNoti) {
     title.value = templateNoti.title
     type.selectedIndex = templateNoti.typez
     content.value = templateNoti.content

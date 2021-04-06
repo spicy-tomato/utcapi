@@ -32,7 +32,7 @@
       <?php shared_navbar(); ?>
 
     <main>
-      <form action="" autocomplete="off">
+      <form action="" autocomplete="off" onsubmit="return false">
 
           <?php shared_form(); ?>
 

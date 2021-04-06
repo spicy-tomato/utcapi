@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('submit_btn').addEventListener('click', trySendNotification)
     document.getElementById('template').addEventListener('change', fillForms)
     document.getElementById('confirm').addEventListener('click', uploadFile)
+    document.getElementsByName('reset_button')[0].addEventListener('click', resetInputDate)
+    document.getElementsByName('reset_button')[1].addEventListener('click', resetInputDate)
 
     sender = await getSender()
 })
@@ -61,7 +63,7 @@ async function uploadFile() {
     formData.append('flag', '0');
 
     for (let i = 0; i < fileUpload.files.length; i++) {
-        formData.append('file'+1, fileUpload.files[i]);
+        formData.append('file' + 1, fileUpload.files[i]);
     }
 
     let responseAsJson = await fetch('../../../worker/handle_file_upload.php', {
@@ -85,7 +87,7 @@ async function uploadFile() {
 //  Display error if there are some unfulfilled fields
 function getInvalidField(data) {
     for (const [field, fieldValue] of Object.entries(data.info)) {
-        if (fieldValue === '') {
+        if (fieldValue === '' && fieldList[field] !== undefined) {
             return fieldList[field]
         }
     }
@@ -105,6 +107,8 @@ async function trySendNotification() {
             title: $('#title').val(),
             content: $('#content').val(),
             typez: $('#type').val(),
+            time_start: $('#time_start').val(),
+            time_end: $('#time_end').val(),
             sender: sender
         },
         file_name: fileName
@@ -121,4 +125,10 @@ async function trySendNotification() {
 
 function fillForms() {
     autoFillTemplate(templateNoti[template.value])
+}
+
+
+function resetInputDate() {
+    let elemID = this.classList[2]
+    document.getElementById(elemID).value = ''
 }

@@ -26,51 +26,16 @@
       <?php shared_navbar(); ?>
 
     <main>
-      <form action="" autocomplete="off">
+      <form action="" autocomplete="off" onsubmit="return false">
 
           <?php shared_form(); ?>
 
-        <div class="form-group mt-4">
+        <div class="form-group mt-4" id="academic_year_area">
           <legend>Khoá:</legend>
-          <div class="form-check form-check-inline">
-            <input type="checkbox"
-                   class="academic_year form-check-input"
-                   id="all_academic_year"
-                   value="all">
-            <label for="all_academic_year" class="form-check-label">Chọn tất cả</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K60" id="K60">
-            <label for="K60" class="form-check-label">K60</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K59" id="K59">
-            <label for="K59" class="form-check-label">K59</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K58" id="K58">
-            <label for="K58" class="form-check-label">K58</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K57" id="K57">
-            <label for="K57" class="form-check-label">K57</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K56" id="K56">
-            <label for="K56" class="form-check-label">K56</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K55" id="K55">
-            <label for="K55" class="form-check-label">K55</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="academic_year form-check-input" name="academic_year" value="K54" id="K54">
-            <label for="K54" class="form-check-label">K54</label>
-          </div>
         </div>
         <br>
 
-        <div class="form-group">
+        <div class="form-group mt-4" id="faculty_area">
           <legend>Khoa:</legend>
           <div class="form-check form-check-inline">
             <input type="checkbox"
@@ -96,24 +61,8 @@
             <label for="DDT" class="form-check-label">Điện điện tử</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="faculty form-check-input" name="faculty" value="GDQP" id="GDQP">
-            <label for="GDQP" class="form-check-label">Giáo dục quốc phòng</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="faculty form-check-input" name="faculty" value="GDTC" id="GDTC">
-            <label for="GDTC" class="form-check-label">Giáo dục thể chất</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="faculty form-check-input" name="faculty" value="KHCB" id="KHCB">
-            <label for="KHCB" class="form-check-label">Khoa học cơ bản</label>
-          </div>
-          <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" name="faculty" value="KTXD" id="KTXD">
             <label for="KTXD" class="form-check-label">Kỹ thuật xây dựng</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="faculty form-check-input" name="faculty" value="LLCT" id="LLCT">
-            <label for="LLCT" class="form-check-label">Lý luận chính trị</label>
           </div>
           <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty form-check-input" name="faculty" value="VTKT" id="VTKT">
