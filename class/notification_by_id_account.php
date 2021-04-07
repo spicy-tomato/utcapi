@@ -97,6 +97,8 @@
                 return $data['id'];
             } catch (PDOException $e) {
                 printError($e);
+
+                return null;
             }
         }
 

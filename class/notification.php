@@ -40,7 +40,7 @@
             $arr  = explode(" ", $temp_date);
             $arr2 = explode("/", $arr[0]);
 
-            $temp_date = $arr2[2] . "/" . $arr2[1] . "/" . $arr2[0] . " " . $temp_date[1];
+            $temp_date = $arr2[2] . "/" . $arr2[1] . "/" . $arr2[0] . " " . $arr[1];
 
             return $temp_date;
         }
