@@ -2,9 +2,6 @@ import {postDataAndRaiseAlert} from '../../alerts.js'
 import {getSender, fetchData, autoFillTemplate, changeStatusButton} from '../../shared.js'
 
 let sender
-const checkBox = document.querySelectorAll('input')
-let checkBoxes1 = document.getElementsByName('academic_year')
-let checkBoxes2 = document.getElementsByName('faculty')
 let allClass = []
 let selectedClass = []
 let allAcademicYears = []
@@ -53,8 +50,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     createAcademicCheckBoxArea()
 
-    document.getElementById('all_academic_year').addEventListener('click', tickAllForAcademic_YearAndFaculty)
-    document.getElementById('all_faculty').addEventListener('click', tickAllForAcademic_YearAndFaculty)
+    console.log(document.getElementsByName('academic_year'))
+    document.getElementById('all_academic_year').addEventListener('click', tickAllForAcademicYearAndFaculty)
+    document.getElementById('all_faculty').addEventListener('click', tickAllForAcademicYearAndFaculty)
     document.getElementById('submit_btn').addEventListener('click', trySendNotification)
     document.getElementById('template').addEventListener('change', fillForms)
     document.getElementsByName('reset_button')[0].addEventListener('click', resetInputDate)
@@ -64,10 +62,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('time_start').addEventListener('change', changeStatusButton)
     document.getElementById('time_end').addEventListener('change', changeStatusButton)
 
-    addEventForAcademic_YearAndFaculty()
+    addEventForAcademicYearAndFaculty()
 
     sender = await getSender()
 })
+
+/*_____________INITIALIZATION____________________________________*/
+
+
+let academicYearCheckboxes = document.getElementsByName('academic_year')
+let facultyCheckboxes = document.getElementsByName('faculty')
+
 
 /*_________________________________________________*/
 
@@ -86,7 +91,7 @@ function createAcademicYearCheckAll() {
 
     let input = document.createElement('input')
     input.type = 'checkbox'
-    input.className = 'academic_year form-check-input'
+    input.className = 'academic_year form-check-input academic-year-faculty'
     input.id = 'all_academic_year'
     input.value = 'all'
 
@@ -107,7 +112,7 @@ function createAcademicCheckBox(value) {
 
     let input = document.createElement('input')
     input.type = 'checkbox'
-    input.className = 'academic_year form-check-input'
+    input.className = 'academic_year form-check-input academic-year-faculty'
     input.id = value
     input.name = 'academic_year'
     input.value = value
@@ -123,21 +128,18 @@ function createAcademicCheckBox(value) {
     return div
 }
 
-function tickAllForAcademic_YearAndFaculty() {
+function tickAllForAcademicYearAndFaculty() {
     let checkBoxes = document.getElementsByName(this.classList[0])
+
     for (let i = 0; i < checkBoxes.length; i++) {
-        if (checkBoxes[i].checked !== this.checked) {
-            checkBoxes[i].checked = this.checked
-        }
+        checkBoxes[i].checked = this.checked
     }
 }
 
-function addEventForAcademic_YearAndFaculty() {
-    for (let i = 1; i < checkBox.length; i++) {
-        if (checkBox[i].type === 'date') {
-            continue
-        }
+function addEventForAcademicYearAndFaculty() {
+    const checkBox = document.getElementsByClassName('academic-year-faculty')
 
+    for (let i = 0; i < checkBox.length; i++) {
         checkBox[i].addEventListener('change', function () {
             if (!this.checked && this.value !== 'all') {
                 document.getElementsByClassName(this.name)[0].checked = false
@@ -172,14 +174,14 @@ function resetInputDate() {
 function isChecked() {
     let flag1 = false
     let flag2 = false
-    for (let i = 0; i < checkBoxes1.length; i++) {
-        if (checkBoxes1[i].checked) {
+    for (let i = 0; i < academicYearCheckboxes.length; i++) {
+        if (academicYearCheckboxes[i].checked) {
             flag1 = true
             break
         }
     }
-    for (let i = 0; i < checkBoxes2.length; i++) {
-        if (checkBoxes2[i].checked) {
+    for (let i = 0; i < facultyCheckboxes.length; i++) {
+        if (facultyCheckboxes[i].checked) {
             flag2 = true
             break
         }
@@ -205,9 +207,9 @@ function getConditions() {
         else {
             academicYears = ['K54', 'K55', 'K56', 'K57', 'K58', 'K59', 'K60']
 
-            for (let i = 0; i < checkBoxes2.length; i++) {
-                if (checkBoxes2[i].checked) {
-                    faculties.push(checkBoxes2[i].value)
+            for (let i = 0; i < facultyCheckboxes.length; i++) {
+                if (facultyCheckboxes[i].checked) {
+                    faculties.push(facultyCheckboxes[i].value)
                 }
             }
         }
@@ -216,22 +218,22 @@ function getConditions() {
         if ($('#all_faculty').is(':checked')) {
             faculties = ['CK', 'CNTT', 'CT', 'DDT', 'KTXD', 'VTKT']
 
-            for (let i = 0; i < checkBoxes1.length; i++) {
-                if (checkBoxes1[i].checked) {
-                    academicYears.push(checkBoxes1[i].value)
+            for (let i = 0; i < academicYearCheckboxes.length; i++) {
+                if (academicYearCheckboxes[i].checked) {
+                    academicYears.push(academicYearCheckboxes[i].value)
                 }
             }
         }
         else {
-            for (let i = 0; i < checkBoxes1.length; i++) {
-                if (checkBoxes1[i].checked) {
-                    academicYears.push(checkBoxes1[i].value)
+            for (let i = 0; i < academicYearCheckboxes.length; i++) {
+                if (academicYearCheckboxes[i].checked) {
+                    academicYears.push(academicYearCheckboxes[i].value)
                 }
             }
 
-            for (let i = 0; i < checkBoxes2.length; i++) {
-                if (checkBoxes2[i].checked) {
-                    faculties.push(checkBoxes2[i].value)
+            for (let i = 0; i < facultyCheckboxes.length; i++) {
+                if (facultyCheckboxes[i].checked) {
+                    faculties.push(facultyCheckboxes[i].value)
                 }
             }
         }
@@ -385,7 +387,7 @@ function createClassTag(_class, academicYear, faculty) {
 
     let checkbox = document.createElement('input')
     checkbox.type = 'checkbox'
-    checkbox.className = academicYear + faculty + ` form-check-input`
+    checkbox.className = academicYear + faculty + ` form-check-input class-checkbox`
     checkbox.id = _class
     checkbox.name = academicYear + faculty
     checkbox.value = _class
@@ -419,9 +421,9 @@ function tickAllForClass() {
 }
 
 function addEventToClass() {
-    let checkBoxClass = document.querySelectorAll('input')
+    let checkBoxClass = document.getElementsByClassName('class-checkbox')
 
-    for (let i = 20; i < checkBoxClass.length; i++) {
+    for (let i = 0; i < checkBoxClass.length; i++) {
         checkBoxClass[i].addEventListener('change', function () {
             if (!this.checked && this.value !== 'all') {
                 selectedClass.splice(selectedClass.lastIndexOf(this.value), 1)
@@ -479,6 +481,8 @@ async function trySendNotification() {
     if (madeRequest) {
         document.getElementById('submit_btn').removeEventListener('click', trySendNotification)
     }
+
+    console.log(selectedClass)
 }
 
 function fillForms() {

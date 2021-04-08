@@ -39,33 +39,33 @@
           <legend>Khoa:</legend>
           <div class="form-check form-check-inline">
             <input type="checkbox"
-                   class="faculty form-check-input"
+                   class="faculty form-check-input academic-year-faculty"
                    id="all_faculty"
                    value="all">
             <label for="all_faculty" class="form-check-label">Chọn tất cả</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="faculty form-check-input" name="faculty" value="CK" id="CK">
+            <input type="checkbox" class="faculty form-check-input academic-year-faculty" name="faculty" value="CK" id="CK">
             <label for="CK" class="form-check-label">Cơ khí</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="faculty form-check-input" name="faculty" value="CNTT" id="CNTT">
+            <input type="checkbox" class="faculty form-check-input academic-year-faculty" name="faculty" value="CNTT" id="CNTT">
             <label for="CNTT" class="form-check-label">Công nghệ thông tin</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="faculty form-check-input" name="faculty" value="CT" id="CT">
+            <input type="checkbox" class="faculty form-check-input academic-year-faculty" name="faculty" value="CT" id="CT">
             <label for="CT" class="form-check-label">Công trình</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="faculty form-check-input" name="faculty" value="DDT" id="DDT">
+            <input type="checkbox" class="faculty form-check-input academic-year-faculty" name="faculty" value="DDT" id="DDT">
             <label for="DDT" class="form-check-label">Điện điện tử</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="faculty form-check-input" name="faculty" value="KTXD" id="KTXD">
+            <input type="checkbox" class="faculty form-check-input academic-year-faculty" name="faculty" value="KTXD" id="KTXD">
             <label for="KTXD" class="form-check-label">Kỹ thuật xây dựng</label>
           </div>
           <div class="form-check form-check-inline">
-            <input type="checkbox" class="faculty form-check-input" name="faculty" value="VTKT" id="VTKT">
+            <input type="checkbox" class="faculty form-check-input academic-year-faculty" name="faculty" value="VTKT" id="VTKT">
             <label for="VTKT" class="form-check-label">Vận tải kinh tế</label>
           </div>
         </div>
