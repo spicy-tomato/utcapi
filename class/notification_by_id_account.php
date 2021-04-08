@@ -62,12 +62,22 @@
                 $stmt->execute(array($id_account, $id_account));
 
                 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                if (!$data)
+                {
+                    $data['notification'] = [];
+                    $data['sender'] = [];
+
+                    return $data;
+                }
+
                 $data = $this->modifyResponse($data);
 
             } catch (PDOException $e) {
                 printError($e);
 
-                $data = "Failed";
+                $data['notification'] = [];
+                $data['sender'] = [];
             }
 
 
