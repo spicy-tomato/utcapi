@@ -3,19 +3,15 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/academic_year.php";
 
-    $db               = new Database();
-    $conn             = $db->connect();
-    $res              = null;
-    $academic_year = new AcademicYear($conn);
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        $db      = new Database();
+        $connect = $db->connect();
 
-    switch ($_SERVER["REQUEST_METHOD"]) {
-        case "GET":
-            $res = $academic_year->getAcademicYear();
-            break;
-
-        default:
-            echo null;
-            exit();
+        $academic_year = new AcademicYear($connect);
+        $response      = $academic_year->getAcademicYear();
+    }
+    else {
+        $response = 'Invalid Request';
     }
 
-    echo json_encode($res);
+    echo json_encode($response);

@@ -8,7 +8,7 @@
         private const notification_table = "Notification";
         private const notification_account_table = "Notification_Account";
 
-        private PDO $conn;
+        private PDO $connect;
         private string $id;
         private string $title;
         private string $content;
@@ -19,9 +19,9 @@
         private ?string $time_start;
         private ?string $time_end;
 
-        public function __construct (PDO $conn, array $info, array $id_account_list)
+        public function __construct (PDO $connect, array $info, array $id_account_list)
         {
-            $this->conn            = $conn;
+            $this->connect            = $connect;
             $this->title           = $info['title'];
             $this->content         = $info['content'];
             $this->typez           = $info['typez'];
@@ -50,7 +50,7 @@
             $sql_query = $this->_queryWithTime();
 
             try {
-                $stmt = $this->conn->prepare($sql_query);
+                $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute(array($this->title, $this->content, $this->typez, $this->sender,
                     $this->time_create, $this->time_start, $this->time_end));
 
@@ -73,20 +73,20 @@
                     (?,?)
                 ";
 
-            $this->conn->beginTransaction();
+            $this->connect->beginTransaction();
             try {
                 foreach ($this->id_account_list as $id_account) {
                     if ($id_account == null) {
                         continue;
                     }
-                    $stmt = $this->conn->prepare($sql_query);
+                    $stmt = $this->connect->prepare($sql_query);
                     $stmt->execute(array($this->id, $id_account));
                 }
 
-                $this->conn->commit();
+                $this->connect->commit();
 
             } catch (PDOException $error) {
-                $this->conn->rollBack();
+                $this->connect->rollBack();
                 throw $error;
             }
         }
@@ -96,7 +96,8 @@
             $sql_query =
                 "INSERT INTO
                     " . self::notification_table . "
-                    (Title, Content, Typez, ID_Sender, Time_Create, Time_Start, Time_End)
+                    (Title, Content, Typez, ID_Sender, 
+                    Time_Create, Time_Start, Time_End)
                 VALUES
                     (?,?,?,?,?,?,?) 
                 ";
@@ -106,6 +107,6 @@
 
         private function _getId () : string
         {
-            return $this->conn->lastInsertId();
+            return $this->connect->lastInsertId();
         }
     }

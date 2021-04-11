@@ -7,13 +7,13 @@
         private const device_table = "Device";
         private const account_table = "Account";
 
-        private PDO $conn;
+        private PDO $connect;
         private array $student_id_list;
         private array $id_account_list;
 
-        public function __construct(PDO $conn)
+        public function __construct(PDO $connect)
         {
-            $this->conn = $conn;
+            $this->connect = $connect;
         }
 
         public function setStudentIdList (array $student_id_list) : void
@@ -43,7 +43,7 @@
                     ID_Module_Class IN (" . $sql_of_list . ")
                 ";
 
-            $stmt = $this->conn->prepare($sql_query);
+            $stmt = $this->connect->prepare($sql_query);
             $stmt->execute();
 
             $this->student_id_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -71,7 +71,7 @@
                     ID_Class IN (" . $sql_of_list . ")
                 ";
 
-            $stmt = $this->conn->prepare($sql_query);
+            $stmt = $this->connect->prepare($sql_query);
             $stmt->execute();
 
             $this->student_id_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -97,7 +97,7 @@
                     ID_Student IN (" . $sql_of_list . ")
                 ";
 
-            $stmt = $this->conn->prepare($sql_query);
+            $stmt = $this->connect->prepare($sql_query);
             $stmt->execute();
 
             $this->id_account_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -127,7 +127,7 @@
                     ID_Student IN (" . $sql_of_list . ")
                 ";
 
-            $stmt = $this->conn->prepare($sql_query);
+            $stmt = $this->connect->prepare($sql_query);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_COLUMN);

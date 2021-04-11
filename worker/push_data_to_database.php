@@ -88,9 +88,9 @@
             $stmt = $connect->prepare($sql);
             $stmt->execute(array($username));
 
-            $res = $stmt->fetch(PDO::FETCH_ASSOC);
+            $response = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            return $res ? true : false;
+            return $response ? true : false;
         }
 
         private function _createSQL ($arr, $table_name) : string

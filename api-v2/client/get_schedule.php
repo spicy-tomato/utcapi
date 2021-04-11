@@ -1,50 +1,40 @@
 <?php
     session_start();
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/account.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/student_schedule.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/teacher_schedule.php";
 
-    if (isset($_GET['id'])) {
-        $db   = new Database();
-        $conn = $db->connect();
-        $res  = null;
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
+        isset($_GET['id'])) {
 
-        switch ($_GET['pass'])
-        {
+        $db      = new Database();
+        $connect = $db->connect();
+        $account = new Account($connect);
+
+        $flag = $account->getPermission($_GET['id']);
+        switch ($flag) {
             case '0';
-            {
-                $schedules = new StudentSchedule($conn, $_GET['id']);
-
-                if (isset($_GET['start']) &&
-                    isset($_GET['to'])) {
-
-                    $res = $schedules->getByTime($_GET['start'], $_GET['end']);
+                {
+                    $schedules = new StudentSchedule($connect, $_GET['id']);
+                    $response       = $schedules->getAll();
+                    break;
                 }
-                else {
-                    $res = $schedules->getAll();
-                }
-
-                break;
-            }
 
             case '1':
-            {
-                $schedules = new TeacherSchedule($conn, $_GET['id']);
-
-                if (isset($_GET['start']) &&
-                    isset($_GET['to'])) {
-
-                    $res = $schedules->getByTime($_GET['start'], $_GET['end']);
-                }
-                else {
-                    $res = $schedules->getAll();
+                {
+                    $schedules = new TeacherSchedule($connect, $_GET['id']);
+                    $response       = $schedules->getAll();
+                    break;
                 }
 
-                break;
-            }
-
+            default:
+                $response = [];
         }
-
-
-        echo json_encode($res);
     }
+    else {
+        $response = 'Invalid Request';
+
+    }
+
+    echo json_encode($response);

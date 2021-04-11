@@ -1,29 +1,28 @@
 <?php
 
 
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/account.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
 
     class NotificationByIDAccount
     {
         private const notification_account_table = "Notification_Account";
         private const account_table = "Account";
-        private const student_table = "Student";
-        private const teacher_table = "Teacher";
         private const notification_table = "Notification";
         private const other_department_table = "Other_Department";
         private const faculty_table = "Faculty";
 
+        private PDO $connect;
 
-        private PDO $conn;
-
-        public function __construct (PDO $conn)
+        public function __construct (PDO $connect)
         {
-            $this->conn = $conn;
+            $this->connect = $connect;
         }
 
-        public function getAll ()
+        public function getAll ($id) : array
         {
-            $id_account = $this->getIDAccount($_GET["ID"]);
+            $account = new Account($this->connect);
+            $id_account = $account->getIDAccount($id);
 
             $sql_query = "
                     SELECT
@@ -58,7 +57,7 @@
                     ";
 
             try {
-                $stmt = $this->conn->prepare($sql_query);
+                $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute(array($id_account, $id_account));
 
                 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -73,8 +72,8 @@
 
                 $data = $this->modifyResponse($data);
 
-            } catch (PDOException $e) {
-                printError($e);
+            } catch (PDOException $error) {
+                printError($error);
 
                 $data['notification'] = [];
                 $data['sender'] = [];
@@ -82,34 +81,6 @@
 
 
             return $data;
-        }
-
-        private function getIDAccount ($id)
-        {
-            $sql_query = "
-                    SELECT
-                        a.id
-                    FROM
-                         " . self::student_table . " s,
-                         " . self::teacher_table . " t,
-                         " . self::account_table . " a  
-                    WHERE
-                        ((s.ID_Student = ? AND s.ID = a.id) OR
-                        (t.ID_Teacher = ? AND t.ID = a.id)) 
-                    ";
-
-            try {
-                $stmt = $this->conn->prepare($sql_query);
-                $stmt->execute(array($id, $id));
-
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                return $data['id'];
-            } catch (PDOException $e) {
-                printError($e);
-
-                return null;
-            }
         }
 
         private function modifyResponse ($arr) : array

@@ -12,17 +12,17 @@
         private const module_table = "Module";
 
         private string $student_id;
-        private PDO $conn;
+        private PDO $connect;
 
-        public function __construct (PDO $conn, string $student_id)
+        public function __construct (PDO $connect, string $student_id)
         {
-            $this->conn       = $conn;
+            $this->connect       = $connect;
             $this->student_id = $student_id;
         }
 
-        public function getAll ()
+        public function getAll () : array
         {
-            $sqlQuery =
+            $sql_query =
                 "SELECT
                     mc.Module_Name,
                     sdu.ID_Module_Class, sdu.ID_Room, sdu.Shift_Schedules, sdu.Day_Schedules
@@ -36,51 +36,21 @@
                     stu.ID_Student = :student_id AND
                     par.ID_Student = :student_id AND
                     sdu.ID_Module_Class = par.ID_Module_Class AND
-                    sdu.ID_Module_Class = mdcls.ID_Module_Class AND
+                    mdcls.ID_Module_Class = sdu.ID_Module_Class AND
                     mc.ID_Module = mdcls.ID_Module
                 ORDER BY
                     sdu.Shift_Schedules";
 
             try {
-                $stmt = $this->conn->prepare($sqlQuery);
+                $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':student_id' => $this->student_id]);
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            } catch (PDOException $e) {
-                printError($e);
-
-                return "Failed";
-            }
-        }
-
-        public function getByTime (string $from, string $to)
-        {
-            $sqlQuery =
-                "SELECT
-                    sdu.*, stu.*, par.*
-                FROM
-                    " . self::schedule_table . " sdu,
-                    " . self::student_table . " stu,
-                    " . self::participate_table . " par
-                WHERE
-                    stu.ID_Student = :student_id AND
-                    par.ID_Student = :student_id AND
-                    sdu.ID_Module_Class = par.ID_Module_Class AND
-                    sdu.Day_Schedules >= :from AND
-                    sdu.Day_Schedules <= :to";
-
-            try {
-                $stmt = $this->conn->prepare($sqlQuery);
-                $stmt->execute([
-                    ':student_id' => $this->student_id,
-                    ':from' => $from,
-                    ':to' => $to]);
 
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
-            } catch (PDOException $e) {
-                printError($e);
 
-                return "Failed";
+            } catch (PDOException $error) {
+                printError($error);
+
+                return [];
             }
         }
     }

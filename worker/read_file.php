@@ -14,9 +14,9 @@
                 $command = escapeshellcmd("python .\main.py $file_name");
                 $output = shell_exec($command);
 
-            } catch (Exception $e)
+            } catch (Exception $error)
             {
-                printError($e);;
+                printError($error);;
             }
 
             $json = json_decode($output, true);

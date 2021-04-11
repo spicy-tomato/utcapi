@@ -9,17 +9,15 @@
         private const account_table_name = "Account";
         private const student_table_name = "Student";
         private const teacher_table_name = "Teacher";
-        private PDO $conn;
+        private PDO $connect;
 
-        public function __construct (PDO $conn)
+        public function __construct (PDO $connect)
         {
-            $this->conn = $conn;
+            $this->connect = $connect;
         }
 
-        public function checkAccount () : array
+        public function checkAccount ($account) : array
         {
-            $account = json_decode(file_get_contents("php://input"), true);
-
             $sql_query = "
                 SELECT
                     *
@@ -30,7 +28,7 @@
                     password = ?";
 
             try {
-                $stmt = $this->conn->prepare($sql_query);
+                $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute(array($account['ID'], md5($account['Password'])));
 
                 $response = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -54,10 +52,10 @@
 
                 return $data;
 
-            } catch (PDOException $e) {
-                printError($e);
-
+            } catch (PDOException $error) {
+                printError($error);
                 $data['message'] = 'failed';
+
                 return $data;
             }
         }
@@ -74,7 +72,7 @@
 
 
             try {
-                $stmt = $this->conn->prepare($sql_query);
+                $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute(array($id_account));
 
                 $response = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -90,8 +88,8 @@
 
                 return $data;
 
-            } catch (PDOException $e) {
-                printError($e);
+            } catch (PDOException $error) {
+                printError($error);
                 $data['message'] = 'failed';
 
                 return $data;

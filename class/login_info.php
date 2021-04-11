@@ -9,22 +9,22 @@
         private const faculty_table = "Faculty";
 
 
-        private PDO $conn;
+        private PDO $connect;
         private string $department_name;
         private int $account_id;
         private string $username;
         private string $password;
 
-        public function __construct (PDO $conn, string $username, string $password)
+        public function __construct (PDO $connect, string $username, string $password)
         {
-            $this->conn = $conn;
+            $this->connect = $connect;
             $this->username = $username;
             $this->password = $password;
         }
 
         public function login () : bool
         {
-            $sqlQuery = "
+            $sql_query = "
                 SELECT 
                     a.id, 
                     od.Other_Department_Name, 
@@ -42,7 +42,7 @@
                 LIMIT 0, 1";
 
             try {
-                $stmt = $this->conn->prepare($sqlQuery);
+                $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
                     ':username' => $this->username,
                     ':password' => md5($this->password)
@@ -63,8 +63,8 @@
 
                 return false;
 
-            } catch (PDOException $e) {
-                printError($e);
+            } catch (PDOException $error) {
+                printError($error);
 
                 return false;
             }

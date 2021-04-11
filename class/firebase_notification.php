@@ -32,8 +32,8 @@
 
                 try {
                     $this->messaging->send($message);
-                } catch (MessagingException | FirebaseException $e) {
-                    printError($e);
+                } catch (MessagingException | FirebaseException $error) {
+                    printError($error);
                 }
             }
         }

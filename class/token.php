@@ -1,16 +1,19 @@
 <?php
 
+
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
+
     class Token
     {
-        private PDO $conn;
+        private PDO $connect;
         private string $student_id;
         private string $token;
 
         private const device_table = "Device";
 
-        public function __construct (PDO $conn, string $student_id, string $token)
+        public function __construct (PDO $connect, string $student_id, string $token)
         {
-            $this->conn       = $conn;
+            $this->connect    = $connect;
             $this->student_id = $student_id;
             $this->token      = $token;
         }
@@ -30,12 +33,14 @@
                     Last_Use = '" . $current_time . "'";
 
             try {
-                $stmt = $this->conn->prepare($sql_query);
+                $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute();
 
                 return true;
 
             } catch (Exception $error) {
+                printError($error);
+
                 return false;
             }
         }

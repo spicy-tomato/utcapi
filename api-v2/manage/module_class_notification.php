@@ -4,7 +4,7 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/notification.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/firebase_notification.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
-    include_once 'helper.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/helper.php";
 
     $response = 'No request';
 
@@ -14,13 +14,13 @@
         $data != null) {
 
         $db   = new Database();
-        $conn = $db->connect();
+        $connect = $db->connect();
 
-        $helper = new Helper($conn);
+        $helper = new Helper($connect);
         $helper->getListFromModuleClassList($data['class_list']);
 
         $id_account_list = $helper->getAccountListFromStudentList();
-        $notification    = new Notification($conn, $data['info'], $id_account_list);
+        $notification    = new Notification($connect, $data['info'], $id_account_list);
 
         $token_list            = $helper->getTokenListFromStudentList();
         $firebase_notification = new FirebaseNotification($data['info'], $token_list);
@@ -32,11 +32,14 @@
 
             $response = 'OK';
 
-        } catch (PDOException $e) {
-            printError($e);
+        } catch (PDOException $error) {
+            printError($error);
 
             $response = 'Failed';
         }
+    }
+    else {
+        $response = 'Invalid Request';
     }
 
     echo json_encode($response);

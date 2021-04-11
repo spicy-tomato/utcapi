@@ -6,11 +6,11 @@
     class AcademicYear
     {
         private const db_table = "Class";
-        private PDO $conn;
+        private PDO $connect;
 
-        public function __construct (PDO $conn)
+        public function __construct (PDO $connect)
         {
-            $this->conn = $conn;
+            $this->connect = $connect;
         }
 
         public function getAcademicYear ()
@@ -26,13 +26,13 @@
 
 
             try {
-                $stmt = $this->conn->prepare($sql_query);
+                $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute();
 
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            } catch (PDOException $e) {
-                printError($e);
+            } catch (PDOException $error) {
+                printError($error);
 
                 return "Failed";
             }
