@@ -36,7 +36,7 @@
                     " . self::other_department_table . " od, 
                     " . self::faculty_table . " f  
                 WHERE 
-                    (a.Username = :username AND 
+                    (a.username = :username AND 
                     a.password = :password) AND 
                     (od.ID = a.id OR f.ID = a.id) 
                 LIMIT 0, 1";

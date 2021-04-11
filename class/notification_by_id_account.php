@@ -28,7 +28,7 @@
                     SELECT
                         n.*,
                         od.Other_Department_Name, 
-                        a.Permission 
+                        a.permission 
                     FROM
                          " . self::notification_account_table . " na,
                          " . self::notification_table . " n,
@@ -43,7 +43,7 @@
                     SELECT
                         n.*, 
                         f.Faculty_Name, 
-                        a.Permission 
+                        a.permission 
                     FROM
                          " . self::notification_account_table . " na,
                          " . self::notification_table . " n,
@@ -90,15 +90,15 @@
             for ($i = 0; $i < count($arr); $i++) {
                 $arr[$i]['ID_Notification'] = intval($arr[$i]['ID_Notification']);
                 $arr[$i]['ID_Sender']       = intval($arr[$i]['ID_Sender']);
-                $arr[$i]['Permission']      = intval($arr[$i]['Permission']);
+                $arr[$i]['permission']      = intval($arr[$i]['permission']);
 
                 $data['notification'][$i] = $arr[$i];
                 unset($data['notification'][$i]['Other_Department_Name']);
-                unset($data['notification'][$i]['Permission']);
+                unset($data['notification'][$i]['permission']);
 
                 $data['sender'][$i]['ID_Sender']   = $arr[$i]['ID_Sender'];
                 $data['sender'][$i]['Sender_Name'] = $arr[$i]['Other_Department_Name'];
-                $data['sender'][$i]['Permission']  = $arr[$i]['Permission'];
+                $data['sender'][$i]['permission']  = $arr[$i]['permission'];
             }
 
             $data['sender'] = array_values(array_unique($data['sender'], SORT_REGULAR));

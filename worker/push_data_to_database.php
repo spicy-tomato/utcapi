@@ -63,7 +63,7 @@
                                  Account_Username, 
                                  Account_Email, 
                                  Password, 
-                                 Permission
+                                 permission
                             ) 
                             VALUES 
                                 (?,?,?,?)";
@@ -82,7 +82,7 @@
                     FROM 
                         Account
                     WHERE 
-                        Username = ?";
+                        username = ?";
 
             $connect = $this->db->connect();
             $stmt = $connect->prepare($sql);

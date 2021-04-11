@@ -20,18 +20,18 @@
         {
             $sql_query =
                 "SELECT
-                    Permission
+                    permission
                 FROM
                     " . self::account_table . "
                 WHERE
-                    Username = :username";
+                    username = :username";
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':username' => $username]);
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                return isset($data['Permission']) ? $data['Permission'] : 'Not Found';
+                return isset($data['permission']) ? $data['permission'] : 'Not Found';
 
             } catch (PDOException $error) {
                 printError($error);

@@ -24,7 +24,7 @@
                 FROM
                      " . self::account_table_name . "
                 WHERE
-                    Username = :username AND
+                    username = :username AND
                     password = :password";
 
             try {
@@ -38,11 +38,11 @@
                     $data['message'] = 'failed';
                 }
                 else {
-                    if ($response['Permission'] == '0') {
+                    if ($response['permission'] == '0') {
                         $data = $this->_getData($response['id'], self::student_table_name);
                     }
                     else {
-                        if ($response['Permission'] == '1') {
+                        if ($response['permission'] == '1') {
                             $data = $this->_getData($response['id'], self::teacher_table_name);
                         }
                         else {
