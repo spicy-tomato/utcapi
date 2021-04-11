@@ -3,19 +3,18 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/notification_by_id_account.php";
 
-    $db               = new Database();
-    $conn             = $db->connect();
-    $res              = null;
-    $notification_by_id_account = new NotificationByIDAccount($conn);
+    if ($_SERVER["REQUEST_METHOD"] == 'GET' &&
+        isset($_GET["ID"])) {
 
-    switch ($_SERVER["REQUEST_METHOD"]) {
-        case "GET":
-            $res = $notification_by_id_account->getAll();
-            break;
+        $db      = new Database();
+        $connect = $db->connect();
+        $id      = $_GET["ID"];
 
-        default:
-            echo null;
-            exit();
+        $notification_by_id_account = new NotificationByIDAccount($connect);
+        $response                   = $notification_by_id_account->getAll($id);
+    }
+    else {
+        $response = 'Invalid Request';
     }
 
-    echo json_encode($res);
+    echo json_encode($response);
