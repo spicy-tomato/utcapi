@@ -1,15 +1,15 @@
 <?php
 
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/print_error.php';
 
     class StudentSchedule
     {
-        private const module_class_table = "Module_Class";
-        private const schedule_table = "Schedules";
-        private const student_table = "Student";
-        private const participate_table = "Participate";
-        private const module_table = "Module";
+        private const module_class_table = 'Module_Class';
+        private const schedule_table = 'Schedules';
+        private const student_table = 'Student';
+        private const participate_table = 'Participate';
+        private const module_table = 'Module';
 
         private string $student_id;
         private PDO $connect;

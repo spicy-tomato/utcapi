@@ -5,7 +5,7 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/student_schedule.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/teacher_schedule.php";
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         isset($_GET['id'])) {
 
         $db      = new Database();

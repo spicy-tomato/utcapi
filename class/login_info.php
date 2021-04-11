@@ -1,12 +1,12 @@
 <?php
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/print_error.php';
 
     class LoginInfo
     {
-        private const account_table = "Account";
-        private const other_department_table = "Other_Department";
-        private const faculty_table = "Faculty";
+        private const account_table = 'Account';
+        private const other_department_table = 'Other_Department';
+        private const faculty_table = 'Faculty';
 
 
         private PDO $connect;

@@ -1,14 +1,14 @@
 <?php
 
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/db.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/print_error.php';
 
     class LoginApp
     {
-        private const account_table_name = "Account";
-        private const student_table_name = "Student";
-        private const teacher_table_name = "Teacher";
+        private const account_table_name = 'Account';
+        private const student_table_name = 'Student';
+        private const teacher_table_name = 'Teacher';
         private PDO $connect;
 
         public function __construct (PDO $connect)
@@ -24,12 +24,13 @@
                 FROM
                      " . self::account_table_name . "
                 WHERE
-                    Username = ? AND
-                    password = ?";
+                    Username = :username AND
+                    password = :password";
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute(array($account['ID'], md5($account['Password'])));
+                $stmt->execute([':username' => $account['ID'],
+                                ':password' => md5($account['Password'])]);
 
                 $response = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -68,12 +69,12 @@
                 FROM 
                      " . $table_name . "
                 WHERE 
-                    ID = ?";
+                    ID = :id";
 
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute(array($id_account));
+                $stmt->execute([':id' => $id_account]);
 
                 $response = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -81,7 +82,6 @@
                     $data['message'] = 'failed';
                 }
                 else {
-                    unset($response['ID']);
                     $data['message'] = 'success';
                     $data['info']    = $response;
                 }

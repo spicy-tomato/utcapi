@@ -2,10 +2,9 @@
 
     class Helper
     {
-        private const participate_table = "Participate";
-        private const student_table = "Student";
-        private const device_table = "Device";
-        private const account_table = "Account";
+        private const participate_table = 'Participate';
+        private const student_table = 'Student';
+        private const device_table = 'Device';
 
         private PDO $connect;
         private array $student_id_list;
@@ -135,7 +134,7 @@
 
         private function _getSqlOfList($list): string
         {
-            $sql = "";
+            $sql = '';
 
             foreach ($list as $id) {
                 $sql .= "'" . $id . "',";

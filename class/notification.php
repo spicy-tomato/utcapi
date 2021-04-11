@@ -1,12 +1,12 @@
 <?php
 
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/print_error.php';
 
     class Notification
     {
-        private const notification_table = "Notification";
-        private const notification_account_table = "Notification_Account";
+        private const notification_table = 'Notification';
+        private const notification_account_table = 'Notification_Account';
 
         private PDO $connect;
         private string $id;
@@ -21,7 +21,7 @@
 
         public function __construct (PDO $connect, array $info, array $id_account_list)
         {
-            $this->connect            = $connect;
+            $this->connect         = $connect;
             $this->title           = $info['title'];
             $this->content         = $info['content'];
             $this->typez           = $info['typez'];
@@ -35,12 +35,12 @@
         private function _getDateNow () : string
         {
             date_default_timezone_set('Asia/Ho_Chi_Minh');
-            $temp_date = date("d/m/Y H:i:s");
+            $temp_date = date('d/m/Y H:i:s');
 
-            $arr  = explode(" ", $temp_date);
-            $arr2 = explode("/", $arr[0]);
+            $arr  = explode(' ', $temp_date);
+            $arr2 = explode('/', $arr[0]);
 
-            $temp_date = $arr2[2] . "/" . $arr2[1] . "/" . $arr2[0] . " " . $arr[1];
+            $temp_date = $arr2[2] . '/' . $arr2[1] . '/' . $arr2[0] . ' ' . $arr[1];
 
             return $temp_date;
         }
@@ -51,8 +51,13 @@
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute(array($this->title, $this->content, $this->typez, $this->sender,
-                    $this->time_create, $this->time_start, $this->time_end));
+                $stmt->execute([':title'       => $this->title,
+                                ':content'     => $this->content,
+                                ':typez'       => $this->typez,
+                                ':id_sender'   => $this->sender,
+                                ':time_create' => $this->time_create,
+                                ':time_start'  => $this->time_start,
+                                ':time_end'    => $this->time_end]);
 
                 $this->id = $this->_getId();
 
@@ -70,7 +75,7 @@
                     " . self::notification_account_table . "
                     (ID_Notification, ID_Account)
                 VALUES
-                    (?,?)
+                    (:id_notification, :id_account)
                 ";
 
             $this->connect->beginTransaction();
@@ -80,7 +85,8 @@
                         continue;
                     }
                     $stmt = $this->connect->prepare($sql_query);
-                    $stmt->execute(array($this->id, $id_account));
+                    $stmt->execute([':id_notification' => $this->id,
+                                    ':id_account'      => $id_account]);
                 }
 
                 $this->connect->commit();
@@ -99,7 +105,8 @@
                     (Title, Content, Typez, ID_Sender, 
                     Time_Create, Time_Start, Time_End)
                 VALUES
-                    (?,?,?,?,?,?,?) 
+                    (:title, :content, :typez, :id_sender, 
+                    :time_create, :time_start, :time_end) 
                 ";
 
             return $sql_query;

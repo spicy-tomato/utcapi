@@ -1,14 +1,14 @@
 <?php
 
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/print_error.php';
 
     class TeacherSchedule
     {
-        private const module_table = "Module";
-        private const module_class_table = "Module_Class";
-        private const schedule_table = "Schedules";
-        private const teacher_table = "Teacher";
+        private const module_table = 'Module';
+        private const module_class_table = 'Module_Class';
+        private const schedule_table = 'Schedules';
+        private const teacher_table = 'Teacher';
 
         private string $teacher_id;
         private PDO $connect;
@@ -46,7 +46,7 @@
             } catch (PDOException $error) {
                 printError($error);
 
-                return "Failed";
+                return 'Failed';
             }
         }
     }
