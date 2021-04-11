@@ -2,7 +2,7 @@
 
 
     include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/db.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/print_error.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/shared/functions.php';
 
     class LoginApp
     {

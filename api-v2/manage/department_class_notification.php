@@ -3,7 +3,7 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/notification.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/firebase_notification.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/print_error.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/shared/functions.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/helper.php";
 
     $response = 'No request';
