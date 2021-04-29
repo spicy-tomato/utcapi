@@ -9,7 +9,7 @@
             $this->fileArr = $fileArr;
         }
 
-        public function handleFile ()
+        public function handleFile () : array
         {
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $newFileNameArr = null;
@@ -26,7 +26,7 @@
                     $newFileNameArr[] = $newFileName;
                 }
                 else {
-                    $newFileNameArr = 'Failure';
+                    $newFileNameArr = null;
                 }
             }
 

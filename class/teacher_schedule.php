@@ -15,7 +15,7 @@
 
         public function __construct (PDO $connect, string $teacher_id)
         {
-            $this->connect       = $connect;
+            $this->connect    = $connect;
             $this->teacher_id = $teacher_id;
         }
 
@@ -40,8 +40,15 @@
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':teacher_id' => $this->teacher_id]);
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $stmt->execute([
+                    ':teacher_id' => $this->teacher_id
+                ]);
+                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($data as &$e) {
+                    $e['Shift_Schedules'] = intval($e['Shift_Schedules']);
+                }
+
+                return $data;
 
             } catch (PDOException $error) {
                 printError($error);

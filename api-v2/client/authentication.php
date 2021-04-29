@@ -1,6 +1,6 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/db.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/class/login_app_info.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/class/account.php';
 
     $account = json_decode(file_get_contents('php://input'), true);
 
@@ -10,7 +10,7 @@
         $db      = new Database();
         $connect = $db->connect();
 
-        $login_app = new LoginApp($connect);
+        $login_app = new Account($connect);
         $response  = $login_app->checkAccount($account);
     }
     else {

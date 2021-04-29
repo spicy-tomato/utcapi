@@ -11,6 +11,7 @@
         private const notification_table = 'Notification';
         private const other_department_table = 'Other_Department';
         private const faculty_table = 'Faculty';
+        private const teacher_table = 'Teacher';
 
         private PDO $connect;
 
@@ -42,7 +43,7 @@
                 UNION
                     SELECT
                         n.*, 
-                        f.Faculty_Name, 
+                        concat('Khoa ', f.Faculty_Name), 
                         a.permission 
                     FROM
                          " . self::notification_account_table . " na,
@@ -53,6 +54,21 @@
                         na.ID_Account = :id_account AND 
                         n.ID_Notification = na.ID_Notification AND
                         f.ID = n.ID_Sender AND 
+                        a.id = n.ID_Sender 
+                UNION
+                    SELECT
+                        n.*, 
+                        concat('Gv.', t.Name_Teacher), 
+                        a.permission 
+                    FROM
+                         " . self::notification_account_table . " na,
+                         " . self::notification_table . " n,
+                         " . self::teacher_table . " t, 
+                         " . self::account_table . " a    
+                    WHERE
+                        na.ID_Account = :id_account AND 
+                        n.ID_Notification = na.ID_Notification AND
+                        t.ID = n.ID_Sender AND 
                         a.id = n.ID_Sender 
                     ";
 
@@ -75,8 +91,7 @@
             } catch (PDOException $error) {
                 printError($error);
 
-                $data['notification'] = [];
-                $data['sender'] = [];
+                $data['message'] = 'Failed';
             }
 
 

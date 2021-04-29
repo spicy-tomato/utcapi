@@ -3,7 +3,7 @@
 //
 //    class TKBController
 //    {
-//        private PDO    $ket_noi;
+//        private PDO    $connect;
 //        private string $ma_sv;
 //        private string $nam_hoc;
 //        private string $hoc_ky;
@@ -11,15 +11,15 @@
 //
 //        private Schedule $tkb;
 //
-//        public function __construct (PDO $ket_noi, string $phuong_thuc_truy_van, string $ma_sv, string $nam_hoc, int $hoc_ky)
+//        public function __construct (PDO $connect, string $phuong_thuc_truy_van, string $ma_sv, string $nam_hoc, int $hoc_ky)
 //        {
-//            $this->ket_noi              = $ket_noi;
+//            $this->connect              = $connect;
 //            $this->phuong_thuc_truy_van = $phuong_thuc_truy_van;
 //            $this->ma_sv                = $ma_sv;
 //            $this->nam_hoc              = $nam_hoc;
 //            $this->hoc_ky               = $hoc_ky;
 //
-//            $this->tkb = new Schedule($ket_noi);
+//            $this->tkb = new Schedule($connect);
 //        }
 //
 //        public function xuLyTruyVan () : void

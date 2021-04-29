@@ -16,11 +16,11 @@
 
         public function __construct (PDO $connect, string $student_id)
         {
-            $this->connect       = $connect;
+            $this->connect    = $connect;
             $this->student_id = $student_id;
         }
 
-        public function getAll () : array
+        public function getAll ()
         {
             $sql_query =
                 "SELECT
@@ -33,8 +33,8 @@
                     " . self::participate_table . " par,
                     " . self::module_class_table . " mdcls
                 WHERE
-                    stu.ID_Student = :student_id AND
-                    par.ID_Student = :student_id AND
+                    stu.ID_Student = :id_student AND
+                    par.ID_Student = :id_student AND
                     sdu.ID_Module_Class = par.ID_Module_Class AND
                     mdcls.ID_Module_Class = sdu.ID_Module_Class AND
                     mc.ID_Module = mdcls.ID_Module
@@ -43,14 +43,17 @@
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':student_id' => $this->student_id]);
+                $stmt->execute([':id_student' => $this->student_id]);
+                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($data as &$e) {
+                    $e['Shift_Schedules'] = intval($e['Shift_Schedules']);
+                }
 
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+                return $data;
             } catch (PDOException $error) {
                 printError($error);
 
-                return [];
+                return 'Failed';
             }
         }
     }

@@ -44,11 +44,12 @@
 
 
         private Database $db;
+        private PDO $connect;
         private array $data;
 
-        public function __construct (Database $db)
+        public function __construct (PDO $connect)
         {
-            $this->db = $db;
+            $this->connect = $connect;
         }
 
         public function setData (array $data) : void
@@ -60,19 +61,19 @@
         {
             $sql = "INSERT INTO Account 
                             (
-                                 Account_Username, 
-                                 Account_Email, 
-                                 Password, 
+                                 username, 
+                                 email, 
+                                 password,
+                                 qldt_password,
                                  permission
                             ) 
                             VALUES 
-                                (?,?,?,?)";
+                                (?,?,?, null, ?)";
 
-            $connect = $this->db->connect();
-            $stmt = $connect->prepare($sql);
-            $stmt->execute(array($id_student, NULL, md5($dob), 0));
+            $stmt = $this->connect->prepare($sql);
+            $stmt->execute(array($id_student, null, md5($dob), 0));
 
-            return $connect->lastInsertId();
+            return $this->connect->lastInsertId();
         }
 
         private function isAccountExist ($username) : bool
@@ -84,8 +85,7 @@
                     WHERE 
                         username = ?";
 
-            $connect = $this->db->connect();
-            $stmt = $connect->prepare($sql);
+            $stmt = $this->connect->prepare($sql);
             $stmt->execute(array($username));
 
             $response = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -128,7 +128,7 @@
                     $sql .= "'" . $item . "',";
                 }
                 else {
-                    $sql .= "NULL,";
+                    $sql .= "null,";
                 }
 
             }
@@ -141,12 +141,10 @@
 
         public function pushData ($table_name)
         {
-            $connect = $this->db->connect();
-
             foreach ($this->data as $arr) {
                 $sql = $this->_createSQL($arr, $table_name);
 
-                $stmt = $connect->prepare($sql);
+                $stmt = $this->connect->prepare($sql);
                 $stmt->execute();
             }
         }

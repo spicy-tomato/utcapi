@@ -1,6 +1,7 @@
 <?php
     require $_SERVER['DOCUMENT_ROOT'] . '/utcapi/vendor/autoload.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/shared/functions.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/device.php";
 
     use Kreait\Firebase\Exception\FirebaseException;
     use Kreait\Firebase\Exception\MessagingException;
@@ -26,6 +27,10 @@
 
         public function send ()
         {
+            $db      = new Database();
+            $connect = $db->connect();
+            $device  = new Device($connect);
+
             foreach ($this->token_list as $token) {
                 $message = CloudMessage::withTarget('token', $token)
                     ->withNotification($this->notification);
@@ -34,6 +39,10 @@
                     $this->messaging->send($message);
                 } catch (MessagingException | FirebaseException $error) {
                     printError($error);
+
+                    if ($error->getCode() == 0) {
+                        $device->deleteOldToken($token);
+                    }
                 }
             }
         }

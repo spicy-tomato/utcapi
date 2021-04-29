@@ -33,8 +33,8 @@
                 return;
             }
 
-            $sql_query =
-                "SELECT
+            $sql_query = "
+                SELECT
                     ID_Student
                 FROM
                     " . self::participate_table . "
@@ -87,8 +87,8 @@
 
         private function _getAccountListFromStudentList($sql_of_list)
         {
-            $sql_query =
-                "SELECT
+            $sql_query = "
+                SELECT
                     ID
                 FROM
                     " . self::student_table . "
@@ -117,8 +117,8 @@
                 return [];
             }
 
-            $sql_query =
-                "SELECT
+            $sql_query = "
+                SELECT
                     Device_Token
                 FROM
                     " . self::device_table . "

@@ -29,7 +29,7 @@ async function uploadFile() {
 
     response = responseAsJson.json();
 
-    if (response !== 'Failure') {
+    if (await response === 'OK') {
         alert('The file has been uploaded successfully.');
     }
     else {

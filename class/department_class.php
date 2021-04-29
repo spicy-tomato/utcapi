@@ -15,15 +15,15 @@
 
         public function getAll()
         {
-            $sql_query = '
+            $sql_query = "
                     SELECT 
                         Academic_Year, ID_Faculty, ID_Class
-                    FROM ' . self::db_table . ' 
+                    FROM " . self::db_table . "  
                     ORDER BY 
                         Academic_Year ASC,
                         ID_Faculty ASC,
                         ID_Class ASC
-                    ';
+                    ";
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

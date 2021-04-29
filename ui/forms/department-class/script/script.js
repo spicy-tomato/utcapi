@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     createAcademicCheckBoxArea()
 
-    console.log(document.getElementsByName('academic_year'))
     document.getElementById('all_academic_year').addEventListener('click', tickAllForAcademicYearAndFaculty)
     document.getElementById('all_faculty').addEventListener('click', tickAllForAcademicYearAndFaculty)
     document.getElementById('submit_btn').addEventListener('click', trySendNotification)
@@ -479,10 +478,9 @@ async function trySendNotification() {
     let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField)
 
     if (madeRequest) {
+        console.log(111)
         document.getElementById('submit_btn').removeEventListener('click', trySendNotification)
     }
-
-    console.log(selectedClass)
 }
 
 function fillForms() {

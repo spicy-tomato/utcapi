@@ -3,8 +3,8 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/notification.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/firebase_notification.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/shared/functions.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/helper.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/shared/functions.php";
 
     $response = 'No request';
 
@@ -13,7 +13,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
         $data != null) {
 
-        $db   = new Database();
+        $db      = new Database();
         $connect = $db->connect();
 
         $helper = new Helper($connect);
@@ -27,9 +27,7 @@
 
         try {
             $notification->create();
-
             $firebase_notification->send();
-
             $response = 'OK';
 
         } catch (PDOException $error) {

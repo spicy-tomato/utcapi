@@ -9,18 +9,18 @@
         {
             $output = null;
 
-            try
-            {
+            try {
                 $command = escapeshellcmd("python .\main.py $file_name");
-                $output = shell_exec($command);
+                $output  = shell_exec($command);
 
-            } catch (Exception $error)
-            {
-                printError($error);;
+            } catch (Exception $error) {
+                printError($error);
+
+                return null;
             }
 
             $json = json_decode($output, true);
 
-            return $json;
+            return $output != null ? $json : null;
         }
     }

@@ -51,13 +51,13 @@
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':title'       => $this->title,
-                                ':content'     => $this->content,
-                                ':typez'       => $this->typez,
-                                ':id_sender'   => $this->sender,
-                                ':time_create' => $this->time_create,
-                                ':time_start'  => $this->time_start,
-                                ':time_end'    => $this->time_end]);
+                $stmt->execute([':title' => $this->title,
+                    ':content' => $this->content,
+                    ':typez' => $this->typez,
+                    ':id_sender' => $this->sender,
+                    ':time_create' => $this->time_create,
+                    ':time_start' => $this->time_start,
+                    ':time_end' => $this->time_end]);
 
                 $this->id = $this->_getId();
 
@@ -85,8 +85,10 @@
                         continue;
                     }
                     $stmt = $this->connect->prepare($sql_query);
-                    $stmt->execute([':id_notification' => $this->id,
-                                    ':id_account'      => $id_account]);
+                    $stmt->execute([
+                        ':id_notification' => $this->id,
+                        ':id_account' => $id_account
+                    ]);
                 }
 
                 $this->connect->commit();

@@ -27,9 +27,7 @@
 
         try {
             $notification->create();
-
             $firebase_notification->send();
-
             $response = 'OK';
 
         } catch (PDOException $error) {
