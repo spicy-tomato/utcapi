@@ -1,24 +1,40 @@
 <?php
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    session_start();
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/account.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/student_schedule.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/teacher_schedule.php";
 
-    if (isset($_GET['id'])) {
-        $db   = new Database();
-        $conn = $db->connect();
-        $res  = null;
-        $tkb  = new StudentSchedule($conn, $_GET['id']);
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
+        isset($_GET['id'])) {
 
-        if (isset($_GET['start']) &&
-            isset($_GET['to'])) {
+        $db      = new Database();
+        $connect = $db->connect();
+        $account = new Account($connect);
 
-            $res = $tkb->get($_GET['start'], $_GET['end']);
+        $flag = $account->getPermission($_GET['id']);
+        switch ($flag) {
+            case '0';
+                {
+                    $schedules = new StudentSchedule($connect, $_GET['id']);
+                    $response       = $schedules->getAll();
+                    break;
+                }
+
+            case '1':
+                {
+                    $schedules = new TeacherSchedule($connect, $_GET['id']);
+                    $response       = $schedules->getAll();
+                    break;
+                }
+
+            default:
+                $response = [];
         }
-        else {
-            $res = $tkb->getAll();
-        }
-
-        echo json_encode($res);
     }
+    else {
+        $response = 'Invalid Request';
+
+    }
+
+    echo json_encode($response);

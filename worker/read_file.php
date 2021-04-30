@@ -1,25 +1,26 @@
 <?php
 
+
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/shared/functions.php";
+
     class ReadFIle
     {
         public function getData ($file_name)
         {
             $output = null;
 
-            try
-            {
+            try {
                 $command = escapeshellcmd("python .\main.py $file_name");
-                $output = shell_exec($command);
-                // echo $command;
+                $output  = shell_exec($command);
 
-            } catch (Exception $e)
-            {
-                echo $e;
+            } catch (Exception $error) {
+                printError($error);
+
+                return null;
             }
 
             $json = json_decode($output, true);
-//            file_put_contents('PDOErrors.json', $output, FILE_APPEND);
 
-            return $json;
+            return $output != null ? $json : null;
         }
     }

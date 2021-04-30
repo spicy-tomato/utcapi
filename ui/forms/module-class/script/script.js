@@ -1,5 +1,5 @@
 import { postDataAndRaiseAlert } from '../../alerts.js'
-import {getSender, fetchData, autoFillTemplate} from '../../shared.js'
+import {getSender, fetchData, autoFillTemplate, changeStatusButton} from '../../shared.js'
 
 let moduleClassIdList = []
 let sender
@@ -50,6 +50,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('submit_btn').addEventListener('click', trySendNotification)
     document.getElementById('template').addEventListener('change', fillForms)
+    document.getElementsByName('reset_button')[0].addEventListener('click', resetInputDate)
+    document.getElementsByName('reset_button')[0].addEventListener('click', changeStatusButton)
+    document.getElementsByName('reset_button')[1].addEventListener('click', resetInputDate)
+    document.getElementsByName('reset_button')[1].addEventListener('click', changeStatusButton)
+    document.getElementById('time_start').addEventListener('change', changeStatusButton)
+    document.getElementById('time_end').addEventListener('change', changeStatusButton)
 
     //  Display selected tags
     moduleClassId.select2({
@@ -89,7 +95,7 @@ function getClassList() {
 //  Display error if there are some unfulfilled fields
 function getInvalidField(data) {
     for (const [field, fieldValue] of Object.entries(data.info)) {
-        if (fieldValue === '') {
+        if (fieldValue === '' && fieldList[field] !== undefined) {
             return fieldList[field]
         }
     }
@@ -109,6 +115,8 @@ async function trySendNotification() {
             title: $('#title').val(),
             content: $('#content').val(),
             typez: $('#type').val(),
+            time_start: $('#time_start').val(),
+            time_end: $('#time_end').val(),
             sender: sender
         },
         class_list: getClassList()
@@ -129,4 +137,11 @@ async function trySendNotification() {
 function fillForms()
 {
     autoFillTemplate(templateNoti[template.value])
+}
+
+
+function resetInputDate()
+{
+    let elemID = this.classList[2]
+    document.getElementById(elemID).value = ''
 }

@@ -3,19 +3,19 @@
 //
 //    class SinhVienController
 //    {
-//        private PDO    $ket_noi;
+//        private PDO    $connect;
 //        private string $ma_sv;
 //        private string $phuong_thuc_truy_van;
 //
 //        private SinhVien $sinh_vien;
 //
-//        public function __construct (PDO $ket_noi, string $phuong_thuc_truy_van, string $ma_sv)
+//        public function __construct (PDO $connect, string $phuong_thuc_truy_van, string $ma_sv)
 //        {
-//            $this->ket_noi              = $ket_noi;
+//            $this->connect              = $connect;
 //            $this->phuong_thuc_truy_van = $phuong_thuc_truy_van;
 //            $this->ma_sv                = $ma_sv;
 //
-//            $this->sinh_vien = new SinhVien($ket_noi);
+//            $this->sinh_vien = new SinhVien($connect);
 ////            echo($ma_sv);
 //        }
 //

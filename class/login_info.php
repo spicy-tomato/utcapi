@@ -1,65 +1,81 @@
 <?php
 
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/shared/functions.php';
+
     class LoginInfo
     {
-        private const department_account_table = "Account";
-        private const department_other_department_table = "Other_Department";
+        private const account_table = 'Account';
+        private const other_department_table = 'Other_Department';
+        private const faculty_table = 'Faculty';
 
-        private PDO $conn;
+
+        private PDO $connect;
         private string $department_name;
         private int $account_id;
         private string $username;
         private string $password;
 
-        public function __construct(PDO $conn, string $username, string $password)
+        public function __construct (PDO $connect, string $username, string $password)
         {
-            $this->conn     = $conn;
+            $this->connect = $connect;
             $this->username = $username;
             $this->password = $password;
         }
 
-        public function login(): bool
+        public function login () : bool
         {
-            $sqlQuery = "
+            $sql_query = "
                 SELECT 
                     a.id, 
-                    od.Other_Department_Name 
+                    od.Other_Department_Name, 
+                    od.ID AS O_ID, 
+                    f.Faculty_Name, 
+                    f.ID AS F_ID 
                 FROM 
-                    " . self::department_account_table . " a, 
-                    " . self::department_other_department_table . " od 
+                    " . self::account_table . " a, 
+                    " . self::other_department_table . " od, 
+                    " . self::faculty_table . " f  
                 WHERE 
-                    a.Username = :username AND 
-                    a.password = :password AND 
-                    od.ID = a.id 
+                    (a.username = :username AND 
+                    a.password = :password) AND 
+                    (od.ID = a.id OR f.ID = a.id) 
                 LIMIT 0, 1";
 
             try {
-                $stmt = $this->conn->prepare($sqlQuery);
+                $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
                     ':username' => $this->username,
                     ':password' => md5($this->password)
                 ]);
 
                 $loggedAccount = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
                 if (count($loggedAccount) == 1) {
-                    $this->department_name = $loggedAccount[0]['Other_Department_Name'];
+                    if ($loggedAccount[0]['id'] == $loggedAccount[0]['O_ID']) {
+                        $this->department_name = $loggedAccount[0]['Other_Department_Name'];
+                    }
+                    else {
+                        $this->department_name = $loggedAccount[0]['Faculty_Name'];
+                    }
                     $this->account_id = $loggedAccount[0]['id'];
                     return true;
                 }
 
                 return false;
 
-            } catch (PDOException $loi) {
-                exit($loi->getMessage());
+            } catch (PDOException $error) {
+                printError($error);
+
+                return false;
             }
         }
 
-        public function getDepartmentName(): string
+        public function getDepartmentName () : string
         {
             return $this->department_name;
         }
 
-        public function getAccountID(): string
+        public function getAccountID () : string
         {
             return $this->account_id;
         }

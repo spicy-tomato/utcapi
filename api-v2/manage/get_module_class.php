@@ -3,19 +3,15 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/module_class.php";
 
-    $db           = new Database();
-    $conn         = $db->connect();
-    $res          = null;
-    $module_class = new ModuleClass($conn);
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        $db      = new Database();
+        $connect = $db->connect();
 
-    switch ($_SERVER["REQUEST_METHOD"]) {
-        case "GET":
-            $res = $module_class->getAll();
-            break;
-
-        default:
-            echo null;
-            exit();
+        $module_class = new ModuleClass($connect);
+        $response     = $module_class->getAll();
+    }
+    else {
+        $response = 'Invalid Request';
     }
 
-    echo json_encode($res);
+    echo json_encode($response);

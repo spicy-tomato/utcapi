@@ -3,34 +3,33 @@
 
     include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/shared/functions.php';
 
-    class DepartmentClass
+    class AcademicYear
     {
         private const db_table = 'Class';
         private PDO $connect;
 
-        public function __construct(PDO $connect)
+        public function __construct (PDO $connect)
         {
             $this->connect = $connect;
         }
 
-        public function getAll()
+        public function getAcademicYear ()
         {
             $sql_query = "
-                    SELECT 
-                        Academic_Year, ID_Faculty, ID_Class
-                    FROM " . self::db_table . "  
+                    SELECT DISTINCT
+                        Academic_Year
+                    FROM " . self::db_table . " 
                     ORDER BY 
-                        Academic_Year ASC,
-                        ID_Faculty ASC,
-                        ID_Class ASC
+                        Academic_Year DESC 
+                    LIMIT 9
                     ";
+
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute();
 
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 
             } catch (PDOException $error) {
                 printError($error);
@@ -39,3 +38,4 @@
             }
         }
     }
+

@@ -113,9 +113,10 @@
               <textarea cols="30" rows="10" class="form-control" id="content"></textarea>
             </div>
           </div>
-          <div class="right">
-            <label for="title"><legend>Một số mẫu thông báo:</legend></label><br>
-             <select name="template" id="template">
+          <div class="right form-group mt-4">
+            <div class="template">
+              <label for="title"><legend>Một số mẫu thông báo:</legend></label><br>
+              <select class="template" id="template">
                 <option value="empty"></option>
                 <option value="study">Học tập</option>
                 <option value="fee">Học phí</option>
@@ -123,6 +124,18 @@
                 <option value="social_payment">Chi trả xã hội</option>
                 <option value="others">Thông báo khác</option>
               </select>
+            </div>
+            
+            <div class="form-group mt-4">
+              <label for="time_start" class="select_date">Ngày bắt đầu:</label>
+              <input type="date" class="input_date" id="time_start">
+              <button class="btn btn-primary time_start disable" name="reset_button">Bỏ chọn</button>
+            </div>
+            <div class="form-group mt-4">
+              <label for="time_end" class="select_date">Ngày kết thúc:</label>
+              <input type="date" class="input_date" id="time_end">
+              <button class="btn btn-primary time_end disable" name="reset_button">Bỏ chọn</button>
+            </div>
           </div>
         </div>';
     }

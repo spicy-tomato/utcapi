@@ -11,6 +11,19 @@
     width: 38%;
 }
 
+.select_date {
+    width: 30%;
+}
+
+.input_date {
+    height: 38px;
+}
+
+.disable {
+    background-color: gray;
+    border-color: gray;
+}
+
 .dropdown-submenu {
     position: relative;
 }

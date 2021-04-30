@@ -7,8 +7,6 @@
 <html lang="en">
 
 <?php
-
-
     shared_header('Trang chủ');
 ?>
 <body>
