@@ -24,8 +24,8 @@
         {
             $sql_query =
                 "SELECT
-                    mc.Module_Name,
-                    sdu.ID_Module_Class, sdu.ID_Room, sdu.Shift_Schedules, sdu.Day_Schedules
+                    mdcls.Module_Class_Name, sdu.ID_Module_Class, 
+                    sdu.ID_Room, sdu.Shift_Schedules, sdu.Day_Schedules
                 FROM
                     " . self::module_table . " mc,
                     " . self::schedule_table . " sdu,

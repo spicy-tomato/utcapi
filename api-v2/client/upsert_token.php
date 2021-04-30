@@ -11,7 +11,7 @@
         $db      = new Database();
         $connect = $db->connect();
 
-        $token    = new Token($connect, $data['id_student'], $data['token']);
+        $token    = new Token($connect, $data['student_id'], $data['token']);
         $response = $token->upsert();
     }
     else {
