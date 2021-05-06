@@ -1,7 +1,7 @@
 <?php
-    require $_SERVER['DOCUMENT_ROOT'] . '/utcapi/vendor/autoload.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/shared/functions.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/device.php";
+    require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/shared/functions.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/device.php";
 
     use Kreait\Firebase\Exception\FirebaseException;
     use Kreait\Firebase\Exception\MessagingException;
@@ -19,7 +19,7 @@
 
         public function __construct (array $info, array $token_list)
         {
-            $this->credentials_path = $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/firebase_credentials.json';
+            $this->credentials_path = $_SERVER['DOCUMENT_ROOT'] . '/config/firebase_credentials.json';
             $this->_setInfo($info);
             $this->token_list = $token_list;
             $this->_initFactory();

@@ -1,7 +1,7 @@
 <?php
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/academic_year.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/config/db.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/academic_year.php";
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $db      = new Database();

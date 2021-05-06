@@ -1,6 +1,6 @@
 <?php
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/shared/functions.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
 
     class LoginInfo
     {

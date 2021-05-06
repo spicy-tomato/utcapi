@@ -1,9 +1,9 @@
 <?php
 //
-//    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
-//    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/notification.php";
-//    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/firebase_notification.php";
-//    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/worker/read_file.php";
+//    include_once $_SERVER['DOCUMENT_ROOT'] . "/config/db.php";
+//    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/notification.php";
+//    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/firebase_notification.php";
+//    include_once $_SERVER['DOCUMENT_ROOT'] . "/worker/read_file.php";
 //
 //    $response = 'No request';
 //

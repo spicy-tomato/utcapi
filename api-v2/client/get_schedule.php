@@ -1,9 +1,9 @@
 <?php
     session_start();
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/account.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/student_schedule.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/teacher_schedule.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/config/db.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/account.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/student_schedule.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/teacher_schedule.php";
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         isset($_GET['id'])) {
