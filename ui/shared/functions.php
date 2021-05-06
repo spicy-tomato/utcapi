@@ -152,7 +152,7 @@
 
         if (isset($_SESSION['time_limit']) && $now > $_SESSION['time_limit']) {
             session_destroy();
-            header('Location: /utcapi/ui/login/');
+            header('Location: /ui/login/');
         }
 
         $_SESSION['time_limit'] = $now + 3600;
