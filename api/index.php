@@ -23,9 +23,9 @@
 //            $phuong_thuc_truy_van = $_SERVER['REQUEST_METHOD'];
 //
 //            $csdl    = new Database();
-//            $ket_noi = $csdl->connect();
+//            $connect = $csdl->connect();
 //
-//            $sinh_vien_controller = new SinhVienController($ket_noi, $phuong_thuc_truy_van, $ma_sv);
+//            $sinh_vien_controller = new SinhVienController($connect, $phuong_thuc_truy_van, $ma_sv);
 //            $sinh_vien_controller->xuLyTruyVan();
 //            break;
 //
@@ -36,9 +36,9 @@
 //            $phuong_thuc_truy_van = $_SERVER['REQUEST_METHOD'];
 //
 //            $csdl    = new Database();
-//            $ket_noi = $csdl->connect();
+//            $connect = $csdl->connect();
 //
-//            $tkb_controller = new TKBController($ket_noi, $phuong_thuc_truy_van, $ma_sv, $nam_hoc, $hoc_ky);
+//            $tkb_controller = new TKBController($connect, $phuong_thuc_truy_van, $ma_sv, $nam_hoc, $hoc_ky);
 //            $tkb_controller->xuLyTruyVan();
 //            break;
 //
@@ -46,9 +46,9 @@
 //            $phuong_thuc_truy_van = $_SERVER['REQUEST_METHOD'];
 //
 //            $csdl    = new Database();
-//            $ket_noi = $csdl->connect();
+//            $connect = $csdl->connect();
 //
-//            $department_class_controller = new DepartmentClassController($ket_noi, $phuong_thuc_truy_van);
+//            $department_class_controller = new DepartmentClassController($connect, $phuong_thuc_truy_van);
 //            $department_class_controller->xuLyTruyVan();
 //            break;
 //

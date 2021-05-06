@@ -1,16 +1,19 @@
 <?php
 
+
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/shared/functions.php";
+
     class ModuleClass
     {
         private const db_table = "Module_Class";
-        private PDO $conn;
+        private PDO $connect;
 
-        public function __construct(PDO $conn)
+        public function __construct(PDO $connect)
         {
-            $this->conn = $conn;
+            $this->connect = $connect;
         }
 
-        public function getAll(): array
+        public function getAll()
         {
             $sql_query =
                 "SELECT 
@@ -21,9 +24,16 @@
                     ID_Module_Class
                 ";
 
-            $stmt = $this->conn->prepare($sql_query);
-            $stmt->execute();
+            try {
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute();
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            } catch (PDOException $error) {
+                printError($error);
+
+                return "Failed";
+            }
         }
     }

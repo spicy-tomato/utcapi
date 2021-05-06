@@ -1,30 +1,41 @@
 <?php
 
+
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/shared/functions.php';
+
     class DepartmentClass
     {
-        private const db_table = "Class";
-        private PDO $conn;
+        private const db_table = 'Class';
+        private PDO $connect;
 
-        public function __construct(PDO $conn)
+        public function __construct(PDO $connect)
         {
-            $this->conn = $conn;
+            $this->connect = $connect;
         }
 
-        public function getAll(): array
+        public function getAll()
         {
             $sql_query = "
                     SELECT 
                         Academic_Year, ID_Faculty, ID_Class
-                    FROM " . self::db_table . " 
+                    FROM " . self::db_table . "  
                     ORDER BY 
                         Academic_Year ASC,
                         ID_Faculty ASC,
                         ID_Class ASC
                     ";
 
-            $stmt = $this->conn->prepare($sql_query);
-            $stmt->execute();
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute();
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+            } catch (PDOException $error) {
+                printError($error);
+
+                return 'Failed';
+            }
         }
     }
