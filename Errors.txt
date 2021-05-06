@@ -862,3 +862,427 @@ project you are using. This could have the following reasons:
   environment to a device in another environment.
 
 
+03/05/2021 14:07:44
+HY000
+SQLSTATE[HY000]: General error
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA1.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA2.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GDT01.1-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-QLY17.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-CPM01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-MLN301.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-DSO02.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-ANHB1.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GIT01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP202.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-VLY01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN04.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-CPM215.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP201.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GIT02.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GDT02.1-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP203.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:07:52
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN302.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:41
+HY000
+SQLSTATE[HY000]: General error
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA1.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA2.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GDT01.1-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-QLY17.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-CPM01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-MLN301.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-DSO02.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-ANHB1.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GIT01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP202.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-VLY01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN04.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-CPM215.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP201.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GIT02.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GDT02.1-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP203.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:15:48
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN302.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:32
+HY000
+SQLSTATE[HY000]: General error
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA1.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA2.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GDT01.1-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-QLY17.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-CPM01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-MLN301.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-DSO02.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-ANHB1.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GIT01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP202.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-VLY01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN04.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-CPM215.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP201.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GIT02.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GDT02.1-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP203.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:27:40
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN302.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:23
+HY000
+SQLSTATE[HY000]: General error
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA1.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA2.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GDT01.1-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-QLY17.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-CPM01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-MLN301.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-DSO02.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-ANHB1.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GIT01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP202.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-VLY01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN04.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-CPM215.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP201.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GIT02.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GDT02.1-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP203.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:28:34
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN302.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:46:54
+HY000
+SQLSTATE[HY000]: General error
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA1.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA2.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GDT01.1-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-QLY17.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-CPM01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-MLN301.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-DSO02.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-ANHB1.4-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GIT01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP202.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-VLY01.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN04.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-CPM215.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP201.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GIT02.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GDT02.1-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP203.3-191212716' for key 'module_score.PRIMARY'
+03/05/2021 14:47:01
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN302.2-191212716' for key 'module_score.PRIMARY'
+03/05/2021 17:13:57
+0
+The registration token is not a valid FCM registration token
+03/05/2021 17:28:28
+0
+
+
+The message could not be delivered to the device identified by 'cNlFbxRTR4umUsZhrvgO7s:APA91bH40eBR0FdP3nd2PtRq6yuwgCRmh8wH99zp1a74ihCvzx0ZyJuI6JrsJCMaVRYLPTPIf1E5Qu9cDp9nage4LYL_EzbTcyD7XxzOQSMRej9k8B3He024vAIscu3d8-3CC0V_kis2'.
+
+Although the token is syntactically correct, it is not known to the Firebase
+project you are using. This could have the following reasons:
+
+- The token has been unregistered from the project. This can happen when a user
+  has logged out from the application on the given client, or if they have
+  uninstalled or re-installed the application.
+
+- The token has been registered to a different Firebase project than the project
+  you are using to send the message. A common reason for this is when you work
+  with different application environments and are sending a message from one
+  environment to a device in another environment.
+
+
+03/05/2021 18:17:05
+0
+The registration token is not a valid FCM registration token
+04/05/2021 13:45:11
+HY000
+SQLSTATE[HY000]: General error
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA1.4-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA2.4-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GDT01.1-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-QLY17.2-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-CPM01.3-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-MLN301.3-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-DSO02.3-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-ANHB1.4-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GIT01.3-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP202.2-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-VLY01.3-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN04.2-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-CPM215.3-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP201.3-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GIT02.3-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GDT02.1-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP203.3-191212716' for key 'module_score.PRIMARY'
+04/05/2021 13:45:19
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN302.2-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:11:31
+HY000
+SQLSTATE[HY000]: General error
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA1.4-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '19_20_1 -ANHA2.4-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GDT01.1-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-QLY17.2-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-CPM01.3-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-MLN301.3-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-DSO02.3-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-ANHB1.4-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_1-GIT01.3-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP202.2-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-VLY01.3-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN04.2-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-CPM215.3-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP201.3-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GIT02.3-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GDT02.1-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-GQP203.3-191212716' for key 'module_score.PRIMARY'
+06/05/2021 12:12:15
+23000
+SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '2019_2020_2-MLN302.2-191212716' for key 'module_score.PRIMARY'

@@ -1,7 +1,7 @@
 <?php
 
     include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/constants.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . './utcapi/api-v2/manage/crawl/simple_html_dom.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/api-v2/manage/crawl/simple_html_dom.php';
 
 
     class CrawlQLDTData
