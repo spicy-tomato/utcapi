@@ -145,7 +145,7 @@
         if (!isset($_SESSION['department_name']) ||
             !isset($_SESSION['department_id_account'])) {
 
-            header('Location: /utcapi/ui/login/');
+            header('Location: /ui/login/');
         }
 
         $now = time();
