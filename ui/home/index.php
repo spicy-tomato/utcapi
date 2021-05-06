@@ -1,4 +1,5 @@
 <?php
+    header("Location: /nckh-utc/ui/login/");
     echo 111;
     session_start();
     include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
