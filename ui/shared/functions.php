@@ -145,14 +145,14 @@
         if (!isset($_SESSION['department_name']) ||
             !isset($_SESSION['department_id_account'])) {
 
-            header('Location: /nckh-utc/ui/login/');
+            header('Location: /ui/login/');
         }
 
         $now = time();
 
         if (isset($_SESSION['time_limit']) && $now > $_SESSION['time_limit']) {
             session_destroy();
-            header('Location: /nckh-utc/ui/login/');
+            header('Location: /ui/login/');
         }
 
         $_SESSION['time_limit'] = $now + 3600;
