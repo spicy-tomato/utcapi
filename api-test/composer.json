@@ -1,0 +1,15 @@
+{
+  "require": {
+    "php": "^7.4",
+    "kreait/firebase-php": "^5.14",
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "shuchkin/simplexlsx": "^0.8.21",
+    "ext-curl": "*"
+  },
+  "config": {
+    "platform": {
+      "php": "7.4"
+    }
+  }
+}
