@@ -23,7 +23,6 @@
         $notification = new Notification($connect, $data['info'], $id_account_list);
 
         $token_list = $helper->getTokenListFromStudentList();
-        var_dump($token_list);
         $firebase_notification = new FirebaseNotification($data['info'], $token_list);
 
         try {
