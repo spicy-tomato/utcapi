@@ -1,4 +1,4 @@
 /.idea
 /vendor
-.db
+db.php
 file_upload
