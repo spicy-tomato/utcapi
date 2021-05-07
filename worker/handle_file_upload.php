@@ -22,6 +22,7 @@
             foreach ($response as $file_name) {
                 $data = $read_file->getData($file_name);
 
+                echo json_decode($data['module_json']);
                 //                $work_with_db->setData($data['student_json']);
                 //                $work_with_db->pushData("Student");
 
@@ -34,7 +35,7 @@
                 //                $work_with_db->setData($data['participate_json']);
                 //                $work_with_db->pushData("Participate");
 
-                $work_with_db->setData($data['schedule_json']);
+//                $work_with_db->setData($data['schedule_json']);
 //                $work_with_db->pushData("Schedules");
 
             }
