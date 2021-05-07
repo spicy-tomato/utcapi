@@ -7,6 +7,7 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . "/config/db.php";
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        var_dump($_FILES);
         $handleFile = new HandleFile($_FILES);
         $response   = $handleFile->handleFile();
 
