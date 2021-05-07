@@ -1,0 +1,4 @@
+/.idea
+/vendor
+/config/db.php
+/file_upload/
