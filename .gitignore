@@ -1,5 +1,6 @@
 /.idea
 /vendor
-config/db.php
+config/*
+!config/db.php
 file_upload/*
 !file_upload/.gitkeep
