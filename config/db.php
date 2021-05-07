@@ -5,10 +5,10 @@
 
     class Database
     {
-        private string $host     = 'localhost';
-        private string $db_name  = 'nckh3';
-        private string $username = 'WRBKOR23';
-        private string $password = 'hai210501';
+        private string $host     = 'frwahxxknm9kwy6c.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
+        private string $db_name  = 'ns46ojgfb89b7zve';
+        private string $username = 'ha3knlk2xkvximtp';
+        private string $password = 'k1wjbrghzjdjasg4';
 
         private PDO $connect;
 
