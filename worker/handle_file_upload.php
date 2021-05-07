@@ -35,7 +35,7 @@
                 //                $work_with_db->pushData("Participate");
 
                 $work_with_db->setData($data['schedule_json']);
-                $work_with_db->pushData("Schedules");
+//                $work_with_db->pushData("Schedules");
 
             }
             $response = 'OK';
