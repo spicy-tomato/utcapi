@@ -6,15 +6,16 @@
 
     class Database
     {
-        private string $host = 'localhost';
-        private string $db_name = 'nckh3';
-        private string $username = 'WRBKOR23';
-        private string $password = 'hai210501';
+        private string $host;
+        private string $db_name;
+        private string $username;
+        private string $password;
 
         private PDO $connect;
 
         public function __construct ()
         {
+            var_dump($_ENV);
             EnvIO::loadEnv();
             $this->host     = $_ENV['HOST'];
             $this->db_name  = $_ENV['DB_NAME'];
