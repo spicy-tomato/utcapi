@@ -1,6 +1,7 @@
 <?php
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/constants.php';
+
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utils/env_io.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/api-v2/manage/crawl/simple_html_dom.php';
 
 
@@ -52,7 +53,7 @@
 
         private function loginQLDT ()
         {
-            $form_login_request                = Constants::$form_login_request;
+            $form_login_request                = EnvIO::$form_login_request;
             $form_login_request['txtUserName'] = $this->student_id;
             $form_login_request['txtPassword'] = $this->student_password;
 
@@ -86,7 +87,7 @@
 
         private function getDataMarks ()
         {
-            $form_get_mark_request                 = Constants::$form_get_mark_request;
+            $form_get_mark_request                 = EnvIO::$form_get_mark_request;
             $form_get_mark_request['hidStudentId'] = $this->hidden_student_id;
             $data                                  = null;
 

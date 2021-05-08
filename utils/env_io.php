@@ -1,6 +1,17 @@
 <?php
 
-    class Constants
+
+    require $_SERVER['DOCUMENT_ROOT'] . '/utcapi/vendor/autoload.php';
+
+    use Dotenv\Dotenv;
+    use Dotenv\Exception\InvalidEncodingException;
+    use Dotenv\Exception\InvalidPathException;
+    use Dotenv\Loader\Loader;
+    use Dotenv\Parser\Parser;
+    use Dotenv\Repository\RepositoryBuilder;
+    use Dotenv\Store\StoreBuilder;
+
+    class EnvIO
     {
         public static array $form_login_request = [
             '__EVENTTARGET'              => '',
@@ -37,5 +48,21 @@
             'hidFieldName' => 'Công nghệ thông tin',
             'hidStudentId' => ''
         ];
+
+        public static string $host = '';
+        /**
+         * Constants constructor.
+         */
+        public static function loadEnv()
+        {
+            try {
+                $dotenv = Dotenv::createMutable($_SERVER['DOCUMENT_ROOT'] . '/utcapi');
+                $dotenv->load();
+
+            }catch (Exception $e)
+            {
+                echo $e->getMessage();
+            }
+        }
 
     }

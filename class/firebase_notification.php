@@ -1,7 +1,7 @@
 <?php
     require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/shared/functions.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/device.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/device.php';
 
     use Kreait\Firebase\Exception\FirebaseException;
     use Kreait\Firebase\Exception\MessagingException;
