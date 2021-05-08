@@ -15,8 +15,7 @@
 
         public function __construct ()
         {
-//            EnvIO::loadEnv();
-//            var_dump($_ENV);
+            EnvIO::loadEnv();
             $this->host     = $_ENV['DB_HOST'];
             $this->db_name  = $_ENV['DB_NAME'];
             $this->username = $_ENV['DB_USER'];
@@ -26,11 +25,6 @@
         public function connect () : PDO
         {
             try {
-//                echo $this->host . '<br>';
-//                echo $this->db_name . '<br>';
-//                echo $this->username . '<br>';
-//                echo $this->password . '<br>';
-
                 $this->connect = new PDO(
                     "mysql:charset=utf8mb4;
                     host=$this->host;
