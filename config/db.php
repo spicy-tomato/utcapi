@@ -15,8 +15,7 @@
 
         public function __construct ()
         {
-            var_dump($_ENV);
-            EnvIO::loadEnv();
+//            EnvIO::loadEnv();
             $this->host     = $_ENV['HOST'];
             $this->db_name  = $_ENV['DB_NAME'];
             $this->username = $_ENV['USER'];
