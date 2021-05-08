@@ -6,20 +6,20 @@
 
     class Database
     {
-        private string $host;
-        private string $db_name;
-        private string $username;
-        private string $password;
+        private string $host     = 'frwahxxknm9kwy6c.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
+        private string $db_name  = 'ns46ojgfb89b7zve';
+        private string $username = 'ha3knlk2xkvximtp';
+        private string $password = 'k1wjbrghzjdjasg4';
 
         private PDO $connect;
 
         public function __construct ()
         {
-//            EnvIO::loadEnv();
-            $this->host     = $_ENV['HOST'];
-            $this->db_name  = $_ENV['DB_NAME'];
-            $this->username = $_ENV['USER'];
-            $this->password = $_ENV['PASS'];
+////            EnvIO::loadEnv();
+//            $this->host     = $_ENV['HOST'];
+//            $this->db_name  = $_ENV['DB_NAME'];
+//            $this->username = $_ENV['USER'];
+//            $this->password = $_ENV['PASS'];
         }
 
         public function connect () : PDO
