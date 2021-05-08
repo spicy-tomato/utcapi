@@ -2,3 +2,4 @@
 /vendor
 file_upload/*
 !file_upload/.gitkeep
+Errors.txt
