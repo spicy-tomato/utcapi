@@ -16,20 +16,20 @@
         public function __construct ()
         {
 //            EnvIO::loadEnv();
-            var_dump($_ENV);
-            $this->host     = $_ENV['HOST'];
+//            var_dump($_ENV);
+            $this->host     = $_ENV['DB_HOST'];
             $this->db_name  = $_ENV['DB_NAME'];
-            $this->username = $_ENV['USER'];
-            $this->password = $_ENV['PASS'];
+            $this->username = $_ENV['DB_USER'];
+            $this->password = $_ENV['DB_PASS'];
         }
 
         public function connect () : PDO
         {
             try {
-                echo $this->host . '<br>';
-                echo $this->db_name . '<br>';
-                echo $this->username . '<br>';
-                echo $this->password . '<br>';
+//                echo $this->host . '<br>';
+//                echo $this->db_name . '<br>';
+//                echo $this->username . '<br>';
+//                echo $this->password . '<br>';
 
                 $this->connect = new PDO(
                     "mysql:charset=utf8mb4;
