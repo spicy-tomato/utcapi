@@ -25,6 +25,7 @@
         public function connect () : PDO
         {
             try {
+                echo $this->host;
                 $this->connect = new PDO(
                     "mysql:charset=utf8mb4;
                     host=$this->host;
