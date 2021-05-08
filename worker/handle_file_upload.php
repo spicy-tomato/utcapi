@@ -10,7 +10,7 @@
         var_dump($_FILES);
         $handleFile = new HandleFile($_FILES);
         $response   = $handleFile->handleFile();
-
+echo json_encode($response);
         if ($_POST['flag'] == 1 ||
             $response != null) {
 
