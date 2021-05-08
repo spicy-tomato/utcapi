@@ -6,7 +6,7 @@
 
     class Database
     {
-        public string $host = 'localhost';
+        private string $host = 'localhost';
         private string $db_name = 'nckh3';
         private string $username = 'WRBKOR23';
         private string $password = 'hai210501';
@@ -43,6 +43,3 @@
             return $this->connect;
         }
     }
-
-    $da = new Database();
-    var_dump($da->host);
