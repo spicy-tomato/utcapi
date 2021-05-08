@@ -1,7 +1,7 @@
 <?php
 
 
-    require $_SERVER['DOCUMENT_ROOT'] . '/utcapi/vendor/autoload.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
     use Dotenv\Dotenv;
     use Dotenv\Exception\InvalidEncodingException;
