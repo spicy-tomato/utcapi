@@ -49,10 +49,6 @@
             'hidStudentId' => ''
         ];
 
-        public static string $host = '';
-        /**
-         * Constants constructor.
-         */
         public static function loadEnv()
         {
             try {

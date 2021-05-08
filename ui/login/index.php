@@ -1,5 +1,6 @@
 <?php
     session_start();
+
     if (isset($_SESSION['department_name']) &&
         isset($_SESSION['department_id_account'])) {
 
