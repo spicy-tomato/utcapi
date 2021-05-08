@@ -25,7 +25,11 @@
         public function connect () : PDO
         {
             try {
-                echo $this->host;
+                echo $this->host . '<br>';
+                echo $this->db_name . '<br>';
+                echo $this->username . '<br>';
+                echo $this->password . '<br>';
+
                 $this->connect = new PDO(
                     "mysql:charset=utf8mb4;
                     host=$this->host;
