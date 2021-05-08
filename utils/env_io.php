@@ -56,7 +56,7 @@
         public static function loadEnv()
         {
             try {
-                $dotenv = Dotenv::createMutable($_SERVER['DOCUMENT_ROOT']);
+                $dotenv = Dotenv::createMutable(__DIR__);
                 $dotenv->load();
 
             }catch (Exception $e)
