@@ -25,7 +25,7 @@
                 $data = $read_file->getData($file_name);
                 $aws->upload($file_name);
 
-//                echo json_encode($data['module_json']);
+                echo json_encode($data['module_json']);
                 //                $work_with_db->setData($data['student_json']);
                 //                $work_with_db->pushData('Student');
 
