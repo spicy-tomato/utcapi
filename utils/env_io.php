@@ -4,12 +4,6 @@
     require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
     use Dotenv\Dotenv;
-    use Dotenv\Exception\InvalidEncodingException;
-    use Dotenv\Exception\InvalidPathException;
-    use Dotenv\Loader\Loader;
-    use Dotenv\Parser\Parser;
-    use Dotenv\Repository\RepositoryBuilder;
-    use Dotenv\Store\StoreBuilder;
 
     class EnvIO
     {
