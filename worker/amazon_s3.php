@@ -11,6 +11,7 @@
 
         public function __construct ()
         {
+            EnvIO::loadEnv();
             $this->bucket_name       = $_ENV['BUCKET_NAME'];
             $this->access_key_id     = $_ENV['AWS_ACCESS_KEY_ID'];
             $this->secret_access_key = $_ENV['AWS_SECRET_ACCESS_KEY'];
