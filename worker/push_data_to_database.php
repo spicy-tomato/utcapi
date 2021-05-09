@@ -100,8 +100,7 @@
                 case "Student";
                     $sql = self::student_sql . "(";
 
-                    if (!$this->isAccountExist($arr["ID_Student"]))
-                    {
+                    if (!$this->isAccountExist($arr["ID_Student"])) {
                         $arr['ID'] = $this->autoCreateStudentAccount($arr['ID_Student'], $arr['DoB']);
                     }
                     break;
@@ -142,8 +141,7 @@
         public function pushData ($table_name)
         {
             foreach ($this->data as $arr) {
-                $sql = $this->_createSQL($arr, $table_name);
-
+                $sql  = $this->_createSQL($arr, $table_name);
                 $stmt = $this->connect->prepare($sql);
                 $stmt->execute();
             }
