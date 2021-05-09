@@ -4,7 +4,7 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . "/worker/handle_file.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/worker/read_file.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/worker/push_data_to_database.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/worker/amazon_s3.php.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/worker/amazon_s3.php";
     include_once $_SERVER['DOCUMENT_ROOT'] . "/config/db.php";
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
