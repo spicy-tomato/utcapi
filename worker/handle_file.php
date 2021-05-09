@@ -13,7 +13,6 @@
 
         public function handleFile ()
         {
-            var_dump($this->file_arr);
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $new_file_name_arr = null;
 
