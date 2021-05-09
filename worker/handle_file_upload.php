@@ -20,7 +20,7 @@
             $read_file    = new ReadFIle();
             $work_with_db = new WorkWithDatabase($connect);
             $aws          = new AWS();
-
+            var_dump($response);
             foreach ($response as $file_name) {
                 $data = $read_file->getData($file_name);
                 $aws->upload($file_name);
