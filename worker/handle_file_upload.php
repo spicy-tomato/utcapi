@@ -12,7 +12,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $handleFile = new HandleFile($_FILES);
         $response   = $handleFile->handleFile();
-
+        var_dump($response);
         if ($_POST['flag'] == 1 ||
             $response != null) {
 

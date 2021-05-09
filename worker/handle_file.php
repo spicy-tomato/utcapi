@@ -4,11 +4,11 @@
     error_reporting(E_ALL);
     class HandleFile
     {
-        private array $fileArr;
+        private array $file_arr;
 
         public function __construct (array $fileArr)
         {
-            $this->fileArr = $fileArr;
+            $this->file_arr = $fileArr;
         }
 
         public function handleFile ()
@@ -16,7 +16,7 @@
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $new_file_name_arr = null;
 
-            foreach ($this->fileArr as $file) {
+            foreach ($this->file_arr as $file) {
                 $nameSplit = explode('.', $file['name']);
                 $timeSplit = explode('.', microtime(true));
 
