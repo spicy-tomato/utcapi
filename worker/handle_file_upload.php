@@ -27,7 +27,7 @@
 
                 echo json_encode($data['module_json']);
                 //                $work_with_db->setData($data['student_json']);
-                $work_with_db->pushData("Student");
+                //                $work_with_db->pushData("Student");
 
                 //                $work_with_db->setData($data['module_json']);
                 //                $work_with_db->pushData("Module");
