@@ -5,7 +5,7 @@
 <html lang="en">
 
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/ui/shared/functions.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/ui/shared/functions.php';
 
     shield();
     shared_header('Thông báo cho sinh viên', '

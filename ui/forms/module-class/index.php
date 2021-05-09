@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/ui/shared/functions.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/ui/shared/functions.php';
     shield();
 ?>
 <!doctype html>

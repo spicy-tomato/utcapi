@@ -1,11 +1,11 @@
 <?php
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/config/db.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/notification.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/firebase_notification.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/helper.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/fix_schedule.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/shared/functions.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/notification.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/firebase_notification.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/helper.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/fix_schedule.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
 
     $old_id_fix = file_get_contents('id_fix.txt');
 
