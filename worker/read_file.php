@@ -7,10 +7,8 @@
     {
         public function getData ($file_name)
         {
-            $output = null;
-
             try {
-                $command = escapeshellcmd('python main.py $file_name');
+                $command = escapeshellcmd('python main.py ' . $file_name);
                 $output  = shell_exec($command);
 
             } catch (Exception $error) {
