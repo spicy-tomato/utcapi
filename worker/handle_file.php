@@ -15,12 +15,12 @@
             $newFileNameArr = null;
 
             foreach ($this->fileArr as $file) {
-                $nameSplit = explode(".", $file["name"]);
-                $timeSplit = explode(".", microtime(true));
+                $nameSplit = explode('.', $file['name']);
+                $timeSplit = explode('.', microtime(true));
 
-                $newFileName = $nameSplit[0] . "_" . $timeSplit[0] . $timeSplit[1] . "." . $nameSplit[1];
+                $newFileName = $nameSplit[0] . '_' . $timeSplit[0] . $timeSplit[1] . '.' . $nameSplit[1];
 
-                $location = "../file_upload/" . $newFileName;
+                $location = '../file_upload/' . $newFileName;
 
                 if (move_uploaded_file($file['tmp_name'], $location)) {
                     $newFileNameArr[] = $newFileName;

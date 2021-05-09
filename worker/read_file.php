@@ -1,7 +1,7 @@
 <?php
 
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/shared/functions.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
 
     class ReadFIle
     {
@@ -10,7 +10,7 @@
             $output = null;
 
             try {
-                $command = escapeshellcmd("python main.py $file_name");
+                $command = escapeshellcmd('python main.py $file_name');
                 $output  = shell_exec($command);
 
             } catch (Exception $error) {
