@@ -12,24 +12,24 @@
         public function handleFile ()
         {
             date_default_timezone_set('Asia/Ho_Chi_Minh');
-            $newFileNameArr = null;
+            $new_file_name_arr = null;
 
             foreach ($this->fileArr as $file) {
                 $nameSplit = explode('.', $file['name']);
                 $timeSplit = explode('.', microtime(true));
 
-                $newFileName = $nameSplit[0] . '_' . $timeSplit[0] . $timeSplit[1] . '.' . $nameSplit[1];
+                $new_file_name = $nameSplit[0] . '_' . $timeSplit[0] . $timeSplit[1] . '.' . $nameSplit[1];
 
-                $location = '../file_upload/' . $newFileName;
+                $location = $_SERVER['DOCUMENT_ROOT'] . '/file_upload/' . $new_file_name;
 
                 if (move_uploaded_file($file['tmp_name'], $location)) {
-                    $newFileNameArr[] = $newFileName;
+                    $new_file_name_arr[] = $location;
                 }
                 else {
-                    $newFileNameArr = null;
+                    $new_file_name_arr = null;
                 }
             }
 
-            return $newFileNameArr;
+            return $new_file_name_arr;
         }
     }

@@ -19,7 +19,7 @@
 
         public function upload ($file_name)
         {
-            $file_location = '../file_upload/' . $file_name;
+            $file_location = $_SERVER['DOCUMENT_ROOT'] . '/file_upload/' . $file_name;
 
             $finfo     = new finfo(FILEINFO_MIME_TYPE);
             $file_mime = $finfo->file($file_location);
