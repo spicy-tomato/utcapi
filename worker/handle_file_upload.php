@@ -20,12 +20,12 @@
             $read_file    = new ReadFIle();
             $work_with_db = new WorkWithDatabase($connect);
             $aws          = new AWS();
-            var_dump($response);
+            echo json_encode($response);
             foreach ($response as $file_name) {
                 $data = $read_file->getData($file_name);
                 $aws->upload($file_name);
 
-                echo json_encode($data['module_json']);
+//                echo json_encode($data['module_json']);
                 //                $work_with_db->setData($data['student_json']);
                 //                $work_with_db->pushData('Student');
 
