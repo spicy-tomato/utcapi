@@ -23,7 +23,7 @@
                 $location = $_SERVER['DOCUMENT_ROOT'] . '/file_upload/' . $new_file_name;
 
                 if (move_uploaded_file($file['tmp_name'], $location)) {
-                    $new_file_name_arr[] = $location;
+                    $new_file_name_arr[] = $new_file_name;
                 }
                 else {
                     $new_file_name_arr = null;
