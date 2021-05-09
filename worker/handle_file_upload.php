@@ -7,10 +7,9 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . "/config/db.php";
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        var_dump($_FILES);
         $handleFile = new HandleFile($_FILES);
         $response   = $handleFile->handleFile();
-echo json_encode($response);
+
         if ($_POST['flag'] == 1 ||
             $response != null) {
 
@@ -23,7 +22,7 @@ echo json_encode($response);
             foreach ($response as $file_name) {
                 $data = $read_file->getData($file_name);
 
-                echo json_decode($data['module_json']);
+                echo json_encode($data['module_json']);
                 //                $work_with_db->setData($data['student_json']);
                 //                $work_with_db->pushData("Student");
 
