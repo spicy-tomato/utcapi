@@ -10,7 +10,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $handleFile = new HandleFile($_FILES);
         $response   = $handleFile->handleFile();
-
+echo 1;
         if ($_POST['flag'] == 1 ||
             $response != null) {
 
@@ -20,11 +20,11 @@
             $read_file    = new ReadFIle();
             $work_with_db = new WorkWithDatabase($connect);
             $aws          = new AWS();
-
+echo 2;
             foreach ($response as $file_name) {
                 $data = $read_file->getData($file_name);
                 $aws->upload($file_name);
-echo 111;
+
                 echo json_encode($data['module_json']);
                 //                $work_with_db->setData($data['student_json']);
                 //                $work_with_db->pushData('Student');
