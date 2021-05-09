@@ -13,6 +13,10 @@
   "config": {
     "platform": {
       "php": "7.4"
-    }
+    },
+    "bin-dir": "utcapi"
+  },
+  "require-dev": {
+    "heroku/heroku-buildpack-php": "*"
   }
 }
