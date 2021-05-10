@@ -29,7 +29,7 @@
 
                 $data = $read_file->getData($file_name);
                 $aws->uploadFile($file_name, $file_location);
-                echo  json_encode($data['module_json']);
+
                 //                $work_with_db->setData($data['student_json']);
                 //                $work_with_db->pushData('Student');
 
