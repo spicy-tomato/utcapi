@@ -39,8 +39,6 @@
 </head>
 
 <body>
-
-
   <div id="fixed">
     <a href="#student">Sinh viên</a>
     <a href="#module-class">Lớp học phần</a>
