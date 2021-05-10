@@ -10,10 +10,9 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        var_dump($_FILES);
         $handleFile = new HandleFile($_FILES);
         $response   = $handleFile->handleFile();
-        var_dump($response);
+
         if ($_POST['flag'] == 1 ||
             $response != null) {
 
@@ -28,7 +27,6 @@
                 $data = $read_file->getData($file_name);
                 $aws->upload($file_name);
 
-                echo json_encode($data);
                 //                $work_with_db->setData($data['student_json']);
                 //                $work_with_db->pushData('Student');
 

@@ -478,7 +478,6 @@ async function trySendNotification() {
     let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField)
 
     if (madeRequest) {
-        console.log(111)
         document.getElementById('submit_btn').removeEventListener('click', trySendNotification)
     }
 }
