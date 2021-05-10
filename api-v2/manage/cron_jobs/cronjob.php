@@ -7,7 +7,8 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . '/class/fix_schedule.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
 
-    $old_id_fix = file_get_contents('id_fix.txt');
+    $aws = new AWS();
+    $old_id_fix = $aws->getDataFromFile('id_fix.txt');
 
     $db      = new Database();
     $connect = $db->connect();
@@ -46,6 +47,8 @@
             $response = 'OK';
 
             file_put_contents('id_fix.txt', $fix['ID_Fix']);
+            $file_location = $_SERVER['DOCUMENT_ROOT'] . '/api-v2/manage/cron_jobs/id_fix.txt';
+            $aws->uploadFile('id_fix.txt', $file_location);
 
         } catch (Exception $error) {
             printError($error);

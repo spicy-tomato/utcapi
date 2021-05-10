@@ -23,14 +23,17 @@
             $work_with_db = new WorkWithDatabase($connect);
             $aws          = new AWS();
 
+            $location = $_SERVER['DOCUMENT_ROOT'] . '/file_upload/';
             foreach ($response as $file_name) {
-                $data = $read_file->getData($file_name);
-                $aws->upload($file_name);
+                $file_location = $location . $file_name;
 
+                $data = $read_file->getData($file_name);
+                $aws->uploadFile($file_name, $file_location);
+                echo  json_encode($data['module_json']);
                 //                $work_with_db->setData($data['student_json']);
                 //                $work_with_db->pushData('Student');
 
-                //                $work_with_db->setData($data['module_json']);
+                //                $work_with_db->setData();
                 //                $work_with_db->pushData('Module');
 
                 //                $work_with_db->setData($data['module_class_json']);
@@ -50,5 +53,5 @@
         $response = 'Invalid Request';
     }
 
-        echo json_encode($response);
+    echo json_encode($response);
 
