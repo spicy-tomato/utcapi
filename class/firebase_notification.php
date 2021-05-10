@@ -44,8 +44,7 @@
 //                    printError($error);
                     echo $error->getCode();
 
-                    if ($error->getCode() == 400 ||
-                        $error->getCode() == 404) {
+                    if ($error->getCode() == 0) {
 
                         $device->deleteOldToken($token);
                     }
