@@ -12,13 +12,14 @@
 
     $aws = new AWS();
     $old_id_fix = $aws->getDataFromFile('id_fix.txt');
+    var_dump($old_id_fix);
 
     $db      = new Database();
     $connect = $db->connect();
 
     $fix     = new FixSchedule($connect);
     $arr_fix = $fix->getFixSchedules($old_id_fix);
-
+var_dump($arr_fix);
     if (empty($arr_fix) ||
         $arr_fix == 'Failed') {
 
