@@ -41,8 +41,7 @@
                 try {
                     $this->messaging->send($message);
                 } catch (MessagingException | FirebaseException $error) {
-//                    printError($error);
-                    echo $error->getCode();
+                    printError($error);
 
                     if ($error->getCode() == 0) {
 
