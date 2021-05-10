@@ -1,7 +1,4 @@
 <?php
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
     include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/class/notification.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/worker/amazon_s3.php';
@@ -12,14 +9,13 @@
 
     $aws = new AWS();
     $old_id_fix = $aws->getDataFromFile('id_fix.txt');
-    echo ($old_id_fix);
 
     $db      = new Database();
     $connect = $db->connect();
 
     $fix     = new FixSchedule($connect);
     $arr_fix = $fix->getFixSchedules($old_id_fix);
-var_dump($arr_fix);
+
     if (empty($arr_fix) ||
         $arr_fix == 'Failed') {
 
@@ -35,7 +31,7 @@ var_dump($arr_fix);
         $info['sender']     = $fix['ID'];
         $info['time_start'] = '';
         $info['time_end']   = '';
-        var_dump($info);
+
         $helper = new Helper($connect);
         $helper->getListFromModuleClassList([$fix['ID_Module_Class']]);
 
