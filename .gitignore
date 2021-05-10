@@ -4,3 +4,4 @@ file_upload/*
 !file_upload/.gitkeep
 Errors.txt
 id_fix.txt
+.env
