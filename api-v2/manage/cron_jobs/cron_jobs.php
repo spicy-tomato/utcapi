@@ -12,7 +12,7 @@
 
     $aws = new AWS();
     $old_id_fix = $aws->getDataFromFile('id_fix.txt');
-    var_dump($old_id_fix);
+    echo ($old_id_fix);
 
     $db      = new Database();
     $connect = $db->connect();
