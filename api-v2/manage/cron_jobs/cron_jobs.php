@@ -1,5 +1,7 @@
 <?php
-
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
     include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/class/notification.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/worker/amazon_s3.php';
