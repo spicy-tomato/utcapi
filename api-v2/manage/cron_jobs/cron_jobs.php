@@ -32,7 +32,7 @@
         $info['sender']     = $fix['ID'];
         $info['time_start'] = '';
         $info['time_end']   = '';
-
+        var_dump($info);
         $helper = new Helper($connect);
         $helper->getListFromModuleClassList([$fix['ID_Module_Class']]);
 
