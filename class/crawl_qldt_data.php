@@ -176,12 +176,9 @@
             {
                 foreach ($semester as $module)
                 {
-                    foreach ($module as $item)
-                    {
-                        $item[1] = preg_replace('/\s+/', ' ', $item[1]);
-                        $item[1] = str_replace('- ', '-', $item[1]);
-                        $item[1] = str_replace('- ', '-', $item[1]);
-                    }
+                    $module[1] = preg_replace('/\s+/', ' ', $module[1]);
+                    $module[1] = str_replace('- ', '-', $module[1]);
+                    $module[1] = str_replace('- ', '-', $module[1]);
                 }
             }
 
