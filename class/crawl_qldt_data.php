@@ -172,6 +172,19 @@
             }
             unset($data[$this->semester_arr[0]]);
 
+            foreach ($data as $semester)
+            {
+                foreach ($semester as $module)
+                {
+                    foreach ($module as $item)
+                    {
+                        $item[1] = preg_replace('/\s+/', ' ', $item[1]);
+                        $item[1] = str_replace('- ', '-', $item[1]);
+                        $item[1] = str_replace('- ', '-', $item[1]);
+                    }
+                }
+            }
+
             return $data;
         }
     }

@@ -113,11 +113,6 @@
         private function _formatResponse ($data)
         {
             foreach ($data as &$e) {
-                $e['Semester']    = trim($e['Semester'], ' ');
-                $e['Module_Name'] = preg_replace('/\s+/', ' ', $e['Module_Name']);
-                $e['Module_Name'] = str_replace('- ', '-', $e['Module_Name']);
-                $e['Module_Name'] = str_replace('- ', '-', $e['Module_Name']);
-
                 $e['Credit']            = intval($e['Credit']);
                 $e['Process_Score']     = floatval($e['Process_Score']);
                 $e['Test_Score']        = floatval($e['Test_Score']);
