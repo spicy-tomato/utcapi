@@ -27,12 +27,17 @@
         public function getAll () : array
         {
             $this->ch = curl_init();
-            $data     = [];
 
             $this->getAccessToken();
             $this->loginQLDT();
-            if ($this->getFormRequireData()) {
+
+            $status = $this->getFormRequireData();
+
+            if ($status != -1 && $status != 0) {
                 $data = $this->getDataMarks();
+            }
+            else {
+                $data[] = $status;
             }
 
             curl_close($this->ch);
@@ -45,7 +50,8 @@
             file_get_contents($this->url);
             $response_header = explode(' ', $http_response_header[3]);
             $location        = explode('/', $response_header[1]);
-            $access_token    = $location[2];
+                        $access_token    = $location[2];
+//            $access_token = '';
 
             $this->url_login        = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.Info/' . $access_token . '/Login.aspx';
             $this->url_student_mark = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/' . $access_token . '/StudentMark.aspx';
@@ -60,7 +66,7 @@
             $this->postRequest($this->url_login, $form_login_request);
         }
 
-        private function getFormRequireData () : bool
+        private function getFormRequireData () : int
         {
             $response = $this->getRequest($this->url_student_mark);
 
@@ -69,7 +75,11 @@
 
             $flag = $html->find('input[id=hidStudentId]', 0);
             if (empty($flag)) {
-                return false;
+                $flag2 = $html->find('input[id=txtUserName]', 0);
+                if (empty($flag2)) {
+                    return -1;
+                }
+                return 0;
             }
 
             $this->view_state        = $html->find('input[name=__VIEWSTATE]', 0)->value;
@@ -82,7 +92,7 @@
                 $this->semester_arr[] = $e->innertext;
             }
 
-            return true;
+            return 1;
         }
 
         private function getDataMarks ()

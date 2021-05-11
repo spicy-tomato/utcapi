@@ -24,7 +24,17 @@
 
         $crawl      = new CrawlQLDTData($data['id_student'], $data['qldt_password']);
         $crawl_data = $crawl->getAll();
-        $response   = empty($crawl_data) ? 'Failed' : 'OK';
+        if (isset($crawl_data[0])) {
+            if ($crawl_data[0] == -1) {
+                $response = 'Failed';
+            }
+            else {
+                $response = 'Invalid Password';
+            }
+        }
+        else {
+            $response = 'OK';
+        }
 
         if ($response == 'OK') {
             $module_score = new ModuleScore($connect);
