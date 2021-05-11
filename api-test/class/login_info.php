@@ -17,7 +17,7 @@
 
         public function __construct (PDO $connect, string $username, string $password)
         {
-            $this->connect = $connect;
+            $this->connect  = $connect;
             $this->username = $username;
             $this->password = $password;
         }

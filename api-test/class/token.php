@@ -1,7 +1,7 @@
 <?php
 
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/shared/functions.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
 
     class Token
     {
@@ -9,7 +9,7 @@
         private string $id_student;
         private string $token;
 
-        private const device_table = "Device";
+        private const device_table = 'Device';
 
         public function __construct (PDO $connect, string $student_id, string $token)
         {

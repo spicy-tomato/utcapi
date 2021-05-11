@@ -1,7 +1,10 @@
 <?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
     require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/shared/functions.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/device.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/device.php';
 
     use Kreait\Firebase\Exception\FirebaseException;
     use Kreait\Firebase\Exception\MessagingException;
@@ -41,6 +44,7 @@
                     printError($error);
 
                     if ($error->getCode() == 0) {
+
                         $device->deleteOldToken($token);
                     }
                 }

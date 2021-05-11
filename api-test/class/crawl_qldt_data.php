@@ -27,7 +27,7 @@
         public function getAll () : array
         {
             $this->ch = curl_init();
-            $data = [];
+            $data     = [];
 
             $this->getAccessToken();
             $this->loginQLDT();

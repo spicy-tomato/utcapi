@@ -1,18 +1,26 @@
 <?php
 
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/shared/functions.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/utils/env_io.php';
 
     class Database
     {
-        private string $host     = 'localhost';
-        private string $db_name  = 'nckh3';
-        private string $username = 'WRBKOR23';
-        private string $password = 'hai210501';
+        private string $host;
+        private string $db_name;
+        private string $username;
+        private string $password;
 
         private PDO $connect;
 
-        public function __construct (){ }
+        public function __construct ()
+        {
+            EnvIO::loadEnv();
+            $this->host     = $_ENV['DB_HOST'];
+            $this->db_name  = $_ENV['DB_NAME'];
+            $this->username = $_ENV['DB_USER'];
+            $this->password = $_ENV['DB_PASS'];
+        }
 
         public function connect () : PDO
         {
@@ -25,10 +33,10 @@
                     $this->password
                 );
                 $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $this->connect->exec("set names utf8");
-            }
-            catch (PDOException $error){
+                $this->connect->exec('set names utf8');
+            } catch (PDOException $error) {
                 printError($error);
+                echo $error->getMessage();
 
                 exit(-1);
             }

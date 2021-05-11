@@ -1,10 +1,10 @@
 <?php
     session_start();
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/config/db.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/login_info.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/login_info.php';
 
-    $db   = new Database();
+    $db      = new Database();
     $connect = $db->connect();
 
     if (isset($_POST['btn-submit'])) {
@@ -14,7 +14,7 @@
         $loginInfo = new LoginInfo($connect, $username, $password);
 
         if ($loginInfo->login()) {
-            $_SESSION['department_name'] = $loginInfo->getDepartmentName();
+            $_SESSION['department_name']       = $loginInfo->getDepartmentName();
             $_SESSION['department_id_account'] = $loginInfo->getAccountID();
             header('Location: ../home');
         }

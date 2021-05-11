@@ -14,7 +14,7 @@
     "platform": {
       "php": "7.4"
     },
-    "bin-dir": "utcapi"
+    "bin-dir": "vendor/bin"
   },
   "require-dev": {
     "heroku/heroku-buildpack-php": "*"
