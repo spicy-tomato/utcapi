@@ -40,7 +40,6 @@
             else {
                 $data[] = $status;
             }
-            var_dump($data);
             curl_close($this->ch);
 
             return $data;
