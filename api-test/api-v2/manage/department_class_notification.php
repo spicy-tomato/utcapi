@@ -1,10 +1,10 @@
 <?php
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/config/db.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/notification.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/firebase_notification.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/shared/functions.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/helper.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/notification.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/firebase_notification.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/helper.php';
 
     $response = 'No request';
 
@@ -23,7 +23,6 @@
         $notification = new Notification($connect, $data['info'], $id_account_list);
 
         $token_list = $helper->getTokenListFromStudentList();
-        var_dump($token_list);
         $firebase_notification = new FirebaseNotification($data['info'], $token_list);
 
         try {

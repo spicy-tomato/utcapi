@@ -11,7 +11,7 @@
     use Kreait\Firebase\Factory;
     use Kreait\Firebase\Messaging;
     use Kreait\Firebase\Messaging\CloudMessage;
-    use \Kreait\Firebase\Messaging\Notification;
+    use Kreait\Firebase\Messaging\Notification;
 
     class FirebaseNotification
     {

@@ -7,6 +7,15 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . '/class/fix_schedule.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
 
+    echo  __FILE__ .'<br>';
+    echo  __DIR__ .'<br>';
+    echo  $_SERVER['DOCUMENT_ROOT'] .'<br>';
+    echo  dirname(__FILE__, 1) .'<br>';
+    echo  dirname(__DIR__, 1) .'<br>';
+    echo  dirname($_SERVER['DOCUMENT_ROOT'], 1) .'<br>';
+    echo  dirname(__FILE__, 2) .'<br>';
+    echo  dirname(__DIR__, 2) .'<br>';
+    echo  dirname($_SERVER['DOCUMENT_ROOT'], 2) .'<br>';
     $aws = new AWS();
     $old_id_fix = $aws->getDataFromFile('id_fix.txt');
 
