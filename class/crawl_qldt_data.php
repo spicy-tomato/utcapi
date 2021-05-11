@@ -172,9 +172,9 @@
             }
             unset($data[$this->semester_arr[0]]);
 
-            foreach ($data as $semester)
+            foreach ($data as &$semester)
             {
-                foreach ($semester as $module)
+                foreach ($semester as &$module)
                 {
                     $module[1] = preg_replace('/\s+/', ' ', $module[1]);
                     $module[1] = str_replace('- ', '-', $module[1]);
