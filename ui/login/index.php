@@ -12,8 +12,8 @@
 
 <?php
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/ui/shared/functions.php';
+    include_once dirname(__DIR__, 2) . '/config/db.php';
+    include_once dirname(__DIR__, 2) . '/ui/shared/functions.php';
 
     shared_header("Đăng nhập");
 ?>

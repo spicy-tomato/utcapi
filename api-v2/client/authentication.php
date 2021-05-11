@@ -1,6 +1,6 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/account.php';
+    include_once dirname(__DIR__, 2) . '/config/db.php';
+    include_once dirname(__DIR__, 2) . '/class/account.php';
 
     $account = json_decode(file_get_contents('php://input'), true);
 

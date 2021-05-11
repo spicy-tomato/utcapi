@@ -1,8 +1,8 @@
 <?php
 
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utils/env_io.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/api-v2/manage/crawl/simple_html_dom.php';
+    include_once dirname(__DIR__) . '/utils/env_io.php';
+    include_once dirname(__DIR__) . '/api-v2/manage/crawl/simple_html_dom.php';
 
 
     class CrawlQLDTData

@@ -1,7 +1,7 @@
 <?php
 
 
-    require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+    require dirname(__DIR__) . '/vendor/autoload.php';
 
     use Dotenv\Dotenv;
 
@@ -46,7 +46,7 @@
         public static function loadEnv()
         {
             try {
-                $dotenv = Dotenv::createMutable($_SERVER['DOCUMENT_ROOT']);
+                $dotenv = Dotenv::createMutable(dirname(__DIR__));
                 $dotenv->load();
 
             }catch (Exception $e)

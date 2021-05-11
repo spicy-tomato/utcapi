@@ -1,9 +1,9 @@
 <?php
     session_start();
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/config/db.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/module_score.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/crawl_qldt_data.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/account.php";
+    include_once dirname(__DIR__, 3) . '/config/db.php';
+    include_once dirname(__DIR__, 3) . '/class/module_score.php';
+    include_once dirname(__DIR__, 3) . '/class/crawl_qldt_data.php';
+    include_once dirname(__DIR__, 3) . '/class/account.php';
 
     $data = json_decode(file_get_contents('php://input'), true);
 

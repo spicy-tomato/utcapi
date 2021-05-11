@@ -2,9 +2,9 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-    require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/device.php';
+    require dirname(__DIR__) . '/vendor/autoload.php';
+    include_once dirname(__DIR__) . '/shared/functions.php';
+    include_once dirname(__DIR__) . '/class/device.php';
 
     use Kreait\Firebase\Exception\FirebaseException;
     use Kreait\Firebase\Exception\MessagingException;
@@ -22,7 +22,7 @@
 
         public function __construct (array $info, array $token_list)
         {
-            $this->credentials_path = $_SERVER['DOCUMENT_ROOT'] . '/config/firebase_credentials.json';
+            $this->credentials_path = dirname(__DIR__) . '/config/firebase_credentials.json';
             $this->_setInfo($info);
             $this->token_list = $token_list;
             $this->_initFactory();

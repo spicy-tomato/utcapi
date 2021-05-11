@@ -1,8 +1,8 @@
 <?php
     session_start();
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/module_score.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/crawl_qldt_data.php';
+    include_once dirname(__DIR__, 2) . '/config/db.php';
+    include_once dirname(__DIR__, 2) . '/class/module_score.php';
+    include_once dirname(__DIR__, 2) . '/class/crawl_qldt_data.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         isset($_GET['id'])) {

@@ -1,7 +1,7 @@
 <?php
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/module_class.php';
+    include_once dirname(__DIR__, 2) . '/config/db.php';
+    include_once dirname(__DIR__, 2) . '/class/module_class.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $db      = new Database();

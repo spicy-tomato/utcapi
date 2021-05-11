@@ -21,17 +21,25 @@
 
     function shared_navbar () : void
     {
-        $nav1_class = 'nav-link';
-        $nav2_class = 'nav-link';
-        $nav3_class = 'nav-link';
-        $nav4_class = 'nav-link';
+        $nav1_class  = 'nav-link';
+        $nav2_class  = 'nav-link';
+        $nav3_class  = 'nav-link';
+        $nav4_class  = 'nav-link';
         $current_nav = ' active';
 
-        $home_link = '/ui/home';
-        $form1_link = '/ui/forms/department-class';
-        $form2_link = '/ui/forms/module-class';
-        $form3_link = '/ui/forms/student';
-        $push_data_link = '/ui/push-data/';
+        if (!isset($_ENV['DB_HOST'])) {
+            $root_folder = '/utcapi';
+        }
+        else {
+            $root_folder = '';
+        }
+
+        $home_link      = $root_folder . '/ui/home';
+        $form1_link     = $root_folder . '/ui/forms/department-class';
+        $form2_link     = $root_folder . '/ui/forms/module-class';
+        $form3_link     = $root_folder . '/ui/forms/student';
+        $push_data_link = $root_folder . '/ui/push-data';
+        $log_out_link   = $root_folder . '/ui/home/logout.php';
 
         if (stripos($_SERVER['REQUEST_URI'], 'department-class') !== false) {
             $nav1_class .= $current_nav;
@@ -80,7 +88,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a href="/ui/home/logout.php" class="dropdown-item">Đăng xuất</a></li>
+            <li><a href="' . $log_out_link . '" class="dropdown-item">Đăng xuất</a></li>
           </ul>
         </div>
       </div>

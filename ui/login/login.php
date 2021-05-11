@@ -1,8 +1,8 @@
 <?php
     session_start();
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/login_info.php';
+    include_once dirname(__DIR__, 2) . '/config/db.php';
+    include_once dirname(__DIR__, 2) . '/class/login_info.php';
 
     $db      = new Database();
     $connect = $db->connect();

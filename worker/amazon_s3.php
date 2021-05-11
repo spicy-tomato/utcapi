@@ -1,7 +1,7 @@
 <?php
 
 
-    require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+    require dirname(__DIR__) . '/vendor/autoload.php';
 
     class AWS
     {

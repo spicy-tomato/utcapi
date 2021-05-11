@@ -98,7 +98,6 @@
 
             $stmt = $this->connect->prepare($sql_query);
             $stmt->execute();
-
             $this->id_account_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
         }
 
@@ -137,7 +136,7 @@
             $sql = '';
 
             foreach ($list as $id) {
-                $sql .= '\'' . $id . '\'';
+                $sql .= '\'' . $id . '\',';
             }
 
             $sql = rtrim($sql, ',');

@@ -1,9 +1,9 @@
 <?php
     session_start();
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/account.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/student_schedule.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/teacher_schedule.php';
+    include_once dirname(__DIR__, 2) . '/config/db.php';
+    include_once dirname(__DIR__, 2) . '/class/account.php';
+    include_once dirname(__DIR__, 2) . '/class/student_schedule.php';
+    include_once dirname(__DIR__, 2) . '/class/teacher_schedule.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         isset($_GET['id'])) {
