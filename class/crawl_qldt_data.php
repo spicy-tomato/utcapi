@@ -35,11 +35,12 @@
 
             if ($status != -1 && $status != 0) {
                 $data = $this->getDataMarks();
+                $data = $this->_formatData($data);
             }
             else {
                 $data[] = $status;
             }
-
+            var_dump($data);
             curl_close($this->ch);
 
             return $data;
@@ -50,8 +51,7 @@
             file_get_contents($this->url);
             $response_header = explode(' ', $http_response_header[3]);
             $location        = explode('/', $response_header[1]);
-                        $access_token    = $location[2];
-//            $access_token = '';
+            $access_token    = $location[2];
 
             $this->url_login        = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.Info/' . $access_token . '/Login.aspx';
             $this->url_student_mark = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/' . $access_token . '/StudentMark.aspx';
@@ -162,5 +162,17 @@
             $response = curl_exec($this->ch);
 
             return $response;
+        }
+
+        private function _formatData ($data)
+        {
+            if (strlen($this->semester_arr[0]) == 8) {
+                foreach ($data[$this->semester_arr[0]] as $module) {
+                    $data[$this->semester_arr[1]][] = $module;
+                }
+            }
+            unset($data[$this->semester_arr[0]]);
+
+            return $data;
         }
     }
