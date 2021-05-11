@@ -25,16 +25,16 @@
             $account = new Account($this->connect);
             $id_account = $account->getIDAccount($id);
 
-            $sql_query = "
+            $sql_query = '
                     SELECT
                         n.*,
                         od.Other_Department_Name, 
                         a.permission 
                     FROM
-                         " . self::notification_account_table . " na,
-                         " . self::notification_table . " n,
-                         " . self::other_department_table . " od, 
-                         " . self::account_table . " a  
+                         ' . self::notification_account_table . ' na,
+                         ' . self::notification_table . ' n,
+                         ' . self::other_department_table . ' od, 
+                         ' . self::account_table . ' a  
                     WHERE
                         na.ID_Account = :id_account AND 
                         n.ID_Notification = na.ID_Notification AND
@@ -43,13 +43,13 @@
                 UNION
                     SELECT
                         n.*, 
-                        concat('Khoa ', f.Faculty_Name), 
+                        concat(\'Khoa \', f.Faculty_Name), 
                         a.permission 
                     FROM
-                         " . self::notification_account_table . " na,
-                         " . self::notification_table . " n,
-                         " . self::faculty_table . " f, 
-                         " . self::account_table . " a    
+                         ' . self::notification_account_table . ' na,
+                         ' . self::notification_table . ' n,
+                         ' . self::faculty_table . ' f, 
+                         ' . self::account_table . ' a    
                     WHERE
                         na.ID_Account = :id_account AND 
                         n.ID_Notification = na.ID_Notification AND
@@ -58,19 +58,19 @@
                 UNION
                     SELECT
                         n.*, 
-                        concat('Gv.', t.Name_Teacher), 
+                        concat(\'Gv.\', t.Name_Teacher), 
                         a.permission 
                     FROM
-                         " . self::notification_account_table . " na,
-                         " . self::notification_table . " n,
-                         " . self::teacher_table . " t, 
-                         " . self::account_table . " a    
+                         ' . self::notification_account_table . ' na,
+                         ' . self::notification_table . ' n,
+                         ' . self::teacher_table . ' t, 
+                         ' . self::account_table . ' a    
                     WHERE
                         na.ID_Account = :id_account AND 
                         n.ID_Notification = na.ID_Notification AND
                         t.ID = n.ID_Sender AND 
                         a.id = n.ID_Sender 
-                    ";
+                    ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
