@@ -18,15 +18,15 @@
 
         public function checkAccount ($account) : array
         {
-            $sql_query = "
+            $sql_query = '
                 SELECT
                     *
                 FROM
-                     " . self::account_table . "
+                     ' . self::account_table . '
                 WHERE
                     username = :username AND
                     password = :password
-                ";
+                ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -67,14 +67,14 @@
 
         private function _getDataAccountOwner ($id_account, $table_name) : array
         {
-            $sql_query = "
+            $sql_query = '
                 SELECT
                     * 
                 FROM 
-                     " . $table_name . "
+                     ' . $table_name . '
                 WHERE 
                     ID = :id
-                ";
+                ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -103,13 +103,13 @@
         public function getPermission ($username) : string
         {
             $sql_query =
-                "SELECT
+                'SELECT
                     permission
                 FROM
-                    " . self::account_table . "
+                    ' . self::account_table . '
                 WHERE
                     username = :username
-                ";
+                ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -128,18 +128,18 @@
 
         public function getIDAccount ($id) : string
         {
-            $sql_query = "
+            $sql_query = '
                     SELECT
                         a.id
                     FROM
-                         " . self::student_table . " s,
-                         " . self::teacher_table . " t,
-                         " . self::account_table . " a  
+                         ' . self::student_table . ' s,
+                         ' . self::teacher_table . ' t,
+                         ' . self::account_table . ' a  
                     WHERE
                         ((s.ID_Student = :id AND s.ID = a.id) OR
                         (t.ID_Teacher = :id AND t.ID = a.id)) 
                     LIMIT 1
-                    ";
+                    ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -157,14 +157,14 @@
 
         public function updateQLDTPasswordOfStudentAccount ($id, $qldt_password) : string
         {
-            $sql_query = "
+            $sql_query = '
                     UPDATE
-                         " . self::account_table . "
+                         ' . self::account_table . '
                     SET 
                         qldt_password = :qldt_password
                     WHERE
                         id = :id
-                    ";
+                    ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -183,14 +183,14 @@
 
         public function getQLDTPasswordOfStudentAccount ($id) : string
         {
-            $sql_query = "
+            $sql_query = '
                     SELECT
                         qldt_password
                     FROM
-                         " . self::account_table . " a  
+                         ' . self::account_table . ' a  
                     WHERE
                         id = :id
-                    ";
+                    ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

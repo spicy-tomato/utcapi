@@ -105,21 +105,21 @@
 
                 for ($i = 1; $i < count($tr) - 1; $i++) {
                     $arr   = [];
-                    $td    = explode("<br><br>", $tr[$i]->children(1)->innertext);
+                    $td    = explode('<br><br>', $tr[$i]->children(1)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
-                    $td    = explode("<br><br>", $tr[$i]->children(2)->innertext);
+                    $td    = explode('<br><br>', $tr[$i]->children(2)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
-                    $td    = explode("<br><br>", $tr[$i]->children(3)->innertext);
+                    $td    = explode('<br><br>', $tr[$i]->children(3)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
-                    $td    = explode("<br><br>", $tr[$i]->children(8)->innertext);
+                    $td    = explode('<br><br>', $tr[$i]->children(8)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
-                    $td    = explode("<br><br>", $tr[$i]->children(9)->innertext);
+                    $td    = explode('<br><br>', $tr[$i]->children(9)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
-                    $td    = explode("<br><br>", $tr[$i]->children(10)->innertext);
+                    $td    = explode('<br><br>', $tr[$i]->children(10)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
-                    $td    = explode("<br><br>", $tr[$i]->children(11)->innertext);
+                    $td    = explode('<br><br>', $tr[$i]->children(11)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
-                    $td    = explode("<br><br>", $tr[$i]->children(12)->innertext);
+                    $td    = explode('<br><br>', $tr[$i]->children(12)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
 
                     $data[$semester][] = $arr;

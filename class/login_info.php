@@ -24,7 +24,7 @@
 
         public function login () : bool
         {
-            $sql_query = "
+            $sql_query = '
                 SELECT 
                     a.id, 
                     od.Other_Department_Name, 
@@ -32,14 +32,14 @@
                     f.Faculty_Name, 
                     f.ID AS F_ID 
                 FROM 
-                    " . self::account_table . " a, 
-                    " . self::other_department_table . " od, 
-                    " . self::faculty_table . " f  
+                    ' . self::account_table . ' a, 
+                    ' . self::other_department_table . ' od, 
+                    ' . self::faculty_table . ' f  
                 WHERE 
                     (a.username = :username AND 
                     a.password = :password) AND 
                     (od.ID = a.id OR f.ID = a.id) 
-                LIMIT 0, 1";
+                LIMIT 0, 1';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

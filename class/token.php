@@ -23,14 +23,14 @@
             $current_time = date('Y-m-d H:i:s');
 
             $sql_query =
-                "INSERT INTO
-                    " . self::device_table . "
+                'INSERT INTO
+                    ' . self::device_table . '
                     (Device_Token, ID_Student, Last_Use)
                 VALUES
                     (:token, :id_student, :current_time)
                 ON DUPLICATE KEY UPDATE
                     ID_Student = :id_student,
-                    Last_Use = :current_time";
+                    Last_Use = :current_time';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

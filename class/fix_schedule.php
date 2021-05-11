@@ -18,23 +18,23 @@
 
         public function getFixSchedules($old_id_fix)
         {
-            $sql_query = "
+            $sql_query = '
                 SELECT
                     fix.ID_Fix, md.Module_Name, sch.ID_Module_Class, sch.Day_Schedules,
                     fix.Day_Fix, fix.Shift_Fix, fix.ID_Room, t.ID
                 FROM
-                    " . self::fix_table . " fix,
-                    " . self::schedules_table . " sch,
-                    " . self::module_table . " md,
-                    " . self::module_class_table . " mdc,
-                    " . self::teacher_table . " t
+                    ' . self::fix_table . ' fix,
+                    ' . self::schedules_table . ' sch,
+                    ' . self::module_table . ' md,
+                    ' . self::module_class_table . ' mdc,
+                    ' . self::teacher_table . ' t
                 WHERE
                     fix.ID_Fix > :old_id_fix AND
                     sch.ID_Schedules = fix.ID_Schedules AND
                     mdc.ID_Module_Class = sch.ID_Module_Class AND
                     md.ID_Module = mdc.ID_Module AND
                     t.ID_Teacher = mdc.ID_Teacher
-                ";
+                ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

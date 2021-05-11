@@ -15,14 +15,14 @@
 
         public function getAcademicYear ()
         {
-            $sql_query = "
+            $sql_query = '
                     SELECT DISTINCT
                         Academic_Year
-                    FROM " . self::db_table . " 
+                    FROM ' . self::db_table . ' 
                     ORDER BY 
                         Academic_Year DESC 
                     LIMIT 9
-                    ";
+                    ';
 
 
             try {

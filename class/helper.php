@@ -33,14 +33,14 @@
                 return;
             }
 
-            $sql_query = "
+            $sql_query = '
                 SELECT
                     ID_Student
                 FROM
-                    " . self::participate_table . "
+                    ' . self::participate_table . '
                 WHERE
-                    ID_Module_Class IN (" . $sql_of_list . ")
-                ";
+                    ID_Module_Class IN (' . $sql_of_list . ')
+                ';
 
             $stmt = $this->connect->prepare($sql_query);
             $stmt->execute();
@@ -62,13 +62,13 @@
             }
 
             $sql_query =
-                "SELECT
+                'SELECT
                     ID_Student
                 FROM
-                    " . self::student_table . "
+                    ' . self::student_table . '
                 WHERE
-                    ID_Class IN (" . $sql_of_list . ")
-                ";
+                    ID_Class IN (' . $sql_of_list . ')
+                ';
 
             $stmt = $this->connect->prepare($sql_query);
             $stmt->execute();
@@ -87,14 +87,14 @@
 
         private function _getAccountListFromStudentList($sql_of_list)
         {
-            $sql_query = "
+            $sql_query = '
                 SELECT
                     ID
                 FROM
-                    " . self::student_table . "
+                    ' . self::student_table . '
                 WHERE
-                    ID_Student IN (" . $sql_of_list . ")
-                ";
+                    ID_Student IN (' . $sql_of_list . ')
+                ';
 
             $stmt = $this->connect->prepare($sql_query);
             $stmt->execute();
@@ -117,14 +117,14 @@
                 return [];
             }
 
-            $sql_query = "
+            $sql_query = '
                 SELECT
                     Device_Token
                 FROM
-                    " . self::device_table . "
+                    ' . self::device_table . '
                 WHERE
-                    ID_Student IN (" . $sql_of_list . ")
-                ";
+                    ID_Student IN (' . $sql_of_list . ')
+                ';
 
             $stmt = $this->connect->prepare($sql_query);
             $stmt->execute();
@@ -137,10 +137,10 @@
             $sql = '';
 
             foreach ($list as $id) {
-                $sql .= "'" . $id . "',";
+                $sql .= '\'' . $id . '\'';
             }
 
-            $sql = rtrim($sql, ",");
+            $sql = rtrim($sql, ',');
 
             return $sql;
         }

@@ -16,13 +16,13 @@
         public function getAll()
         {
             $sql_query =
-                "SELECT 
+                'SELECT 
                     ID_Module_Class, Module_Class_Name
                 FROM 
-                    " . self::db_table . " 
+                    ' . self::db_table . ' 
                 ORDER BY
                     ID_Module_Class
-                ";
+                ';
 
             try {
 

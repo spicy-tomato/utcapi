@@ -71,12 +71,12 @@
         private function _sendToStudent () : void
         {
             $sql_query =
-                "INSERT INTO
-                    " . self::notification_account_table . "
+                'INSERT INTO
+                    ' . self::notification_account_table . '
                     (ID_Notification, ID_Account)
                 VALUES
                     (:id_notification, :id_account)
-                ";
+                ';
 
             $this->connect->beginTransaction();
             try {
@@ -102,14 +102,14 @@
         private function _queryWithTime () : string
         {
             $sql_query =
-                "INSERT INTO
-                    " . self::notification_table . "
+                'INSERT INTO
+                    ' . self::notification_table . '
                     (Title, Content, Typez, ID_Sender, 
                     Time_Create, Time_Start, Time_End)
                 VALUES
                     (:title, :content, :typez, :id_sender, 
                     :time_create, :time_start, :time_end) 
-                ";
+                ';
 
             return $sql_query;
         }

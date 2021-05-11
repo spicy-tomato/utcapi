@@ -19,8 +19,8 @@
             $response = 'OK';
 
             $sql_query =
-                "INSERT INTO
-                    " . self::module_score_table . " 
+                'INSERT INTO
+                    ' . self::module_score_table . ' 
                 (
                 Semester, ID_Module, Module_Name, Credit, ID_Student,
                 Evaluation, Process_Score, Test_Score, Theoretical_Score
@@ -29,7 +29,7 @@
                 (
                 :semester, :id_module, :module_name, :credit, :id_student,
                 :evaluation, :process_score, :test_score, :theoretical_score
-                )";
+                )';
 
             foreach ($data as $key => $value) {
                 foreach ($value as $item) {
@@ -50,15 +50,15 @@
                         if ($error->getCode() == 23000 &&
                             count($data) == 1) {
                             $sql_query_2 =
-                                "UPDATE
-                                    " . self::module_score_table . "
+                                'UPDATE
+                                    ' . self::module_score_table . '
                                 SET  
                                     Evaluation = :evaluation, Process_Score = :process_score, 
                                     Test_Score = :test_score, Theoretical_Score = :theoretical_score
                                 WHERE 
                                     Semester = :semester AND
                                     ID_Module = :id_module AND
-                                    ID_Student = :id_student";
+                                    ID_Student = :id_student';
 
                             $stmt = $this->connect->prepare($sql_query_2);
                             $stmt->execute([':semester' => $key,
@@ -85,14 +85,14 @@
         public function getScore ($is_student)
         {
             $sql_query =
-                "SELECT
+                'SELECT
                     Semester, Module_Name, Credit, Evaluation, 
                     Process_Score, Test_Score, Theoretical_Score
                 FROM
-                    " . self::module_score_table . "
+                    ' . self::module_score_table . '
                 WHERE
                     ID_Student = :id_student
-                ";
+                ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
