@@ -1,6 +1,6 @@
 <?php
 
-    function shared_header (string $title, string $otherTags = '') : void
+    function shared_header (string $title, string $otherTags, $css_link = '') : void
     {
         echo '
         <head>
@@ -14,7 +14,7 @@
           <title>' . $title . '</title>
           ' . $otherTags . '
           <link rel="stylesheet" href="css/style.css">
-          <link rel="stylesheet" href="/ui/css/style.css">
+          <link rel="stylesheet" href="' . $css_link . '">
         </head>';
     }
 

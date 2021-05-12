@@ -7,7 +7,7 @@
 <html lang="en">
 
 <?php
-    shared_header('Trang chủ');
+    shared_header('Trang chủ', '', '../css/style.css');
 ?>
 <body>
     <?php shared_navbar(); ?>
