@@ -2,6 +2,7 @@
 
 
     require dirname(__DIR__) . '/vendor/autoload.php';
+    include_once dirname(__DIR__) . '/utils/env_io.php';
 
     class AWS
     {
@@ -23,7 +24,7 @@
             ]);
         }
 
-        public function uploadFile ($file_name, $file_location)
+        public function uploadFile ($file_name, $file_location, $folder)
         {
             $finfo     = new finfo(FILEINFO_MIME_TYPE);
             $file_mime = $finfo->file($file_location);
@@ -31,7 +32,7 @@
             try {
                 $this->s3->putObject([
                     'Bucket' => $this->bucket_name,
-                    'Key' => $file_name,
+                    'Key' => $folder . $file_name,
                     'SourceFile' => $file_location,
                     'ACL' => 'public-read',
                     'ContentType' => $file_mime
@@ -41,11 +42,11 @@
             }
         }
 
-        public function getDataFromFile ($ile_name)
+        public function getDataFromFile ($file_name, $folder)
         {
             $result = $this->s3->getObject([
                 'Bucket' => 'utcapi-file-upload',
-                'Key' => $ile_name,
+                'Key' => $folder . $file_name,
                 'Body' => 'this is the body!',
             ]);
 

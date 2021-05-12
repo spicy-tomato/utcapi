@@ -17,7 +17,7 @@
     echo  dirname(__DIR__, 2) .'<br>';
     echo  dirname($_SERVER['DOCUMENT_ROOT'], 2) .'<br>';
     $aws = new AWS();
-    $old_id_fix = $aws->getDataFromFile('id_fix.txt');
+    $old_id_fix = $aws->getDataFromFile('id_fix.txt', 'cron-jobs/');
 
     $db      = new Database();
     $connect = $db->connect();
@@ -57,7 +57,7 @@
 
             file_put_contents('id_fix.txt', $fix['ID_Fix']);
             $file_location = $_SERVER['DOCUMENT_ROOT'] . '/api-v2/manage/cron_jobs/id_fix.txt';
-            $aws->uploadFile('id_fix.txt', $file_location);
+            $aws->uploadFile('id_fix.txt', $file_location, 'cron-jobs/');
 
         } catch (Exception $error) {
             printError($error);
