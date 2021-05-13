@@ -163,7 +163,7 @@
             return $response;
         }
 
-        private function _formatData ($data)
+        private function _formatData ($data) : array
         {
             if (strlen($this->semester_arr[0]) == 8) {
                 foreach ($data[$this->semester_arr[0]] as $module) {
@@ -182,7 +182,6 @@
 
             return $data;
         }
-
 
         public function getStudentExamSchedule ($semester) : array
         {
@@ -251,8 +250,6 @@
                 $exam_type         = [];
                 $exam_type_element = $html->find('select[id=drpDotThi] option');
                 for ($i = 1; $i < count($exam_type_element); $i++) {
-                    echo $exam_type_element[$i]->plaintext . '<br>';
-
                     $exam_type[$i - 1][] = $exam_type_element[$i]->plaintext;
                     $exam_type[$i - 1][] = $exam_type_element[$i]->value;
                 }

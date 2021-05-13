@@ -1,5 +1,4 @@
 <?php
-    session_start();
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/class/account.php';
     include_once dirname(__DIR__, 2) . '/class/student_schedule.php';
