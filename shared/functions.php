@@ -6,7 +6,7 @@
         $date = date("d/m/Y H:i:s");
         $message = $date . "\n" . $error->getCode() . "\n" . $error->getMessage() . "\n";
 
-        file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/Errors.txt', $message, FILE_APPEND);
+        file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/utcapi/Errors.txt', $message, FILE_APPEND);
     }
 
     function convertDate($date) : string
