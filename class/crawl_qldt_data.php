@@ -219,11 +219,19 @@
             $this->event_validation  = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
             $this->hidden_student_id = $html->find('input[id=hidStudentId]', 0)->value;
 
-            $data     = [];
             $elements = $html->find('select[name=drpSemester] option');
-            foreach ($elements as $e) {
-                if (in_array($e->innertext, $this->semester_arr)) {
-                    $data[$e->innertext] = $e->value;
+            $data     = [];
+            $flag = false;
+            $data[$elements[2]->innertext] = $elements[2]->value;
+            for ($i = 0; $i < count($elements); $i++)
+            {
+                if (in_array($elements[$i]->innertext, $this->semester_arr)) {
+                    $data[$elements[$i]->innertext] = $elements[$i]->value;
+                    if (!$flag)
+                    {
+                        $data[$elements[$i-1]->innertext] = $elements[$i-1]->value;
+                        $flag = true;
+                    }
                 }
             }
 
