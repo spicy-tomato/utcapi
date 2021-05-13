@@ -18,7 +18,5 @@
   },
   "require-dev": {
     "heroku/heroku-buildpack-php": "*"
-  },
-  "name": "utcapi",
-  "description": "connect all utcers"
+  }
 }
