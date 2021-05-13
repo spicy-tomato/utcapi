@@ -152,7 +152,7 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $id_student]);
 
-                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $data = $this->_formatSemesterResponse($stmt->fetchAll(PDO::FETCH_ASSOC));
 
                 return $data;
 
@@ -161,5 +161,16 @@
 
                 return 'Failed';
             }
+        }
+
+        private function _formatSemesterResponse ($data) : array
+        {
+            $formatted_data = [];
+            foreach ($data as $item) {
+                $semester_split   = explode('_', $item['Semester']);
+                $formatted_data[] = $semester_split[2] . '_' . $semester_split[0] . '_' . $semester_split[1];
+            }
+
+            return $formatted_data;
         }
     }

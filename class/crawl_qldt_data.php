@@ -280,9 +280,9 @@
                         //                        $aa = ForceUTF8\Encoding::toUTF8($exam_type[$i][0]);
                         //                        $arr[] = ForceUTF8\Encoding::toUTF8($aa);
                         //                        $aa = iconv("ISO-8859-1", "UTF-8", $exam_type[$i][0]);
-                        $arr[] = htmlentities(trim(($exam_type[$i][0])), ENT_QUOTES, 'UTF-8');
+                        //                        $arr[] = htmlentities(trim(($exam_type[$i][0])), ENT_QUOTES, 'UTF-8');
                         //                        $arr[] = $aa;
-                        //                        $arr[]     = ($this->_formatStringDataCrawled($exam_type[$i][0]));
+                        $arr[]     = ($this->_formatStringDataCrawled($exam_type[$i][0]));
                         $arr[]     = $this->student_id;
                         $arr[]     = $this->_formatStringDataCrawled($tr[$j]->children(1)->innertext);
                         $arr[]     = $this->_formatStringDataCrawled($tr[$j]->children(2)->innertext);
