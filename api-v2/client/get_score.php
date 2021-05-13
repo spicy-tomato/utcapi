@@ -1,5 +1,4 @@
 <?php
-    session_start();
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/class/module_score.php';
     include_once dirname(__DIR__, 2) . '/class/crawl_qldt_data.php';
@@ -10,7 +9,7 @@
         $db      = new Database();
         $connect = $db->connect();
 
-        $module_score = new ModuleScore($connect,);
+        $module_score = new ModuleScore($connect);
         $response     = $module_score->getScore($_GET['id']);
     }
     else {

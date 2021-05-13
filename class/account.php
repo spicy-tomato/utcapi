@@ -167,12 +167,13 @@
                     ';
 
             try {
-                $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute(['id' => $id,
-                    ':qldt_password' => $qldt_password]);
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                $stmt   = $this->connect->prepare($sql_query);
+                $status = $stmt->execute([
+                    'id' => $id,
+                    ':qldt_password' => md5($qldt_password)
+                ]);
 
-                return isset($data['qldt_password']) ? $data['qldt_password'] : 'Not Found';
+                return $status ? 'OK' : 'Not Found';
 
             } catch (PDOException $error) {
                 printError($error);
