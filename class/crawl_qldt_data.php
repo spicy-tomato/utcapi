@@ -219,18 +219,16 @@
             $this->event_validation  = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
             $this->hidden_student_id = $html->find('input[id=hidStudentId]', 0)->value;
 
-            $elements = $html->find('select[name=drpSemester] option');
-            $data     = [];
-            $flag = false;
+            $elements                      = $html->find('select[name=drpSemester] option');
+            $data                          = [];
+            $flag                          = false;
             $data[$elements[2]->innertext] = $elements[2]->value;
-            for ($i = 0; $i < count($elements); $i++)
-            {
+            for ($i = 0; $i < count($elements); $i++) {
                 if (in_array($elements[$i]->innertext, $this->semester_arr)) {
                     $data[$elements[$i]->innertext] = $elements[$i]->value;
-                    if (!$flag)
-                    {
-                        $data[$elements[$i-1]->innertext] = $elements[$i-1]->value;
-                        $flag = true;
+                    if (!$flag) {
+                        $data[$elements[$i - 1]->innertext] = $elements[$i - 1]->value;
+                        $flag                               = true;
                     }
                 }
             }
@@ -290,17 +288,19 @@
                         //                        $aa = iconv("ISO-8859-1", "UTF-8", $exam_type[$i][0]);
                         //                        $arr[] = htmlentities(trim(($exam_type[$i][0])), ENT_QUOTES, 'UTF-8');
                         //                        $arr[] = $aa;
-                        $arr[]     = ($this->_formatStringDataCrawled($exam_type[$i][0]));
-                        $arr[]     = $this->student_id;
-                        $arr[]     = $this->_formatStringDataCrawled($tr[$j]->children(1)->innertext);
-                        $arr[]     = $this->_formatStringDataCrawled($tr[$j]->children(2)->innertext);
-                        $arr[]     = $this->_formatStringDataCrawled($tr[$j]->children(3)->innertext);
-                        $temp_date = $this->_formatStringDataCrawled($tr[$j]->children(4)->innertext);
-                        $arr[]     = $this->_formatDateDataCrawled($temp_date);
-                        $arr[]     = $this->_formatStringDataCrawled($tr[$j]->children(5)->innertext);
-                        $arr[]     = $this->_formatStringDataCrawled($tr[$j]->children(6)->innertext);
-                        $arr[]     = $this->_formatStringDataCrawled($tr[$j]->children(7)->innertext);
-                        $arr[]     = $this->_formatStringDataCrawled($tr[$j]->children(8)->innertext);
+                        $temp_examination = $this->_specialFormatUTF8EncodingBreak($exam_type[$i][0]);
+                        $arr[]            = $this->_formatStringDataCrawled($temp_examination);
+                        $arr[]            = $this->student_id;
+                        $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(1)->innertext);
+                        $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(2)->innertext);
+                        $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(3)->innertext);
+                        $temp_date        = $this->_formatStringDataCrawled($tr[$j]->children(4)->innertext);
+                        $arr[]            = $this->_formatDateDataCrawled($temp_date);
+                        $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(5)->innertext);
+                        $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(6)->innertext);
+                        $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(7)->innertext);
+                        $temp_room        = $this->_specialFormatUTF8EncodingBreak($tr[$j]->children(8)->innertext);
+                        $arr[]            = $this->_formatStringDataCrawled($temp_room);
 
                         $data[$semester_key][] = $arr;
                     }
@@ -311,11 +311,21 @@
             return $data;
         }
 
+        private function _specialFormatUTF8EncodingBreak ($str)
+        {
+            $str = preg_replace('/kh&#243;a/', 'khóa', $str);
+            $str = preg_replace('/K&#234;/', 'Kế', $str);
+            $str = preg_replace('/ch&#237;nh/', 'chính', $str);
+            $str = preg_replace('/Kê/', 'Kế', $str);
+            $str = preg_replace('/Phong/', 'Phòng', $str);
+
+            return $str;
+        }
+
         private function _formatStringDataCrawled ($str) : string
         {
             $str = preg_replace('/\s+/', ' ', $str);
-            $str = preg_replace('/Kê/', 'Kế', $str);
-            $str = preg_replace('/Phong/', 'Phòng', $str);
+
             $str = str_replace('- ', '-', $str);
             $str = str_replace(' -', '-', $str);
             $str = trim($str, ' ');
