@@ -315,6 +315,9 @@
             $str = preg_replace('/kh&#243;a/', 'khóa', $str);
             $str = preg_replace('/K&#234;/', 'Kế', $str);
             $str = preg_replace('/ch&#237;nh/', 'chính', $str);
+            $str = preg_replace('/đ&#225;nh/', 'đánh', $str);
+            $str = preg_replace('/gi&#225;/', 'giá', $str);
+            $str = preg_replace('/tr&#236;nh/', 'trình', $str);
             $str = preg_replace('/Kê/', 'Kế', $str);
             $str = preg_replace('/Phong/', 'Phòng', $str);
 
