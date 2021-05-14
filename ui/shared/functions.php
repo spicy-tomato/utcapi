@@ -4,7 +4,7 @@
     function shared_header (string $title, string $otherTags = '') : void
     {
         EnvIO::loadEnv();
-        $root_folder = $_ENV['ROOT_PROJECT'];
+        $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
 
         echo '
         <head>
@@ -32,7 +32,7 @@
         $current_nav = ' active';
 
         EnvIO::loadEnv();
-        $root_folder = $_ENV['ROOT_PROJECT'] ?? '';
+        $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
 
         $home_link      = $root_folder . '/ui/home';
         $form1_link     = $root_folder . '/ui/forms/department-class';

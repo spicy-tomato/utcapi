@@ -7,7 +7,7 @@
         $date    = date("d/m/Y H:i:s");
         $message = $date . "\n" . $error->getCode() . "\n" . $error->getMessage() . "\n";
         EnvIO::loadEnv();
-        file_put_contents($_SERVER['DOCUMENT_ROOT'] . $_ENV['ROOT_PROJECT'] . '/Errors.txt', $message, FILE_APPEND);
+        file_put_contents(dirname(__DIR__) . '/Errors.txt', $message, FILE_APPEND);
     }
 
     function convertDate ($date) : string
