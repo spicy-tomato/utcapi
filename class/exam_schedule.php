@@ -105,4 +105,44 @@
 
             return $semester;
         }
+
+        public function getExamSchedule ($id_student)
+        {
+            $sql_query =
+                'SELECT
+                    Semester, Module_Name, Credit, Date_Start,
+                    Time_Start, Method, Identification_Number, Room
+                FROM
+                    ' . self::exam_schedule_table . '
+                WHERE
+                    ID_Student = :id_student
+                ';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([':id_student' => $id_student]);
+
+                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $data = $this->_formatExamScheduleResponse($data);
+
+                return $data;
+
+            } catch (PDOException $error) {
+                printError($error);
+
+                return 'Failed';
+            }
+        }
+
+        private function _formatExamScheduleResponse ($data)
+        {
+            foreach ($data as &$value) {
+                $value['Credit']                = intval($value['Credit']);
+                $value['Identification_Number'] = intval($value['Identification_Number']);
+                $date_split                     = explode('-', $value['Date_Start']);
+                $value['Date_Start']            = $date_split[2] . '-' . $date_split[1] . '-' . $date_split[0];
+            }
+
+            return $data;
+        }
     }
