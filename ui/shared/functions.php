@@ -1,7 +1,11 @@
 <?php
+    include_once dirname(__DIR__, 2) . '/utils/env_io.php';
 
-    function shared_header (string $title, string $otherTags, $css_link = '') : void
+    function shared_header (string $title, string $otherTags = '') : void
     {
+        EnvIO::loadEnv();
+        $root_folder = $_ENV['ROOT_PROJECT'];
+
         echo '
         <head>
           <meta charset="UTF-8">
@@ -14,7 +18,7 @@
           <title>' . $title . '</title>
           ' . $otherTags . '
           <link rel="stylesheet" href="css/style.css">
-          <link rel="stylesheet" href="' . $css_link . '">
+          <link rel="stylesheet" href="' . $root_folder . '/ui/css/style.css">
         </head>';
     }
 
@@ -27,12 +31,8 @@
         $nav4_class  = 'nav-link';
         $current_nav = ' active';
 
-        if (!isset($_ENV['DB_HOST'])) {
-            $root_folder = '/utcapi';
-        }
-        else {
-            $root_folder = '';
-        }
+        EnvIO::loadEnv();
+        $root_folder = $_ENV['ROOT_PROJECT'];
 
         $home_link      = $root_folder . '/ui/home';
         $form1_link     = $root_folder . '/ui/forms/department-class';

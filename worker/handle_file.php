@@ -19,7 +19,7 @@
 
                 $new_file_name = $nameSplit[0] . '_' . $timeSplit[0] . $timeSplit[1] . '.' . $nameSplit[1];
 
-                $location = $_SERVER['DOCUMENT_ROOT'] . '/file_upload/' . $new_file_name;
+                $location = dirname(__DIR__) . '/file_upload/' . $new_file_name;
 
                 if (move_uploaded_file($file['tmp_name'], $location)) {
                     $new_file_name_arr[] = $new_file_name;

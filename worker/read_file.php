@@ -1,5 +1,5 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
+    include_once dirname(__DIR__) . '/shared/functions.php';
 
     class ReadFIle
     {

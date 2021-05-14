@@ -1,9 +1,9 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/worker/handle_file.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/worker/read_file.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/worker/push_data_to_database.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/worker/amazon_s3.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
+    include_once 'handle_file.php';
+    include_once 'read_file.php';
+    include_once 'push_data_to_database.php';
+    include_once 'amazon_s3.php';
+    include_once dirname(__DIR__) . '/config/db.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $handleFile = new HandleFile($_FILES);
@@ -19,7 +19,7 @@
             $work_with_db = new WorkWithDatabase($connect);
             $aws          = new AWS();
 
-            $location = $_SERVER['DOCUMENT_ROOT'] . '/file_upload/';
+            $location = dirname(__DIR__) . '/file_upload/';
             foreach ($response as $file_name) {
                 $file_location = $location . $file_name;
 

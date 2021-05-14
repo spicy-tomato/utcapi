@@ -1,6 +1,5 @@
 <?php
     session_start();
-
     if (isset($_SESSION['department_name']) &&
         isset($_SESSION['department_id_account'])) {
 
@@ -11,11 +10,10 @@
 <html lang="en">
 
 <?php
-
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/ui/shared/functions.php';
 
-    shared_header('Đăng nhập', '');
+    shared_header('Đăng nhập');
 ?>
 
 <body class="text-center cc_cursor bg-light">
