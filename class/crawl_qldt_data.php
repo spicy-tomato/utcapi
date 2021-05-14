@@ -251,17 +251,24 @@
                 $response = $this->postRequest($this->url_student_exam_schedule, $form_get_exam_schedule_request);
                 $html     = new simple_html_dom();
                 $html->load($response);
+                $exam_type_element_by_shtmldom = $html->find('select[id=drpDotThi] option');
 
-                $exam_type         = [];
-                $exam_type_element = $html->find('select[id=drpDotThi] option');
-                for ($i = 1; $i < count($exam_type_element); $i++) {
-                    $exam_type[$i - 1][] = $exam_type_element[$i]->plaintext;
-                    $exam_type[$i - 1][] = $exam_type_element[$i]->value;
+                $response  = mb_convert_encoding($response, 'HTML-ENTITIES', "UTF-8");
+                $dom       = new DOMDocument();
+                @$dom->loadHTML($response);
+                $exam_type_element_by_dom_document = $dom->getElementById('drpDotThi');
+
+                $exam_type = [];
+                $j = 1;
+                for ($i = 3; $i < $exam_type_element_by_dom_document->childNodes->count(); $i += 2) {
+                    $exam_type[$i - (2 + $j)][] = $exam_type_element_by_dom_document->childNodes->item($i)->textContent;
+                    $exam_type[$i - (2 + $j)][] = $exam_type_element_by_shtmldom[$i - ($j + 1)]->value;
+                    $j++;
                 }
 
-                $exam_type_selected = $html->find('select[id=drpDotThi] option[selected=selected]', 0)->innertext;
+                $exam_type_selected = $html->find('select[id=drpDotThi] option[selected=selected]', 0)->value;
                 for ($i = count($exam_type) - 1; $i >= 0; $i--) {
-                    if ($exam_type[$i][0] != $exam_type_selected) {
+                    if ($exam_type[$i][1] != $exam_type_selected) {
                         $form_get_exam_schedule_request['drpDotThi']         = $exam_type[$i][1];
                         $form_get_exam_schedule_request['__EVENTTARGET']     = 'drpDotThi';
                         $form_get_exam_schedule_request['__VIEWSTATE']       = $html->find('input[name=__VIEWSTATE]', 0)->value;
@@ -281,12 +288,7 @@
 
                     $tr = $html->find('table[id=tblCourseList] tr');
                     for ($j = 1; $j < count($tr) - 1; $j++) {
-                        $arr = [];
-                        //                        $aa = ForceUTF8\Encoding::toUTF8($exam_type[$i][0]);
-                        //                        $arr[] = ForceUTF8\Encoding::toUTF8($aa);
-                        //                        $aa = iconv("ISO-8859-1", "UTF-8", $exam_type[$i][0]);
-                        //                        $arr[] = htmlentities(trim(($exam_type[$i][0])), ENT_QUOTES, 'UTF-8');
-                        //                        $arr[] = $aa;
+                        $arr              = [];
                         $temp_examination = $this->_specialFormatUTF8EncodingBreak($exam_type[$i][0]);
                         $arr[]            = $this->_formatStringDataCrawled($temp_examination);
                         $arr[]            = $this->student_id;
@@ -312,13 +314,8 @@
 
         private function _specialFormatUTF8EncodingBreak ($str)
         {
-            $str = preg_replace('/kh&#243;a/', 'khóa', $str);
-            $str = preg_replace('/K&#234;/', 'Kế', $str);
-            $str = preg_replace('/ch&#237;nh/', 'chính', $str);
-            $str = preg_replace('/đ&#225;nh/', 'đánh', $str);
-            $str = preg_replace('/gi&#225;/', 'giá', $str);
-            $str = preg_replace('/tr&#236;nh/', 'trình', $str);
             $str = preg_replace('/Kê/', 'Kế', $str);
+            $str = preg_replace('/hoach/', 'hoạch', $str);
             $str = preg_replace('/Phong/', 'Phòng', $str);
 
             return $str;
