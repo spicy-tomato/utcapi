@@ -11,6 +11,9 @@
 
         $module_score = new ModuleScore($connect);
         $response     = $module_score->getScore($_GET['id']);
+        if (empty($response)) {
+            $response = 'Not Found';
+        }
     }
     else {
         $response = 'Invalid Request';
