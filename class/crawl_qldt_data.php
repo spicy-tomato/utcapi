@@ -327,7 +327,6 @@
         private function _formatStringDataCrawled ($str) : string
         {
             $str = preg_replace('/\s+/', ' ', $str);
-
             $str = str_replace('- ', '-', $str);
             $str = str_replace(' -', '-', $str);
             $str = trim($str, ' ');
