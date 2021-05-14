@@ -125,11 +125,11 @@
 
         private function _formatScoreResponse ($data)
         {
-            foreach ($data as &$e) {
-                $e['Credit']            = intval($e['Credit']);
-                $e['Process_Score']     = floatval($e['Process_Score']);
-                $e['Test_Score']        = floatval($e['Test_Score']);
-                $e['Theoretical_Score'] = floatval($e['Theoretical_Score']);
+            foreach ($data as &$value) {
+                $value['Credit']            = intval($value['Credit']);
+                $value['Process_Score']     = floatval($value['Process_Score']);
+                $value['Test_Score']        = floatval($value['Test_Score']);
+                $value['Theoretical_Score'] = floatval($value['Theoretical_Score']);
             }
 
             return $data;
