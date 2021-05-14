@@ -1,8 +1,4 @@
 <?php
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-
     include_once $_SERVER['DOCUMENT_ROOT'] . '/worker/handle_file.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/worker/read_file.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/worker/push_data_to_database.php';

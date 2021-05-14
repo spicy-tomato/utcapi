@@ -1,5 +1,4 @@
 <?php
-
     require dirname(__DIR__) . '/vendor/autoload.php';
     include_once dirname(__DIR__) . '/utils/env_io.php';
     include_once dirname(__DIR__) . '/api-v2/manage/crawl/simple_html_dom.php';

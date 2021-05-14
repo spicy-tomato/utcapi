@@ -1,6 +1,4 @@
 <?php
-
-
     require dirname(__DIR__) . '/vendor/autoload.php';
     include_once dirname(__DIR__) . '/utils/env_io.php';
 

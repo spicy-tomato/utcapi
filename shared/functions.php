@@ -1,5 +1,4 @@
 <?php
-
     function printError(Exception $error)
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');

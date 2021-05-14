@@ -1,5 +1,4 @@
 <?php
-
     class Helper
     {
         private const participate_table = 'Participate';

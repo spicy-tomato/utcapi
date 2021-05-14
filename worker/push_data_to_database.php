@@ -1,5 +1,4 @@
 <?php
-
     class WorkWithDatabase
     {
         private const student_sql = "
