@@ -80,21 +80,12 @@
             }
         }
 
-        private function getFormRequireDataOfStudentMark () : int
+        private function getFormRequireDataOfStudentMark ()
         {
             $response = $this->getRequest($this->url_student_mark);
 
             $html = new simple_html_dom();
             $html->load($response);
-
-            $flag = $html->find('input[id=hidStudentId]', 0);
-            if (empty($flag)) {
-                $flag2 = $html->find('input[id=txtUserName]', 0);
-                if (empty($flag2)) {
-                    return -1;
-                }
-                return 0;
-            }
 
             $this->view_state        = $html->find('input[name=__VIEWSTATE]', 0)->value;
             $this->event_validation  = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
@@ -105,8 +96,6 @@
             foreach ($elements as $e) {
                 $this->semester_arr[] = $e->innertext;
             }
-
-            return 1;
         }
 
         private function getDataMarks ()
