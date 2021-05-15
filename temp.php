@@ -21,7 +21,7 @@
         $access_token    = $location[2];
     }
     else {
-        $access_token = '(S(3vwbcqssv0cc30sz2d5girih))';
+        $access_token = $_ENV['TOKEN_QLDT'];
     }
 
     $url_login                 .= $access_token . '/Login.aspx';
