@@ -168,7 +168,7 @@
                 $stmt   = $this->connect->prepare($sql_query);
                 $status = $stmt->execute([
                     'id' => $id,
-                    ':qldt_password' => md5($qldt_password)
+                    ':qldt_password' => $qldt_password
                 ]);
 
                 return $status ? 'OK' : 'Not Found';

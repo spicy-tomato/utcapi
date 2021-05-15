@@ -16,6 +16,7 @@
         $data['qldt_password'] = $account->getQLDTPasswordOfStudentAccount($data['id_account']);
         $crawl                 = new CrawlQLDTData($data['id_student'], $data['qldt_password']);
         $crawl_data            = $crawl->getStudentMarks();
+
         if (isset($crawl_data[0])) {
             if ($crawl_data[0] == -1) {
                 $response = 'Failed';

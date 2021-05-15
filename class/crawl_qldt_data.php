@@ -7,7 +7,7 @@
     class CrawlQLDTData
     {
         private string $student_id;
-        private string $student_password;
+        private string $qldt_password;
         private array $semester_arr = [];
         private string $hidden_student_id = '';
         private string $url = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.Info/Login.aspx';
@@ -19,10 +19,10 @@
         private int $status = 1;
         private $ch;
 
-        public function __construct (string $student_id, string $student_password)
+        public function __construct (string $student_id, string $qldt_password)
         {
-            $this->student_id       = $student_id;
-            $this->student_password = $student_password;
+            $this->student_id    = $student_id;
+            $this->qldt_password = $qldt_password;
 
             $this->ch = curl_init();
 
@@ -30,9 +30,14 @@
             $this->loginQLDT();
         }
 
+        public function getStatus () : int
+        {
+            return $this->status;
+        }
+
         public function getStudentMarks () : array
         {
-            if ($this->status != -1 && $this->status != 0) {
+            if ($this->status == 1) {
                 $this->getFormRequireDataOfStudentMark();
                 $data   = $this->getDataMarks();
                 $data   = $this->_formatData($data);
@@ -57,11 +62,11 @@
             $this->url_student_exam_schedule .= $access_token . '/StudentViewExamList.aspx';
         }
 
-        private function loginQLDT ()
+        public function loginQLDT ()
         {
             $form_login_request                = EnvIO::$form_login_request;
             $form_login_request['txtUserName'] = $this->student_id;
-            $form_login_request['txtPassword'] = $this->student_password;
+            $form_login_request['txtPassword'] = $this->qldt_password;
 
             $response = $this->postRequest($this->url_login, $form_login_request);
 
