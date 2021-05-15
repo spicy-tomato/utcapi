@@ -16,6 +16,7 @@
         private string $url_student_exam_schedule = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/';
         private string $view_state = '';
         private string $event_validation = '';
+        private int $status = 1;
         private $ch;
 
         public function __construct (string $student_id, string $student_password)
@@ -31,14 +32,13 @@
 
         public function getStudentMarks () : array
         {
-            $status = $this->getFormRequireDataOfStudentMark();
-
-            if ($status != -1 && $status != 0) {
-                $data = $this->getDataMarks();
-                $data = $this->_formatData($data);
+            if ($this->status != -1 && $this->status != 0) {
+                $this->getFormRequireDataOfStudentMark();
+                $data   = $this->getDataMarks();
+                $data   = $this->_formatData($data);
             }
             else {
-                $data[] = $status;
+                $data[] = $this->status;
             }
             curl_close($this->ch);
 
@@ -63,7 +63,21 @@
             $form_login_request['txtUserName'] = $this->student_id;
             $form_login_request['txtPassword'] = $this->student_password;
 
-            $this->postRequest($this->url_login, $form_login_request);
+            $response = $this->postRequest($this->url_login, $form_login_request);
+
+            $html = new simple_html_dom();
+            $html->load($response);
+
+            $flag = $html->find('select[id=drpCourse]', 0);
+            if (empty($flag)) {
+                $flag2 = $html->find('input[id=txtUserName]', 0);
+                if (empty($flag2)) {
+                    $this->status = -1;
+                }
+                else {
+                    $this->status = 0;
+                }
+            }
         }
 
         private function getFormRequireDataOfStudentMark () : int
@@ -253,13 +267,13 @@
                 $html->load($response);
                 $exam_type_element_by_shtmldom = $html->find('select[id=drpDotThi] option');
 
-                $response  = mb_convert_encoding($response, 'HTML-ENTITIES', "UTF-8");
-                $dom       = new DOMDocument();
+                $response = mb_convert_encoding($response, 'HTML-ENTITIES', "UTF-8");
+                $dom      = new DOMDocument();
                 @$dom->loadHTML($response);
                 $exam_type_element_by_dom_document = $dom->getElementById('drpDotThi');
 
                 $exam_type = [];
-                $j = 1;
+                $j         = 1;
                 for ($i = 3; $i < $exam_type_element_by_dom_document->childNodes->count(); $i += 2) {
                     $exam_type[$i - (2 + $j)][] = $exam_type_element_by_dom_document->childNodes->item($i)->textContent;
                     $exam_type[$i - (2 + $j)][] = $exam_type_element_by_shtmldom[$i - ($j + 1)]->value;
