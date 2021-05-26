@@ -1,6 +1,6 @@
 export async function getSender() {
     try {
-        const baseUrl = '../../shared/session.php?var=department_id_account'
+        const baseUrl = '../../shared/session.php?var=id_account'
         const init = {
             method: 'GET',
             cache: 'no-cache'

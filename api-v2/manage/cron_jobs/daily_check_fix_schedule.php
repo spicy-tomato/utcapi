@@ -7,7 +7,7 @@
     include_once dirname(__DIR__, 3) . '/class/fix_schedule.php';
     include_once dirname(__DIR__, 3) . '/shared/functions.php';
 
-    $aws        = new AWS();
+    $aws                = new AWS();
     $last_time_accepted = $aws->getDataFromFile('last_schedule_fixed.txt', 'cron-jobs/');
 
     $db      = new Database();
