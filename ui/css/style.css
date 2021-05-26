@@ -15,10 +15,6 @@
     width: 30%;
 }
 
-.input_date {
-    height: 38px;
-}
-
 .disable {
     background-color: gray;
     border-color: gray;
@@ -32,6 +28,36 @@
     top: 0;
     left: 100%;
     margin-top: -1px;
+}
+
+.input-date {
+    position: relative;
+    width: 160px; height: 35px; font-size: 18px;
+    color: white;
+}
+
+.input-date:before {
+    position: absolute;
+    top: 3px; left: 3px;
+    content: attr(data-date);
+    display: inline-block;
+    color: black;
+}
+
+.input-date::-webkit-clear-button{
+    display: none;
+}
+
+.input-date::-webkit-inner-spin-button{
+    display: none;
+}
+
+.input-date::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    color: black;
+    opacity: 1;
 }
 
 @media only screen and (max-width: 800px) {

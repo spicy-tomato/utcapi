@@ -28,7 +28,6 @@
         $nav1_class  = 'nav-link';
         $nav2_class  = 'nav-link';
         $nav3_class  = 'nav-link';
-        $nav4_class  = 'nav-link';
         $current_nav = ' active';
 
         EnvIO::loadEnv();
@@ -37,7 +36,6 @@
         $home_link      = $root_folder . '/ui/home';
         $form1_link     = $root_folder . '/ui/forms/department-class';
         $form2_link     = $root_folder . '/ui/forms/module-class';
-        $form3_link     = $root_folder . '/ui/forms/student';
         $push_data_link = $root_folder . '/ui/push-data';
         $log_out_link   = $root_folder . '/ui/home/logout.php';
 
@@ -47,11 +45,8 @@
         elseif (stripos($_SERVER['REQUEST_URI'], 'module-class') !== false) {
             $nav2_class .= $current_nav;
         }
-        elseif (stripos($_SERVER['REQUEST_URI'], 'student') !== false) {
-            $nav3_class .= $current_nav;
-        }
         elseif (stripos($_SERVER['REQUEST_URI'], 'push-data') !== false) {
-            $nav4_class .= $current_nav;
+            $nav3_class .= $current_nav;
         }
 
         echo '
@@ -67,10 +62,7 @@
             <a href="' . $form2_link . '" class="' . $nav2_class . '">Lớp học phần</a>
           </li>
           <li class="navbar-item">
-            <a href="' . $form3_link . '" class="' . $nav3_class . '">Sinh viên</a>
-          </li>
-          <li class="navbar-item">
-            <a href="' . $push_data_link . '" class="' . $nav4_class . '">Nhập dữ liệu</a>
+            <a href="' . $push_data_link . '" class="' . $nav3_class . '">Nhập dữ liệu</a>
           </li>
         </ul>
 
@@ -135,14 +127,14 @@
             </div>
             
             <div class="form-group mt-4">
-              <label for="time_start" class="select_date">Ngày bắt đầu:</label>
-              <input type="date" class="input_date" id="time_start">
-              <button class="btn btn-primary time_start disable" name="reset_button">Bỏ chọn</button>
+              <label for="time-start" class="select_date">Ngày bắt đầu:</label>
+              <input type="date" class="input-date" id="time-start" data-date="" data-date-format="DD/MM/YYYY">
+              <button class="btn btn-primary time-start disable" name="reset_button">Bỏ chọn</button>
             </div>
             <div class="form-group mt-4">
-              <label for="time_end" class="select_date">Ngày kết thúc:</label>
-              <input type="date" class="input_date" id="time_end">
-              <button class="btn btn-primary time_end disable" name="reset_button">Bỏ chọn</button>
+              <label for="time-end" class="select_date">Ngày kết thúc:</label>
+              <input type="date" class="input-date" id="time-end" data-date="" data-date-format="DD/MM/YYYY">
+              <button class="btn btn-primary time-end disable" name="reset_button">Bỏ chọn</button>
             </div>
           </div>
         </div>';
