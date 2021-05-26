@@ -139,7 +139,7 @@
             }
 
             $sql = rtrim($sql, ',');
-
+//var_dump($sql);
             return $sql;
         }
     }

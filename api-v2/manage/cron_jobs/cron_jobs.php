@@ -8,32 +8,32 @@
     include_once dirname(__DIR__, 3) . '/shared/functions.php';
 
     $aws        = new AWS();
-    $old_id_fix = $aws->getDataFromFile('id_fix.txt', 'cron-jobs/');
+    $last_time_accepted = $aws->getDataFromFile('last_schedule_fixed.txt', 'cron-jobs/');
 
     $db      = new Database();
     $connect = $db->connect();
 
-    $fix     = new FixSchedule($connect);
-    $arr_fix = $fix->getFixSchedules($old_id_fix);
+    $changes           = new FixSchedule($connect);
+    $arr_fix_schedules = $changes->getFixedSchedules($last_time_accepted);
 
-    if (empty($arr_fix) ||
-        $arr_fix == 'Failed') {
+    if (empty($arr_fix_schedules) ||
+        $arr_fix_schedules == 'Failed') {
 
         exit();
     }
 
-    foreach ($arr_fix as $fix) {
-        $info['title']      = 'Thay đổi lịch học môn ' . $fix['Module_Name'];
-        $info['content']    = $info['title'] . ' từ ngày ' . convertDate($fix['Day_Schedules']);
-        $info['content']    .= ' sang ca ' . $fix['Shift_Fix'] . ' ngày ' . convertDate($fix['Day_Fix']);
-        $info['content']    .= ' tại phòng ' . $fix['ID_Room'];
+    foreach ($arr_fix_schedules as $changes) {
+        $info['title']      = 'Thay đổi lịch học môn ' . $changes['Module_Name'];
+        $info['content']    = $info['title'] . ' từ ngày ' . convertDate($changes['Day_Fix']);
+        $info['content']    .= ' sang ca ' . $changes['Shift_Schedules'] . ' ngày ' . convertDate($changes['Day_Schedules']);
+        $info['content']    .= ' tại phòng ' . $changes['ID_Room'];
         $info['typez']      = 'study';
-        $info['sender']     = $fix['ID'];
+        $info['sender']     = $changes['ID'];
         $info['time_start'] = '';
         $info['time_end']   = '';
 
         $helper = new Helper($connect);
-        $helper->getListFromModuleClassList([$fix['ID_Module_Class']]);
+        $helper->getListFromModuleClassList([$changes['ID_Module_Class']]);
 
         $id_account_list = $helper->getAccountListFromStudentList();
         $notification    = new Notification($connect, $info, $id_account_list);
@@ -46,9 +46,13 @@
             $firebase_notification->send();
             $response = 'OK';
 
-            file_put_contents('id_fix.txt', $fix['ID_Fix']);
-            $file_location = $_SERVER['DOCUMENT_ROOT'] . '/api-v2/manage/cron_jobs/id_fix.txt';
-            $aws->uploadFile('id_fix.txt', $file_location, 'cron-jobs/');
+            if ($changes['Time_Accept_Request'] == $arr_fix_schedules[count($arr_fix_schedules) - 1]['Time_Accept_Request']) {
+                EnvIO::loadEnv();
+                $root_folder   = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
+                $file_location = $_SERVER['DOCUMENT_ROOT'] . $root_folder . '/api-v2/manage/cron_jobs/last_schedule_fixed.txt';
+                $aws->uploadFile('last_schedule_fixed.txt', $file_location, 'cron-jobs/');
+            }
+
 
         } catch (Exception $error) {
             printError($error);

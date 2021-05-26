@@ -16,12 +16,12 @@
             $this->connect = $connect;
         }
 
-        public function getFixSchedules($old_id_fix)
+        public function getFixedSchedules($last_time_accepted)
         {
             $sql_query = '
                 SELECT
-                    fix.ID_Fix, md.Module_Name, sch.ID_Module_Class, sch.Day_Schedules,
-                    fix.Day_Fix, fix.Shift_Fix, fix.ID_Room, t.ID
+                    fix.Time_Accept_Request, md.Module_Name, sch.ID_Module_Class, 
+                    fix.Day_Fix, sch.Day_Schedules, sch.Shift_Schedules, sch.ID_Room, t.ID
                 FROM
                     ' . self::fix_table . ' fix,
                     ' . self::schedules_table . ' sch,
@@ -29,16 +29,18 @@
                     ' . self::module_class_table . ' mdc,
                     ' . self::teacher_table . ' t
                 WHERE
-                    fix.ID_Fix > :old_id_fix AND
+                    fix.Time_Accept_Request > :last_time_accepted AND
                     sch.ID_Schedules = fix.ID_Schedules AND
                     mdc.ID_Module_Class = sch.ID_Module_Class AND
                     md.ID_Module = mdc.ID_Module AND
                     t.ID_Teacher = mdc.ID_Teacher
+                ORDER BY 
+                    fix.Time_Accept_Request ASC
                 ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':old_id_fix' => $old_id_fix]);
+                $stmt->execute([':last_time_accepted' => $last_time_accepted]);
                 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 return $data;
