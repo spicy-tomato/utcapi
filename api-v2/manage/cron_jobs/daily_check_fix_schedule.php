@@ -47,9 +47,12 @@
             $response = 'OK';
 
             if ($changes['Time_Accept_Request'] == $arr_fix_schedules[count($arr_fix_schedules) - 1]['Time_Accept_Request']) {
+                file_put_contents('last_schedule_fixed.txt', $changes['Time_Accept_Request']);
+
                 EnvIO::loadEnv();
                 $root_folder   = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
                 $file_location = $_SERVER['DOCUMENT_ROOT'] . $root_folder . '/api-v2/manage/cron_jobs/last_schedule_fixed.txt';
+
                 $aws->uploadFile('last_schedule_fixed.txt', $file_location, 'cron-jobs/');
             }
 
