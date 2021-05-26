@@ -33,7 +33,7 @@
               <a href="../push-data/src/data.xls">Tải file mẫu tại đây</a><br>
                 <legend>Tải lên tệp dữ liệu:</legend>
 
-                <input id="fileUpload" type="file" name="fileUpload" multiple/>
+                <input id="fileUpload" type="file" name="fileUpload" accept="application/vnd.ms-excel" multiple/>
                 <button type="button"
                         class="btn btn-primary"
                         name="button"
