@@ -1,9 +1,10 @@
 <?php
     include_once dirname(__DIR__, 2) . '/utils/env_io.php';
 
+    EnvIO::loadEnv();
+
     function shared_header (string $title, string $otherTags = '') : void
     {
-        EnvIO::loadEnv();
         $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
 
         echo '
@@ -72,7 +73,7 @@
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                   id="dropdownMenuButton">
-            ' . $_SESSION["department_name"] . '
+            ' . $_SESSION["account_owner"] . '
             <i class="fas fa-cogs"></i>
           </button>
           <ul class="dropdown-menu mr-5" aria-labelledby="dropdownMenuButton">
@@ -142,17 +143,19 @@
 
     function shield ()
     {
-        if (!isset($_SESSION['department_name']) ||
-            !isset($_SESSION['department_id_account'])) {
+        $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
 
-            header('Location: /ui/login/');
+        if (!isset($_SESSION['account_owner']) ||
+            !isset($_SESSION['id_account'])) {
+
+            header('Location: ' . $root_folder . '/ui/login/');
         }
 
         $now = time();
 
         if (isset($_SESSION['time_limit']) && $now > $_SESSION['time_limit']) {
             session_destroy();
-            header('Location: /ui/login/');
+            header('Location: ' . $root_folder . '/ui/login/');
         }
 
         $_SESSION['time_limit'] = $now + 3600;

@@ -14,8 +14,8 @@
         $loginInfo = new LoginInfo($connect, $username, $password);
 
         if ($loginInfo->login()) {
-            $_SESSION['department_name']       = $loginInfo->getDepartmentName();
-            $_SESSION['department_id_account'] = $loginInfo->getAccountID();
+            $_SESSION['account_owner']       = $loginInfo->getAccountOwner();
+            $_SESSION['id_account'] = $loginInfo->getAccountID();
 
             header('Location: ../home');
         }

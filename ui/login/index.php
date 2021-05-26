@@ -1,7 +1,7 @@
 <?php
     session_start();
-    if (isset($_SESSION['department_name']) &&
-        isset($_SESSION['department_id_account'])) {
+    if (isset($_SESSION['account_owner']) &&
+        isset($_SESSION['id_account'])) {
 
         header('Location: ../home');
     }

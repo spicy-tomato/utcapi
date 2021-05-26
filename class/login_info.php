@@ -10,7 +10,7 @@
 
 
         private PDO $connect;
-        private string $department_name;
+        private string $account_owner;
         private int $account_id;
         private string $username;
         private string $password;
@@ -56,14 +56,14 @@
                 if (count($loggedAccount) == 1) {
                     $this->account_id = $loggedAccount[0]['id'];
                     if ($this->account_id == $loggedAccount[0]['OT_ID']) {
-                        $this->department_name = $loggedAccount[0]['Other_Department_Name'];
+                        $this->account_owner = $loggedAccount[0]['Other_Department_Name'];
                     }
                     else {
                         if ($this->account_id == $loggedAccount[0]['F_ID']) {
-                            $this->department_name = $loggedAccount[0]['Faculty_Name'];
+                            $this->account_owner = $loggedAccount[0]['Faculty_Name'];
                         }
                         else {
-                            $this->department_name = $loggedAccount[0]['Department_Name'];
+                            $this->account_owner = $loggedAccount[0]['Department_Name'];
                         }
                     }
                     return true;
@@ -78,9 +78,9 @@
             }
         }
 
-        public function getDepartmentName () : string
+        public function getAccountOwner () : string
         {
-            return $this->department_name;
+            return $this->account_owner;
         }
 
         public function getAccountID () : string
