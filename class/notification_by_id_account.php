@@ -1,5 +1,4 @@
 <?php
-    include_once dirname(__DIR__) . '/class/account.php';
     include_once dirname(__DIR__) . '/shared/functions.php';
 
     class NotificationByIDAccount
@@ -18,11 +17,8 @@
             $this->connect = $connect;
         }
 
-        public function getAll ($id) : array
+        public function getAll ($id_account) : array
         {
-            $account = new Account($this->connect);
-            $id_account = $account->getIDAccount($id);
-
             $sql_query = '
                     SELECT
                         n.*,

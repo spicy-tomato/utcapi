@@ -11,7 +11,7 @@
         $connect = $db->connect();
         $account = new Account($connect);
 
-        $flag = $account->getPermission($_GET['id']);
+        $flag = $account->getAccountPermission($_GET['id']);
         switch ($flag) {
             case '0';
                 {
