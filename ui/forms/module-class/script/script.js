@@ -125,7 +125,7 @@ async function trySendNotification() {
         class_list: getClassList()
     }
 
-    const baseUrl = '../../../api-v2/manage/module_class_notification.php'
+    const baseUrl = '../../../api-v2/manage/push_module_class_notification.php'
 
     let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField)
 
