@@ -15,7 +15,7 @@
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
       <!-- AlertifyJS Theme -->
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
-      <link rel="stylesheet" href="../../ui/forms/alert.css">
+      <link rel="stylesheet" href="../forms/alert.css">
     ');
 ?>
 

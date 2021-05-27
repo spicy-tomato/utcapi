@@ -1,4 +1,5 @@
 <?php
+
     class HandleFile
     {
         private array $file_arr;
@@ -18,6 +19,7 @@
                 $timeSplit = explode('.', microtime(true));
 
                 $new_file_name = $nameSplit[0] . '_' . $timeSplit[0] . $timeSplit[1] . '.' . $nameSplit[1];
+                $new_file_name = preg_replace('/\s+/', '', $new_file_name);
 
                 $location = dirname(__DIR__) . '/file_upload/' . $new_file_name;
 
