@@ -9,7 +9,7 @@
 
         private const device_table = 'Device';
 
-        public function __construct (PDO $connect, string $student_id, string $token)
+        public function __construct (PDO $connect, string $student_id = '', string $token = '')
         {
             $this->connect    = $connect;
             $this->id_student = $student_id;

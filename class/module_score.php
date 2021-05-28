@@ -95,7 +95,7 @@
             }
         }
 
-        public function getScore ($id_student)
+        public function getScore ($id_student) : array
         {
             $sql_query =
                 'SELECT
@@ -111,15 +111,23 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $id_student]);
 
-                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $data = $this->_formatScoreResponse($data);
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $record = $this->_formatScoreResponse($record);
+
+                if (empty($record)) {
+                    $data['status_code'] = 404;
+                    $data['content']     = 'Not Found';
+                }
+                else {
+                    $data['status_code'] = 200;
+                    $data['content']     = $record;
+                }
 
                 return $data;
 
             } catch (PDOException $error) {
                 printError($error);
-
-                return 'Failed';
+                throw $error;
             }
         }
 

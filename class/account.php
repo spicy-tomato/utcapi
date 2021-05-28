@@ -34,8 +34,7 @@
                 ]);
                 $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if (!$record)
-                {
+                if (!$record) {
                     $record = 'Failed';
                 }
 
@@ -65,11 +64,11 @@
                 $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if (!$record) {
-                    $data['status_code'] = 404;
+                    $data['status_code']        = 404;
                     $data['content']['message'] = 'failed';
                 }
                 else {
-                    $data['status_code'] = 200;
+                    $data['status_code']        = 200;
                     $data['content']['message'] = 'success';
                     $data['content']['info']    = $record;
                 }
@@ -136,7 +135,7 @@
             }
         }
 
-        public function updateQLDTPasswordOfStudentAccount ($id, $qldt_password) : string
+        public function updateQLDTPasswordOfStudentAccount ($id, $qldt_password) : array
         {
             $sql_query = '
                     UPDATE
@@ -148,18 +147,20 @@
                     ';
 
             try {
-                $stmt   = $this->connect->prepare($sql_query);
-                $status = $stmt->execute([
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([
                     'id' => $id,
                     ':qldt_password' => $qldt_password
                 ]);
 
-                return $status ? 'OK' : 'Not Found';
+                $data['status_code'] = 200;
+                $data['content']     = 'OK';
+
+                return $data;
 
             } catch (PDOException $error) {
                 printError($error);
-
-                return 'Failed';
+                throw $error;
             }
         }
 

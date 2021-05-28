@@ -3,16 +3,53 @@
 
     class Device
     {
+        private PDO $connect;
+        private string $id_student;
+        private string $token;
+
         private const device_table = 'Device';
 
-        private PDO $connect;
-
-        public function __construct (PDO $connect)
+        public function __construct (PDO $connect, string $student_id = '', string $token = '')
         {
-            $this->connect = $connect;
+            $this->connect    = $connect;
+            $this->id_student = $student_id;
+            $this->token      = $token;
         }
 
-        public function deleteOldToken($old_token)
+        public function upsertToken () : array
+        {
+            $current_time = date('Y-m-d H:i:s');
+
+            $sql_query =
+                'INSERT INTO
+                    ' . self::device_table . '
+                    (Device_Token, ID_Student, Last_Use)
+                VALUES
+                    (:token, :id_student, :current_time)
+                ON DUPLICATE KEY UPDATE
+                    ID_Student = :id_student,
+                    Last_Use = :current_time';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([
+                    ':token' => $this->token,
+                    ':id_student' => $this->id_student,
+                    ':current_time' => $current_time
+                ]);
+
+                $data['status_code'] = 200;
+                $data['content']     = 'OK';
+
+                return $data;
+
+            } catch (PDOException $error) {
+                printError($error);
+                throw $error;
+            }
+        }
+
+        public function deleteOldToken ($old_token) : array
         {
             $sql_query = '
             DELETE 
@@ -23,9 +60,14 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':old_token' => $old_token]);
 
-            } catch (PDOException $error)
-            {
+                $data['status_code'] = 200;
+                $data['content']     = 'OK';
+
+                return $data;
+
+            } catch (PDOException $error) {
                 printError($error);
+                throw $error;
             }
         }
     }
