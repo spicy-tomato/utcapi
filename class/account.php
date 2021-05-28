@@ -14,56 +14,7 @@
             $this->connect = $connect;
         }
 
-        public function login_app ($request_data) : array
-        {
-            $sql_query = '
-                SELECT
-                    *
-                FROM
-                     ' . self::account_table . '
-                WHERE
-                    username = :username AND
-                    password = :password
-                ';
-
-            try {
-                $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([
-                    ':username' => $request_data['username'],
-                    ':password' => md5($request_data['password'])
-                ]);
-
-                $response = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if (!$response) {
-                    $data['message'] = 'failed';
-                }
-                else {
-                    switch ($response['permission']) {
-                        case '0':
-                            $data = $this->getDataAccountOwner($response['id'], self::student_table);
-                            break;
-
-                        case '1':
-                            $data = $this->getDataAccountOwner($response['id'], self::teacher_table);
-                            break;
-
-                        default:
-                            $data['message'] = 'failed';
-                    }
-                }
-
-                return $data;
-
-            } catch (PDOException $error) {
-                printError($error);
-                $data['message'] = 'failed';
-
-                return $data;
-            }
-        }
-
-        public function login_web ($request_data)
+        public function login ($request_data)
         {
             $sql_query = '
                 SELECT
@@ -81,19 +32,18 @@
                     ':username' => $request_data['username'],
                     ':password' => md5($request_data['password'])
                 ]);
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if (!$data)
+                if (!$record)
                 {
-                    $data = 'Failed';
+                    $record = 'Failed';
                 }
 
-                return $data;
+                return $record;
 
             } catch (PDOException $error) {
                 printError($error);
-
-                return 'Failed';
+                throw $error;
             }
         }
 
@@ -112,23 +62,23 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id' => $id_account]);
 
-                $response = $stmt->fetch(PDO::FETCH_ASSOC);
+                $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if (!$response) {
-                    $data['message'] = 'failed';
+                if (!$record) {
+                    $data['status_code'] = 404;
+                    $data['content']['message'] = 'failed';
                 }
                 else {
-                    $data['message'] = 'success';
-                    $data['info']    = $response;
+                    $data['status_code'] = 200;
+                    $data['content']['message'] = 'success';
+                    $data['content']['info']    = $record;
                 }
 
                 return $data;
 
             } catch (PDOException $error) {
                 printError($error);
-                $data['message'] = 'failed';
-
-                return $data;
+                throw $error;
             }
         }
 

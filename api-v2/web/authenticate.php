@@ -8,64 +8,68 @@
     $response = [];
 
     if (isset($_POST['btn-submit'])) {
-        $db      = new Database();
-        $connect = $db->connect();
-        $account = new Account($connect);
+        try {
+            $db      = new Database();
+            $connect = $db->connect();
+            $account = new Account($connect);
 
-        $data['username'] = addslashes(strip_tags($_POST['username']));
-        $data['password'] = addslashes(strip_tags($_POST['password']));
+            $data['username'] = addslashes(strip_tags($_POST['username']));
+            $data['password'] = addslashes(strip_tags($_POST['password']));
 
-        $account_info = $account->login_web($data);
-        if ($account_info == 'Failed') {
-            $response['message'] = 'failed';
-        }
-        else {
-            switch ($account_info['permission']) {
-                case '1':
-                    $response = $account->getDataAccountOwner($account_info['id'], 'Teacher');
-                    if ($response['message'] != 'failed') {
-                        $response['info']['account_owner'] = 'Gv.' . $response['info']['Name_Teacher'];
-                    }
-                    break;
-
-                case '2':
-                    $response = $account->getDataAccountOwner($account_info['id'], 'Department');
-                    if ($response['message'] != 'failed') {
-                        $response['info']['account_owner'] = $response['info']['Department_Name'];
-                    }
-                    break;
-
-                case '3':
-                    $response = $account->getDataAccountOwner($account_info['id'], 'Faculty');
-                    if ($response['message'] != 'failed') {
-                        $response['info']['account_owner'] = $response['info']['Faculty_Name'];
-                    }
-                    break;
-
-                case '4':
-                    $response = $account->getDataAccountOwner($account_info['id'], 'Other_Department');
-                    if ($response['message'] != 'failed') {
-                        $response['info']['account_owner'] = $response['info']['Other_Department_Name'];
-                    }
-                    break;
-
-                default:
-                    $response['message'] = 'failed';
+            $account_info = $account->login($data);
+            if ($account_info == 'Failed') {
+                $response['message'] = 'failed';
             }
-        }
+            else {
+                switch ($account_info['permission']) {
+                    case '1':
+                        $response = $account->getDataAccountOwner($account_info['id'], 'Teacher');
+                        if ($response['status_code'] == 200) {
+                            $response['content']['info']['account_owner'] = 'Gv.' . $response['content']['info']['Name_Teacher'];
+                        }
+                        break;
 
-        if ($response['message'] == 'success') {
-            $_SESSION['account_owner'] = $response['info']['account_owner'];
-            $_SESSION['id_account']    = $response['info']['ID'];
+                    case '2':
+                        $response = $account->getDataAccountOwner($account_info['id'], 'Department');
+                        if ($response['status_code'] == 200) {
+                            $response['content']['info']['account_owner'] = $response['content']['info']['Department_Name'];
+                        }
+                        break;
 
-            $response['status_code'] = 200;
-            $response['content']     = 'OK';
-            response($response, false);
+                    case '3':
+                        $response = $account->getDataAccountOwner($account_info['id'], 'Faculty');
+                        if ($response['status_code'] == 200) {
+                            $response['content']['info']['account_owner'] = $response['content']['info']['Faculty_Name'];
+                        }
+                        break;
 
-            header('Location: ../../ui/home');
-        }
-        else {
-            $response['status_code'] = 404;
+                    case '4':
+                        $response = $account->getDataAccountOwner($account_info['id'], 'Other_Department');
+                        if ($response['status_code'] == 200) {
+                            $response['content']['info']['account_owner'] = $response['content']['info']['Other_Department_Name'];
+                        }
+                        break;
+
+                    default:
+                        $response['status_code']        = 404;
+                        $response['content']['message'] = 'failed';
+                }
+            }
+
+            if ($response['status_code'] == 200) {
+                $_SESSION['account_owner'] = $response['content']['info']['account_owner'];
+                $_SESSION['id_account']    = $response['content']['info']['ID'];
+
+                response($response, false);
+                header('Location: ../../ui/home');
+            }
+            else {
+                response($response, false);
+                header('Location: ../../ui/login/index.php?login-failed=true');
+            }
+
+        } catch (Exception $error) {
+            $response['status_code'] = 500;
             $response['content']     = 'Failed';
             response($response, false);
 
