@@ -8,8 +8,8 @@
         $db      = new Database();
         $connect = $db->connect();
 
-        $module_score = new ExamSchedule($connect);
-        $response     = $module_score->getExamSchedule($_GET['id']);
+        $exam_schedule = new ExamSchedule($connect);
+        $response      = $exam_schedule->getExamSchedule($_GET['id']);
         if (empty($response)) {
             $response = 'Not Found';
         }

@@ -6,9 +6,6 @@
         private const account_table = 'Account';
         private const student_table = 'Student';
         private const teacher_table = 'Teacher';
-        private const other_department_table = 'Other_Department';
-        private const department_table = 'Department';
-        private const faculty_table = 'Faculty';
 
         private PDO $connect;
 
@@ -44,11 +41,11 @@
                 else {
                     switch ($response['permission']) {
                         case '0':
-                            $data = $this->_getDataAccountOwner($response['id'], self::student_table);
+                            $data = $this->getDataAccountOwner($response['id'], self::student_table);
                             break;
 
                         case '1':
-                            $data = $this->_getDataAccountOwner($response['id'], self::teacher_table);
+                            $data = $this->getDataAccountOwner($response['id'], self::teacher_table);
                             break;
 
                         default:
@@ -66,11 +63,11 @@
             }
         }
 
-        public function login_web ($request_data) : array
+        public function login_web ($request_data)
         {
             $sql_query = '
                 SELECT
-                    *
+                    id, permission
                 FROM
                      ' . self::account_table . '
                 WHERE
@@ -84,58 +81,23 @@
                     ':username' => $request_data['username'],
                     ':password' => md5($request_data['password'])
                 ]);
+                $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                $response = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if (!$response) {
-                    $data['message'] = 'failed';
-                }
-                else {
-                    switch ($response['permission']) {
-                        case '1':
-                            $data = $this->_getDataAccountOwner($response['id'], self::teacher_table);
-                            if ($data['message'] != 'failed') {
-                                $data['info']['account_owner'] = $data['info']['Name_Teacher'];
-                            }
-                            break;
-
-                        case '2':
-                            $data = $this->_getDataAccountOwner($response['id'], self::department_table);
-                            if ($data['message'] != 'failed') {
-                                $data['info']['account_owner'] = $data['info']['Department_Name'];
-                            }
-                            break;
-
-                        case '3':
-                            $data = $this->_getDataAccountOwner($response['id'], self::faculty_table);
-                            if ($data['message'] != 'failed') {
-                                $data['info']['account_owner'] = $data['info']['Faculty_Name'];
-                            }
-                            break;
-
-                        case '4':
-                            $data = $this->_getDataAccountOwner($response['id'], self::other_department_table);
-                            if ($data['message'] != 'failed') {
-                                $data['info']['account_owner'] = $data['info']['Other_Department_Name'];
-                            }
-                            break;
-
-                        default:
-                            $data['message'] = 'failed';
-                    }
+                if (!$data)
+                {
+                    $data = 'Failed';
                 }
 
                 return $data;
 
             } catch (PDOException $error) {
                 printError($error);
-                $data['message'] = 'failed';
 
-                return $data;
+                return 'Failed';
             }
         }
 
-        private function _getDataAccountOwner ($id_account, $table_name) : array
+        public function getDataAccountOwner ($id_account, $table_name) : array
         {
             $sql_query = '
                 SELECT
@@ -187,31 +149,6 @@
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 return isset($data['permission']) ? $data['permission'] : 'Not Found';
-
-            } catch (PDOException $error) {
-                printError($error);
-
-                return 'Failed';
-            }
-        }
-
-        public function getDepartmentInfoByIDAccount ($id_account)
-        {
-            $sql_query = '
-                    SELECT
-                        Department_Name, ID
-                    FROM
-                         ' . self::department_table . '
-                    WHERE
-                        ID = :id_account
-                    ';
-
-            try {
-                $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':id_account' => $id_account]);
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                return $data;
 
             } catch (PDOException $error) {
                 printError($error);

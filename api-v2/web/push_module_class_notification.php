@@ -43,5 +43,5 @@
         $response['status_code'] = 406;
     }
 
-    response($response);
+    response($response, true);
 
