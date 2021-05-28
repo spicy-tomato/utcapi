@@ -1,7 +1,7 @@
 <?php
     require dirname(__DIR__) . '/vendor/autoload.php';
     include_once dirname(__DIR__) . '/utils/env_io.php';
-    include_once dirname(__DIR__) . '/api-v2/web/crawl/simple_html_dom.php';
+    include_once dirname(__DIR__) . '/api-v2/app/crawl/simple_html_dom.php';
 
 
     class CrawlQLDTData
@@ -39,8 +39,8 @@
         {
             if ($this->status == 1) {
                 $this->getFormRequireDataOfStudentMark();
-                $data   = $this->getDataMarks();
-                $data   = $this->_formatData($data);
+                $data = $this->getDataMarks();
+                $data = $this->_formatData($data);
             }
             else {
                 $data[] = $this->status;
