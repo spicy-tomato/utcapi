@@ -2,7 +2,7 @@
 
 
     include_once $_SERVER['DOCUMENT_ROOT'] . '/utils/env_io.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/api-v2/manage/crawl/simple_html_dom.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/api-v2/web/crawl/simple_html_dom.php';
 
 
     class CrawlQLDTData

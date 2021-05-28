@@ -1,4 +1,5 @@
 <?php
+
     /**
      * Website: http://sourceforge.net/projects/simplehtmldom/
      * Additional projects: http://sourceforge.net/projects/debugobject/
@@ -20,7 +21,7 @@
      *
      * Version Rev. 1.9.1 (291)
      */
-    header('Content-Type: text/html; charset=utf-8');
+
     define('HDOM_TYPE_ELEMENT', 1);
     define('HDOM_TYPE_COMMENT', 2);
     define('HDOM_TYPE_TEXT', 3);
@@ -221,7 +222,7 @@
                 $string .= "'" . $node->_[HDOM_INFO_INNER] . "'";
             }
             else {
-                $string .= ' null ';
+                $string .= ' NULL ';
             }
 
             $string .= ' children: ' . count($this->children);
@@ -446,8 +447,8 @@
             $ret = '';
 
             // In rare cases, (always node type 1 or HDOM_TYPE_ELEMENT - observed
-            // for some span tags, and some p tags) $this->nodes is set to null.
-            // NOTE: This indicates that there is a problem where it's set to null
+            // for some span tags, and some p tags) $this->nodes is set to NULL.
+            // NOTE: This indicates that there is a problem where it's set to NULL
             // without a clear happening.
             // WHY is this happening?
             if (!is_null($this->nodes)) {
@@ -1314,11 +1315,11 @@
                     }
                 }
             }
-            else {
-                if (is_object($debug_object)) {
-                    $debug_object->debug_log(2, 'Invalid type: ', gettype($class));
-                }
-            }
+            //            else {
+            //                if (is_object($debug_object)) {
+            //                    $debug_object->debug_log(2, 'Invalid type: ', gettype($class));
+            //                }
+            //            }
         }
 
         function hasClass ($class)
@@ -1328,11 +1329,11 @@
                     return in_array($class, explode(' ', $this->class), true);
                 }
             }
-            else {
-                if (is_object($debug_object)) {
-                    $debug_object->debug_log(2, 'Invalid type: ', gettype($class));
-                }
-            }
+            //            else {
+            //                if (is_object($debug_object)) {
+            //                    $debug_object->debug_log(2, 'Invalid type: ', gettype($class));
+            //                }
+            //            }
 
             return false;
         }

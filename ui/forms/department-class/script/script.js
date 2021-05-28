@@ -45,8 +45,8 @@ const templateNoti = {
 /*_________________________________________________*/
 
 document.addEventListener('DOMContentLoaded', async () => {
-    allClass = await fetchData('../../../api-v2/manage/get_department_class.php')
-    allAcademicYears = await fetchData('../../../api-v2/manage/get_academic_years.php')
+    allClass = await fetchData('../../../api-v2/web/get_department_class.php')
+    allAcademicYears = await fetchData('../../../api-v2/web/get_academic_years.php')
 
     createAcademicCheckBoxArea()
 
@@ -471,7 +471,7 @@ async function trySendNotification() {
         class_list: selectedClass
     }
 
-    const baseUrl = '../../../api-v2/manage/push_department_class_notification.php'
+    const baseUrl = '../../../api-v2/web/push_department_class_notification.php'
 
     let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField)
 

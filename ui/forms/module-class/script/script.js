@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 /*_________________________________________________*/
 
 async function loadData() {
-    let data = await fetchData('../../../api-v2/manage/get_module_class.php')
+    let data = await fetchData('../../../api-v2/web/get_module_class.php')
 
     data.forEach((row, index) => {
         moduleClassIdList.push({id: index, text: row['ID_Module_Class']})
@@ -125,7 +125,7 @@ async function trySendNotification() {
         class_list: getClassList()
     }
 
-    const baseUrl = '../../../api-v2/manage/push_module_class_notification.php'
+    const baseUrl = '../../../api-v2/web/push_module_class_notification.php'
 
     let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField)
 
