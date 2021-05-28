@@ -1,7 +1,7 @@
 <?php
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/class/notification_by_id_account.php';
-    include_once dirname(__DIR__) . '/class/account.php';
+    include_once dirname(__DIR__, 2) . '/class/account.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         isset($_GET['id'])) {
