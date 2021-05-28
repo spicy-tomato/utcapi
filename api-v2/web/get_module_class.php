@@ -1,7 +1,9 @@
 <?php
-
     include_once dirname(__DIR__, 2) . '/config/db.php';
+    include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/module_class.php';
+
+    $response = [];
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $db      = new Database();
@@ -11,7 +13,8 @@
         $response     = $module_class->getAll();
     }
     else {
-        $response = 'Invalid Request';
+        $response['content']     = 'Invalid Request';
+        $response['status_code'] = 406;
     }
 
-    echo json_encode($response);
+    response($response);

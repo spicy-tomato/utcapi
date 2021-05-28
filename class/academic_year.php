@@ -11,7 +11,7 @@
             $this->connect = $connect;
         }
 
-        public function getAcademicYear ()
+        public function getAcademicYear () : array
         {
             $sql_query = '
                     SELECT DISTINCT
@@ -22,17 +22,21 @@
                     LIMIT 9
                     ';
 
-
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute();
 
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $data['content'] = $stmt->fetchAll(PDO::FETCH_ASSOC);;
+                $data['status_code'] = 200;
+
+                return $data;
 
             } catch (PDOException $error) {
                 printError($error);
+                $data['content']     = 'Failed';
+                $data['status_code'] = 500;
 
-                return 'Failed';
+                return $data;
             }
         }
     }

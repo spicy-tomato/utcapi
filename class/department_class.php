@@ -6,12 +6,12 @@
         private const db_table = 'Class';
         private PDO $connect;
 
-        public function __construct(PDO $connect)
+        public function __construct (PDO $connect)
         {
             $this->connect = $connect;
         }
 
-        public function getAll()
+        public function getAll () : array
         {
             $sql_query = '
                     SELECT 
@@ -27,13 +27,17 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute();
 
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $data['content'] = $stmt->fetchAll(PDO::FETCH_ASSOC);;
+                $data['status_code'] = 200;
 
+                return $data;
 
             } catch (PDOException $error) {
                 printError($error);
+                $data['content']     = 'Failed';
+                $data['status_code'] = 500;
 
-                return 'Failed';
+                return $data;
             }
         }
     }
