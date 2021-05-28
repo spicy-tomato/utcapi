@@ -17,7 +17,7 @@
 ?>
 
 <body class="text-center cc_cursor bg-light">
-<form method="post" action="../../api-v2/web/authenticate_web.php" class="form-signin cc_cursor border border-dark mb-4 rounded">
+<form method="post" action="../../api-v2/web/authenticate.php" class="form-signin cc_cursor border border-dark mb-4 rounded">
   <div class="mt-3 mb-3">
     <div class="input-group">
         <span class="col-lg-1 justify-content-center align-items-center d-flex">
