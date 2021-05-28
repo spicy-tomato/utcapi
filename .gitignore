@@ -5,3 +5,5 @@ file_upload/*
 Errors.txt
 id_fix.txt
 .env
+temp.php
+test.php
