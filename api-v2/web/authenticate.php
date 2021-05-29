@@ -25,28 +25,28 @@
                 switch ($account_info['permission']) {
                     case '1':
                         $response = $account->getDataAccountOwner($account_info['id'], 'Teacher');
-                        if ($data['content']['message'] == 'failed') {
+                        if ($response['content']['message'] == 'success') {
                             $response['content']['info']['account_owner'] = 'Gv.' . $response['content']['info']['Name_Teacher'];
                         }
                         break;
 
                     case '2':
                         $response = $account->getDataAccountOwner($account_info['id'], 'Department');
-                        if ($data['content']['message'] == 'failed') {
+                        if ($response['content']['message'] == 'success') {
                             $response['content']['info']['account_owner'] = $response['content']['info']['Department_Name'];
                         }
                         break;
 
                     case '3':
                         $response = $account->getDataAccountOwner($account_info['id'], 'Faculty');
-                        if ($data['content']['message'] == 'failed') {
+                        if ($response['content']['message'] == 'success') {
                             $response['content']['info']['account_owner'] = $response['content']['info']['Faculty_Name'];
                         }
                         break;
 
                     case '4':
                         $response = $account->getDataAccountOwner($account_info['id'], 'Other_Department');
-                        if ($data['content']['message'] == 'failed') {
+                        if ($response['content']['message'] == 'success') {
                             $response['content']['info']['account_owner'] = $response['content']['info']['Other_Department_Name'];
                         }
                         break;
@@ -57,7 +57,7 @@
                 }
             }
 
-            if ($data['content']['message'] == 'success') {
+            if ($response['content']['message'] == 'success') {
                 $_SESSION['account_owner'] = $response['content']['info']['account_owner'];
                 $_SESSION['id_account']    = $response['content']['info']['ID'];
 
