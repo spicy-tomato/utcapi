@@ -120,23 +120,42 @@
                 $tr = $html->find('table[id=tblStudentMark] tr');
 
                 for ($j = 1; $j < count($tr) - 1; $j++) {
-                    $arr   = [];
+                    $arr = [];
+
                     $td    = explode('<br><br>', $tr[$j]->children(1)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
+
                     $td    = explode('<br><br>', $tr[$j]->children(2)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
+
                     $td    = explode('<br><br>', $tr[$j]->children(3)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
-                    $td    = explode('<br><br>', $tr[$j]->children(8)->innertext);
-                    $arr[] = isset($td[1]) ? $td[1] : $td[0];
+
+                    $td              = explode('<br><br>', $tr[$j]->children(8)->innertext);
+                    $temp_evaluation = isset($td[1]) ? $td[1] : $td[0];
+                    $arr[]           = $temp_evaluation == '&nbsp;' ? null : $temp_evaluation;
+
                     $td    = explode('<br><br>', $tr[$j]->children(9)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
+
                     $td    = explode('<br><br>', $tr[$j]->children(10)->innertext);
                     $arr[] = isset($td[1]) ? $td[1] : $td[0];
-                    $td    = explode('<br><br>', $tr[$j]->children(11)->innertext);
-                    $arr[] = isset($td[1]) ? $td[1] : $td[0];
-                    $td    = explode('<br><br>', $tr[$j]->children(12)->innertext);
-                    $arr[] = isset($td[1]) ? $td[1] : $td[0];
+
+                    if (count($tr[$j]->children()) == 11) {
+                        $arr[]             = null;
+                        $arr[]             = null;
+                        $data[$semester][] = $arr;
+
+                        continue;
+                    }
+
+                    $td         = explode('<br><br>', $tr[$j]->children(11)->innertext);
+                    $temp_score = isset($td[1]) ? $td[1] : $td[0];
+                    $arr[]      = $temp_score == '&nbsp;' ? null : $temp_score;
+
+                    $td         = explode('<br><br>', $tr[$j]->children(12)->innertext);
+                    $temp_score = isset($td[1]) ? $td[1] : $td[0];
+                    $arr[]      = $temp_score == '&nbsp;' ? null : $temp_score;
 
                     $data[$semester][] = $arr;
                 }
@@ -299,15 +318,24 @@
                         $arr              = [];
                         $temp_examination = $this->_specialFormatUTF8EncodingBreak($exam_type[$i][0]);
                         $arr[]            = $this->_formatStringDataCrawled($temp_examination);
+
                         $arr[]            = $this->student_id;
+
                         $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(1)->innertext);
+
                         $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(2)->innertext);
+
                         $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(3)->innertext);
+
                         $temp_date        = $this->_formatStringDataCrawled($tr[$j]->children(4)->innertext);
                         $arr[]            = $this->_formatDateDataCrawled($temp_date);
+
                         $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(5)->innertext);
+
                         $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(6)->innertext);
+
                         $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(7)->innertext);
+
                         $temp_room        = $this->_specialFormatUTF8EncodingBreak($tr[$j]->children(8)->innertext);
                         $arr[]            = $this->_formatStringDataCrawled($temp_room);
 
