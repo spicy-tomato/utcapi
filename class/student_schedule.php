@@ -18,7 +18,7 @@
             $this->student_id = $student_id;
         }
 
-        public function getAll ()
+        public function getAll () : array
         {
             $sql_query =
                 'SELECT
@@ -43,14 +43,21 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $this->student_id]);
 
-                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $data = $this->_formatResponse($data);
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $record = $this->_formatResponse($record);
+
+                $data['status_code'] = 200;
+                if (empty($record)) {
+                    $data['content']     = 'Not Found';
+                }
+                else {
+                    $data['content']     = $record;
+                }
 
                 return $data;
             } catch (PDOException $error) {
                 printError($error);
-
-                return 'Failed';
+                throw $error;
             }
         }
 

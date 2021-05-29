@@ -17,7 +17,7 @@
             $this->teacher_id = $teacher_id;
         }
 
-        public function getAll ()
+        public function getAll () : array
         {
             $sql_query =
                 'SELECT
@@ -41,17 +41,31 @@
                 $stmt->execute([
                     ':teacher_id' => $this->teacher_id
                 ]);
-                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                foreach ($data as &$e) {
-                    $e['Shift_Schedules'] = intval($e['Shift_Schedules']);
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $record = $this->_formatResponse($record);
+
+                $data['status_code'] = 200;
+                if (empty($record)) {
+                    $data['content']     = 'Not Found';
+                }
+                else {
+                    $data['content']     = $record;
                 }
 
                 return $data;
 
             } catch (PDOException $error) {
                 printError($error);
-
-                return 'Failed';
+                throw $error;
             }
+        }
+
+        private function _formatResponse ($data)
+        {
+            foreach ($data as &$e) {
+                $e['Shift_Schedules'] = intval($e['Shift_Schedules']);
+            }
+
+            return $data;
         }
     }

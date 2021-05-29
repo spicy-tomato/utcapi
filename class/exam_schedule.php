@@ -106,7 +106,7 @@
             return $semester;
         }
 
-        public function getExamSchedule ($id_student)
+        public function getExamSchedule ($id_student) : array
         {
             $sql_query =
                 'SELECT
@@ -122,15 +122,22 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $id_student]);
 
-                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $data = $this->_formatExamScheduleResponse($data);
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $record = $this->_formatExamScheduleResponse($record);
+
+                $data['status_code'] = 200;
+                if (empty($record)) {
+                    $data['content']     = 'Not Found';
+                }
+                else {
+                    $data['content']     = $record;
+                }
 
                 return $data;
 
             } catch (PDOException $error) {
                 printError($error);
-
-                return 'Failed';
+                throw $error;
             }
         }
 

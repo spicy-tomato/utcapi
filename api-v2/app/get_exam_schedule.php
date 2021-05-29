@@ -1,21 +1,26 @@
 <?php
     include_once dirname(__DIR__, 2) . '/config/db.php';
+    include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/exam_schedule.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         isset($_GET['id'])) {
 
-        $db      = new Database();
-        $connect = $db->connect();
+        try {
+            $db      = new Database();
+            $connect = $db->connect();
 
-        $exam_schedule = new ExamSchedule($connect);
-        $response      = $exam_schedule->getExamSchedule($_GET['id']);
-        if (empty($response)) {
-            $response = 'Not Found';
+            $exam_schedule = new ExamSchedule($connect);
+            $response      = $exam_schedule->getExamSchedule($_GET['id']);
+
+        } catch (Exception $error) {
+            $response['status_code'] = 500;
+            $response['content']     = 'Error';
         }
     }
     else {
-        $response = 'Invalid Request';
+        $response['content']     = 'Invalid Request';
+        $response['status_code'] = 406;
     }
 
-    echo json_encode($response);
+    response($response, true);

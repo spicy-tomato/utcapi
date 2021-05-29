@@ -63,12 +63,11 @@
 
                 $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
+                $data['status_code']        = 200;
                 if (!$record) {
-                    $data['status_code']        = 404;
                     $data['content']['message'] = 'failed';
                 }
                 else {
-                    $data['status_code']        = 200;
                     $data['content']['message'] = 'success';
                     $data['content']['info']    = $record;
                 }
@@ -95,14 +94,13 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':username' => $username]);
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                return isset($data['permission']) ? $data['permission'] : 'Not Found';
+                return $record['permission'] ?? 'Not Found';
 
             } catch (PDOException $error) {
                 printError($error);
-
-                return 'Failed';
+                throw $error;
             }
         }
 

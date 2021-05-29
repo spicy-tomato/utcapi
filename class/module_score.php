@@ -115,7 +115,7 @@
                 $record = $this->_formatScoreResponse($record);
 
                 if (empty($record)) {
-                    $data['status_code'] = 404;
+                    $data['status_code'] = 200;
                     $data['content']     = 'Not Found';
                 }
                 else {
