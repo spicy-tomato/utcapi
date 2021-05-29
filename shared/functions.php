@@ -22,7 +22,7 @@
     {
         header(responseHeaders($data['status_code']));
         header('Content-Type: application/json');
-        echo json_encode($data['content'], JSON_UNESCAPED_UNICODE);
+        echo json_encode($data['content']);
         if ($isExit) {
             exit();
         }
