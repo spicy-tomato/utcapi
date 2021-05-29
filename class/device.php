@@ -49,7 +49,7 @@
             }
         }
 
-        public function deleteOldToken ($old_token) : array
+        public function deleteOldToken ($old_token)
         {
             $sql_query = '
             DELETE 
@@ -59,11 +59,6 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':old_token' => $old_token]);
-
-                $data['status_code'] = 200;
-                $data['content']     = 'OK';
-
-                return $data;
 
             } catch (PDOException $error) {
                 printError($error);

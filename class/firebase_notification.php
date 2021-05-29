@@ -41,7 +41,6 @@
                     printError($error);
 
                     if ($error->getCode() == 0) {
-
                         $device->deleteOldToken($token);
                     }
                 }
