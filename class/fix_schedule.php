@@ -16,7 +16,7 @@
             $this->connect = $connect;
         }
 
-        public function getFixedSchedules($last_time_accepted)
+        public function getFixedSchedules ($last_time_accepted) : array
         {
             $sql_query = '
                 SELECT
@@ -41,14 +41,13 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':last_time_accepted' => $last_time_accepted]);
-                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                return $data;
+                return $record;
 
             } catch (PDOException $error) {
                 printError($error);
-
-                return 'Failed';
+                throw $error;
             }
         }
     }

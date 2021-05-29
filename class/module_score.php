@@ -12,10 +12,8 @@
             $this->connect = $connect;
         }
 
-        public function pushData ($data) : string
+        public function pushData ($data)
         {
-            $response = 'OK';
-
             $sql_query =
                 'INSERT INTO
                     ' . self::module_score_table . ' 
@@ -51,18 +49,15 @@
                             if (count($data) == 1) {
                                 $this->_updateData($semester, $value);
                             }
-                            $response = 'OK';
                         }
                         else {
                             printError($error);
-                            //                            throw $error;
+                            throw $error;
                         }
                     }
                 }
                 unset($data[$semester]);
             }
-
-            return $response;
         }
 
         private function _updateData ($semester, $value)

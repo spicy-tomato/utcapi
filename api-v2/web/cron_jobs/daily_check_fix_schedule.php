@@ -1,5 +1,6 @@
 <?php
     include_once dirname(__DIR__, 3) . '/config/db.php';
+    include_once dirname(__DIR__, 3) . '/shared/functions.php';
     include_once dirname(__DIR__, 3) . '/class/notification.php';
     include_once dirname(__DIR__, 3) . '/worker/amazon_s3.php';
     include_once dirname(__DIR__, 3) . '/class/firebase_notification.php';
@@ -7,19 +8,26 @@
     include_once dirname(__DIR__, 3) . '/class/fix_schedule.php';
     include_once dirname(__DIR__, 3) . '/shared/functions.php';
 
-    $aws                = new AWS();
-    $last_time_accepted = $aws->getDataFromFile('last_schedule_fixed.txt', 'cron-jobs/');
+    try {
+        $aws                = new AWS();
+        $last_time_accepted = $aws->getDataFromFile('last_schedule_fixed.txt', 'cron-jobs/');
 
-    $db      = new Database();
-    $connect = $db->connect();
+        $db      = new Database();
+        $connect = $db->connect();
 
-    $changes           = new FixSchedule($connect);
-    $arr_fix_schedules = $changes->getFixedSchedules($last_time_accepted);
+        $changes           = new FixSchedule($connect);
+        $arr_fix_schedules = $changes->getFixedSchedules($last_time_accepted);
 
-    if (empty($arr_fix_schedules) ||
-        $arr_fix_schedules == 'Failed') {
+        if (empty($arr_fix_schedules)) {
+            $response['status_code'] = 200;
+            $response['content']     = 'Failed';
+            response($response, true);
+        }
 
-        exit();
+    } catch (Exception $error) {
+        $response['status_code'] = 500;
+        $response['content']     = 'Error';
+        response($response, true);
     }
 
     foreach ($arr_fix_schedules as $changes) {
@@ -32,37 +40,37 @@
         $info['time_start'] = '';
         $info['time_end']   = '';
 
-        $helper = new Helper($connect);
-        $helper->getListFromModuleClassList([$changes['ID_Module_Class']]);
-
-        $id_account_list = $helper->getAccountListFromStudentList();
-        $notification    = new Notification($connect, $info, $id_account_list);
-
-        $token_list            = $helper->getTokenListFromStudentList();
-        $firebase_notification = new FirebaseNotification($info, $token_list);
-
         try {
+            $helper = new Helper($connect);
+            $helper->getListFromModuleClassList([$changes['ID_Module_Class']]);
+
+            $id_account_list = $helper->getAccountListFromStudentList();
+            $notification    = new Notification($connect, $info, $id_account_list);
+
+            $token_list            = $helper->getTokenListFromStudentList();
+            $firebase_notification = new FirebaseNotification($info, $token_list);
+
             $notification->create();
             $firebase_notification->send();
-            $response = 'OK';
 
             if ($changes['Time_Accept_Request'] == $arr_fix_schedules[count($arr_fix_schedules) - 1]['Time_Accept_Request']) {
                 file_put_contents('last_schedule_fixed.txt', $changes['Time_Accept_Request']);
 
                 EnvIO::loadEnv();
                 $root_folder   = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
-                $file_location = $_SERVER['DOCUMENT_ROOT'] . $root_folder . '/api-v2/manage/cron_jobs/last_schedule_fixed.txt';
+                $file_location = $_SERVER['DOCUMENT_ROOT'] . $root_folder . '/api-v2/web/cron_jobs/last_schedule_fixed.txt';
 
                 $aws->uploadFile('last_schedule_fixed.txt', $file_location, 'cron-jobs/');
             }
 
+            $response['status_code'] = 200;
+            $response['content']     = 'OK';
 
         } catch (Exception $error) {
             printError($error);
-
-            $response = 'Failed';
+            $response['status_code'] = 500;
+            $response['content']     = 'Error';
         }
     }
 
-    echo json_encode($response);
-
+    response($response, true);

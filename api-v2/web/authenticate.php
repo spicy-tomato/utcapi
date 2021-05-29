@@ -72,8 +72,8 @@
         } catch (Exception $error) {
             $response['status_code'] = 500;
             $response['content']     = 'Error';
-            response($response, false);
 
+            response($response, false);
             header('Location: ../../ui/login/index.php?login-failed=true');
         }
     }

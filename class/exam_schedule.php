@@ -12,7 +12,7 @@
             $this->connect = $connect;
         }
 
-        public function pushData ($data) : string
+        public function pushData ($data)
         {
             $sql_query = '
                 INSERT INTO
@@ -47,25 +47,20 @@
                             ':room' => $value[9]
                         ]);
 
-                        $response = 'OK';
-
                     } catch (PDOException $error) {
                         if ($error->getCode() == 23000) {
                             if (count($data) == $sum) {
                                 $this->_updateData($semester, $value);
                             }
-                            $response = 'OK';
                         }
                         else {
                             printError($error);
-                            $response = 'Failed';
+                            throw $error;
                         }
                     }
                 }
                 unset($data[$semester]);
             }
-
-            return $response;
         }
 
         private function _updateData ($semester, $value)
@@ -95,6 +90,7 @@
 
             } catch (PDOException $error) {
                 printError($error);
+                throw $error;
             }
         }
 
@@ -127,10 +123,10 @@
 
                 $data['status_code'] = 200;
                 if (empty($record)) {
-                    $data['content']     = 'Not Found';
+                    $data['content'] = 'Not Found';
                 }
                 else {
-                    $data['content']     = $record;
+                    $data['content'] = $record;
                 }
 
                 return $data;
