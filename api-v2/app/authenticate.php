@@ -16,7 +16,7 @@
 
             $account_info = $account->login($data);
             if ($account_info == 'Failed') {
-                $response['status_code']        = 404;
+                $response['status_code']        = 200;
                 $response['content']['message'] = 'failed';
             }
             else {
@@ -30,7 +30,7 @@
                         break;
 
                     default:
-                        $response['status_code']        = 404;
+                        $response['status_code']        = 200;
                         $response['content']['message'] = 'failed';
                 }
             }

@@ -6,15 +6,21 @@
     $response = [];
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-        $db      = new Database();
-        $connect = $db->connect();
+        try {
+            $db      = new Database();
+            $connect = $db->connect();
 
-        $department_class = new DepartmentClass($connect);
-        $response         = $department_class->getAll();
+            $department_class = new DepartmentClass($connect);
+            $response         = $department_class->getAll();
+
+        } catch (Exception $error) {
+            $response['status_code'] = 500;
+            $response['content']     = 'Error';
+        }
     }
     else {
-        $response['content']     = 'Invalid Request';
         $response['status_code'] = 406;
+        $response['content']     = 'Invalid Request';
     }
 
     response($response, true);

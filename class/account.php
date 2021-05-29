@@ -63,7 +63,7 @@
 
                 $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                $data['status_code']        = 200;
+                $data['status_code'] = 200;
                 if (!$record) {
                     $data['content']['message'] = 'failed';
                 }
@@ -122,9 +122,9 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute(['id' => $id]);
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                return isset($data['id']) ? $data['id'] : 'Not Found';
+                return $record['id'] ?? 'Not Found';
 
             } catch (PDOException $error) {
                 printError($error);
@@ -176,9 +176,9 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute(['id' => $id]);
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                return isset($data['qldt_password']) ? $data['qldt_password'] : 'Not Found';
+                return $record['qldt_password'] ?? 'Not Found';
 
             } catch (PDOException $error) {
                 printError($error);

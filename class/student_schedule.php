@@ -48,10 +48,10 @@
 
                 $data['status_code'] = 200;
                 if (empty($record)) {
-                    $data['content']     = 'Not Found';
+                    $data['content'] = 'Not Found';
                 }
                 else {
-                    $data['content']     = $record;
+                    $data['content'] = $record;
                 }
 
                 return $data;

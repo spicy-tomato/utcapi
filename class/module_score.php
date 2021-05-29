@@ -55,7 +55,7 @@
                         }
                         else {
                             printError($error);
-                            $response = 'Failed';
+                            //                            throw $error;
                         }
                     }
                 }
@@ -158,9 +158,10 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $id_student]);
 
-                $data = $this->_formatSemesterResponse($stmt->fetchAll(PDO::FETCH_ASSOC));
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $record = $this->_formatSemesterResponse($record);
 
-                return $data;
+                return $record;
 
             } catch (PDOException $error) {
                 printError($error);

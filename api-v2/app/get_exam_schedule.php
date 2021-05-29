@@ -19,8 +19,8 @@
         }
     }
     else {
-        $response['content']     = 'Invalid Request';
         $response['status_code'] = 406;
+        $response['content']     = 'Invalid Request';
     }
 
     response($response, true);

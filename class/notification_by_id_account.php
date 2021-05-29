@@ -69,27 +69,24 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_account' => $id_account]);
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                if (!$data)
-                {
-                    $data['notification'] = [];
-                    $data['sender'] = [];
-
-                    return $data;
+                $data['status_code'] = 200;
+                if (!$record) {
+                    $data['content']['notification'] = [];
+                    $data['content']['sender']       = [];
+                }
+                else {
+                    $record          = $this->modifyResponse($record);
+                    $data['content'] = $record;
                 }
 
-                $data = $this->modifyResponse($data);
+                return $data;
 
             } catch (PDOException $error) {
                 printError($error);
-
-                $data['message'] = 'Failed';
+                throw $error;
             }
-
-
-            return $data;
         }
 
         private function modifyResponse ($arr) : array

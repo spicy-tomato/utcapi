@@ -33,10 +33,7 @@
 
             } catch (PDOException $error) {
                 printError($error);
-                $data['content']     = 'Failed';
-                $data['status_code'] = 500;
-
-                return $data;
+                throw $error;
             }
         }
     }

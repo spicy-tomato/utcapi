@@ -29,18 +29,19 @@
             $notification->create();
             $firebase_notification->send();
 
-            $response['content']     = 'OK';
             $response['status_code'] = 200;
+            $response['content']     = 'OK';
 
         } catch (PDOException $error) {
             printError($error);
-            $response['content']     = 'Failed';
             $response['status_code'] = 500;
+            $response['content']     = 'Error';
         }
     }
     else {
-        $response['content']     = 'Invalid Request';
         $response['status_code'] = 406;
+        $response['content']     = 'Invalid Request';
     }
 
     response($response, true);
+

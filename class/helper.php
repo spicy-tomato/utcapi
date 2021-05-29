@@ -45,8 +45,9 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-                $this->student_id_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                $this->student_id_list = $record;
 
             } catch (PDOException $error) {
                 throw $error;
@@ -78,8 +79,9 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-                $this->student_id_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                $this->student_id_list = $record;
 
             } catch (PDOException $error) {
                 throw $error;
@@ -109,8 +111,9 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-                $this->id_account_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                $this->id_account_list = $record;
 
             } catch (PDOException $error) {
                 throw $error;
@@ -144,8 +147,9 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-                return $stmt->fetchAll(PDO::FETCH_COLUMN);
+                return $record;
 
             } catch (PDOException $error) {
                 throw $error;

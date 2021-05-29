@@ -1,22 +1,30 @@
 <?php
     include_once dirname(__DIR__, 2) . '/config/db.php';
+    include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/notification_by_id_account.php';
     include_once dirname(__DIR__, 2) . '/class/account.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         isset($_GET['id'])) {
 
-        $db                         = new Database();
-        $connect                    = $db->connect();
-        $account                    = new Account($connect);
-        $notification_by_id_account = new NotificationByIDAccount($connect);
+        try {
+            $db                         = new Database();
+            $connect                    = $db->connect();
+            $account                    = new Account($connect);
+            $notification_by_id_account = new NotificationByIDAccount($connect);
 
-        $id         = $_GET['id'];
-        $id_account = $account->getIDAccount($id);
-        $response   = $notification_by_id_account->getAll($id_account);
+            $id         = $_GET['id'];
+            $id_account = $account->getIDAccount($id);
+            $response   = $notification_by_id_account->getAll($id_account);
+
+        } catch (Exception $error) {
+            $response['status_code'] = 500;
+            $response['content']     = 'Error';
+        }
     }
     else {
-        $response = 'Invalid Request';
+        $response['status_code'] = 406;
+        $response['content']     = 'Invalid Request';
     }
 
-    echo json_encode($response);
+    response($response, true);
