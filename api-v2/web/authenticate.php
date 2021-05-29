@@ -61,11 +61,9 @@
                 $_SESSION['account_owner'] = $response['content']['info']['account_owner'];
                 $_SESSION['id_account']    = $response['content']['info']['ID'];
 
-                response($response, false);
                 header('Location: ../../ui/home');
             }
             else {
-                response($response, false);
                 header('Location: ../../ui/login/index.php?login-failed=true');
             }
 
@@ -73,7 +71,6 @@
             $response['status_code'] = 500;
             $response['content']     = 'Error';
 
-            response($response, false);
             header('Location: ../../ui/login/index.php?login-failed=true');
         }
     }
