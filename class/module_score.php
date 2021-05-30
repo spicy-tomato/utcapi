@@ -138,7 +138,7 @@
             return $data;
         }
 
-        public function getSemester ($id_student)
+        public function getSemester ($id_student) : array
         {
             $sql_query =
                 'SELECT DISTINCT 
