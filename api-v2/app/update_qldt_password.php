@@ -21,7 +21,7 @@
                 $response = $account->updateQLDTPasswordOfStudentAccount($data['id_account'], $data['qldt_password']);
             }
             else {
-                $response['status_code'] = 200;
+                $response['status_code'] = 401;
                 $response['content']     = 'Invalid Password';
             }
 
