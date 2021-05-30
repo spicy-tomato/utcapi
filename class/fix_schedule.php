@@ -33,7 +33,9 @@
                     sch.ID_Schedules = fix.ID_Schedules AND
                     mdc.ID_Module_Class = sch.ID_Module_Class AND
                     md.ID_Module = mdc.ID_Module AND
-                    t.ID_Teacher = mdc.ID_Teacher
+                    t.ID_Teacher = mdc.ID_Teacher AND
+                    fix.Time_Accept_Request IS NOT NULL AND 
+                    fix.Status_Fix = \'Chấp nhận\'
                 ORDER BY 
                     fix.Time_Accept_Request
                 ';

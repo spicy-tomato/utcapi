@@ -2,7 +2,7 @@
     include_once dirname(__DIR__, 3) . '/config/db.php';
     include_once dirname(__DIR__, 3) . '/shared/functions.php';
     include_once dirname(__DIR__, 3) . '/class/notification.php';
-    include_once dirname(__DIR__, 2) . '/class/device.php';
+    include_once dirname(__DIR__, 3) . '/class/device.php';
     include_once dirname(__DIR__, 3) . '/worker/amazon_s3.php';
     include_once dirname(__DIR__, 3) . '/class/firebase_notification.php';
     include_once dirname(__DIR__, 3) . '/class/helper.php';
