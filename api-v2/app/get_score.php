@@ -14,6 +14,7 @@
             $response     = $module_score->getScore($_GET['id']);
 
         } catch (Exception $error) {
+            printError($error);
             $response['status_code'] = 500;
             $response['content']     = 'Error';
         }

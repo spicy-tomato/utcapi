@@ -2,11 +2,11 @@
     include_once dirname(__DIR__, 3) . '/config/db.php';
     include_once dirname(__DIR__, 3) . '/shared/functions.php';
     include_once dirname(__DIR__, 3) . '/class/notification.php';
+    include_once dirname(__DIR__, 2) . '/class/device.php';
     include_once dirname(__DIR__, 3) . '/worker/amazon_s3.php';
     include_once dirname(__DIR__, 3) . '/class/firebase_notification.php';
     include_once dirname(__DIR__, 3) . '/class/helper.php';
     include_once dirname(__DIR__, 3) . '/class/fix_schedule.php';
-    include_once dirname(__DIR__, 3) . '/shared/functions.php';
 
     try {
         $aws                = new AWS();
@@ -43,11 +43,13 @@
         try {
             $helper = new Helper($connect);
             $helper->getListFromModuleClassList([$changes['ID_Module_Class']]);
-
+            $id_student_list = $helper->getIdStudentList();
             $id_account_list = $helper->getAccountListFromStudentList();
-            $notification    = new Notification($connect, $info, $id_account_list);
 
-            $token_list            = $helper->getTokenListFromStudentList();
+            $device     = new Device($connect);
+            $token_list = $device->getTokenByIdStudent($id_student_list);
+
+            $notification          = new Notification($connect, $info, $id_account_list);
             $firebase_notification = new FirebaseNotification($info, $token_list);
 
             $notification->create();

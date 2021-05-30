@@ -4,10 +4,9 @@
     {
         private const participate_table = 'Participate';
         private const student_table = 'Student';
-        private const device_table = 'Device';
 
         private PDO $connect;
-        private array $student_id_list;
+        private array $id_student_list;
         private array $id_account_list;
 
         public function __construct (PDO $connect)
@@ -15,9 +14,14 @@
             $this->connect = $connect;
         }
 
-        public function setStudentIdList (array $student_id_list) : void
+        public function setIdStudentList (array $student_id_list) : void
         {
-            $this->student_id_list = $student_id_list;
+            $this->id_student_list = $student_id_list;
+        }
+
+        public function getIdStudentList () : array
+        {
+            return $this->id_student_list;
         }
 
         public function getListFromModuleClassList ($class_list) : void
@@ -47,7 +51,7 @@
                 $stmt->execute();
                 $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-                $this->student_id_list = $record;
+                $this->id_student_list = $record;
 
             } catch (PDOException $error) {
                 throw $error;
@@ -81,7 +85,7 @@
                 $stmt->execute();
                 $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-                $this->student_id_list = $record;
+                $this->id_student_list = $record;
 
             } catch (PDOException $error) {
                 throw $error;
@@ -90,7 +94,7 @@
 
         public function getAccountListFromStudentList () : array
         {
-            $sql_of_list = $this->_getSqlOfList($this->student_id_list);
+            $sql_of_list = $this->_getSqlOfList($this->id_student_list);
 
             $this->_getAccountListFromStudentList($sql_of_list);
 
@@ -120,52 +124,16 @@
             }
         }
 
-        public function getTokenListFromStudentList () : array
-        {
-            $sql_of_list = $this->_getSqlOfList($this->student_id_list);
-
-            $listToken = $this->_getTokenListFromStudentList($sql_of_list);
-
-            return $listToken;
-        }
-
-        private function _getTokenListFromStudentList ($sql_of_list) : array
-        {
-            if ($sql_of_list == '') {
-                return [];
-            }
-
-            $sql_query = '
-                SELECT
-                    Device_Token
-                FROM
-                    ' . self::device_table . '
-                WHERE
-                    ID_Student IN (' . $sql_of_list . ')
-                ';
-
-            try {
-                $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute();
-                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-                return $record;
-
-            } catch (PDOException $error) {
-                throw $error;
-            }
-        }
-
         private function _getSqlOfList ($list) : string
         {
-            $sql = '';
+            $part_of_sql = '';
 
             foreach ($list as $id) {
-                $sql .= '\'' . $id . '\',';
+                $part_of_sql .= '\'' . $id . '\',';
             }
 
-            $sql = rtrim($sql, ',');
+            $part_of_sql = rtrim($part_of_sql, ',');
 
-            return $sql;
+            return $part_of_sql;
         }
     }

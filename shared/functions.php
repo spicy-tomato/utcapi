@@ -5,7 +5,7 @@
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $date    = date('d/m/Y H:i:s');
-        $message = $date . '\n' . $error->getCode() . '\n' . $error->getMessage() . '\n';
+        $message = $date . "\n" . $error->getCode() . "\n" . $error->getMessage() . "\n";
         EnvIO::loadEnv();
         file_put_contents(dirname(__DIR__) . '/Errors.txt', $message, FILE_APPEND);
     }

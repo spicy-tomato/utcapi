@@ -16,6 +16,38 @@
             $this->token      = $token;
         }
 
+        public function getTokenByIdStudent ($id_student_list) : array
+        {
+            $part_of_sql = '';
+
+            foreach ($id_student_list as $id_student) {
+                $part_of_sql .= '\'' . $id_student . '\',';
+            }
+
+            $part_of_sql = rtrim($part_of_sql, ',');
+
+            $sql_query = '
+                SELECT 
+                    Device_Token
+                FROM
+                    ' . self::device_table . '
+                WHERE 
+                    ID_Student IN (' . $part_of_sql . ')
+                 ';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+                return $record;
+
+            } catch (PDOException $error) {
+                printError($error);
+                throw $error;
+            }
+        }
+
         public function upsertToken () : array
         {
             $current_time = date('Y-m-d H:i:s');
@@ -28,7 +60,8 @@
                     (:token, :id_student, :current_time)
                 ON DUPLICATE KEY UPDATE
                     ID_Student = :id_student,
-                    Last_Use = :current_time';
+                    Last_Use = :current_time
+                 ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

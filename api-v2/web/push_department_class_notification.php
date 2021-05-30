@@ -2,11 +2,9 @@
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/notification.php';
+    include_once dirname(__DIR__, 2) . '/class/device.php';
     include_once dirname(__DIR__, 2) . '/class/firebase_notification.php';
-    include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/helper.php';
-
-    $response = [];
 
     $data = json_decode(file_get_contents('php://input'), true);
 
@@ -19,11 +17,13 @@
         try {
             $helper = new Helper($connect);
             $helper->getListFromDepartmentClass($data['class_list']);
-
+            $id_student_list = $helper->getIdStudentList();
             $id_account_list = $helper->getAccountListFromStudentList();
-            $notification    = new Notification($connect, $data['info'], $id_account_list);
 
-            $token_list            = $helper->getTokenListFromStudentList();
+            $device     = new Device($connect);
+            $token_list = $device->getTokenByIdStudent($id_student_list);
+
+            $notification          = new Notification($connect, $data['info'], $id_account_list);
             $firebase_notification = new FirebaseNotification($data['info'], $token_list);
 
             $notification->create();
