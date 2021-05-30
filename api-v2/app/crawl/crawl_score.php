@@ -26,7 +26,7 @@
                     $response['content']     = 'Error';
                 }
                 else {
-                    $response['status_code'] = 200;
+                    $response['status_code'] = 401;
                     $response['content']     = 'Invalid Password';
                 }
             }
