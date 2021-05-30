@@ -20,7 +20,7 @@
 
         if (empty($arr_fix_schedules)) {
             $response['status_code'] = 200;
-            $response['content']     = 'Failed';
+            $response['content']     = 'No Request Found';
             response($response, true);
         }
 
