@@ -131,8 +131,8 @@
             foreach ($data as &$value) {
                 $value['Credit']            = intval($value['Credit']);
                 $value['Process_Score']     = floatval($value['Process_Score']);
-                $value['Test_Score']        = floatval($value['Test_Score']);
-                $value['Theoretical_Score'] = floatval($value['Theoretical_Score']);
+                $value['Test_Score']        = is_null($value['Test_Score']) ? $value['Test_Score'] : floatval($value['Test_Score']);
+                $value['Theoretical_Score'] = is_null($value['Theoretical_Score']) ? $value['Theoretical_Score'] : floatval($value['Theoretical_Score']);
             }
 
             return $data;
