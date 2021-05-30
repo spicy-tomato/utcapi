@@ -35,7 +35,7 @@
                     md.ID_Module = mdc.ID_Module AND
                     t.ID_Teacher = mdc.ID_Teacher
                 ORDER BY 
-                    fix.Time_Accept_Request ASC
+                    fix.Time_Accept_Request
                 ';
 
             try {

@@ -16,8 +16,9 @@
             $account = new Account($connect);
 
             $data['qldt_password'] = $account->getQLDTPasswordOfStudentAccount($data['id_account']);
-            $crawl                 = new CrawlQLDTData($data['id_student'], $data['qldt_password']);
-            $crawl_data            = $crawl->getStudentMarks();
+
+            $crawl      = new CrawlQLDTData($data['id_student'], $data['qldt_password']);
+            $crawl_data = $crawl->getStudentModuleScore();
 
             if (isset($crawl_data[0])) {
                 if ($crawl_data[0] == -1) {

@@ -35,21 +35,6 @@
             return $this->status;
         }
 
-        public function getStudentMarks () : array
-        {
-            if ($this->status == 1) {
-                $this->getFormRequireDataOfStudentMark();
-                $data = $this->getDataMarks();
-                $data = $this->_formatData($data);
-            }
-            else {
-                $data[] = $this->status;
-            }
-            curl_close($this->ch);
-
-            return $data;
-        }
-
         private function getAccessToken ()
         {
             file_get_contents($this->url);
@@ -85,7 +70,22 @@
             }
         }
 
-        private function getFormRequireDataOfStudentMark ()
+        public function getStudentModuleScore () : array
+        {
+            if ($this->status == 1) {
+                $this->getFormRequireDataOfStudentModuleScore();
+                $data = $this->getDataModuleScore();
+                $data = $this->_formatModuleScoreData($data);
+            }
+            else {
+                $data[] = $this->status;
+            }
+            curl_close($this->ch);
+
+            return $data;
+        }
+
+        private function getFormRequireDataOfStudentModuleScore ()
         {
             $response = $this->getRequest($this->url_student_mark);
 
@@ -103,7 +103,7 @@
             }
         }
 
-        private function getDataMarks ()
+        private function getDataModuleScore ()
         {
             $form_get_mark_request                      = EnvIO::$form_get_mark_request;
             $form_get_mark_request['__VIEWSTATE']       = $this->view_state;
@@ -189,57 +189,27 @@
             return $response;
         }
 
-        private function _formatData ($data) : array
-        {
-            if (strlen($this->semester_arr[0]) == 8) {
-                foreach ($data[$this->semester_arr[0]] as $module) {
-                    $data[$this->semester_arr[1]][] = $module;
-                }
-                unset($data[$this->semester_arr[0]]);
-            }
-
-            foreach ($data as &$semester) {
-                foreach ($semester as &$module) {
-                    $module[1] = preg_replace('/\s+/', ' ', $module[1]);
-                    $module[1] = str_replace('- ', '-', $module[1]);
-                    $module[1] = str_replace('- ', '-', $module[1]);
-                }
-            }
-
-            return $data;
-        }
-
         public function getStudentExamSchedule ($semester) : array
         {
-            $this->semester_arr = $semester;
-            $status             = $this->getFormRequireDataOfStudentExamSchedule();
-
-            if ($status != -1 && $status != 0) {
+            if ($this->status == 1) {
+                $this->semester_arr = $semester;
+                $this->getFormRequireDataOfStudentExamSchedule();
                 $data = $this->getDataExamSchedule();
             }
             else {
-                $data[] = $status;
+                $data[] = $this->status;
             }
             curl_close($this->ch);
 
             return $data;
         }
 
-        private function getFormRequireDataOfStudentExamSchedule () : int
+        private function getFormRequireDataOfStudentExamSchedule ()
         {
             $response = $this->getRequest($this->url_student_exam_schedule);
 
             $html = new simple_html_dom();
             $html->load($response);
-
-            $flag = $html->find('select[name=drpExaminationNumber]', 0);
-            if (empty($flag)) {
-                $flag2 = $html->find('input[id=txtUserName]', 0);
-                if (empty($flag2)) {
-                    return -1;
-                }
-                return 0;
-            }
 
             $this->view_state        = $html->find('input[name=__VIEWSTATE]', 0)->value;
             $this->event_validation  = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
@@ -260,8 +230,6 @@
             }
 
             $this->semester_arr = $data;
-
-            return 1;
         }
 
         private function getDataExamSchedule ()
@@ -278,18 +246,18 @@
                 $response = $this->postRequest($this->url_student_exam_schedule, $form_get_exam_schedule_request);
                 $html     = new simple_html_dom();
                 $html->load($response);
-                $exam_type_element_by_shtmldom = $html->find('select[id=drpDotThi] option');
+                $exam_type_by_shtmldom = $html->find('select[id=drpDotThi] option');
 
                 $response = mb_convert_encoding($response, 'HTML-ENTITIES', "UTF-8");
                 $dom      = new DOMDocument();
                 @$dom->loadHTML($response);
-                $exam_type_element_by_dom_document = $dom->getElementById('drpDotThi');
+                $exam_type_by_dom_document = $dom->getElementById('drpDotThi');
 
                 $exam_type = [];
                 $j         = 1;
-                for ($i = 3; $i < $exam_type_element_by_dom_document->childNodes->count(); $i += 2) {
-                    $exam_type[$i - (2 + $j)][] = $exam_type_element_by_dom_document->childNodes->item($i)->textContent;
-                    $exam_type[$i - (2 + $j)][] = $exam_type_element_by_shtmldom[$i - ($j + 1)]->value;
+                for ($i = 3; $i < $exam_type_by_dom_document->childNodes->count(); $i += 2) {
+                    $exam_type[$i - (2 + $j)][] = $exam_type_by_dom_document->childNodes->item($i)->textContent;
+                    $exam_type[$i - (2 + $j)][] = $exam_type_by_shtmldom[$i - ($j + 1)]->value;
                     $j++;
                 }
 
@@ -316,28 +284,28 @@
                     $tr = $html->find('table[id=tblCourseList] tr');
                     for ($j = 1; $j < count($tr) - 1; $j++) {
                         $arr              = [];
-                        $temp_examination = $this->_specialFormatUTF8EncodingBreak($exam_type[$i][0]);
+                        $temp_examination = $this->_formatWrongWord($exam_type[$i][0]);
                         $arr[]            = $this->_formatStringDataCrawled($temp_examination);
 
-                        $arr[]            = $this->student_id;
+                        $arr[] = $this->student_id;
 
-                        $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(1)->innertext);
+                        $arr[] = $this->_formatStringDataCrawled($tr[$j]->children(1)->innertext);
 
-                        $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(2)->innertext);
+                        $arr[] = $this->_formatStringDataCrawled($tr[$j]->children(2)->innertext);
 
-                        $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(3)->innertext);
+                        $arr[] = $this->_formatStringDataCrawled($tr[$j]->children(3)->innertext);
 
-                        $temp_date        = $this->_formatStringDataCrawled($tr[$j]->children(4)->innertext);
-                        $arr[]            = $this->_formatDateDataCrawled($temp_date);
+                        $temp_date = $this->_formatStringDataCrawled($tr[$j]->children(4)->innertext);
+                        $arr[]     = $this->_formatDateDataCrawled($temp_date);
 
-                        $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(5)->innertext);
+                        $arr[] = $this->_formatStringDataCrawled($tr[$j]->children(5)->innertext);
 
-                        $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(6)->innertext);
+                        $arr[] = $this->_formatStringDataCrawled($tr[$j]->children(6)->innertext);
 
-                        $arr[]            = $this->_formatStringDataCrawled($tr[$j]->children(7)->innertext);
+                        $arr[] = $this->_formatStringDataCrawled($tr[$j]->children(7)->innertext);
 
-                        $temp_room        = $this->_specialFormatUTF8EncodingBreak($tr[$j]->children(8)->innertext);
-                        $arr[]            = $this->_formatStringDataCrawled($temp_room);
+                        $temp_room = $this->_formatWrongWord($tr[$j]->children(8)->innertext);
+                        $arr[]     = $this->_formatStringDataCrawled($temp_room);
 
                         $data[$semester_key][] = $arr;
                     }
@@ -348,7 +316,7 @@
             return $data;
         }
 
-        private function _specialFormatUTF8EncodingBreak ($str)
+        private function _formatWrongWord ($str)
         {
             $str = preg_replace('/Kê/', 'Kế', $str);
             $str = preg_replace('/hoach/', 'hoạch', $str);
@@ -375,4 +343,21 @@
             return $date;
         }
 
+        private function _formatModuleScoreData ($data) : array
+        {
+            if (strlen($this->semester_arr[0]) == 8) {
+                foreach ($data[$this->semester_arr[0]] as $module) {
+                    $data[$this->semester_arr[1]][] = $module;
+                }
+                unset($data[$this->semester_arr[0]]);
+            }
+
+            foreach ($data as &$semester) {
+                foreach ($semester as &$module) {
+                    $module[1] = $this->_formatStringDataCrawled($module[1]);
+                }
+            }
+
+            return $data;
+        }
     }

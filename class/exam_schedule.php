@@ -112,6 +112,8 @@
                     ' . self::exam_schedule_table . '
                 WHERE
                     ID_Student = :id_student
+                ORDER BY
+                    Date_Start
                 ';
 
             try {

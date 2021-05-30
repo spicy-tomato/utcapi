@@ -19,7 +19,6 @@
             $module_score = new ModuleScore($connect);
 
             $data['qldt_password'] = $account->getQLDTPasswordOfStudentAccount($data['id_account']);
-
             $semester = $module_score->getSemester($data['id_student']);
 
             $crawl      = new CrawlQLDTData($data['id_student'], $data['qldt_password']);
