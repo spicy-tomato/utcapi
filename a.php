@@ -21,6 +21,7 @@
     try {
         $b = $a[0];
     } catch (Exception $e) {
+        printError($e);
         echo $e->getMessage();
         echo $e->getFile();
         echo $e->getLine();
