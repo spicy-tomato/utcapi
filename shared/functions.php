@@ -1,11 +1,30 @@
 <?php
     include_once dirname(__DIR__) . '/utils/env_io.php';
 
+    /**
+     * @throws ErrorException
+     */
+    function exceptions_error_handler ($severity, $message, $filename, $lineno)
+    {
+        if (error_reporting() == 0) {
+            return;
+        }
+        if (error_reporting() & $severity) {
+            throw new ErrorException($message, 0, $severity, $filename, $lineno);
+        }
+    }
+
     function printError (Exception $error)
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $date    = date('d/m/Y H:i:s');
-        $message = $date . "\n" . $error->getCode() . "\n" . $error->getMessage() . "\n";
+        $message = "=====================================================\n";
+        $message .= $date . "\n";
+        $message .= "Code: " . $error->getCode() . "\n";
+        $message .= $error->getMessage() . "\n";
+        $message .= $error->getFile() . "  " . $error->getLine() . "\n";
+        $message .= "=====================================================\n";
+
         EnvIO::loadEnv();
         file_put_contents(dirname(__DIR__) . '/Errors.txt', $message, FILE_APPEND);
     }
