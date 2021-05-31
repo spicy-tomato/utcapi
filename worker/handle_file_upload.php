@@ -22,10 +22,11 @@
             $location = dirname(__DIR__) . '/file_upload/';
             foreach ($response as $file_name) {
                 $file_location = $location . $file_name;
-
                 $data = $read_file->getData($file_name);
-                $aws->uploadFile($file_name, $file_location, 'data/');
-//                echo json_encode($data['student_json']);
+                unset($data['student_json']);
+
+                //                $aws->uploadFile($file_name, $file_location, 'data/');
+                $a =  $data['hjghj'];
                 //                $work_with_db->setData($data['student_json']);
                 //                $work_with_db->pushData('Student');
 
