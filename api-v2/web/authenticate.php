@@ -4,6 +4,7 @@
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/account.php';
+    set_error_handler('exceptions_error_handler');
 
     $response = [];
 
@@ -68,6 +69,7 @@
             }
 
         } catch (Exception $error) {
+            printError($error);
             $response['status_code'] = 500;
             $response['content']     = 'Error';
 

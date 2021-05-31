@@ -4,6 +4,7 @@
     include_once dirname(__DIR__, 2) . '/class/account.php';
     include_once dirname(__DIR__, 2) . '/class/student_schedule.php';
     include_once dirname(__DIR__, 2) . '/class/teacher_schedule.php';
+    set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         isset($_GET['id'])) {
@@ -35,6 +36,7 @@
             }
 
         } catch (Exception $error) {
+            printError($error);
             $response['status_code'] = 500;
             $response['content']     = 'Error';
         }

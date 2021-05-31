@@ -3,6 +3,7 @@
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/account.php';
     include_once dirname(__DIR__, 2) . '/class/crawl_qldt_data.php';
+    set_error_handler('exceptions_error_handler');
 
     $data = json_decode(file_get_contents('php://input'), true);
 
@@ -26,6 +27,7 @@
             }
 
         } catch (Exception $error) {
+            printError($error);
             $response['status_code'] = 500;
             $response['content']     = 'Error';
         }

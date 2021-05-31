@@ -7,6 +7,7 @@
     include_once dirname(__DIR__, 3) . '/class/firebase_notification.php';
     include_once dirname(__DIR__, 3) . '/class/helper.php';
     include_once dirname(__DIR__, 3) . '/class/fix_schedule.php';
+    set_error_handler('exceptions_error_handler');
 
     try {
         $aws                = new AWS();
@@ -25,8 +26,10 @@
         }
 
     } catch (Exception $error) {
+        printError($error);
         $response['status_code'] = 500;
         $response['content']     = 'Error';
+
         response($response, true);
     }
 

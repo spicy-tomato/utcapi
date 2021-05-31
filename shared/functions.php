@@ -18,15 +18,12 @@
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $date    = date('d/m/Y H:i:s');
-        $message = "=====================================================\n";
-        $message .= $date . "\n";
+        $message = $date . "\n";
         $message .= "Code: " . $error->getCode() . "\n";
         $message .= $error->getMessage() . "\n";
         $message .= $error->getFile() . "  " . $error->getLine() . "\n";
         $message .= "=====================================================\n";
-
-        EnvIO::loadEnv();
-        file_put_contents(dirname(__DIR__) . '/Errors.txt', $message, FILE_APPEND);
+        file_put_contents(dirname(__DIR__) . '/errors.txt', $message, FILE_APPEND);
     }
 
     function convertDate ($date) : string

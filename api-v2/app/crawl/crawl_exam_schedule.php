@@ -6,6 +6,7 @@
     include_once dirname(__DIR__, 3) . '/class/exam_schedule.php';
     include_once dirname(__DIR__, 3) . '/class/account.php';
     include_once dirname(__DIR__, 3) . '/class/crawl_qldt_data.php';
+    set_error_handler('exceptions_error_handler');
 
     $data = json_decode(file_get_contents('php://input'), true);
 
@@ -43,6 +44,7 @@
             }
 
         } catch (Exception $error) {
+            printError($error);
             $response['status_code'] = 500;
             $response['content']     = 'Error';
         }

@@ -123,23 +123,23 @@
                     $arr = [];
 
                     $td    = explode('<br><br>', $tr[$j]->children(1)->innertext);
-                    $arr[] = isset($td[1]) ? $td[1] : $td[0];
+                    $arr[] = $td[1] ?? $td[0];
 
                     $td    = explode('<br><br>', $tr[$j]->children(2)->innertext);
-                    $arr[] = isset($td[1]) ? $td[1] : $td[0];
+                    $arr[] = $td[1] ?? $td[0];
 
                     $td    = explode('<br><br>', $tr[$j]->children(3)->innertext);
-                    $arr[] = isset($td[1]) ? $td[1] : $td[0];
+                    $arr[] = $td[1] ?? $td[0];
 
                     $td              = explode('<br><br>', $tr[$j]->children(8)->innertext);
-                    $temp_evaluation = isset($td[1]) ? $td[1] : $td[0];
+                    $temp_evaluation = $td[1] ?? $td[0];
                     $arr[]           = $temp_evaluation == '&nbsp;' ? null : $temp_evaluation;
 
                     $td    = explode('<br><br>', $tr[$j]->children(9)->innertext);
-                    $arr[] = isset($td[1]) ? $td[1] : $td[0];
+                    $arr[] = $td[1] ?? $td[0];
 
                     $td    = explode('<br><br>', $tr[$j]->children(10)->innertext);
-                    $arr[] = isset($td[1]) ? $td[1] : $td[0];
+                    $arr[] = $td[1] ?? $td[0];
 
                     if (count($tr[$j]->children()) == 11) {
                         $arr[]             = null;

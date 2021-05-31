@@ -2,9 +2,9 @@
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/account.php';
+    set_error_handler('exceptions_error_handler');
 
     $data     = json_decode(file_get_contents('php://input'), true);
-    $response = [];
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
         !empty($data)) {
@@ -12,9 +12,10 @@
         try {
             $db      = new Database();
             $connect = $db->connect();
-            $account = new Account($connect);
 
+            $account = new Account($connect);
             $account_info = $account->login($data);
+
             if ($account_info == 'Failed') {
                 $response['status_code']        = 200;
                 $response['content']['message'] = 'failed';
@@ -36,6 +37,7 @@
             }
 
         } catch (Exception $error) {
+            printError($error);
             $response['status_code']        = 500;
             $response['content']['message'] = 'error';
         }

@@ -5,16 +5,17 @@
     include_once dirname(__DIR__, 2) . '/class/device.php';
     include_once dirname(__DIR__, 2) . '/class/firebase_notification.php';
     include_once dirname(__DIR__, 2) . '/class/helper.php';
+    set_error_handler('exceptions_error_handler');
 
     $data = json_decode(file_get_contents('php://input'), true);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
         !empty($data)) {
 
-        $db      = new Database();
-        $connect = $db->connect();
-
         try {
+            $db      = new Database();
+            $connect = $db->connect();
+
             $helper = new Helper($connect);
             $helper->getListFromDepartmentClass($data['class_list']);
             $id_student_list = $helper->getIdStudentList();
