@@ -23,7 +23,7 @@
         $message .= $error->getMessage() . "\n";
         $message .= $error->getFile() . "  " . $error->getLine() . "\n";
         $message .= "=====================================================\n";
-        file_put_contents(dirname(__DIR__) . '/errors.txt', $message, FILE_APPEND);
+        file_put_contents(dirname(__DIR__) . '/error-log/errors.txt', $message, FILE_APPEND);
     }
 
     function convertDate ($date) : string
