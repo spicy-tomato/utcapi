@@ -13,7 +13,6 @@ async function uploadFile() {
 
     let response;
     let formData = new FormData();
-    formData.append('flag', '1');
 
     for (let i = 0; i < fileUpload.files.length; i++) {
         formData.append('file'+i, fileUpload.files[i]);

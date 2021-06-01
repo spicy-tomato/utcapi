@@ -10,9 +10,7 @@
                 $output  = shell_exec($command);
 
             } catch (Exception $error) {
-                printError($error);
-
-                return null;
+                throw  $error;
             }
 
             $json = json_decode($output, true);

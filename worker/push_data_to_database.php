@@ -1,6 +1,11 @@
 <?php
+
     class WorkWithDatabase
     {
+
+        private PDO $connect;
+        private array $data;
+
         private const student_sql = "
                     INSERT IGNORE INTO Student 
                     (
@@ -41,10 +46,6 @@
                     ) 
                         VALUES ";
 
-
-        private Database $db;
-        private PDO $connect;
-        private array $data;
 
         public function __construct (PDO $connect)
         {
@@ -89,7 +90,7 @@
 
             $response = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            return $response ? true : false;
+            return (bool)$response;
         }
 
         private function _createSQL ($arr, $table_name) : string
@@ -140,9 +141,14 @@
         public function pushData ($table_name)
         {
             foreach ($this->data as $arr) {
-                $sql  = $this->_createSQL($arr, $table_name);
-                $stmt = $this->connect->prepare($sql);
-                $stmt->execute();
+                $sql = $this->_createSQL($arr, $table_name);
+                try {
+                    $stmt = $this->connect->prepare($sql);
+                    $stmt->execute();
+
+                } catch (PDOException $error) {
+                    throw  $error;
+                }
             }
         }
     }

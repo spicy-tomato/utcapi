@@ -36,17 +36,23 @@
                     'ContentType' => $file_mime
                 ]);
 
-            } catch (Aws\Exception\AwsException $e) {
+            } catch (Aws\Exception\AwsException $error) {
+                throw $error;
             }
         }
 
         public function getDataFromFile ($file_name, $folder)
         {
-            $result = $this->s3->getObject([
-                'Bucket' => 'utcapi-file-upload',
-                'Key' => $folder . $file_name,
-                'Body' => 'this is the body!',
-            ]);
+            try {
+                $result = $this->s3->getObject([
+                    'Bucket' => 'utcapi-file-upload',
+                    'Key' => $folder . $file_name,
+                    'Body' => 'this is the body!',
+                ]);
+
+            } catch (Aws\Exception\AwsException $error) {
+                throw $error;
+            }
 
             return $result['Body'];
         }
