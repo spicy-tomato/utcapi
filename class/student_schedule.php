@@ -1,7 +1,5 @@
 <?php
-
-
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/shared/functions.php';
+    include_once dirname(__DIR__) . '/shared/functions.php';
 
     class StudentSchedule
     {
@@ -20,18 +18,18 @@
             $this->student_id = $student_id;
         }
 
-        public function getAll ()
+        public function getAll () : array
         {
             $sql_query =
-                "SELECT
+                'SELECT
                     mdcls.Module_Class_Name, sdu.ID_Module_Class, 
                     sdu.ID_Room, sdu.Shift_Schedules, sdu.Day_Schedules
                 FROM
-                    " . self::module_table . " mc,
-                    " . self::schedule_table . " sdu,
-                    " . self::student_table . " stu,
-                    " . self::participate_table . " par,
-                    " . self::module_class_table . " mdcls
+                    ' . self::module_table . ' mc,
+                    ' . self::schedule_table . ' sdu,
+                    ' . self::student_table . ' stu,
+                    ' . self::participate_table . ' par,
+                    ' . self::module_class_table . ' mdcls
                 WHERE
                     stu.ID_Student = :id_student AND
                     par.ID_Student = :id_student AND
@@ -39,21 +37,36 @@
                     mdcls.ID_Module_Class = sdu.ID_Module_Class AND
                     mc.ID_Module = mdcls.ID_Module
                 ORDER BY
-                    sdu.Shift_Schedules";
+                    sdu.Shift_Schedules';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $this->student_id]);
-                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                foreach ($data as &$e) {
-                    $e['Shift_Schedules'] = intval($e['Shift_Schedules']);
+
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $record = $this->_formatResponse($record);
+
+                $data['status_code'] = 200;
+                if (empty($record)) {
+                    $data['content'] = 'Not Found';
+                }
+                else {
+                    $data['content'] = $record;
                 }
 
                 return $data;
             } catch (PDOException $error) {
                 printError($error);
-
-                return 'Failed';
+                throw $error;
             }
+        }
+
+        private function _formatResponse ($data)
+        {
+            foreach ($data as &$e) {
+                $e['Shift_Schedules'] = intval($e['Shift_Schedules']);
+            }
+
+            return $data;
         }
     }

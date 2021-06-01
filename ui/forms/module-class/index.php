@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
+    include_once dirname(__DIR__, 3) . '/ui/shared/functions.php';
     shield();
 ?>
 <!doctype html>
@@ -22,53 +22,56 @@
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
       <!-- AlertifyJS Theme -->
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
+      <!-- custom input date -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
       <link rel="stylesheet" href="../alert.css">
     ');
 ?>
 
 <body style="height: 100vh">
-  <div class="container">
+<div class="container">
 
-      <?php shared_navbar(); ?>
+    <?php shared_navbar(); ?>
 
-    <main>
-      <form action="" autocomplete="off" onsubmit="return false">
+  <main>
+    <form action="" autocomplete="off" onsubmit="return false">
 
-          <?php shared_form(); ?>
+        <?php shared_form(); ?>
 
-        <div class="row mt-4">
-          <div class="col-5 col-lg-4">
-            <div class="form-group row">
-              <label for="module-class-id">
-                <legend>Mã học phần:</legend>
-              </label>
-              <div class="col-12 col-lg-8">
-                <select name="" id="module-class-id" class="form-control" multiple="multiple"></select>
-              </div>
+      <div class="row mt-4">
+        <div class="col-5 col-lg-4">
+          <div class="form-group row">
+            <label for="module-class-id">
+              <legend>Mã học phần:</legend>
+            </label>
+            <div class="col-12 col-lg-8">
+              <select name="" id="module-class-id" class="form-control" multiple="multiple"></select>
             </div>
           </div>
-          <div class="col-7 col-lg-8">
-            <div class="form-group row">
-              <legend>Các lớp học phần đã chọn:</legend>
-            </div>
-            <div id="list"></div>
+        </div>
+        <div class="col-7 col-lg-8">
+          <div class="form-group row">
+            <legend>Các lớp học phần đã chọn:</legend>
           </div>
+          <div id="list"></div>
         </div>
+      </div>
 
-        <div class="d-flex justify-content-center mt-4">
-          <button type="button"
-                  class="btn btn-primary"
-                  name="button"
-                  id="submit_btn">Gửi
-          </button>
-        </div>
-      </form>
-    </main>
-  </div>
+      <div class="d-flex justify-content-center mt-4">
+        <button type="button"
+                class="btn btn-primary"
+                name="button"
+                id="submit_btn">Gửi
+        </button>
+      </div>
+    </form>
+  </main>
+</div>
 
-  <script src="script/script.js" type="module"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-          crossorigin="anonymous"></script>
+<script src="script/script.js" type="module"></script>
+<script src="../shared.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
 </body>
 </html>

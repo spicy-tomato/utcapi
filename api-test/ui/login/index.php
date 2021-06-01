@@ -1,5 +1,6 @@
 <?php
     session_start();
+
     if (isset($_SESSION['department_name']) &&
         isset($_SESSION['department_id_account'])) {
 
@@ -11,8 +12,8 @@
 
 <?php
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
-    include_once '../shared/functions.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/ui/shared/functions.php';
 
     shared_header("Đăng nhập");
 ?>

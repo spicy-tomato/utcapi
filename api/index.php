@@ -2,7 +2,7 @@
 //    include_once "../config/db.php";
 //    include_once "./class/tkb_controller.php";
 //    include_once "./class/sinh_vien_controller.php";
-//    include_once $_SERVER["DOCUMENT_ROOT"] . "/utcapi/api-v2/class/DepartmentClassController.php";
+//    include_once $_SERVER["DOCUMENT_ROOT"] . "/api-v2/class/DepartmentClassController.php";
 //
 //header("Access-Control-Allow-Origin: *");
 //    header("Content-Type: application/json; charset=UTF-8");

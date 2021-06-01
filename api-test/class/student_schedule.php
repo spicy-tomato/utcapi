@@ -1,7 +1,7 @@
 <?php
 
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/shared/functions.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
 
     class StudentSchedule
     {
@@ -44,10 +44,9 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $this->student_id]);
+
                 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                foreach ($data as &$e) {
-                    $e['Shift_Schedules'] = intval($e['Shift_Schedules']);
-                }
+                $data = $this->_formatResponse($data);
 
                 return $data;
             } catch (PDOException $error) {
@@ -55,5 +54,14 @@
 
                 return 'Failed';
             }
+        }
+
+        private function _formatResponse ($data)
+        {
+            foreach ($data as &$e) {
+                $e['Shift_Schedules'] = intval($e['Shift_Schedules']);
+            }
+
+            return $data;
         }
     }

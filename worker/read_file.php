@@ -1,22 +1,16 @@
 <?php
-
-
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/shared/functions.php";
+    include_once dirname(__DIR__) . '/shared/functions.php';
 
     class ReadFIle
     {
         public function getData ($file_name)
         {
-            $output = null;
-
             try {
-                $command = escapeshellcmd("python .\main.py $file_name");
+                $command = escapeshellcmd('python main.py ' . $file_name);
                 $output  = shell_exec($command);
 
             } catch (Exception $error) {
-                printError($error);
-
-                return null;
+                throw  $error;
             }
 
             $json = json_decode($output, true);

@@ -4,12 +4,19 @@
     "kreait/firebase-php": "^5.14",
     "ext-json": "*",
     "ext-pdo": "*",
-    "shuchkin/simplexlsx": "^0.8.21",
-    "ext-curl": "*"
+    "ext-curl": "*",
+    "vlucas/phpdotenv": "^5.3",
+    "aws/aws-sdk-php": "~3.0",
+    "ext-fileinfo": "*",
+    "ext-dom": "*"
   },
   "config": {
     "platform": {
       "php": "7.4"
-    }
+    },
+    "bin-dir": "vendor/bin"
+  },
+  "require-dev": {
+    "heroku/heroku-buildpack-php": "*"
   }
 }

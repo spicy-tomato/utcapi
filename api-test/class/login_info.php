@@ -1,6 +1,6 @@
 <?php
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/shared/functions.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
 
     class LoginInfo
     {
@@ -17,7 +17,7 @@
 
         public function __construct (PDO $connect, string $username, string $password)
         {
-            $this->connect = $connect;
+            $this->connect  = $connect;
             $this->username = $username;
             $this->password = $password;
         }

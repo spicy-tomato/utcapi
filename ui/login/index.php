@@ -1,7 +1,10 @@
 <?php
     session_start();
-    if (isset($_SESSION['department_name']) &&
-        isset($_SESSION['department_id_account'])) {
+    include_once dirname(__DIR__, 2) . '/config/db.php';
+    include_once dirname(__DIR__, 2) . '/ui/shared/functions.php';
+
+    if (isset($_SESSION['account_owner']) &&
+        isset($_SESSION['id_account'])) {
 
         header('Location: ../home');
     }
@@ -10,15 +13,11 @@
 <html lang="en">
 
 <?php
-
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
-    include_once '../shared/functions.php';
-
-    shared_header("Đăng nhập");
+    shared_header('Đăng nhập');
 ?>
 
 <body class="text-center cc_cursor bg-light">
-<form method="post" action="login.php" class="form-signin cc_cursor border border-dark mb-4 rounded">
+<form method="post" action="../../api-v2/web/authenticate.php" class="form-signin cc_cursor border border-dark mb-4 rounded">
   <div class="mt-3 mb-3">
     <div class="input-group">
         <span class="col-lg-1 justify-content-center align-items-center d-flex">

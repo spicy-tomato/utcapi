@@ -2,34 +2,35 @@
 
     class HandleFile
     {
-        private array $fileArr;
+        private array $file_arr;
 
         public function __construct (array $fileArr)
         {
-            $this->fileArr = $fileArr;
+            $this->file_arr = $fileArr;
         }
 
         public function handleFile () : array
         {
             date_default_timezone_set('Asia/Ho_Chi_Minh');
-            $newFileNameArr = null;
+            $new_file_name_arr = null;
 
-            foreach ($this->fileArr as $file) {
-                $nameSplit = explode(".", $file["name"]);
-                $timeSplit = explode(".", microtime(true));
+            foreach ($this->file_arr as $file) {
+                $nameSplit = explode('.', $file['name']);
+                $timeSplit = explode('.', microtime(true));
 
-                $newFileName = $nameSplit[0] . "_" . $timeSplit[0] . $timeSplit[1] . "." . $nameSplit[1];
+                $new_file_name = $nameSplit[0] . '_' . $timeSplit[0] . $timeSplit[1] . '.' . $nameSplit[1];
+                $new_file_name = preg_replace('/\s+/', '', $new_file_name);
 
-                $location = "../file_upload/" . $newFileName;
+                $location = dirname(__DIR__) . '/file_upload/' . $new_file_name;
 
                 if (move_uploaded_file($file['tmp_name'], $location)) {
-                    $newFileNameArr[] = $newFileName;
+                    $new_file_name_arr[] = $new_file_name;
                 }
                 else {
-                    $newFileNameArr = null;
+                    $new_file_name_arr = null;
                 }
             }
 
-            return $newFileNameArr;
+            return $new_file_name_arr;
         }
     }

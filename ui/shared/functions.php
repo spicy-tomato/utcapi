@@ -1,7 +1,12 @@
 <?php
+    include_once dirname(__DIR__, 2) . '/utils/env_io.php';
+
+    EnvIO::loadEnv();
 
     function shared_header (string $title, string $otherTags = '') : void
     {
+        $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
+
         echo '
         <head>
           <meta charset="UTF-8">
@@ -14,24 +19,26 @@
           <title>' . $title . '</title>
           ' . $otherTags . '
           <link rel="stylesheet" href="css/style.css">
-          <link rel="stylesheet" href="/utcapi/ui/css/style.css">
+          <link rel="stylesheet" href="' . $root_folder . '/ui/css/style.css">
         </head>';
     }
 
 
     function shared_navbar () : void
     {
-        $nav1_class = 'nav-link';
-        $nav2_class = 'nav-link';
-        $nav3_class = 'nav-link';
-        $nav4_class = 'nav-link';
+        $nav1_class  = 'nav-link';
+        $nav2_class  = 'nav-link';
+        $nav3_class  = 'nav-link';
         $current_nav = ' active';
 
-        $home_link = '/utcapi/ui/home';
-        $form1_link = '/utcapi/ui/forms/department-class';
-        $form2_link = '/utcapi/ui/forms/module-class';
-        $form3_link = '/utcapi/ui/forms/student';
-        $push_data_link = '/utcapi/ui/push-data/';
+        EnvIO::loadEnv();
+        $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
+
+        $home_link      = $root_folder . '/ui/home';
+        $form1_link     = $root_folder . '/ui/forms/department-class';
+        $form2_link     = $root_folder . '/ui/forms/module-class';
+        $push_data_link = $root_folder . '/ui/push-data';
+        $log_out_link   = $root_folder . '/ui/home/logout.php';
 
         if (stripos($_SERVER['REQUEST_URI'], 'department-class') !== false) {
             $nav1_class .= $current_nav;
@@ -39,11 +46,8 @@
         elseif (stripos($_SERVER['REQUEST_URI'], 'module-class') !== false) {
             $nav2_class .= $current_nav;
         }
-        elseif (stripos($_SERVER['REQUEST_URI'], 'student') !== false) {
-            $nav3_class .= $current_nav;
-        }
         elseif (stripos($_SERVER['REQUEST_URI'], 'push-data') !== false) {
-            $nav4_class .= $current_nav;
+            $nav3_class .= $current_nav;
         }
 
         echo '
@@ -59,10 +63,7 @@
             <a href="' . $form2_link . '" class="' . $nav2_class . '">Lớp học phần</a>
           </li>
           <li class="navbar-item">
-            <a href="' . $form3_link . '" class="' . $nav3_class . '">Sinh viên</a>
-          </li>
-          <li class="navbar-item">
-            <a href="' . $push_data_link . '" class="' . $nav4_class . '">Nhập dữ liệu</a>
+            <a href="' . $push_data_link . '" class="' . $nav3_class . '">Nhập dữ liệu</a>
           </li>
         </ul>
 
@@ -72,7 +73,7 @@
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                   id="dropdownMenuButton">
-            ' . $_SESSION["department_name"] . '
+            ' . $_SESSION["account_owner"] . '
             <i class="fas fa-cogs"></i>
           </button>
           <ul class="dropdown-menu mr-5" aria-labelledby="dropdownMenuButton">
@@ -80,7 +81,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a href="/utcapi/ui/home/logout.php" class="dropdown-item">Đăng xuất</a></li>
+            <li><a href="' . $log_out_link . '" class="dropdown-item">Đăng xuất</a></li>
           </ul>
         </div>
       </div>
@@ -127,14 +128,14 @@
             </div>
             
             <div class="form-group mt-4">
-              <label for="time_start" class="select_date">Ngày bắt đầu:</label>
-              <input type="date" class="input_date" id="time_start">
-              <button class="btn btn-primary time_start disable" name="reset_button">Bỏ chọn</button>
+              <label for="time-start" class="select_date">Ngày bắt đầu:</label>
+              <input type="date" class="input-date" id="time-start" data-date="" data-date-format="DD/MM/YYYY">
+              <button class="btn btn-primary time-start disable" name="reset_button">Bỏ chọn</button>
             </div>
             <div class="form-group mt-4">
-              <label for="time_end" class="select_date">Ngày kết thúc:</label>
-              <input type="date" class="input_date" id="time_end">
-              <button class="btn btn-primary time_end disable" name="reset_button">Bỏ chọn</button>
+              <label for="time-end" class="select_date">Ngày kết thúc:</label>
+              <input type="date" class="input-date" id="time-end" data-date="" data-date-format="DD/MM/YYYY">
+              <button class="btn btn-primary time-end disable" name="reset_button">Bỏ chọn</button>
             </div>
           </div>
         </div>';
@@ -142,17 +143,19 @@
 
     function shield ()
     {
-        if (!isset($_SESSION['department_name']) ||
-            !isset($_SESSION['department_id_account'])) {
+        $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
 
-            header('Location: /utcapi/ui/login/');
+        if (!isset($_SESSION['account_owner']) ||
+            !isset($_SESSION['id_account'])) {
+
+            header('Location: ' . $root_folder . '/ui/login/');
         }
 
         $now = time();
 
         if (isset($_SESSION['time_limit']) && $now > $_SESSION['time_limit']) {
             session_destroy();
-            header('Location: /utcapi/ui/login/');
+            header('Location: ' . $root_folder . '/ui/login/');
         }
 
         $_SESSION['time_limit'] = $now + 3600;

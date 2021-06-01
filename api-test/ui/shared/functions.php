@@ -14,7 +14,7 @@
           <title>' . $title . '</title>
           ' . $otherTags . '
           <link rel="stylesheet" href="css/style.css">
-          <link rel="stylesheet" href="/utcapi/ui/css/style.css">
+          <link rel="stylesheet" href="/ui/css/style.css">
         </head>';
     }
 
@@ -27,11 +27,11 @@
         $nav4_class = 'nav-link';
         $current_nav = ' active';
 
-        $home_link = '/utcapi/ui/home';
-        $form1_link = '/utcapi/ui/forms/department-class';
-        $form2_link = '/utcapi/ui/forms/module-class';
-        $form3_link = '/utcapi/ui/forms/student';
-        $push_data_link = '/utcapi/ui/push-data/';
+        $home_link = '/ui/home';
+        $form1_link = '/ui/forms/department-class';
+        $form2_link = '/ui/forms/module-class';
+        $form3_link = '/ui/forms/student';
+        $push_data_link = '/ui/push-data/';
 
         if (stripos($_SERVER['REQUEST_URI'], 'department-class') !== false) {
             $nav1_class .= $current_nav;
@@ -80,7 +80,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a href="/utcapi/ui/home/logout.php" class="dropdown-item">Đăng xuất</a></li>
+            <li><a href="/ui/home/logout.php" class="dropdown-item">Đăng xuất</a></li>
           </ul>
         </div>
       </div>
@@ -145,14 +145,14 @@
         if (!isset($_SESSION['department_name']) ||
             !isset($_SESSION['department_id_account'])) {
 
-            header('Location: /utcapi/ui/login/');
+            header('Location: /ui/login/');
         }
 
         $now = time();
 
         if (isset($_SESSION['time_limit']) && $now > $_SESSION['time_limit']) {
             session_destroy();
-            header('Location: /utcapi/ui/login/');
+            header('Location: /ui/login/');
         }
 
         $_SESSION['time_limit'] = $now + 3600;

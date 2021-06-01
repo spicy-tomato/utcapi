@@ -21,7 +21,6 @@ async function uploadFile() {
     for (let i = 0; i < fileUpload.files.length; i++) {
         formData.append('file'+i, fileUpload.files[i]);
     }
-    console.log(formData)
     let responseAsJson = await fetch('../../worker/handle_file_upload.php', {
         method: 'POST',
         body: formData

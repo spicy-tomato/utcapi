@@ -1,11 +1,11 @@
 <?php
 
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/shared/functions.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
 
     class ModuleClass
     {
-        private const db_table = "Module_Class";
+        private const db_table = 'Module_Class';
         private PDO $connect;
 
         public function __construct(PDO $connect)
@@ -33,7 +33,7 @@
             } catch (PDOException $error) {
                 printError($error);
 
-                return "Failed";
+                return 'Failed';
             }
         }
     }

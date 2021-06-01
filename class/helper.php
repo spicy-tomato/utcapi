@@ -4,144 +4,136 @@
     {
         private const participate_table = 'Participate';
         private const student_table = 'Student';
-        private const device_table = 'Device';
 
         private PDO $connect;
-        private array $student_id_list;
+        private array $id_student_list;
         private array $id_account_list;
 
-        public function __construct(PDO $connect)
+        public function __construct (PDO $connect)
         {
             $this->connect = $connect;
         }
 
-        public function setStudentIdList (array $student_id_list) : void
+        public function setIdStudentList (array $student_id_list) : void
         {
-            $this->student_id_list = $student_id_list;
+            $this->id_student_list = $student_id_list;
         }
 
-        public function getListFromModuleClassList($class_list): void
+        public function getIdStudentList () : array
+        {
+            return $this->id_student_list;
+        }
+
+        public function getListFromModuleClassList ($class_list) : void
         {
             $sql_of_list = $this->_getSqlOfList($class_list);
 
             $this->_getListFromModuleClass($sql_of_list);
         }
 
-        private function _getListFromModuleClass($sql_of_list): void
+        private function _getListFromModuleClass ($sql_of_list) : void
         {
-            if ($sql_of_list == ''){
+            if ($sql_of_list == '') {
                 return;
             }
 
-            $sql_query = "
+            $sql_query = '
                 SELECT
                     ID_Student
                 FROM
-                    " . self::participate_table . "
+                    ' . self::participate_table . '
                 WHERE
-                    ID_Module_Class IN (" . $sql_of_list . ")
-                ";
+                    ID_Module_Class IN (' . $sql_of_list . ')
+                ';
 
-            $stmt = $this->connect->prepare($sql_query);
-            $stmt->execute();
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-            $this->student_id_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                $this->id_student_list = $record;
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
         }
 
-        public function getListFromDepartmentClass($class_list)
+        public function getListFromDepartmentClass ($class_list)
         {
             $sql_of_list = $this->_getSqlOfList($class_list);
 
             $this->_getListFromDepartmentClass($sql_of_list);
         }
 
-        private function _getListFromDepartmentClass($sql_of_list): void
+        private function _getListFromDepartmentClass ($sql_of_list) : void
         {
             if ($sql_of_list == '') {
                 return;
             }
 
             $sql_query =
-                "SELECT
+                'SELECT
                     ID_Student
                 FROM
-                    " . self::student_table . "
+                    ' . self::student_table . '
                 WHERE
-                    ID_Class IN (" . $sql_of_list . ")
-                ";
+                    ID_Class IN (' . $sql_of_list . ')
+                ';
 
-            $stmt = $this->connect->prepare($sql_query);
-            $stmt->execute();
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-            $this->student_id_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                $this->id_student_list = $record;
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
         }
 
-        public function getAccountListFromStudentList() : array
+        public function getAccountListFromStudentList () : array
         {
-            $sql_of_list = $this->_getSqlOfList($this->student_id_list);
+            $sql_of_list = $this->_getSqlOfList($this->id_student_list);
 
             $this->_getAccountListFromStudentList($sql_of_list);
 
             return $this->id_account_list;
         }
 
-        private function _getAccountListFromStudentList($sql_of_list)
+        private function _getAccountListFromStudentList ($sql_of_list)
         {
-            $sql_query = "
+            $sql_query = '
                 SELECT
                     ID
                 FROM
-                    " . self::student_table . "
+                    ' . self::student_table . '
                 WHERE
-                    ID_Student IN (" . $sql_of_list . ")
-                ";
+                    ID_Student IN (' . $sql_of_list . ')
+                ';
 
-            $stmt = $this->connect->prepare($sql_query);
-            $stmt->execute();
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-            $this->id_account_list = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        }
+                $this->id_account_list = $record;
 
-        public function getTokenListFromStudentList(): array
-        {
-            $sql_of_list = $this->_getSqlOfList($this->student_id_list);
-
-            $listToken = $this->_getTokenListFromStudentList($sql_of_list);
-
-            return $listToken;
-        }
-
-        private function _getTokenListFromStudentList($sql_of_list): array
-        {
-            if ($sql_of_list == '') {
-                return [];
+            } catch (PDOException $error) {
+                throw $error;
             }
-
-            $sql_query = "
-                SELECT
-                    Device_Token
-                FROM
-                    " . self::device_table . "
-                WHERE
-                    ID_Student IN (" . $sql_of_list . ")
-                ";
-
-            $stmt = $this->connect->prepare($sql_query);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_COLUMN);
         }
 
-        private function _getSqlOfList($list): string
+        private function _getSqlOfList ($list) : string
         {
-            $sql = '';
+            $part_of_sql = '';
 
             foreach ($list as $id) {
-                $sql .= "'" . $id . "',";
+                $part_of_sql .= '\'' . $id . '\',';
             }
 
-            $sql = rtrim($sql, ",");
+            $part_of_sql = rtrim($part_of_sql, ',');
 
-            return $sql;
+            return $part_of_sql;
         }
     }

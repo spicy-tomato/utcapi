@@ -1,14 +1,17 @@
 <?php
-    require $_SERVER['DOCUMENT_ROOT'] . '/utcapi/vendor/autoload.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/shared/functions.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/device.php";
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/device.php';
 
     use Kreait\Firebase\Exception\FirebaseException;
     use Kreait\Firebase\Exception\MessagingException;
     use Kreait\Firebase\Factory;
     use Kreait\Firebase\Messaging;
     use Kreait\Firebase\Messaging\CloudMessage;
-    use \Kreait\Firebase\Messaging\Notification;
+    use Kreait\Firebase\Messaging\Notification;
 
     class FirebaseNotification
     {
@@ -19,7 +22,7 @@
 
         public function __construct (array $info, array $token_list)
         {
-            $this->credentials_path = $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/firebase_credentials.json';
+            $this->credentials_path = $_SERVER['DOCUMENT_ROOT'] . '/config/firebase_credentials.json';
             $this->_setInfo($info);
             $this->token_list = $token_list;
             $this->_initFactory();
@@ -41,6 +44,7 @@
                     printError($error);
 
                     if ($error->getCode() == 0) {
+
                         $device->deleteOldToken($token);
                     }
                 }

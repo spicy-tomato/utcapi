@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
+    include_once dirname(__DIR__, 2) . '/ui/shared/functions.php';
     shield();
 ?>
 <!doctype html>
@@ -15,7 +15,7 @@
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
       <!-- AlertifyJS Theme -->
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
-      <link rel="stylesheet" href="../../ui/forms/alert.css">
+      <link rel="stylesheet" href="../forms/alert.css">
     ');
 ?>
 
@@ -28,9 +28,12 @@
         <form action="" autocomplete="off" enctype="multipart/form-data" onsubmit="return false">
 
             <div class=" mt-4">
-                <legend>Tải tệp dữ liệu:</legend>
+              <span>Tải lên file điểm danh để phục vụ công việc nhập dữ liệu lớp học vào cở sở dữ liệu</span><br>
+              <span>VD: K60 Công nghệ thông tin 1, K60 Vẫn tải kinh tế 1,...</span><br>
+              <a href="../push-data/src/data.xls">Tải file mẫu tại đây</a><br>
+                <legend>Tải lên tệp dữ liệu:</legend>
 
-                <input id="fileUpload" type="file" name="fileUpload" multiple/>
+                <input id="fileUpload" type="file" name="fileUpload" accept="application/vnd.ms-excel" multiple/>
                 <button type="button"
                         class="btn btn-primary"
                         name="button"

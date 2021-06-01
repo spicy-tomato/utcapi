@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
+    include_once dirname(__DIR__, 3) . '/ui/shared/functions.php';
     shield();
 ?>
 <!doctype html>
@@ -16,6 +16,9 @@
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
       <!-- AlertifyJS Theme -->
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
+      <!-- custom input date -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
       <link rel="stylesheet" href="../alert.css">
     ');
 ?>
@@ -83,6 +86,7 @@
 
   </div>
   <script src="script/script.js" type="module"></script>
+  <script src="../shared.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
           crossorigin="anonymous"></script>

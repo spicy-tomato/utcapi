@@ -1,7 +1,7 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/config/db.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/notification.php";
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/class/token.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/config/db.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/notification.php";
+    include_once $_SERVER['DOCUMENT_ROOT'] . "/class/token.php";
 
     $data = json_decode(file_get_contents('php://input'), true);
 

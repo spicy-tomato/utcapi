@@ -1,8 +1,5 @@
 <?php
-
-
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/class/account.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/shared/functions.php';
+    include_once dirname(__DIR__) . '/shared/functions.php';
 
     class NotificationByIDAccount
     {
@@ -20,21 +17,18 @@
             $this->connect = $connect;
         }
 
-        public function getAll ($id) : array
+        public function getAll ($id_account) : array
         {
-            $account = new Account($this->connect);
-            $id_account = $account->getIDAccount($id);
-
-            $sql_query = "
+            $sql_query = '
                     SELECT
                         n.*,
                         od.Other_Department_Name, 
                         a.permission 
                     FROM
-                         " . self::notification_account_table . " na,
-                         " . self::notification_table . " n,
-                         " . self::other_department_table . " od, 
-                         " . self::account_table . " a  
+                         ' . self::notification_account_table . ' na,
+                         ' . self::notification_table . ' n,
+                         ' . self::other_department_table . ' od, 
+                         ' . self::account_table . ' a  
                     WHERE
                         na.ID_Account = :id_account AND 
                         n.ID_Notification = na.ID_Notification AND
@@ -43,13 +37,13 @@
                 UNION
                     SELECT
                         n.*, 
-                        concat('Khoa ', f.Faculty_Name), 
+                        concat(\'Khoa \', f.Faculty_Name), 
                         a.permission 
                     FROM
-                         " . self::notification_account_table . " na,
-                         " . self::notification_table . " n,
-                         " . self::faculty_table . " f, 
-                         " . self::account_table . " a    
+                         ' . self::notification_account_table . ' na,
+                         ' . self::notification_table . ' n,
+                         ' . self::faculty_table . ' f, 
+                         ' . self::account_table . ' a    
                     WHERE
                         na.ID_Account = :id_account AND 
                         n.ID_Notification = na.ID_Notification AND
@@ -58,44 +52,41 @@
                 UNION
                     SELECT
                         n.*, 
-                        concat('Gv.', t.Name_Teacher), 
+                        concat(\'Gv.\', t.Name_Teacher), 
                         a.permission 
                     FROM
-                         " . self::notification_account_table . " na,
-                         " . self::notification_table . " n,
-                         " . self::teacher_table . " t, 
-                         " . self::account_table . " a    
+                         ' . self::notification_account_table . ' na,
+                         ' . self::notification_table . ' n,
+                         ' . self::teacher_table . ' t, 
+                         ' . self::account_table . ' a    
                     WHERE
                         na.ID_Account = :id_account AND 
                         n.ID_Notification = na.ID_Notification AND
                         t.ID = n.ID_Sender AND 
                         a.id = n.ID_Sender 
-                    ";
+                    ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_account' => $id_account]);
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                if (!$data)
-                {
-                    $data['notification'] = [];
-                    $data['sender'] = [];
-
-                    return $data;
+                $data['status_code'] = 200;
+                if (!$record) {
+                    $data['content']['notification'] = [];
+                    $data['content']['sender']       = [];
+                }
+                else {
+                    $record          = $this->modifyResponse($record);
+                    $data['content'] = $record;
                 }
 
-                $data = $this->modifyResponse($data);
+                return $data;
 
             } catch (PDOException $error) {
                 printError($error);
-
-                $data['message'] = 'Failed';
+                throw $error;
             }
-
-
-            return $data;
         }
 
         private function modifyResponse ($arr) : array

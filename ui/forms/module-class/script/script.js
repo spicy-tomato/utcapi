@@ -1,5 +1,5 @@
-import { postDataAndRaiseAlert } from '../../alerts.js'
-import {getSender, fetchData, autoFillTemplate, changeStatusButton} from '../../shared.js'
+import {postDataAndRaiseAlert} from '../../alerts.js'
+import {getSender, fetchData, autoFillTemplate, resetInputDate, changeStatusButton} from '../../shared_function.js'
 
 let moduleClassIdList = []
 let sender
@@ -54,8 +54,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementsByName('reset_button')[0].addEventListener('click', changeStatusButton)
     document.getElementsByName('reset_button')[1].addEventListener('click', resetInputDate)
     document.getElementsByName('reset_button')[1].addEventListener('click', changeStatusButton)
-    document.getElementById('time_start').addEventListener('change', changeStatusButton)
-    document.getElementById('time_end').addEventListener('change', changeStatusButton)
+    document.getElementById('time-start').addEventListener('change', changeStatusButton)
+    document.getElementById('time-end').addEventListener('change', changeStatusButton)
 
     //  Display selected tags
     moduleClassId.select2({
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 /*_________________________________________________*/
 
 async function loadData() {
-    let data = await fetchData('../../../api-v2/manage/get_module_class.php')
+    let data = await fetchData('../../../api-v2/web/get_module_class.php')
 
     data.forEach((row, index) => {
         moduleClassIdList.push({id: index, text: row['ID_Module_Class']})
@@ -110,19 +110,22 @@ function getInvalidField(data) {
 /*_________________________________________________*/
 
 async function trySendNotification() {
+    let timeStartRsBtClass = document.getElementsByClassName('time-start')[0].classList[3]
+    let timeEndRsBtClass = document.getElementsByClassName('time-end')[0].classList[3]
+
     const data = {
         info: {
             title: $('#title').val(),
             content: $('#content').val(),
             typez: $('#type').val(),
-            time_start: $('#time_start').val(),
-            time_end: $('#time_end').val(),
+            time_start: timeStartRsBtClass === 'disable' ? '' : $('#time-start').val(),
+            time_end: timeEndRsBtClass === 'disable' ? '' : $('#time-end').val(),
             sender: sender
         },
         class_list: getClassList()
     }
 
-    const baseUrl = '../../../api-v2/manage/module_class_notification.php'
+    const baseUrl = '../../../api-v2/web/push_module_class_notification.php'
 
     let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField)
 
@@ -133,15 +136,6 @@ async function trySendNotification() {
 
 /*-------------------------------------------------*/
 
-
-function fillForms()
-{
+function fillForms() {
     autoFillTemplate(templateNoti[template.value])
-}
-
-
-function resetInputDate()
-{
-    let elemID = this.classList[2]
-    document.getElementById(elemID).value = ''
 }

@@ -1,4 +1,4 @@
-import { postData } from './shared.js'
+import { postData } from './shared_function.js'
 
 function raiseSuccess() {
     alertify.confirm('Thêm thông báo thành công!')

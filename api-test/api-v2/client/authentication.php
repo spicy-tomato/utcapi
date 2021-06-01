@@ -1,6 +1,6 @@
 <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/config/db.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/class/account.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/config/db.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/class/account.php';
 
     $account = json_decode(file_get_contents('php://input'), true);
 

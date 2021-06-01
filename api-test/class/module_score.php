@@ -1,7 +1,7 @@
 <?php
 
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/shared/functions.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/shared/functions.php';
 
     class ModuleScore
     {
@@ -82,7 +82,7 @@
             return $response;
         }
 
-        public function getScore($is_student)
+        public function getScore ($is_student)
         {
             $sql_query =
                 "SELECT
@@ -98,12 +98,32 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $is_student]);
 
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $data = $this->_formatResponse($data);
+
+                return $data;
 
             } catch (PDOException $error) {
                 printError($error);
 
                 return 'Failed';
             }
+        }
+
+        private function _formatResponse ($data)
+        {
+            foreach ($data as &$e) {
+                $e['Semester']    = trim($e['Semester'], ' ');
+                $e['Module_Name'] = preg_replace('/\s+/', ' ', $e['Module_Name']);
+                $e['Module_Name'] = str_replace('- ', '-', $e['Module_Name']);
+                $e['Module_Name'] = str_replace('- ', '-', $e['Module_Name']);
+
+                $e['Credit']            = intval($e['Credit']);
+                $e['Process_Score']     = floatval($e['Process_Score']);
+                $e['Test_Score']        = floatval($e['Test_Score']);
+                $e['Theoretical_Score'] = floatval($e['Theoretical_Score']);
+            }
+
+            return $data;
         }
     }

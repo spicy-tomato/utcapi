@@ -1,4 +1,7 @@
-/config
 /.idea
 /vendor
-file_upload/
+file_upload/*
+!file_upload/.gitkeep
+.env
+temp.php
+test.php

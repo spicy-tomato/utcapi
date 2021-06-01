@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/utcapi/ui/shared/functions.php";
+    include_once dirname(__DIR__, 2) . '/ui/shared/functions.php';
     shield();
 ?>
 <!doctype html>

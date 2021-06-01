@@ -1,7 +1,5 @@
 <?php
-
-
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/utcapi/shared/functions.php';
+    include_once dirname(__DIR__) . '/shared/functions.php';
 
     class Account
     {
@@ -16,137 +14,117 @@
             $this->connect = $connect;
         }
 
-        public function checkAccount ($account) : array
+        public function login ($request_data)
         {
-            $sql_query = "
+            $sql_query = '
                 SELECT
-                    *
+                    id, permission
                 FROM
-                     " . self::account_table . "
+                     ' . self::account_table . '
                 WHERE
                     username = :username AND
                     password = :password
-                ";
+                ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
-                    ':username' => $account['ID'],
-                    ':password' => md5($account['Password'])
+                    ':username' => $request_data['username'],
+                    ':password' => md5($request_data['password'])
                 ]);
+                $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                $response = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if (!$response) {
-                    $data['message'] = 'failed';
-                }
-                else {
-                    switch ($response['permission']) {
-                        case '0':
-                            $data = $this->_getDataAccountOwner($response['id'], self::student_table);
-                            break;
-
-                        case '1':
-                            $data = $this->_getDataAccountOwner($response['id'], self::teacher_table);
-                            break;
-
-                        default:
-                            $data['message'] = 'failed';
-                    }
+                if (!$record) {
+                    $record = 'Failed';
                 }
 
-                return $data;
+                return $record;
 
             } catch (PDOException $error) {
                 printError($error);
-                $data['message'] = 'failed';
-
-                return $data;
+                throw $error;
             }
         }
 
-        private function _getDataAccountOwner ($id_account, $table_name) : array
+        public function getDataAccountOwner ($id_account, $table_name) : array
         {
-            $sql_query = "
+            $sql_query = '
                 SELECT
                     * 
                 FROM 
-                     " . $table_name . "
+                     ' . $table_name . '
                 WHERE 
                     ID = :id
-                ";
+                ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id' => $id_account]);
 
-                $response = $stmt->fetch(PDO::FETCH_ASSOC);
+                $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if (!$response) {
-                    $data['message'] = 'failed';
+                $data['status_code'] = 200;
+                if (!$record) {
+                    $data['content']['message'] = 'failed';
                 }
                 else {
-                    $data['message'] = 'success';
-                    $data['info']    = $response;
+                    $data['content']['message'] = 'success';
+                    $data['content']['info']    = $record;
                 }
 
                 return $data;
 
             } catch (PDOException $error) {
                 printError($error);
-                $data['message'] = 'failed';
-
-                return $data;
+                throw $error;
             }
         }
 
-        public function getPermission ($username) : string
+        public function getAccountPermission ($username) : string
         {
             $sql_query =
-                "SELECT
+                'SELECT
                     permission
                 FROM
-                    " . self::account_table . "
+                    ' . self::account_table . '
                 WHERE
                     username = :username
-                ";
+                ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':username' => $username]);
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                return isset($data['permission']) ? $data['permission'] : 'Not Found';
+                return $record['permission'] ?? 'Not Found';
 
             } catch (PDOException $error) {
                 printError($error);
-
-                return 'Failed';
+                throw $error;
             }
         }
 
-
         public function getIDAccount ($id) : string
         {
-            $sql_query = "
+            $sql_query = '
                     SELECT
                         a.id
                     FROM
-                         " . self::student_table . " s,
-                         " . self::teacher_table . " t,
-                         " . self::account_table . " a  
+                         ' . self::student_table . ' s,
+                         ' . self::teacher_table . ' t,
+                         ' . self::account_table . ' a  
                     WHERE
                         ((s.ID_Student = :id AND s.ID = a.id) OR
                         (t.ID_Teacher = :id AND t.ID = a.id)) 
                     LIMIT 1
-                    ";
+                    ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute(['id' => $id]);
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                return isset($data['id']) ? $data['id'] : 'Not Found';
+                return $record['id'] ?? 'Not Found';
 
             } catch (PDOException $error) {
                 printError($error);
@@ -155,49 +133,52 @@
             }
         }
 
-        public function updateQLDTPasswordOfStudentAccount ($id, $qldt_password) : string
+        public function updateQLDTPasswordOfStudentAccount ($id, $qldt_password) : array
         {
-            $sql_query = "
+            $sql_query = '
                     UPDATE
-                         " . self::account_table . "
+                         ' . self::account_table . '
                     SET 
                         qldt_password = :qldt_password
                     WHERE
                         id = :id
-                    ";
+                    ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute(['id' => $id,
-                    ':qldt_password' => $qldt_password]);
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                $stmt->execute([
+                    'id' => $id,
+                    ':qldt_password' => $qldt_password
+                ]);
 
-                return isset($data['qldt_password']) ? $data['qldt_password'] : 'Not Found';
+                $data['status_code'] = 200;
+                $data['content']     = 'OK';
+
+                return $data;
 
             } catch (PDOException $error) {
                 printError($error);
-
-                return 'Failed';
+                throw $error;
             }
         }
 
         public function getQLDTPasswordOfStudentAccount ($id) : string
         {
-            $sql_query = "
+            $sql_query = '
                     SELECT
                         qldt_password
                     FROM
-                         " . self::account_table . " a  
+                         ' . self::account_table . ' a  
                     WHERE
                         id = :id
-                    ";
+                    ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute(['id' => $id]);
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+                $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                return isset($data['qldt_password']) ? $data['qldt_password'] : 'Not Found';
+                return $record['qldt_password'] ?? 'Not Found';
 
             } catch (PDOException $error) {
                 printError($error);

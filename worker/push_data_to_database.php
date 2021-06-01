@@ -2,6 +2,10 @@
 
     class WorkWithDatabase
     {
+
+        private PDO $connect;
+        private array $data;
+
         private const student_sql = "
                     INSERT IGNORE INTO Student 
                     (
@@ -42,10 +46,6 @@
                     ) 
                         VALUES ";
 
-
-        private Database $db;
-        private PDO $connect;
-        private array $data;
 
         public function __construct (PDO $connect)
         {
@@ -90,7 +90,7 @@
 
             $response = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            return $response ? true : false;
+            return (bool)$response;
         }
 
         private function _createSQL ($arr, $table_name) : string
@@ -100,8 +100,7 @@
                 case "Student";
                     $sql = self::student_sql . "(";
 
-                    if (!$this->isAccountExist($arr["ID_Student"]))
-                    {
+                    if (!$this->isAccountExist($arr["ID_Student"])) {
                         $arr['ID'] = $this->autoCreateStudentAccount($arr['ID_Student'], $arr['DoB']);
                     }
                     break;
@@ -143,9 +142,13 @@
         {
             foreach ($this->data as $arr) {
                 $sql = $this->_createSQL($arr, $table_name);
+                try {
+                    $stmt = $this->connect->prepare($sql);
+                    $stmt->execute();
 
-                $stmt = $this->connect->prepare($sql);
-                $stmt->execute();
+                } catch (PDOException $error) {
+                    throw  $error;
+                }
             }
         }
     }
