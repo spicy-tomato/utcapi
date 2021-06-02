@@ -17,6 +17,7 @@
         private string $view_state = '';
         private string $event_validation = '';
         private int $status = 1;
+        private bool $is_all = false;
         private $ch;
 
         public function __construct (string $student_id, string $qldt_password)
@@ -70,8 +71,12 @@
             }
         }
 
-        public function getStudentModuleScore () : array
+        public function getStudentModuleScore ($flag) : array
         {
+            if ($flag == 'true') {
+                $this->is_all = true;
+            }
+
             if ($this->status == 1) {
                 $this->getFormRequireDataOfStudentModuleScore();
                 $data = $this->getDataModuleScore();
@@ -97,6 +102,18 @@
             $this->hidden_student_id = $html->find('input[id=hidStudentId]', 0)->value;
 
             $elements = $html->find('select[name=drpHK] option');
+            if (!$this->is_all) {
+                $latest_semester = $elements[count($elements) - 1]->innertext;
+                if (strlen(trim($latest_semester, ' ')) == 7) {
+                    $this->semester_arr[] = $elements[count($elements) - 2]->innertext;
+                }
+                else {
+                    $this->semester_arr[] = $latest_semester;
+                }
+
+                return;
+            }
+
             unset($elements[0]);
             foreach ($elements as $e) {
                 $this->semester_arr[] = $e->innertext;
@@ -150,11 +167,11 @@
                     }
 
                     $td         = explode('<br><br>', $tr[$j]->children(11)->innertext);
-                    $temp_score = isset($td[1]) ? $td[1] : $td[0];
+                    $temp_score = $td[1] ?? $td[0];
                     $arr[]      = $temp_score == '&nbsp;' ? null : $temp_score;
 
                     $td         = explode('<br><br>', $tr[$j]->children(12)->innertext);
-                    $temp_score = isset($td[1]) ? $td[1] : $td[0];
+                    $temp_score = $td[1] ?? $td[0];
                     $arr[]      = $temp_score == '&nbsp;' ? null : $temp_score;
 
                     $data[$semester][] = $arr;
@@ -201,6 +218,13 @@
             }
             curl_close($this->ch);
 
+            if (empty($data)) {
+                foreach ($this->semester_arr as $key => $value) {
+                    $data[$key] = [];
+                    break;
+                }
+            }
+
             return $data;
         }
 
@@ -214,11 +238,11 @@
             $this->view_state        = $html->find('input[name=__VIEWSTATE]', 0)->value;
             $this->event_validation  = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
             $this->hidden_student_id = $html->find('input[id=hidStudentId]', 0)->value;
+            var_dump($this->semester_arr);
 
-            $elements                      = $html->find('select[name=drpSemester] option');
-            $data                          = [];
-            $flag                          = false;
-            $data[$elements[2]->innertext] = $elements[2]->value;
+            $elements = $html->find('select[name=drpSemester] option');
+            $data     = [];
+            $flag     = false;
             for ($i = 0; $i < count($elements); $i++) {
                 if (in_array($elements[$i]->innertext, $this->semester_arr)) {
                     $data[$elements[$i]->innertext] = $elements[$i]->value;
@@ -228,6 +252,7 @@
                     }
                 }
             }
+            var_dump($data);
 
             $this->semester_arr = $data;
         }
@@ -345,11 +370,31 @@
 
         private function _formatModuleScoreData ($data) : array
         {
-            if (strlen($this->semester_arr[0]) == 8) {
-                foreach ($data[$this->semester_arr[0]] as $module) {
-                    $data[$this->semester_arr[1]][] = $module;
+            $num_of_semester = count($this->semester_arr);
+            if (strlen(trim($this->semester_arr[0], ' ')) == 7) {
+                foreach ($data[$this->semester_arr[0]] as &$module) {
+                    $module[3] = 'DAT';
+                    $score     = $module[5] != null ? $module[5] : ($module[6] != null ? $module[6] : $module[7]);
+                    $module[5] = $score;
+                    $module[6] = $score;
+                    $module[7] = $score;
+
+                    $data[$this->semester_arr[0]][] = $module;
                 }
                 unset($data[$this->semester_arr[0]]);
+            }
+
+            if (strlen(trim($this->semester_arr[$num_of_semester - 1], ' ')) == 7) {
+                foreach ($data[$this->semester_arr[$num_of_semester - 1]] as &$module) {
+                    $module[3] = 'DAT';
+                    $score     = $module[5] != null ? $module[5] : ($module[6] != null ? $module[6] : $module[7]);
+                    $module[5] = $score;
+                    $module[6] = $score;
+                    $module[7] = $score;
+
+                    $data[$this->semester_arr[0]][] = $module;
+                }
+                unset($data[$this->semester_arr[$num_of_semester - 1]]);
             }
 
             foreach ($data as &$semester) {
@@ -357,6 +402,7 @@
                     $module[1] = $this->_formatStringDataCrawled($module[1]);
                 }
             }
+//            var_dump($data);
 
             return $data;
         }
