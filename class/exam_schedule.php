@@ -206,11 +206,12 @@
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $record = $this->_formatExamScheduleResponse($record);
 
-                $data['status_code'] = 200;
                 if (empty($record)) {
-                    $data['content'] = 'Not Found';
+                    $data['status_code'] = 204;
+                    $data['content'] = 'Not Found Data';
                 }
                 else {
+                    $data['status_code'] = 200;
                     $data['content'] = $record;
                 }
 
