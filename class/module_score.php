@@ -6,13 +6,59 @@
         private const module_score_table = 'Module_Score';
 
         private PDO $connect;
+        private string $id_student;
 
-        public function __construct (PDO $connect)
+        public function __construct (PDO $connect, $id_student)
         {
-            $this->connect = $connect;
+            $this->connect    = $connect;
+            $this->id_student = $id_student;
         }
 
         public function pushData ($data)
+        {
+            foreach ($data as $semester => $module) {
+                foreach ($module as $value) {
+                    try {
+                        if ($value[0] == 'ANHA1.4' || $value[0] == 'ANHA2.4') {
+                            continue;
+                        }
+
+                        $this->_insert($semester, $value);
+
+                    } catch (PDOException $error) {
+                        if ($error->getCode() == 23000) {
+                            $this->_updateData($semester, $value);
+                        }
+                        else {
+                            throw $error;
+                        }
+                    }
+                }
+                unset($data[$semester]);
+            }
+        }
+
+        public function pushAllData ($data)
+        {
+            foreach ($data as $semester => $module) {
+                foreach ($module as $value) {
+                    try {
+                        $this->_insert($semester, $value);
+
+                    } catch (PDOException $error) {
+                        if ($error->getCode() == 23000) {
+                            $this->_updateData($semester, $value);
+                        }
+                        else {
+                            throw $error;
+                        }
+                    }
+                }
+                unset($data[$semester]);
+            }
+        }
+
+        private function _insert ($semester, $value)
         {
             $sql_query =
                 'INSERT INTO
@@ -27,36 +73,23 @@
                 :evaluation, :process_score, :test_score, :theoretical_score
                 )';
 
-            foreach ($data as $semester => $module) {
-                foreach ($module as $value) {
-                    $stmt = $this->connect->prepare($sql_query);
 
-                    try {
-                        $stmt->execute([
-                            ':semester' => $semester,
-                            ':id_module' => $value[0],
-                            ':module_name' => $value[1],
-                            ':credit' => $value[2],
-                            ':id_student' => $value[4],
-                            ':evaluation' => $value[3],
-                            ':process_score' => $value[5],
-                            ':test_score' => $value[6],
-                            ':theoretical_score' => $value[7]
-                        ]);
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([
+                    ':semester' => $semester,
+                    ':id_module' => $value[0],
+                    ':module_name' => $value[1],
+                    ':credit' => $value[2],
+                    ':id_student' => $value[4],
+                    ':evaluation' => $value[3],
+                    ':process_score' => $value[5],
+                    ':test_score' => $value[6],
+                    ':theoretical_score' => $value[7]
+                ]);
 
-                    } catch (PDOException $error) {
-                        if ($error->getCode() == 23000) {
-                            if (count($data) == 1) {
-                                $this->_updateData($semester, $value);
-                            }
-                        }
-                        else {
-                            printError($error);
-                            throw $error;
-                        }
-                    }
-                }
-                unset($data[$semester]);
+            } catch (PDOException $error) {
+                throw $error;
             }
         }
 
@@ -73,8 +106,8 @@
                     ID_Module = :id_module AND
                     ID_Student = :id_student';
 
-            $stmt = $this->connect->prepare($sql_query);
             try {
+                $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
                     ':semester' => $semester,
                     ':id_module' => $value[0],
@@ -86,11 +119,11 @@
                 ]);
 
             } catch (PDOException $error) {
-                printError($error);
+                throw $error;
             }
         }
 
-        public function getScore ($id_student) : array
+        public function getScore () : array
         {
             $sql_query =
                 'SELECT
@@ -104,26 +137,85 @@
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':id_student' => $id_student]);
+                $stmt->execute([':id_student' => $this->id_student]);
 
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $record = $this->_formatScoreResponse($record);
 
                 if (empty($record)) {
-                    $data['status_code'] = 200;
-                    $data['content']     = 'Not Found';
+                    $data['status_code']     = 204;
                 }
                 else {
-                    $data['status_code'] = 200;
-                    $data['content']     = $record;
+                    $data['status_code']     = 200;
+                    $data['content']['data'] = $record;
                 }
 
                 return $data;
 
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
+        }
+
+        public function getAllRecentSemester () : array
+        {
+            $sql_query =
+                'SELECT DISTINCT 
+                    Semester
+                FROM
+                    ' . self::module_score_table . '
+                WHERE
+                    ID_Student = :id_student
+                ';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([':id_student' => $this->id_student]);
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                $record = $this->_formatSemester($record);
+
+                return $record;
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+        public function getRecentLatestSemester () : array
+        {
+            $sql_query = '
+                SELECT 
+                   Semester 
+                FROM ' . self::module_score_table . ' 
+                WHERE
+                    ID_Student = :id_student
+                ORDER BY 
+                    Semester DESC 
+                LIMIT 0,1';
+
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([':id_student' => $this->id_student]);
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                $record = $this->_formatSemester($record);
+
+                return $record;
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+        private function _formatSemester ($data) : array
+        {
+            $formatted_data = [];
+            foreach ($data as $item) {
+                $semester_split   = explode('_', $item);
+                $formatted_data[] = $semester_split[2] . '_' . $semester_split[0] . '_' . $semester_split[1];
+            }
+
+            return $formatted_data;
         }
 
         private function _formatScoreResponse ($data)
@@ -138,40 +230,4 @@
             return $data;
         }
 
-        public function getSemester ($id_student) : array
-        {
-            $sql_query =
-                'SELECT DISTINCT 
-                    Semester
-                FROM
-                    ' . self::module_score_table . '
-                WHERE
-                    ID_Student = :id_student
-                ';
-
-            try {
-                $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':id_student' => $id_student]);
-
-                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $record = $this->_formatSemesterResponse($record);
-
-                return $record;
-
-            } catch (PDOException $error) {
-                printError($error);
-                throw $error;
-            }
-        }
-
-        private function _formatSemesterResponse ($data) : array
-        {
-            $formatted_data = [];
-            foreach ($data as $item) {
-                $semester_split   = explode('_', $item['Semester']);
-                $formatted_data[] = $semester_split[2] . '_' . $semester_split[0] . '_' . $semester_split[1];
-            }
-
-            return $formatted_data;
-        }
     }

@@ -6,13 +6,73 @@
         private const exam_schedule_table = 'Exam_Schedule';
 
         private PDO $connect;
+        private string $id_student;
 
-        public function __construct (PDO $connect)
+        public function __construct (PDO $connect, $id_student)
         {
-            $this->connect = $connect;
+            $this->connect    = $connect;
+            $this->id_student = $id_student;
         }
 
         public function pushData ($data)
+        {
+            $recent_latest_semester = $this->_getRecentLatestSemester();
+
+            foreach ($data as $semester => $module) {
+                if ($this->_formatSemester($semester) < $recent_latest_semester) {
+                    $this->_deleteBySemester($recent_latest_semester);
+
+                    return;
+                }
+                if ($this->_formatSemester($semester) == $recent_latest_semester &&
+                    empty($module)) {
+
+                    $this->_deleteBySemester($this->_formatSemester($semester));
+
+                    return;
+                }
+
+                foreach ($module as $value) {
+                    try {
+                        $this->_insert($semester, $value);
+
+                    } catch (PDOException $error) {
+                        if ($error->getCode() == 23000) {
+                            $this->_updateData($semester, $value);
+                        }
+                        else {
+                            throw $error;
+                        }
+                    }
+                }
+            }
+        }
+
+        public function pushAllData ($data)
+        {
+            $sum = count($data);
+
+            foreach ($data as $semester => $module) {
+                foreach ($module as $value) {
+                    try {
+                        $this->_insert($semester, $value);
+
+                    } catch (PDOException $error) {
+                        if ($error->getCode() == 23000) {
+                            if (count($data) == $sum) {
+                                $this->_updateData($semester, $value);
+                            }
+                        }
+                        else {
+                            throw $error;
+                        }
+                    }
+                }
+                unset($data[$semester]);
+            }
+        }
+
+        private function _insert ($semester, $value)
         {
             $sql_query = '
                 INSERT INTO
@@ -27,39 +87,24 @@
                 :date_start, :time_Start, :method, :identification_number, :room
                 )';
 
-            $sum = count($data);
-            foreach ($data as $semester => $module) {
-                foreach ($module as $value) {
-                    $stmt = $this->connect->prepare($sql_query);
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([
+                    ':semester' => $this->_formatSemester($semester),
+                    ':examination' => $value[0],
+                    ':id_student' => $value[1],
+                    ':id_module' => $value[2],
+                    ':module_name' => $value[3],
+                    ':credit' => $value[4],
+                    ':date_start' => $value[5],
+                    ':time_Start' => $value[6],
+                    ':method' => $value[7],
+                    ':identification_number' => $value[8],
+                    ':room' => $value[9]
+                ]);
 
-                    try {
-                        $stmt->execute([
-                            ':semester' => $this->_formatSemester($semester),
-                            ':examination' => $value[0],
-                            ':id_student' => $value[1],
-                            ':id_module' => $value[2],
-                            ':module_name' => $value[3],
-                            ':credit' => $value[4],
-                            ':date_start' => $value[5],
-                            ':time_Start' => $value[6],
-                            ':method' => $value[7],
-                            ':identification_number' => $value[8],
-                            ':room' => $value[9]
-                        ]);
-
-                    } catch (PDOException $error) {
-                        if ($error->getCode() == 23000) {
-                            if (count($data) == $sum) {
-                                $this->_updateData($semester, $value);
-                            }
-                        }
-                        else {
-                            printError($error);
-                            throw $error;
-                        }
-                    }
-                }
-                unset($data[$semester]);
+            } catch (PDOException $error) {
+                throw $error;
             }
         }
 
@@ -76,8 +121,8 @@
                     ID_Student = :id_student AND
                     ID_Module = :id_module';
 
-            $stmt = $this->connect->prepare($sql_query);
             try {
+                $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
                     ':semester' => $this->_formatSemester($semester),
                     ':id_student' => $value[1],
@@ -89,20 +134,58 @@
                 ]);
 
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
         }
 
-        private function _formatSemester ($semester) : string
+        private function _deleteBySemester ($semester)
         {
-            $semester_split = explode('_', $semester);
-            $semester       = $semester_split[1] . '_' . $semester_split[2] . '_' . $semester_split[0];
+            $sql_query = '
+                DELETE
+                FROM
+                    ' . self::exam_schedule_table . '
+                WHERE
+                    Semester = :semester AND
+                    ID_Student = :id_student
+                ';
 
-            return $semester;
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([
+                    ':semester' => $semester,
+                    ':id_student' => $this->id_student
+                ]);
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
         }
 
-        public function getExamSchedule ($id_student) : array
+        private function _getRecentLatestSemester ()
+        {
+            $sql_query = '
+                SELECT 
+                   Semester 
+                FROM ' . self::exam_schedule_table . ' 
+                WHERE
+                    ID_Student = :id_student
+                ORDER BY 
+                    Semester DESC 
+                LIMIT 0,1';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([':id_student' => $this->id_student]);
+                $record = $stmt->fetch(PDO::FETCH_COLUMN);
+
+                return $record;
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+        public function getExamSchedule () : array
         {
             $sql_query =
                 'SELECT
@@ -118,25 +201,32 @@
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':id_student' => $id_student]);
+                $stmt->execute([':id_student' => $this->id_student]);
 
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $record = $this->_formatExamScheduleResponse($record);
 
-                $data['status_code'] = 200;
                 if (empty($record)) {
-                    $data['content'] = 'Not Found';
+                    $data['status_code'] = 204;
                 }
                 else {
-                    $data['content'] = $record;
+                    $data['status_code']     = 200;
+                    $data['content']['data'] = $record;
                 }
 
                 return $data;
 
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
+        }
+
+        private function _formatSemester ($semester) : string
+        {
+            $semester_split = explode('_', $semester);
+            $semester       = $semester_split[1] . '_' . $semester_split[2] . '_' . $semester_split[0];
+
+            return $semester;
         }
 
         private function _formatExamScheduleResponse ($data)
