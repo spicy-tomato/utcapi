@@ -170,9 +170,9 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute(['id' => $id]);
-                $record = $stmt->fetch(PDO::FETCH_ASSOC);
+                $record = $stmt->fetch(PDO::FETCH_COLUMN);
 
-                return $record['qldt_password'] ?? 'Not Found';
+                return $record;
 
             } catch (PDOException $error) {
                 throw $error;

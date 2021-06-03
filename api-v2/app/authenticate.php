@@ -4,16 +4,17 @@
     include_once dirname(__DIR__, 2) . '/class/account.php';
     set_error_handler('exceptions_error_handler');
 
-    $data     = json_decode(file_get_contents('php://input'), true);
+    $data = json_decode(file_get_contents('php://input'), true);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
-        !empty($data)) {
+        isset($data['username']) &&
+        isset($data['password'])) {
 
         try {
             $db      = new Database();
             $connect = $db->connect();
 
-            $account = new Account($connect);
+            $account      = new Account($connect);
             $account_info = $account->login($data);
 
             if ($account_info == 'Failed') {

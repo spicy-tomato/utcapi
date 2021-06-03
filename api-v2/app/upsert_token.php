@@ -7,13 +7,14 @@
     $data = json_decode(file_get_contents('php://input'), true);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
-        !empty($data)) {
+        isset($data['id_student']) &&
+        isset($data['token'])) {
 
         try {
             $db      = new Database();
             $connect = $db->connect();
 
-            $token    = new Device($connect, $data['student_id'], $data['token']);
+            $token    = new Device($connect, $data['id_student'], $data['token']);
             $response = $token->upsertToken();
 
         } catch (Exception $error) {
