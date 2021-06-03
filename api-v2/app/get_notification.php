@@ -7,19 +7,29 @@
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
-        isset($_GET['id_student'])) {
+        isset($_GET['id_student']) &&
+        isset($_GET['version'])) {
 
         try {
-            $db                         = new Database();
-            $connect                    = $db->connect();
-            $account                    = new Account($connect);
-            $notification_by_id_account = new NotificationByIDAccount($connect);
-            $data_version               = new DataVersion($connect, $_GET['id_student']);
+            $db      = new Database();
+            $connect = $db->connect();
 
-            $id_account = $account->getIDAccount($_GET['id_student']);
-            $response   = $notification_by_id_account->getAll($id_account);
-            if ($response['status_code'] == 200) {
-                $response['content']['data_version'] = $data_version->getDataVersion('Module_Score');
+            $data_version        = new DataVersion($connect, $_GET['id_student']);
+            $latest_data_version = $data_version->getDataVersion('Module_Score');
+            $app_data_version    = $_GET['version'];
+
+            if ($latest_data_version != $app_data_version) {
+                $account    = new Account($connect);
+                $id_account = $account->getIDAccount($_GET['id_student']);
+
+                $notification_by_id_account = new NotificationByIDAccount($connect);
+                $response                   = $notification_by_id_account->getAll($id_account);
+                if ($response['status_code'] == 200) {
+                    $response['content']['data_version'] = $latest_data_version;
+                }
+            }
+            else {
+                $response['status_code'] = 204;
             }
 
         } catch (Exception $error) {

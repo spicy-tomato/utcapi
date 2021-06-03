@@ -6,17 +6,27 @@
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
-        isset($_GET['id'])) {
+        isset($_GET['id_student']) &&
+        isset($_GET['version'])) {
 
         try {
-            $db           = new Database();
-            $connect      = $db->connect();
-            $module_score = new ModuleScore($connect, $_GET['id_student']);
-            $data_version = new DataVersion($connect, $_GET['id_student']);
+            $db      = new Database();
+            $connect = $db->connect();
 
-            $response = $module_score->getScore();
-            if ($response['status_code'] == 200) {
-                $response['content']['data_version'] = $data_version->getDataVersion('Module_Score');
+            $data_version        = new DataVersion($connect, $_GET['id_student']);
+            $latest_data_version = $data_version->getDataVersion('Module_Score');
+            $app_data_version    = $_GET['version'];
+
+            if ($latest_data_version != $app_data_version) {
+                $module_score = new ModuleScore($connect, $_GET['id_student']);
+                $response     = $module_score->getScore();
+
+                if ($response['status_code'] == 200) {
+                    $response['content']['data_version'] = $latest_data_version;
+                }
+            }
+            else {
+                $response['status_code'] = 204;
             }
 
         } catch (Exception $error) {
