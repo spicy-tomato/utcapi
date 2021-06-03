@@ -8,14 +8,14 @@
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
-        isset($_GET['id_student']) &&
+        isset($_GET['id']) &&
         isset($_GET['version'])) {
 
         try {
             $db      = new Database();
             $connect = $db->connect();
 
-            $data_version        = new DataVersion($connect, $_GET['id_student']);
+            $data_version        = new DataVersion($connect, $_GET['id']);
             $latest_data_version = $data_version->getDataVersion('Module_Score');
             $app_data_version    = $_GET['version'];
 
