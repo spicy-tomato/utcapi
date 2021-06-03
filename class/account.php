@@ -41,7 +41,6 @@
                 return $record;
 
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
         }
@@ -75,7 +74,6 @@
                 return $data;
 
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
         }
@@ -99,7 +97,6 @@
                 return $record['permission'] ?? 'Not Found';
 
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
         }
@@ -127,9 +124,7 @@
                 return $record['id'] ?? 'Not Found';
 
             } catch (PDOException $error) {
-                printError($error);
-
-                return 'Failed';
+                throw $error;
             }
         }
 
@@ -157,7 +152,6 @@
                 return $data;
 
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
         }
@@ -181,9 +175,7 @@
                 return $record['qldt_password'] ?? 'Not Found';
 
             } catch (PDOException $error) {
-                printError($error);
-
-                return 'Failed';
+                throw $error;
             }
         }
     }

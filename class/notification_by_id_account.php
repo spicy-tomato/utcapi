@@ -84,7 +84,6 @@
                 return $data;
 
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
         }
