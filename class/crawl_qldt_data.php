@@ -238,7 +238,6 @@
             $this->view_state        = $html->find('input[name=__VIEWSTATE]', 0)->value;
             $this->event_validation  = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
             $this->hidden_student_id = $html->find('input[id=hidStudentId]', 0)->value;
-            var_dump($this->semester_arr);
 
             $elements = $html->find('select[name=drpSemester] option');
             $data     = [];
@@ -252,7 +251,6 @@
                     }
                 }
             }
-            var_dump($data);
 
             $this->semester_arr = $data;
         }
@@ -402,7 +400,6 @@
                     $module[1] = $this->_formatStringDataCrawled($module[1]);
                 }
             }
-//            var_dump($data);
 
             return $data;
         }

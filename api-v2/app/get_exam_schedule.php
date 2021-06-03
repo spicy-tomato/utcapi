@@ -11,8 +11,8 @@
             $db      = new Database();
             $connect = $db->connect();
 
-            $exam_schedule = new ExamSchedule($connect);
-            $response      = $exam_schedule->getExamSchedule($_GET['id']);
+            $exam_schedule = new ExamSchedule($connect, $_GET['id']);
+            $response      = $exam_schedule->getExamSchedule();
 
         } catch (Exception $error) {
             printError($error);

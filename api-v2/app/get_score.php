@@ -11,8 +11,8 @@
             $db      = new Database();
             $connect = $db->connect();
 
-            $module_score = new ModuleScore($connect);
-            $response     = $module_score->getScore($_GET['id']);
+            $module_score = new ModuleScore($connect, $_GET['id']);
+            $response     = $module_score->getScore();
 
         } catch (Exception $error) {
             printError($error);

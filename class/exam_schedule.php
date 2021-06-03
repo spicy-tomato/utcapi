@@ -20,14 +20,14 @@
 
             foreach ($data as $semester => $module) {
                 if ($this->_formatSemester($semester) < $recent_latest_semester) {
-                    $this->_deleteBySemester($recent_latest_semester, $this->id_student);
+                    $this->_deleteBySemester($recent_latest_semester);
 
                     return;
                 }
                 if ($this->_formatSemester($semester) == $recent_latest_semester &&
                     empty($module)) {
 
-                    $this->_deleteBySemester($this->_formatSemester($semester), $this->id_student);
+                    $this->_deleteBySemester($this->_formatSemester($semester));
 
                     return;
                 }
@@ -138,7 +138,7 @@
             }
         }
 
-        private function _deleteBySemester ($semester, $id_student)
+        private function _deleteBySemester ($semester)
         {
             $sql_query = '
                 DELETE
@@ -153,7 +153,7 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
                     ':semester' => $semester,
-                    ':id_student' => $id_student
+                    ':id_student' => $this->id_student
                 ]);
 
             } catch (PDOException $error) {
@@ -185,7 +185,7 @@
             }
         }
 
-        public function getExamSchedule ($id_student) : array
+        public function getExamSchedule () : array
         {
             $sql_query =
                 'SELECT
@@ -201,7 +201,7 @@
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':id_student' => $id_student]);
+                $stmt->execute([':id_student' => $this->id_student]);
 
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $record = $this->_formatExamScheduleResponse($record);

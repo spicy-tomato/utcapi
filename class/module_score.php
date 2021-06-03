@@ -40,19 +40,15 @@
 
         public function pushAllData ($data)
         {
-            $sum = count($data);
-
             foreach ($data as $semester => $module) {
-                var_dump($semester);
+                //                var_dump($semester);
                 foreach ($module as $value) {
                     try {
                         $this->_insert($semester, $value);
 
                     } catch (PDOException $error) {
                         if ($error->getCode() == 23000) {
-                            if (count($data) == $sum) {
-                                $this->_updateData($semester, $value);
-                            }
+                            $this->_updateData($semester, $value);
                         }
                         else {
                             throw $error;
@@ -128,7 +124,7 @@
             }
         }
 
-        public function getScore ($id_student) : array
+        public function getScore () : array
         {
             $sql_query =
                 'SELECT
@@ -142,7 +138,7 @@
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':id_student' => $id_student]);
+                $stmt->execute([':id_student' => $this->id_student]);
 
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $record = $this->_formatScoreResponse($record);
