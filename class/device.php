@@ -43,7 +43,6 @@
                 return $record;
 
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
         }
@@ -77,7 +76,6 @@
                 return $data;
 
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
         }
@@ -94,7 +92,6 @@
                 $stmt->execute([':old_token' => $old_token]);
 
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
         }

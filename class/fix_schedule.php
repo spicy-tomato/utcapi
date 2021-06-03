@@ -48,7 +48,6 @@
                 return $record;
 
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
         }

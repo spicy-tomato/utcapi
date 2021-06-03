@@ -17,13 +17,10 @@
             $db           = new Database();
             $connect      = $db->connect();
             $account      = new Account($connect);
-            $module_score = new ModuleScore($connect);
+            $module_score = new ModuleScore($connect, $data['id_student']);
 
             $data['qldt_password'] = $account->getQLDTPasswordOfStudentAccount($data['id_account']);
-            $semester = $module_score->getSemester($data['id_student']);
-
-            $crawl      = new CrawlQLDTData($data['id_student'], $data['qldt_password']);
-            $crawl_data = $crawl->getStudentExamSchedule($semester);
+            $crawl                 = new CrawlQLDTData($data['id_student'], $data['qldt_password']);
 
             if (isset($crawl_data[0])) {
                 if ($crawl_data[0] == -1) {
@@ -36,8 +33,24 @@
                 }
             }
             else {
-                $exam_schedule = new ExamSchedule($connect);
-                $exam_schedule->pushData($crawl_data);
+                $exam_schedule = new ExamSchedule($connect, $data['id_student']);
+
+                if ($data['all'] == 'true') {
+                    $semester   = $module_score->getAllRecentSemester();
+                    $crawl_data = $crawl->getStudentExamSchedule($semester);
+
+                    $exam_schedule->pushAllData($crawl_data);
+                }
+                else {
+                    $semester   = $module_score->getRecentLatestSemester();
+                    $crawl_data = $crawl->getStudentExamSchedule($semester);
+
+                    if (count($crawl_data) == 2) {
+                        array_shift($crawl_data);
+                    }
+
+                    $exam_schedule->pushData($crawl_data);
+                }
 
                 $response['status_code'] = 200;
                 $response['content']     = 'OK';

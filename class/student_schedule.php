@@ -42,21 +42,20 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $this->student_id]);
-
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $record = $this->_formatResponse($record);
 
-                $data['status_code'] = 200;
                 if (empty($record)) {
-                    $data['content'] = 'Not Found';
+                    $data['status_code'] = 204;
                 }
                 else {
-                    $data['content'] = $record;
+                    $data['status_code']     = 200;
+                    $data['content']['data'] = $record;
                 }
 
                 return $data;
+
             } catch (PDOException $error) {
-                printError($error);
                 throw $error;
             }
         }
