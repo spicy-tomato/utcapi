@@ -6,7 +6,7 @@
     include_once dirname(__DIR__, 3) . '/class/exam_schedule.php';
     include_once dirname(__DIR__, 3) . '/class/account.php';
     include_once dirname(__DIR__, 3) . '/class/crawl_qldt_data.php';
-    include_once dirname(__DIR__, 2) . '/class/data_version.php';
+    include_once dirname(__DIR__, 3) . '/class/data_version.php';
     set_error_handler('exceptions_error_handler');
 
     $data = json_decode(file_get_contents('php://input'), true);
@@ -55,7 +55,7 @@
                     $exam_schedule->pushData($crawl_data);
                 }
 
-                $data_version = new DataVersion($connect, $_GET['id_student']);
+                $data_version = new DataVersion($connect, $data['id_student']);
                 $data_version->updateDataVersion('Exam_Schedule');
 
                 $response['status_code'] = 200;
