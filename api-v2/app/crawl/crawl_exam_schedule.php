@@ -11,7 +11,9 @@
     $data = json_decode(file_get_contents('php://input'), true);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
-        isset($data)) {
+        isset($data['all']) &&
+        isset($data['id_student']) &&
+        isset($data['id_account'])) {
 
         try {
             $db           = new Database();

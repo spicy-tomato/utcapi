@@ -83,9 +83,11 @@
         public function deleteOldToken ($old_token)
         {
             $sql_query = '
-            DELETE 
-            FROM ' . self::device_table . '
-            WHERE Device_Token = :old_token';
+                DELETE 
+                FROM 
+                     ' . self::device_table . '
+                WHERE Device_Token = :old_token
+                ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

@@ -10,7 +10,8 @@
     $data = json_decode(file_get_contents('php://input'), true);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
-        !empty($data)) {
+        isset($data['class_list']) &&
+        isset($data['info'])) {
 
         try {
             $db      = new Database();
