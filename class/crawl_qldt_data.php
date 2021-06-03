@@ -9,13 +9,11 @@
         private string $student_id;
         private string $qldt_password;
         private array $semester_arr = [];
-        private string $hidden_student_id = '';
+        private array $form_crawl_request = [];
         private string $url = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.Info/Login.aspx';
         private string $url_login = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/';
         private string $url_student_mark = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/';
         private string $url_student_exam_schedule = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/';
-        private string $view_state = '';
-        private string $event_validation = '';
         private int $status = 1;
         private bool $is_all = false;
         private $ch;
@@ -97,9 +95,10 @@
             $html = new simple_html_dom();
             $html->load($response);
 
-            $this->view_state        = $html->find('input[name=__VIEWSTATE]', 0)->value;
-            $this->event_validation  = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
-            $this->hidden_student_id = $html->find('input[id=hidStudentId]', 0)->value;
+            $this->form_crawl_request                      = EnvIO::$form_get_mark_request;
+            $this->form_crawl_request['__VIEWSTATE']       = $html->find('input[name=__VIEWSTATE]', 0)->value;
+            $this->form_crawl_request['__EVENTVALIDATION'] = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
+            $this->form_crawl_request['hidStudentId']      = $html->find('input[id=hidStudentId]', 0)->value;
 
             $elements = $html->find('select[name=drpHK] option');
             if (!$this->is_all) {
@@ -118,19 +117,16 @@
             foreach ($elements as $e) {
                 $this->semester_arr[] = $e->innertext;
             }
+
         }
 
         private function getDataModuleScore ()
         {
-            $form_get_mark_request                      = EnvIO::$form_get_mark_request;
-            $form_get_mark_request['__VIEWSTATE']       = $this->view_state;
-            $form_get_mark_request['__EVENTVALIDATION'] = $this->event_validation;
-            $form_get_mark_request['hidStudentId']      = $this->hidden_student_id;
-            $data                                       = null;
+            $data = null;
 
             foreach ($this->semester_arr as $semester) {
-                $form_get_mark_request['drpHK'] = $semester;
-                $response                       = $this->postRequest($this->url_student_mark, $form_get_mark_request);
+                $this->form_crawl_request['drpHK'] = $semester;
+                $response                          = $this->postRequest($this->url_student_mark, $this->form_crawl_request);
 
                 $html = new simple_html_dom();
                 $html->load($response);
@@ -235,9 +231,10 @@
             $html = new simple_html_dom();
             $html->load($response);
 
-            $this->view_state        = $html->find('input[name=__VIEWSTATE]', 0)->value;
-            $this->event_validation  = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
-            $this->hidden_student_id = $html->find('input[id=hidStudentId]', 0)->value;
+            $this->form_crawl_request                      = EnvIO::$form_get_exam_schedule_request;
+            $this->form_crawl_request['hidStudentId']      = $html->find('input[name=__VIEWSTATE]', 0)->value;
+            $this->form_crawl_request['__VIEWSTATE']       = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
+            $this->form_crawl_request['__EVENTVALIDATION'] = $html->find('input[id=hidStudentId]', 0)->value;
 
             $elements = $html->find('select[name=drpSemester] option');
             $data     = [];
@@ -257,16 +254,12 @@
 
         private function getDataExamSchedule ()
         {
-            $form_get_exam_schedule_request                      = EnvIO::$form_get_exam_schedule_request;
-            $form_get_exam_schedule_request['hidStudentId']      = $this->hidden_student_id;
-            $form_get_exam_schedule_request['__VIEWSTATE']       = $this->view_state;
-            $form_get_exam_schedule_request['__EVENTVALIDATION'] = $this->event_validation;
             $data                                                = null;
 
             foreach ($this->semester_arr as $semester_key => $semester_value) {
-                $form_get_exam_schedule_request['drpSemester'] = $semester_value;
+                $this->form_crawl_request['drpSemester'] = $semester_value;
 
-                $response = $this->postRequest($this->url_student_exam_schedule, $form_get_exam_schedule_request);
+                $response = $this->postRequest($this->url_student_exam_schedule, $this->form_crawl_request);
                 $html     = new simple_html_dom();
                 $html->load($response);
                 $exam_type_by_shtmldom = $html->find('select[id=drpDotThi] option');
@@ -287,16 +280,16 @@
                 $exam_type_selected = $html->find('select[id=drpDotThi] option[selected=selected]', 0)->value;
                 for ($i = count($exam_type) - 1; $i >= 0; $i--) {
                     if ($exam_type[$i][1] != $exam_type_selected) {
-                        $form_get_exam_schedule_request['drpDotThi']         = $exam_type[$i][1];
-                        $form_get_exam_schedule_request['__EVENTTARGET']     = 'drpDotThi';
-                        $form_get_exam_schedule_request['__VIEWSTATE']       = $html->find('input[name=__VIEWSTATE]', 0)->value;
-                        $form_get_exam_schedule_request['__EVENTVALIDATION'] = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
+                        $this->form_crawl_request['drpDotThi']         = $exam_type[$i][1];
+                        $this->form_crawl_request['__EVENTTARGET']     = 'drpDotThi';
+                        $this->form_crawl_request['__VIEWSTATE']       = $html->find('input[name=__VIEWSTATE]', 0)->value;
+                        $this->form_crawl_request['__EVENTVALIDATION'] = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
 
-                        $response = $this->postRequest($this->url_student_exam_schedule, $form_get_exam_schedule_request);
+                        $response = $this->postRequest($this->url_student_exam_schedule, $this->form_crawl_request);
                         $html->load($response);
 
-                        $form_get_exam_schedule_request['__EVENTTARGET'] = 'drpSemester';
-                        $form_get_exam_schedule_request['drpDotThi']     = '';
+                        $this->form_crawl_request['__EVENTTARGET'] = 'drpSemester';
+                        $this->form_crawl_request['drpDotThi']     = '';
                     }
 
                     $flag = $html->find('table[id=tblCourseList] tr', 1);
@@ -369,6 +362,7 @@
         private function _formatModuleScoreData ($data) : array
         {
             $num_of_semester = count($this->semester_arr);
+
             if (strlen(trim($this->semester_arr[0], ' ')) == 7) {
                 foreach ($data[$this->semester_arr[0]] as &$module) {
                     $module[3] = 'DAT';
@@ -377,7 +371,7 @@
                     $module[6] = $score;
                     $module[7] = $score;
 
-                    $data[$this->semester_arr[0]][] = $module;
+                    $data[$this->semester_arr[1]][] = $module;
                 }
                 unset($data[$this->semester_arr[0]]);
             }
