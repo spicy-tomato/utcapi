@@ -15,7 +15,7 @@
         {
             $sql_query =
                 'SELECT 
-                    ID_Module_Class, Module_Class_Name
+                    ID_Module_Clas, Module_Class_Name
                 FROM 
                     ' . self::db_table . ' 
                 ORDER BY
