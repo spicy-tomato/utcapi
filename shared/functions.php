@@ -23,7 +23,10 @@
         $message .= $error->getMessage() . "\n";
         $message .= $error->getFile() . "  " . $error->getLine() . "\n";
         $message .= "=====================================================\n";
-        file_put_contents(dirname(__DIR__) . '/error-log/errors.txt', $message, FILE_APPEND);
+
+        EnvIO::loadEnv();
+        $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
+        file_put_contents($_SERVER['DOCUMENT_ROOT'] . $root_folder . '/error-log/errors.txt', $message, FILE_APPEND);
     }
 
     function convertDate ($date) : string
