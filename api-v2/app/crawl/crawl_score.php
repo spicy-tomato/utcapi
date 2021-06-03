@@ -4,18 +4,20 @@
     include_once dirname(__DIR__, 3) . '/class/module_score.php';
     include_once dirname(__DIR__, 3) . '/class/account.php';
     include_once dirname(__DIR__, 3) . '/class/crawl_qldt_data.php';
+    include_once dirname(__DIR__, 3) . '/class/data_version.php';
     set_error_handler('exceptions_error_handler');
 
     $data = json_decode(file_get_contents('php://input'), true);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
-        !empty($data)) {
+        isset($data['all']) &&
+        isset($data['id_student']) &&
+        isset($data['id_account'])) {
 
         try {
-            $db           = new Database();
-            $connect      = $db->connect();
-            $account      = new Account($connect);
-            $module_score = new ModuleScore($connect, $data['id_student']);
+            $db      = new Database();
+            $connect = $db->connect();
+            $account = new Account($connect);
 
             $data['qldt_password'] = $account->getQLDTPasswordOfStudentAccount($data['id_account']);
             $crawl                 = new CrawlQLDTData($data['id_student'], $data['qldt_password']);
@@ -31,13 +33,18 @@
                 }
             }
             else {
-                $crawl_data = $crawl->getStudentModuleScore($data['all']);
+                $module_score = new ModuleScore($connect, $data['id_student']);
+                $crawl_data   = $crawl->getStudentModuleScore($data['all']);
+
                 if ($data['all'] == 'true') {
                     $module_score->pushAllData($crawl_data);
                 }
                 else {
                     $module_score->pushData($crawl_data);
                 }
+
+                $data_version = new DataVersion($connect, $data['id_student']);
+                $data_version->updateDataVersion('Module_Score');
 
                 $response['status_code'] = 200;
                 $response['content']     = 'OK';

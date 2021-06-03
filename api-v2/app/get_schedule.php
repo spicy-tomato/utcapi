@@ -8,37 +8,47 @@
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
-        isset($_GET['id'])) {
+        isset($_GET['id']) &&
+        isset($_GET['version'])) {
 
         try {
-            $db           = new Database();
-            $connect      = $db->connect();
-            $account      = new Account($connect);
-            $data_version = new DataVersion($connect, $_GET['id']);
+            $db      = new Database();
+            $connect = $db->connect();
 
-            $flag = $account->getAccountPermission($_GET['id']);
-            switch ($flag) {
-                case '0';
-                    {
-                        $schedules = new StudentSchedule($connect, $_GET['id']);
-                        $response  = $schedules->getAll();
-                        break;
-                    }
+            $data_version        = new DataVersion($connect, $_GET['id']);
+            $latest_data_version = $data_version->getDataVersion('Module_Score');
+            $app_data_version    = $_GET['version'];
 
-                case '1':
-                    {
-                        $schedules = new TeacherSchedule($connect, $_GET['id']);
-                        $response  = $schedules->getAll();
-                        break;
-                    }
+            if ($latest_data_version != $app_data_version) {
+                $account    = new Account($connect);
+                $permission = $account->getAccountPermission($_GET['id']);
 
-                default:
-                    $response['status_code'] = 200;
-                    $response['content']     = 'Not Found';
+                switch ($permission) {
+                    case '0';
+                        {
+                            $schedules = new StudentSchedule($connect, $_GET['id']);
+                            $response  = $schedules->getAll();
+                            break;
+                        }
+
+                    case '1':
+                        {
+                            $schedules = new TeacherSchedule($connect, $_GET['id']);
+                            $response  = $schedules->getAll();
+                            break;
+                        }
+
+                    default:
+                        $response['status_code'] = 406;
+                        $response['content']     = 'Not Found';
+                }
+
+                if ($response['status_code'] == 200) {
+                    $response['content']['data_version'] = $latest_data_version;
+                }
             }
-
-            if ($response['status_code'] == 200) {
-                $response['content']['data_version'] = $data_version->getDataVersion('Module_Score');
+            else {
+                $response['status_code'] = 204;
             }
 
         } catch (Exception $error) {

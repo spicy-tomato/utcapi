@@ -8,7 +8,9 @@
     $data = json_decode(file_get_contents('php://input'), true);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
-        count($data) == 3) {
+        isset($data['id_account']) &&
+        isset($data['id_student']) &&
+        isset($data['qldt_password'])) {
 
         try {
             $db      = new Database();
