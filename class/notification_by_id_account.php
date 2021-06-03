@@ -70,15 +70,14 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_account' => $id_account]);
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $record = $this->modifyResponse($record);
 
-                $data['status_code'] = 200;
-                if (!$record) {
-                    $data['content']['notification'] = [];
-                    $data['content']['sender']       = [];
+                if (empty($record)) {
+                    $data['status_code'] = 204;
                 }
                 else {
-                    $record          = $this->modifyResponse($record);
-                    $data['content'] = $record;
+                    $data['status_code']     = 200;
+                    $data['content']['data'] = $record;
                 }
 
                 return $data;

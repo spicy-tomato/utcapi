@@ -143,12 +143,11 @@
                 $record = $this->_formatScoreResponse($record);
 
                 if (empty($record)) {
-                    $data['status_code'] = 204;
-                    $data['content']     = 'Not Found Data';
+                    $data['status_code']     = 204;
                 }
                 else {
-                    $data['status_code'] = 200;
-                    $data['content']     = $record;
+                    $data['status_code']     = 200;
+                    $data['content']['data'] = $record;
                 }
 
                 return $data;

@@ -41,7 +41,9 @@
     {
         header(responseHeaders($data['status_code']));
         header('Content-Type: application/json');
-        echo json_encode($data['content']);
+        if (isset($data['content'])) {
+            echo json_encode($data['content']);
+        }
         if ($isExit) {
             exit();
         }
