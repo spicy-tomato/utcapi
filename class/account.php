@@ -18,19 +18,17 @@
         {
             $sql_query = '
                 SELECT
-                    id, permission
+                    password, id, permission
                 FROM
                      ' . self::account_table . '
                 WHERE
-                    username = :username AND
-                    password = :password
+                    username = :username
                 ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
-                    ':username' => $request_data['username'],
-                    ':password' => md5($request_data['password'])
+                    ':username' => $request_data['username']
                 ]);
                 $record = $stmt->fetch(PDO::FETCH_ASSOC);
 

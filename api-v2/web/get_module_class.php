@@ -6,7 +6,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         try {
-            $db      = new Database();
+            $db      = new Database(true);
             $connect = $db->connect();
 
             $module_class = new ModuleClass($connect);

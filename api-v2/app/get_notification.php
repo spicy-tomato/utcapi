@@ -11,14 +11,14 @@
         isset($_GET['version'])) {
 
         try {
-            $db      = new Database();
+            $db      = new Database(true);
             $connect = $db->connect();
 
             $data_version        = new DataVersion($connect, $_GET['id_student']);
             $latest_data_version = $data_version->getDataVersion('Module_Score');
             $app_data_version    = $_GET['version'];
 
-            if ($latest_data_version != $app_data_version) {
+            if ($latest_data_version != intval($app_data_version)) {
                 $notification_by_id_account = new NotificationByIDAccount($connect);
                 $response                   = $notification_by_id_account->getAll($_GET['id_account']);
 

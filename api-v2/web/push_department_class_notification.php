@@ -14,7 +14,7 @@
         isset($data['info'])) {
 
         try {
-            $db      = new Database();
+            $db      = new Database(true);
             $connect = $db->connect();
 
             $helper = new Helper($connect);

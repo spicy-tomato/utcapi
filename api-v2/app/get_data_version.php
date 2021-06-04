@@ -9,7 +9,7 @@
         isset($_GET['type'])) {
 
         try {
-            $db           = new Database();
+            $db           = new Database(true);
             $connect      = $db->connect();
             $data_version = new DataVersion($connect, $_GET['id_student']);
 
