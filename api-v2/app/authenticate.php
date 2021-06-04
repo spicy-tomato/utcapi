@@ -17,7 +17,9 @@
             $account      = new Account($connect);
             $account_info = $account->login($data);
 
-            if ($account_info == 'Failed') {
+            if ($account_info == 'Failed' ||
+                !password_verify($data['password'], $account_info['password'])) {
+
                 $response['status_code']        = 200;
                 $response['content']['message'] = 'failed';
             }

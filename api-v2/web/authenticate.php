@@ -16,9 +16,11 @@
 
             $data['username'] = addslashes(strip_tags($_POST['username']));
             $data['password'] = addslashes(strip_tags($_POST['password']));
-
             $account_info = $account->login($data);
-            if ($account_info == 'Failed') {
+
+            if ($account_info == 'Failed' ||
+                !password_verify($data['password'], $account_info['password'])) {
+
                 $response['status_code']        = 200;
                 $response['content']['message'] = 'failed';
             }
@@ -27,7 +29,7 @@
                     case '1':
                         $response = $account->getDataAccountOwner($account_info['id'], 'Teacher');
                         if ($response['content']['message'] == 'success') {
-                            $response['content']['info']['account_owner'] = 'Gv.' . $response['content']['info']['Name_Teacher'];
+                            $response['content']['info']['account_owner'] = 'Gv. ' . $response['content']['info']['Name_Teacher'];
                         }
                         break;
 
