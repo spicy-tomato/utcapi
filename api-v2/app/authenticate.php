@@ -11,7 +11,7 @@
         isset($data['password'])) {
 
         try {
-            $db      = new Database();
+            $db      = new Database(true);
             $connect = $db->connect();
 
             $account      = new Account($connect);

@@ -10,15 +10,17 @@
         isset($_GET['version'])) {
 
         try {
-            $db      = new Database();
-            $connect = $db->connect();
+            $db_main      = new Database(true);
+            $connect_main = $db_main->connect();
+            $db_extra      = new Database(false);
+            $connect_extra = $db_extra->connect();
 
-            $data_version        = new DataVersion($connect, $_GET['id_student']);
+            $data_version        = new DataVersion($connect_main, $_GET['id_student']);
             $latest_data_version = $data_version->getDataVersion('Module_Score');
             $app_data_version    = $_GET['version'];
 
             if ($latest_data_version != intval($app_data_version)) {
-                $exam_schedule = new ExamSchedule($connect, $_GET['id_student']);
+                $exam_schedule = new ExamSchedule($connect_extra, $_GET['id_student']);
                 $response      = $exam_schedule->getExamSchedule();
 
                 if ($response['status_code'] == 200) {

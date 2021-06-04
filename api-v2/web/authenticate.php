@@ -10,7 +10,7 @@
 
     if (isset($_POST['btn-submit'])) {
         try {
-            $db      = new Database();
+            $db      = new Database(true);
             $connect = $db->connect();
             $account = new Account($connect);
 

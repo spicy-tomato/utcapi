@@ -11,7 +11,7 @@
         isset($data['token'])) {
 
         try {
-            $db      = new Database();
+            $db      = new Database(true);
             $connect = $db->connect();
 
             $token    = new Device($connect, $data['id_student'], $data['token']);

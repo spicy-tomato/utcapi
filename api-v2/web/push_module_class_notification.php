@@ -13,7 +13,7 @@
         isset($data['class_list']) &&
         isset($data['info'])) {
 
-        $db      = new Database();
+        $db      = new Database(true);
         $connect = $db->connect();
 
         try {
