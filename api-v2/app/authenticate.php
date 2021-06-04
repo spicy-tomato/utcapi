@@ -21,7 +21,7 @@
                 !password_verify($data['password'], $account_info['password'])) {
 
                 $response['status_code'] = 401;
-                $response['content']     = 'Invalid Password';
+                $response['content']     = 'Invalid Account';
             }
             else {
                 switch ($account_info['permission']) {
@@ -35,7 +35,7 @@
 
                     default:
                         $response['status_code'] = 401;
-                        $response['content']     = 'Invalid Password';
+                        $response['content']     = 'Invalid Account';
                 }
             }
 

@@ -58,7 +58,7 @@
 
                 if (!$record) {
                     $data['status_code'] = 401;
-                    $data['content']     = 'Invalid Password';
+                    $data['content']     = 'Invalid Account';
                 }
                 else {
                     $data['status_code'] = 200;
