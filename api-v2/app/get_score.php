@@ -17,7 +17,7 @@
             $latest_data_version = $data_version->getDataVersion('Module_Score');
             $app_data_version    = $_GET['version'];
 
-            if ($latest_data_version != $app_data_version) {
+            if ($latest_data_version != intval($app_data_version)) {
                 $module_score = new ModuleScore($connect, $_GET['id_student']);
                 $response     = $module_score->getScore();
 
