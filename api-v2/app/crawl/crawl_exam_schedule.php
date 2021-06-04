@@ -30,7 +30,6 @@
             if (isset($crawl_data[0])) {
                 if ($crawl_data[0] == -1) {
                     $response['status_code'] = 500;
-                    $response['content']     = 'Error';
                 }
                 else {
                     $response['status_code'] = 401;
@@ -68,12 +67,10 @@
         } catch (Exception $error) {
             printError($error);
             $response['status_code'] = 500;
-            $response['content']     = 'Error';
         }
     }
     else {
-        $response['status_code'] = 406;
-        $response['content']     = 'Invalid Request';
+        $response['status_code'] = 400;
     }
 
     response($response, true);

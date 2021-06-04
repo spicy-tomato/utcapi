@@ -32,10 +32,6 @@
                 ]);
                 $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if (!$record) {
-                    $record = 'Failed';
-                }
-
                 return $record;
 
             } catch (PDOException $error) {
@@ -60,13 +56,13 @@
 
                 $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                $data['status_code'] = 200;
                 if (!$record) {
-                    $data['content']['message'] = 'failed';
+                    $data['status_code'] = 401;
+                    $data['content']     = 'Invalid Password';
                 }
                 else {
-                    $data['content']['message'] = 'success';
-                    $data['content']['info']    = $record;
+                    $data['status_code'] = 200;
+                    $data['content']     = $record;
                 }
 
                 return $data;

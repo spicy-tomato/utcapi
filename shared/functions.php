@@ -80,7 +80,7 @@
             403 => 'Forbidden',
             404 => 'Not Found',
             405 => 'Method Not Allowed',
-            406 => 'Not Acceptable',
+            400 => 'Not Acceptable',
             407 => 'Proxy Authentication Required',
             408 => 'Request Timeout',
             409 => 'Conflict',

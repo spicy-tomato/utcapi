@@ -16,9 +16,8 @@
 
             $data_version        = new DataVersion($connect, $_GET['id_student']);
             $latest_data_version = $data_version->getDataVersion('Module_Score');
-            $app_data_version    = $_GET['version'];
 
-            if ($latest_data_version != intval($app_data_version)) {
+            if ($latest_data_version != intval($_GET['version'])) {
                 $notification_by_id_account = new NotificationByIDAccount($connect);
                 $response                   = $notification_by_id_account->getAll($_GET['id_account']);
 
@@ -33,12 +32,10 @@
         } catch (Exception $error) {
             printError($error);
             $response['status_code'] = 500;
-            $response['content']     = 'Error';
         }
     }
     else {
-        $response['status_code'] = 406;
-        $response['content']     = 'Invalid Request';
+        $response['status_code'] = 400;
     }
 
     response($response, true);
