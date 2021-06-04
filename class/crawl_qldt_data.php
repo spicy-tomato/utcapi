@@ -232,9 +232,9 @@
             $html->load($response);
 
             $this->form_crawl_request                      = EnvIO::$form_get_exam_schedule_request;
-            $this->form_crawl_request['hidStudentId']      = $html->find('input[name=__VIEWSTATE]', 0)->value;
-            $this->form_crawl_request['__VIEWSTATE']       = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
-            $this->form_crawl_request['__EVENTVALIDATION'] = $html->find('input[id=hidStudentId]', 0)->value;
+            $this->form_crawl_request['__VIEWSTATE']       = $html->find('input[name=__VIEWSTATE]', 0)->value;
+            $this->form_crawl_request['__EVENTVALIDATION'] = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
+            $this->form_crawl_request['hidStudentId']      = $html->find('input[id=hidStudentId]', 0)->value;
 
             $elements = $html->find('select[name=drpSemester] option');
             $data     = [];
@@ -254,7 +254,7 @@
 
         private function getDataExamSchedule ()
         {
-            $data                                                = null;
+            $data = null;
 
             foreach ($this->semester_arr as $semester_key => $semester_value) {
                 $this->form_crawl_request['drpSemester'] = $semester_value;

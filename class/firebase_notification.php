@@ -27,7 +27,7 @@
 
         public function send ()
         {
-            $db      = new Database();
+            $db      = new Database(true);
             $connect = $db->connect();
             $device  = new Device($connect);
 

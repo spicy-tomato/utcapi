@@ -13,7 +13,7 @@
         $aws                = new AWS();
         $last_time_accepted = $aws->getDataFromFile('last_schedule_fixed.txt', 'cron-jobs/');
 
-        $db      = new Database();
+        $db      = new Database(true);
         $connect = $db->connect();
 
         $changes           = new FixSchedule($connect);

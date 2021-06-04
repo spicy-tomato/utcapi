@@ -13,7 +13,7 @@
         isset($data['qldt_password'])) {
 
         try {
-            $db      = new Database();
+            $db      = new Database(true);
             $connect = $db->connect();
 
             $data['qldt_password'] = md5($data['qldt_password']);

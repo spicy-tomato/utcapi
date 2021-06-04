@@ -11,13 +11,21 @@
 
         private PDO $connect;
 
-        public function __construct ()
+        public function __construct ($isMainDB)
         {
             EnvIO::loadEnv();
-            $this->host     = $_ENV['DB_HOST'];
-            $this->db_name  = $_ENV['DB_NAME'];
-            $this->username = $_ENV['DB_USER'];
-            $this->password = $_ENV['DB_PASS'];
+            if ($isMainDB) {
+                $this->host     = $_ENV['DB_HOST'];
+                $this->db_name  = $_ENV['DB_NAME'];
+                $this->username = $_ENV['DB_USER'];
+                $this->password = $_ENV['DB_PASS'];
+            }
+            else {
+                $this->host     = $_ENV['EXTRA_DB_HOST'];
+                $this->db_name  = $_ENV['EXTRA_DB_NAME'];
+                $this->username = $_ENV['EXTRA_DB_USER'];
+                $this->password = $_ENV['EXTRA_DB_PASS'];
+            }
         }
 
         public function connect () : PDO

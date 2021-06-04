@@ -33,7 +33,7 @@
             }
         }
 
-        public function getDataVersion ($type)
+        public function getDataVersion ($type) : int
         {
             $sql_query =
                 'SELECT
@@ -49,7 +49,7 @@
                 $stmt->execute([':id_student' => $this->id_student]);
                 $record = $stmt->fetch(PDO::FETCH_COLUMN);
 
-                return $record;
+                return intval($record);
 
             } catch (PDOException $error) {
                 throw $error;
