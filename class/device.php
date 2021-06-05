@@ -18,25 +18,39 @@
 
         public function getTokenByIdStudent ($id_student_list) : array
         {
-            $part_of_sql = '';
+            $sql_query_1 = '
+                CREATE TEMPORARY TABLE temp3 (
+                  ID_Student varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+                ';
 
-            foreach ($id_student_list as $id_student) {
-                $part_of_sql .= '\'' . $id_student . '\',';
-            }
+            $sql_of_list =
+                implode(',', array_fill(0, count($id_student_list), '(?)'));
 
-            $part_of_sql = rtrim($part_of_sql, ',');
+            $sql_query_2 =
+                'INSERT INTO temp3
+                    (ID_Student)
+                VALUES
+                    ' . $sql_of_list;
 
-            $sql_query = '
-                SELECT 
+            $sql_query_3 = '
+                SELECT
                     Device_Token
                 FROM
-                    ' . self::device_table . '
-                WHERE 
-                    ID_Student IN (' . $part_of_sql . ')
-                 ';
+                     temp3 t
+                         RIGHT OUTER JOIN
+                     ' . self::device_table . ' d
+                        ON t.ID_Student = d.ID_Student
+                ';
 
             try {
-                $stmt = $this->connect->prepare($sql_query);
+                $stmt = $this->connect->prepare($sql_query_1);
+                $stmt->execute();
+
+                $stmt = $this->connect->prepare($sql_query_2);
+                $stmt->execute($id_student_list);
+
+                $stmt = $this->connect->prepare($sql_query_3);
                 $stmt->execute();
                 $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
@@ -83,8 +97,8 @@
         public function deleteOldToken ($old_token)
         {
             $sql_query = '
-                DELETE 
-                FROM 
+                DELETE
+                FROM
                      ' . self::device_table . '
                 WHERE Device_Token = :old_token
                 ';
