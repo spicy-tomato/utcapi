@@ -16,7 +16,7 @@
             $connect = $db->connect();
 
             $data_version        = new DataVersion($connect, $_GET['id']);
-            $latest_data_version = $data_version->getDataVersion('Module_Score');
+            $latest_data_version = $data_version->getDataVersion('Schedule');
 
             if ($latest_data_version != intval($_GET['version'])) {
                 $account    = new Account($connect);

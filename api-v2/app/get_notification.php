@@ -15,7 +15,7 @@
             $connect = $db->connect();
 
             $data_version        = new DataVersion($connect, $_GET['id_student']);
-            $latest_data_version = $data_version->getDataVersion('Module_Score');
+            $latest_data_version = $data_version->getDataVersion('Notification');
 
             if ($latest_data_version != intval($_GET['version'])) {
                 $notification_by_id_account = new NotificationByIDAccount($connect);

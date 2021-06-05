@@ -16,7 +16,7 @@
             $connect_extra = $db_extra->connect();
 
             $data_version        = new DataVersion($connect_main, $_GET['id_student']);
-            $latest_data_version = $data_version->getDataVersion('Module_Score');
+            $latest_data_version = $data_version->getDataVersion('Exam_Schedule');
 
             if ($latest_data_version != intval($_GET['version'])) {
                 $exam_schedule = new ExamSchedule($connect_extra, $_GET['id_student']);
