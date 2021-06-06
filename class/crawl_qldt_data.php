@@ -75,14 +75,10 @@
                 $this->is_all = true;
             }
 
-            if ($this->status == 1) {
-                $this->getFormRequireDataOfStudentModuleScore();
-                $data = $this->getDataModuleScore();
-                $data = $this->_formatModuleScoreData($data);
-            }
-            else {
-                $data[] = $this->status;
-            }
+            $this->getFormRequireDataOfStudentModuleScore();
+            $data = $this->getDataModuleScore();
+            $data = $this->_formatModuleScoreData($data);
+
             curl_close($this->ch);
 
             return $data;
@@ -204,14 +200,10 @@
 
         public function getStudentExamSchedule ($semester) : array
         {
-            if ($this->status == 1) {
-                $this->semester_arr = $semester;
-                $this->getFormRequireDataOfStudentExamSchedule();
-                $data = $this->getDataExamSchedule();
-            }
-            else {
-                $data[] = $this->status;
-            }
+            $this->semester_arr = $semester;
+            $this->getFormRequireDataOfStudentExamSchedule();
+            $data = $this->getDataExamSchedule();
+
             curl_close($this->ch);
 
             if (empty($data)) {

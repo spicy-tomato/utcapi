@@ -114,7 +114,7 @@
                 'UPDATE
                     ' . self::exam_schedule_table . '
                 SET  
-                    Date_Start = :date_start, Time_Start = :time_Start, 
+                    Date_Start = :date_start, Time_Start = :time_Start, Method = :method,
                     Identification_Number = :identification_number, Room = :room
                 WHERE 
                     Semester = :semester AND
@@ -129,6 +129,7 @@
                     ':id_module' => $value[2],
                     ':date_start' => $value[5],
                     ':time_Start' => $value[6],
+                    ':method' => $value[7],
                     ':identification_number' => $value[8],
                     ':room' => $value[9]
                 ]);

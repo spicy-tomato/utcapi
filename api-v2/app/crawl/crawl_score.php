@@ -25,31 +25,33 @@
 
             $crawl = new CrawlQLDTData($data['id_student'], $data['qldt_password']);
 
-            if (isset($crawl_data[0])) {
-                if ($crawl_data[0] == -1) {
+            switch ($crawl->getStatus()) {
+                case -1:
                     $response['status_code'] = 500;
-                }
-                else {
+                    break;
+
+                case 0:
                     $response['status_code'] = 401;
                     $response['content']     = 'Invalid Password';
-                }
-            }
-            else {
-                $module_score = new ModuleScore($connect_extra, $data['id_student']);
-                $crawl_data   = $crawl->getStudentModuleScore($data['all']);
+                    break;
 
-                if ($data['all'] == 'true') {
-                    $module_score->pushAllData($crawl_data);
-                }
-                else {
-                    $module_score->pushData($crawl_data);
-                }
+                case 1:
+                    $module_score = new ModuleScore($connect_extra, $data['id_student']);
+                    $crawl_data   = $crawl->getStudentModuleScore($data['all']);
 
-                $data_version = new DataVersion($connect_main, $data['id_student']);
-                $data_version->updateDataVersion('Module_Score');
+                    if ($data['all'] == 'true') {
+                        $module_score->pushAllData($crawl_data);
+                    }
+                    else {
+                        $module_score->pushData($crawl_data);
+                    }
 
-                $response['status_code'] = 200;
-                $response['content']     = 'OK';
+                    $data_version = new DataVersion($connect_main, $data['id_student']);
+                    $data_version->updateDataVersion('Module_Score');
+
+                    $response['status_code'] = 200;
+                    $response['content']     = 'OK';
+                    break;
             }
 
         } catch (Exception $error) {

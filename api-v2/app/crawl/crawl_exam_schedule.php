@@ -27,41 +27,43 @@
 
             $crawl = new CrawlQLDTData($data['id_student'], $data['qldt_password']);
 
-            if (isset($crawl_data[0])) {
-                if ($crawl_data[0] == -1) {
+            switch ($crawl->getStatus()) {
+                case -1:
                     $response['status_code'] = 500;
-                }
-                else {
+                    break;
+
+                case 0:
                     $response['status_code'] = 401;
                     $response['content']     = 'Invalid Password';
-                }
-            }
-            else {
-                $module_score  = new ModuleScore($connect_extra, $data['id_student']);
-                $exam_schedule = new ExamSchedule($connect_extra, $data['id_student']);
+                    break;
 
-                if ($data['all'] == 'true') {
-                    $semester   = $module_score->getAllRecentSemester();
-                    $crawl_data = $crawl->getStudentExamSchedule($semester);
+                case 1:
+                    $module_score  = new ModuleScore($connect_extra, $data['id_student']);
+                    $exam_schedule = new ExamSchedule($connect_extra, $data['id_student']);
 
-                    $exam_schedule->pushAllData($crawl_data);
-                }
-                else {
-                    $semester   = $module_score->getRecentLatestSemester();
-                    $crawl_data = $crawl->getStudentExamSchedule($semester);
+                    if ($data['all'] == 'true') {
+                        $semester   = $module_score->getAllRecentSemester();
+                        $crawl_data = $crawl->getStudentExamSchedule($semester);
 
-                    if (count($crawl_data) == 2) {
-                        array_shift($crawl_data);
+                        $exam_schedule->pushAllData($crawl_data);
+                    }
+                    else {
+                        $semester   = $module_score->getRecentLatestSemester();
+                        $crawl_data = $crawl->getStudentExamSchedule($semester);
+
+                        if (count($crawl_data) == 2) {
+                            array_shift($crawl_data);
+                        }
+
+                        $exam_schedule->pushData($crawl_data);
                     }
 
-                    $exam_schedule->pushData($crawl_data);
-                }
+                    $data_version = new DataVersion($connect_main, $data['id_student']);
+                    $data_version->updateDataVersion('Exam_Schedule');
 
-                $data_version = new DataVersion($connect_main, $data['id_student']);
-                $data_version->updateDataVersion('Exam_Schedule');
-
-                $response['status_code'] = 200;
-                $response['content']     = 'OK';
+                    $response['status_code'] = 200;
+                    $response['content']     = 'OK';
+                    break;
             }
 
         } catch (Exception $error) {
