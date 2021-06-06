@@ -68,7 +68,8 @@
 
         } catch (Exception $error) {
             printError($error);
-            $response['status_code'] = 500;
+            $response['status_code'] = 200;
+            var_dump($error);
         }
     }
     else {
