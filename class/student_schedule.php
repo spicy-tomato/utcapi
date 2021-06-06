@@ -29,11 +29,9 @@
                     ' . self::participate_table . ' par,
                     ' . self::module_class_table . ' mdcls
                 WHERE
-                    sdu.ID_Module_Class = par.ID_Module_Class AND
                     par.ID_Student = :id_student AND
+                    sdu.ID_Module_Class = par.ID_Module_Class AND
                     mdcls.ID_Module_Class = sdu.ID_Module_Class AND
-                    stu.ID_Student = :id_student
-
                 ORDER BY
                     sdu.Shift_Schedules';
 
