@@ -9,7 +9,7 @@
         isset($_GET['id_student'])) {
 
         try {
-            $db      = new Database(true);
+            $db      = new Database(false);
             $connect = $db->connect();
 
             $module_score = new ModuleScore($connect, $_GET['id_student']);
