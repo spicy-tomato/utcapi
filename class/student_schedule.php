@@ -16,7 +16,7 @@
             $this->student_id = $student_id;
         }
 
-        public function getAll () : array
+        public function getAllSchedule () : array
         {
             $sql_query =
                 'SELECT
@@ -37,17 +37,12 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $this->student_id]);
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $record = $this->_formatResponse($record);
 
-                if (empty($record)) {
-                    $data['status_code'] = 204;
-                }
-                else {
-                    $data['status_code']     = 200;
-                    $data['content']['data'] = $record;
+                if (!empty($record)) {
+                    $record = $this->_formatResponse($record);
                 }
 
-                return $data;
+                return $record;
 
             } catch (PDOException $error) {
                 throw $error;

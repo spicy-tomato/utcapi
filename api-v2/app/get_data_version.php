@@ -5,8 +5,7 @@
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
-        isset($_GET['id_student']) &&
-        isset($_GET['type'])) {
+        isset($_GET['id_student'])) {
 
         try {
             $db           = new Database(true);
@@ -14,7 +13,7 @@
             $data_version = new DataVersion($connect, $_GET['id_student']);
 
             $response['status_code'] = 200;
-            $response['content']     = $data_version->getDataVersion($_GET['type']);
+            $response['content']     = $data_version->getAllDataVersion();
 
         } catch (Exception $error) {
             printError($error);

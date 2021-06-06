@@ -8,46 +8,44 @@
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
-        isset($_GET['id']) &&
-        isset($_GET['version'])) {
+        isset($_GET['id'])) {
 
         try {
             $db      = new Database(true);
             $connect = $db->connect();
 
-            $data_version        = new DataVersion($connect, $_GET['id']);
-            $latest_data_version = $data_version->getDataVersion('Schedule');
+            $account    = new Account($connect);
+            $permission = $account->getAccountPermission($_GET['id']);
 
-            if ($latest_data_version != intval($_GET['version'])) {
-                $account    = new Account($connect);
-                $permission = $account->getAccountPermission($_GET['id']);
+            switch ($permission) {
+                case '0';
+                    {
+                        $schedules = new StudentSchedule($connect, $_GET['id']);
+                        $data      = $schedules->getAllSchedule();
 
-                switch ($permission) {
-                    case '0';
-                        {
-                            $schedules = new StudentSchedule($connect, $_GET['id']);
-                            $response  = $schedules->getAll();
-                            break;
-                        }
+                        break;
+                    }
 
-                    case '1':
-                        {
-                            $schedules = new TeacherSchedule($connect, $_GET['id']);
-                            $response  = $schedules->getAll();
-                            break;
-                        }
+                case '1':
+                    {
+                        $schedules = new TeacherSchedule($connect, $_GET['id']);
+                        $data      = $schedules->getAllSchedule();
 
-                    default:
-                        $response['status_code'] = 400;
-                        $response['content']     = 'Not Found Data';
-                }
+                        break;
+                    }
 
-                if ($response['status_code'] == 200) {
-                    $response['content']['data_version'] = $latest_data_version;
-                }
+                default:
+                    $response['status_code'] = 403;
+            }
+
+            if (isset($data) && empty($data)) {
+                $response['status_code'] = 204;
             }
             else {
-                $response['status_code'] = 204;
+                if (!isset($response['status_code'])) {
+                    $response['status_code'] = 200;
+                    $response['content']     = $data;
+                }
             }
 
         } catch (Exception $error) {

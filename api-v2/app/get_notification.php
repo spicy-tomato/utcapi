@@ -7,26 +7,21 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         isset($_GET['id_student']) &&
-        isset($_GET['id_account']) &&
-        isset($_GET['version'])) {
+        isset($_GET['id_account'])) {
 
         try {
             $db      = new Database(true);
             $connect = $db->connect();
 
-            $data_version        = new DataVersion($connect, $_GET['id_student']);
-            $latest_data_version = $data_version->getDataVersion('Notification');
+            $notification_by_id_account = new NotificationByIDAccount($connect);
+            $data                       = $notification_by_id_account->getAll($_GET['id_account']);
 
-            if ($latest_data_version != intval($_GET['version'])) {
-                $notification_by_id_account = new NotificationByIDAccount($connect);
-                $response                   = $notification_by_id_account->getAll($_GET['id_account']);
-
-                if ($response['status_code'] == 200) {
-                    $response['content']['data_version'] = $latest_data_version;
-                }
+            if (empty($data)) {
+                $response['status_code'] = 204;
             }
             else {
-                $response['status_code'] = 204;
+                $response['status_code'] = 200;
+                $response['content']     = $data;
             }
 
         } catch (Exception $error) {

@@ -202,19 +202,10 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $this->id_student]);
-
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $record = $this->_formatExamScheduleResponse($record);
 
-                if (empty($record)) {
-                    $data['status_code'] = 204;
-                }
-                else {
-                    $data['status_code']     = 200;
-                    $data['content']['data'] = $record;
-                }
-
-                return $data;
+                return $record;
 
             } catch (PDOException $error) {
                 throw $error;

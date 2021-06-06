@@ -87,17 +87,11 @@
                 $stmt->execute([':id_account' => $id_account]);
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                if (empty($record)) {
-                    $data['status_code'] = 204;
-                }
-                else {
+                if (!empty($record)) {
                     $record = $this->modifyResponse($record);
-
-                    $data['status_code']     = 200;
-                    $data['content']['data'] = $record;
                 }
 
-                return $data;
+                return $record;
 
             } catch (PDOException $error) {
                 throw $error;
