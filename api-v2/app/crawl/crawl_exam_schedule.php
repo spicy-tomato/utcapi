@@ -43,6 +43,8 @@
                 if ($data['all'] == 'true') {
                     $semester   = $module_score->getAllRecentSemester();
                     $crawl_data = $crawl->getStudentExamSchedule($semester);
+                    var_dump($semester);
+                    var_dump($crawl_data);
 
                     $exam_schedule->pushAllData($crawl_data);
                 }
