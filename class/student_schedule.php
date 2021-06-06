@@ -5,7 +5,6 @@
     {
         private const module_class_table = 'Module_Class';
         private const schedule_table = 'Schedules';
-        private const student_table = 'Student';
         private const participate_table = 'Participate';
 
         private string $student_id;
@@ -25,7 +24,6 @@
                     sdu.ID_Room, sdu.Shift_Schedules, sdu.Day_Schedules
                 FROM
                     ' . self::schedule_table . ' sdu,
-                    ' . self::student_table . ' stu,
                     ' . self::participate_table . ' par,
                     ' . self::module_class_table . ' mdcls
                 WHERE
