@@ -29,7 +29,7 @@
                 WHERE
                     par.ID_Student = :id_student AND
                     sdu.ID_Module_Class = par.ID_Module_Class AND
-                    mdcls.ID_Module_Class = sdu.ID_Module_Class AND
+                    mdcls.ID_Module_Class = sdu.ID_Module_Class
                 ORDER BY
                     sdu.Shift_Schedules';
 
