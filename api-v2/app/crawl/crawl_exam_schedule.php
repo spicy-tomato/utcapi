@@ -29,8 +29,7 @@
 
             if (isset($crawl_data[0])) {
                 if ($crawl_data[0] == -1) {
-                    $response['status_code'] = 200;
-                    echo 1111111111;
+                    $response['status_code'] = 500;
                 }
                 else {
                     $response['status_code'] = 401;
@@ -44,8 +43,6 @@
                 if ($data['all'] == 'true') {
                     $semester   = $module_score->getAllRecentSemester();
                     $crawl_data = $crawl->getStudentExamSchedule($semester);
-                    var_dump($semester);
-                    var_dump($crawl_data);
 
                     $exam_schedule->pushAllData($crawl_data);
                 }
@@ -69,8 +66,7 @@
 
         } catch (Exception $error) {
             printError($error);
-            $response['status_code'] = 200;
-            var_dump($error);
+            $response['status_code'] = 500;
         }
     }
     else {
