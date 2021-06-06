@@ -16,10 +16,9 @@
             $connect_extra = $db_extra->connect();
 
             $data_version        = new DataVersion($connect_main, $_GET['id_student']);
-            $latest_data_version = $data_version->getDataVersion('Module_Score');
-            $app_data_version    = $_GET['version'];
+            $latest_data_version = $data_version->getDataVersion('Exam_Schedule');
 
-            if ($latest_data_version != intval($app_data_version)) {
+            if ($latest_data_version != intval($_GET['version'])) {
                 $exam_schedule = new ExamSchedule($connect_extra, $_GET['id_student']);
                 $response      = $exam_schedule->getExamSchedule();
 
@@ -34,12 +33,10 @@
         } catch (Exception $error) {
             printError($error);
             $response['status_code'] = 500;
-            $response['content']     = 'Error';
         }
     }
     else {
-        $response['status_code'] = 406;
-        $response['content']     = 'Invalid Request';
+        $response['status_code'] = 400;
     }
 
     response($response, true);

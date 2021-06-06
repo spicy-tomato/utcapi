@@ -59,7 +59,7 @@
         }
     }
     else {
-        $response['status_code'] = 406;
+        $response['status_code'] = 400;
         $response['content']     = 'Invalid Request';
     }
 

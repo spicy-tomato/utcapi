@@ -5,9 +5,7 @@
     {
         private const module_class_table = 'Module_Class';
         private const schedule_table = 'Schedules';
-        private const student_table = 'Student';
         private const participate_table = 'Participate';
-        private const module_table = 'Module';
 
         private string $student_id;
         private PDO $connect;
@@ -25,17 +23,13 @@
                     mdcls.Module_Class_Name, sdu.ID_Module_Class, 
                     sdu.ID_Room, sdu.Shift_Schedules, sdu.Day_Schedules
                 FROM
-                    ' . self::module_table . ' mc,
                     ' . self::schedule_table . ' sdu,
-                    ' . self::student_table . ' stu,
                     ' . self::participate_table . ' par,
                     ' . self::module_class_table . ' mdcls
                 WHERE
-                    stu.ID_Student = :id_student AND
                     par.ID_Student = :id_student AND
                     sdu.ID_Module_Class = par.ID_Module_Class AND
-                    mdcls.ID_Module_Class = sdu.ID_Module_Class AND
-                    mc.ID_Module = mdcls.ID_Module
+                    mdcls.ID_Module_Class = sdu.ID_Module_Class
                 ORDER BY
                     sdu.Shift_Schedules';
 

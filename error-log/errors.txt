@@ -1,0 +1,35 @@
+04/06/2021 21:59:36
+Code: 0
+Undefined index: account_owner
+C:\xampp\htdocs\utcapi\api-v2\web\authenticate.php  64
+=====================================================
+04/06/2021 21:59:37
+Code: 0
+Undefined index: account_owner
+C:\xampp\htdocs\utcapi\api-v2\web\authenticate.php  64
+=====================================================
+04/06/2021 21:59:38
+Code: 0
+Undefined index: account_owner
+C:\xampp\htdocs\utcapi\api-v2\web\authenticate.php  64
+=====================================================
+04/06/2021 21:59:38
+Code: 0
+Undefined index: account_owner
+C:\xampp\htdocs\utcapi\api-v2\web\authenticate.php  64
+=====================================================
+04/06/2021 21:59:38
+Code: 0
+Undefined index: account_owner
+C:\xampp\htdocs\utcapi\api-v2\web\authenticate.php  64
+=====================================================
+04/06/2021 21:59:46
+Code: 0
+Undefined index: account_owner
+C:\xampp\htdocs\utcapi\api-v2\web\authenticate.php  64
+=====================================================
+04/06/2021 21:59:52
+Code: 0
+Undefined index: account_owner
+C:\xampp\htdocs\utcapi\api-v2\web\authenticate.php  64
+=====================================================

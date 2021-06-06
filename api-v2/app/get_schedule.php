@@ -16,10 +16,9 @@
             $connect = $db->connect();
 
             $data_version        = new DataVersion($connect, $_GET['id']);
-            $latest_data_version = $data_version->getDataVersion('Module_Score');
-            $app_data_version    = $_GET['version'];
+            $latest_data_version = $data_version->getDataVersion('Schedule');
 
-            if ($latest_data_version != intval($app_data_version)) {
+            if ($latest_data_version != intval($_GET['version'])) {
                 $account    = new Account($connect);
                 $permission = $account->getAccountPermission($_GET['id']);
 
@@ -39,8 +38,8 @@
                         }
 
                     default:
-                        $response['status_code'] = 406;
-                        $response['content']     = 'Not Found';
+                        $response['status_code'] = 400;
+                        $response['content']     = 'Not Found Data';
                 }
 
                 if ($response['status_code'] == 200) {
@@ -54,12 +53,10 @@
         } catch (Exception $error) {
             printError($error);
             $response['status_code'] = 500;
-            $response['content']     = 'Error';
         }
     }
     else {
-        $response['status_code'] = 406;
-        $response['content']     = 'Invalid Request';
+        $response['status_code'] = 400;
     }
 
     response($response, true);

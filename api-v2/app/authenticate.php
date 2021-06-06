@@ -17,11 +17,11 @@
             $account      = new Account($connect);
             $account_info = $account->login($data);
 
-            if ($account_info == 'Failed' ||
+            if (!$account_info ||
                 !password_verify($data['password'], $account_info['password'])) {
 
-                $response['status_code']        = 200;
-                $response['content']['message'] = 'failed';
+                $response['status_code'] = 401;
+                $response['content']     = 'Invalid Account';
             }
             else {
                 switch ($account_info['permission']) {
@@ -34,20 +34,18 @@
                         break;
 
                     default:
-                        $response['status_code']        = 200;
-                        $response['content']['message'] = 'failed';
+                        $response['status_code'] = 401;
+                        $response['content']     = 'Invalid Account';
                 }
             }
 
         } catch (Exception $error) {
             printError($error);
             $response['status_code']        = 500;
-            $response['content']['message'] = 'error';
         }
     }
     else {
-        $response['status_code'] = 406;
-        $response['content']     = 'Invalid Request';
+        $response['status_code'] = 400;
     }
 
     response($response, true);

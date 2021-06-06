@@ -26,31 +26,46 @@
 
         public function getListFromModuleClassList ($class_list) : void
         {
-            $sql_of_list = $this->_getSqlOfList($class_list);
-
-            $this->_getListFromModuleClass($sql_of_list);
+            $this->_getListFromModuleClass($class_list);
         }
 
-        private function _getListFromModuleClass ($sql_of_list) : void
+        private function _getListFromModuleClass ($class_list) : void
         {
-            if ($sql_of_list == '') {
-                return;
-            }
+            $sql_query_1 = '
+                CREATE TEMPORARY TABLE temp (
+                  ID_Module_Class varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+                ';
 
-            $sql_query = '
-                SELECT
+            $sql_of_list =
+                implode(',', array_fill(0, count($class_list), '(?)'));
+
+            $sql_query_2 =
+                'INSERT INTO temp
+                    (ID_Module_Class)
+                VALUES
+                    ' . $sql_of_list;
+
+            $sql_query_3 = '
+                SELECT 
                     ID_Student
-                FROM
-                    ' . self::participate_table . '
-                WHERE
-                    ID_Module_Class IN (' . $sql_of_list . ')
+                FROM 
+                     temp t 
+                         LEFT OUTER JOIN
+                     ' . self::participate_table . ' p
+                        ON t.ID_Module_Class = p.ID_Module_Class
                 ';
 
             try {
-                $stmt = $this->connect->prepare($sql_query);
+                $stmt = $this->connect->prepare($sql_query_1);
                 $stmt->execute();
-                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
+                $stmt = $this->connect->prepare($sql_query_2);
+                $stmt->execute($class_list);
+
+                $stmt = $this->connect->prepare($sql_query_3);
+                $stmt->execute();
+                $record                = $stmt->fetchAll(PDO::FETCH_COLUMN);
                 $this->id_student_list = $record;
 
             } catch (PDOException $error) {
@@ -60,31 +75,46 @@
 
         public function getListFromDepartmentClass ($class_list)
         {
-            $sql_of_list = $this->_getSqlOfList($class_list);
-
-            $this->_getListFromDepartmentClass($sql_of_list);
+            $this->_getListFromDepartmentClass($class_list);
         }
 
-        private function _getListFromDepartmentClass ($sql_of_list) : void
+        private function _getListFromDepartmentClass ($class_list) : void
         {
-            if ($sql_of_list == '') {
-                return;
-            }
+            $sql_query_1 = '
+                CREATE TEMPORARY TABLE temp (
+                  ID_Class varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+                ';
 
-            $sql_query =
-                'SELECT
+            $sql_of_list =
+                implode(',', array_fill(0, count($class_list), '(?)'));
+
+            $sql_query_2 =
+                'INSERT INTO temp
+                    (ID_Class)
+                VALUES
+                    ' . $sql_of_list;
+
+            $sql_query_3 = '
+                SELECT 
                     ID_Student
-                FROM
-                    ' . self::student_table . '
-                WHERE
-                    ID_Class IN (' . $sql_of_list . ')
+                FROM 
+                     temp t 
+                         LEFT OUTER JOIN
+                     ' . self::student_table . ' s
+                        ON t.ID_Class = s.ID_Class
                 ';
 
             try {
-                $stmt = $this->connect->prepare($sql_query);
+                $stmt = $this->connect->prepare($sql_query_1);
                 $stmt->execute();
-                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
+                $stmt = $this->connect->prepare($sql_query_2);
+                $stmt->execute($class_list);
+
+                $stmt = $this->connect->prepare($sql_query_3);
+                $stmt->execute();
+                $record                = $stmt->fetchAll(PDO::FETCH_COLUMN);
                 $this->id_student_list = $record;
 
             } catch (PDOException $error) {
@@ -94,46 +124,54 @@
 
         public function getAccountListFromStudentList () : array
         {
-            $sql_of_list = $this->_getSqlOfList($this->id_student_list);
-
-            $this->_getAccountListFromStudentList($sql_of_list);
+            $this->_getAccountListFromStudentList($this->id_student_list);
 
             return $this->id_account_list;
         }
 
-        private function _getAccountListFromStudentList ($sql_of_list)
+        private function _getAccountListFromStudentList ($id_student_list)
         {
-            $sql_query = '
-                SELECT
+            $sql_query_1 = '
+                CREATE TEMPORARY TABLE temp1 (
+                  ID_Student varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+                ';
+
+            $sql_of_list =
+                implode(',', array_fill(0, count($id_student_list), '(?)'));
+
+            $sql_query_2 =
+                'INSERT INTO temp1
+                    (ID_Student)
+                VALUES
+                    ' . $sql_of_list;
+
+            $sql_query_3 = '
+                SELECT 
                     ID
-                FROM
-                    ' . self::student_table . '
+                FROM 
+                     temp1 t 
+                         LEFT OUTER JOIN
+                     ' . self::student_table . ' s
+                        ON t.ID_Student = s.ID_Student
                 WHERE
-                    ID_Student IN (' . $sql_of_list . ')
+                    ID IS NOT NULL
                 ';
 
             try {
-                $stmt = $this->connect->prepare($sql_query);
+                $stmt = $this->connect->prepare($sql_query_1);
                 $stmt->execute();
-                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
+                $stmt = $this->connect->prepare($sql_query_2);
+                $stmt->execute($id_student_list);
+
+                $stmt = $this->connect->prepare($sql_query_3);
+                $stmt->execute();
+                $record                = $stmt->fetchAll(PDO::FETCH_COLUMN);
                 $this->id_account_list = $record;
 
             } catch (PDOException $error) {
                 throw $error;
             }
-        }
-
-        private function _getSqlOfList ($list) : string
-        {
-            $part_of_sql = '';
-
-            foreach ($list as $id) {
-                $part_of_sql .= '\'' . $id . '\',';
-            }
-
-            $part_of_sql = rtrim($part_of_sql, ',');
-
-            return $part_of_sql;
         }
     }

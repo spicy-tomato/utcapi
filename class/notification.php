@@ -7,17 +7,15 @@
         private const notification_account_table = 'Notification_Account';
 
         private PDO $connect;
-        private string $id;
         private string $title;
         private string $content;
         private string $typez;
         private string $sender;
-        private array $id_account_list;
         private string $time_create;
         private ?string $time_start;
         private ?string $time_end;
 
-        public function __construct (PDO $connect, array $info, array $id_account_list)
+        public function __construct (PDO $connect, array $info)
         {
             $this->connect         = $connect;
             $this->title           = $info['title'];
@@ -27,7 +25,6 @@
             $this->time_create     = $this->_getDateNow();
             $this->time_start      = $info['time_start'] != '' ? $info['time_start'] . ' 00:00:00.00' : null;
             $this->time_end        = $info['time_end'] != '' ? $info['time_end'] . ' 23:59:59.00' : null;
-            $this->id_account_list = $id_account_list;
         }
 
         private function _getDateNow () : string
@@ -43,7 +40,7 @@
             return $temp_date;
         }
 
-        public function create () : void
+        public function create () : string
         {
             $sql_query = $this->_queryWithTime();
 
@@ -57,42 +54,11 @@
                     ':time_start' => $this->time_start,
                     ':time_end' => $this->time_end]);
 
-                $this->id = $this->_getId();
+                $id_notification = $this->_getIdNotification();
 
-                $this->_sendToStudent();
-
-            } catch (PDOException $error) {
-                throw $error;
-            }
-        }
-
-        private function _sendToStudent () : void
-        {
-            $sql_query =
-                'INSERT INTO
-                    ' . self::notification_account_table . '
-                    (ID_Notification, ID_Account)
-                VALUES
-                    (:id_notification, :id_account)
-                ';
-
-            $this->connect->beginTransaction();
-            try {
-                foreach ($this->id_account_list as $id_account) {
-                    if ($id_account == null) {
-                        continue;
-                    }
-                    $stmt = $this->connect->prepare($sql_query);
-                    $stmt->execute([
-                        ':id_notification' => $this->id,
-                        ':id_account' => $id_account
-                    ]);
-                }
-
-                $this->connect->commit();
+                return $id_notification;
 
             } catch (PDOException $error) {
-                $this->connect->rollBack();
                 throw $error;
             }
         }
@@ -112,7 +78,7 @@
             return $sql_query;
         }
 
-        private function _getId () : string
+        private function _getIdNotification () : string
         {
             return $this->connect->lastInsertId();
         }

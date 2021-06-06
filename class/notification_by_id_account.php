@@ -7,6 +7,7 @@
         private const account_table = 'Account';
         private const notification_table = 'Notification';
         private const other_department_table = 'Other_Department';
+        private const department_table = 'Department';
         private const faculty_table = 'Faculty';
         private const teacher_table = 'Teacher';
 
@@ -63,6 +64,21 @@
                         na.ID_Account = :id_account AND 
                         n.ID_Notification = na.ID_Notification AND
                         t.ID = n.ID_Sender AND 
+                        a.id = n.ID_Sender
+                UNION
+                    SELECT
+                        n.*, 
+                        d.Department_Name, 
+                        a.permission 
+                    FROM
+                         ' . self::notification_account_table . ' na,
+                         ' . self::notification_table . ' n,
+                         ' . self::department_table . ' d, 
+                         ' . self::account_table . ' a    
+                    WHERE
+                        na.ID_Account = :id_account AND 
+                        n.ID_Notification = na.ID_Notification AND
+                        d.ID = n.ID_Sender AND 
                         a.id = n.ID_Sender 
                     ';
 
@@ -70,12 +86,13 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_account' => $id_account]);
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $record = $this->modifyResponse($record);
 
                 if (empty($record)) {
                     $data['status_code'] = 204;
                 }
                 else {
+                    $record = $this->modifyResponse($record);
+
                     $data['status_code']     = 200;
                     $data['content']['data'] = $record;
                 }
@@ -83,6 +100,32 @@
                 return $data;
 
             } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+
+        public function pushData (array $id_account_list, string $id_notification) : void
+        {
+            $sql_of_list =
+                implode(',', array_fill(0, count($id_account_list), '(' . $id_notification . ',?)'));
+
+            $sql_query =
+                'INSERT INTO
+                    ' . self::notification_account_table . '
+                    (ID_Notification, ID_Account)
+                VALUES
+                    ' . $sql_of_list;
+
+            $this->connect->beginTransaction();
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute($id_account_list);
+
+                $this->connect->commit();
+
+            } catch (PDOException $error) {
+                $this->connect->rollBack();
                 throw $error;
             }
         }
