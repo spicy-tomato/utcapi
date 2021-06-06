@@ -29,7 +29,8 @@
 
             if (isset($crawl_data[0])) {
                 if ($crawl_data[0] == -1) {
-                    $response['status_code'] = 500;
+                    $response['status_code'] = 200;
+                    echo 1111111111;
                 }
                 else {
                     $response['status_code'] = 401;
