@@ -160,8 +160,3 @@
 
         $_SESSION['time_limit'] = $now + 3600;
     }
-    $a = null;
-    foreach ($a as $b)
-    {
-        echo 1;
-    }
