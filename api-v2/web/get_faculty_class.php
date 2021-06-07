@@ -1,7 +1,7 @@
 <?php
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
-    include_once dirname(__DIR__, 2) . '/class/department_class.php';
+    include_once dirname(__DIR__, 2) . '/class/faculty_class.php';
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -9,8 +9,13 @@
             $db      = new Database(true);
             $connect = $db->connect();
 
-            $department_class = new DepartmentClass($connect);
-            $response         = $department_class->getAll();
+            $faculty_class = new FacultyClass($connect);
+            $data1         = $faculty_class->getAllFacultyClass();
+            $data2         = $faculty_class->getAcademicYear();
+
+            $response['status_code']              = 200;
+            $response['content']['all_class']     = $data1;
+            $response['content']['academic_year'] = $data2;
 
         } catch (Error | Exception $error) {
             printError($error);

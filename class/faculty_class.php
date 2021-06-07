@@ -1,7 +1,7 @@
 <?php
     include_once dirname(__DIR__) . '/shared/functions.php';
 
-    class DepartmentClass
+    class FacultyClass
     {
         private const db_table = 'Class';
         private PDO $connect;
@@ -11,7 +11,7 @@
             $this->connect = $connect;
         }
 
-        public function getAll () : array
+        public function getAllFacultyClass () : array
         {
             $sql_query = '
                     SELECT 
@@ -26,11 +26,32 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                $data['content'] = $stmt->fetchAll(PDO::FETCH_ASSOC);;
-                $data['status_code'] = 200;
+                return $record;
 
-                return $data;
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+        public function getAcademicYear () : array
+        {
+            $sql_query = '
+                    SELECT DISTINCT
+                        Academic_Year
+                    FROM ' . self::db_table . ' 
+                    ORDER BY 
+                        Academic_Year DESC 
+                    LIMIT 9
+                    ';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);;
+
+                return $record;
 
             } catch (PDOException $error) {
                 throw $error;

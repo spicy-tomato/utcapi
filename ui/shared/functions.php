@@ -35,12 +35,12 @@
         $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
 
         $home_link      = $root_folder . '/ui/home';
-        $form1_link     = $root_folder . '/ui/forms/department-class';
+        $form1_link     = $root_folder . '/ui/forms/faculty-class';
         $form2_link     = $root_folder . '/ui/forms/module-class';
         $push_data_link = $root_folder . '/ui/push-data';
         $log_out_link   = $root_folder . '/ui/home/logout.php';
 
-        if (stripos($_SERVER['REQUEST_URI'], 'department-class') !== false) {
+        if (stripos($_SERVER['REQUEST_URI'], 'faculty-class') !== false) {
             $nav1_class .= $current_nav;
         }
         elseif (stripos($_SERVER['REQUEST_URI'], 'module-class') !== false) {
