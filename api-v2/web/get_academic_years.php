@@ -12,7 +12,7 @@
             $academic_year = new AcademicYear($connect);
             $response      = $academic_year->getAcademicYear();
 
-        } catch (Exception $error) {
+        } catch (Error | Exception $error) {
             printError($error);
             $response['status_code'] = 500;
         }

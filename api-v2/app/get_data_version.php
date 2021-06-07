@@ -15,7 +15,7 @@
             $response['status_code'] = 200;
             $response['content']     = $data_version->getAllDataVersion();
 
-        } catch (Exception $error) {
+        } catch (Error | Exception $error) {
             printError($error);
             $response['status_code'] = 500;
         }

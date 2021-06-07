@@ -12,7 +12,7 @@
             $department_class = new DepartmentClass($connect);
             $response         = $department_class->getAll();
 
-        } catch (Exception $error) {
+        } catch (Error | Exception $error) {
             printError($error);
             $response['status_code'] = 500;
         }

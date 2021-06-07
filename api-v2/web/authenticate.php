@@ -70,10 +70,11 @@
                 header('Location: ../../ui/login/index.php?login-failed=true');
             }
 
-        } catch (Exception $error) {
+        } catch (Error | Exception $error) {
             printError($error);
             $response['status_code'] = 500;
 
             header('Location: ../../ui/login/index.php?login-failed=true');
+
         }
     }

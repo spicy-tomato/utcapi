@@ -17,7 +17,7 @@
             $token    = new Device($connect, $data['id_student'], $data['token']);
             $response = $token->upsertToken();
 
-        } catch (Exception $error) {
+        } catch (Error | Exception $error) {
             printError($error);
             $response['status_code'] = 500;
         }

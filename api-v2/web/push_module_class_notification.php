@@ -37,7 +37,7 @@
             $response['status_code'] = 200;
             $response['content']     = 'OK';
 
-        } catch (PDOException $error) {
+        } catch (Error | Exception $error) {
             printError($error);
             $response['status_code'] = 500;
         }

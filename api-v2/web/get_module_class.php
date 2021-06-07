@@ -12,7 +12,7 @@
             $module_class = new ModuleClass($connect);
             $response     = $module_class->getAll();
 
-        } catch (Exception $error) {
+        } catch (Error | Exception $error) {
             printError($error);
             $response['status_code'] = 500;
         }

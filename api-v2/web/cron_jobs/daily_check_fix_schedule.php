@@ -28,7 +28,6 @@
     } catch (Exception $error) {
         printError($error);
         $response['status_code'] = 500;
-        $response['content']     = 'Error';
 
         response($response, true);
     }
@@ -71,10 +70,9 @@
             $response['status_code'] = 200;
             $response['content']     = 'OK';
 
-        } catch (Exception $error) {
+        } catch (Error | Exception $error) {
             printError($error);
             $response['status_code'] = 500;
-            $response['content']     = 'Error';
         }
     }
 
