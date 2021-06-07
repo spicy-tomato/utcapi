@@ -81,7 +81,7 @@ function createAcademicCheckBoxArea() {
     parentNode.appendChild(createAcademicYearCheckAll())
 
     for (let item of allAcademicYears) {
-        parentNode.appendChild(createAcademicCheckBox(item.Academic_Year))
+        parentNode.appendChild(createAcademicCheckBox(item))
     }
 }
 

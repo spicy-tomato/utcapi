@@ -131,6 +131,11 @@
 
         private function _getAccountListFromStudentList ($id_student_list)
         {
+            if (empty($id_student_list))
+            {
+                return;
+            }
+
             $sql_query_1 = '
                 CREATE TEMPORARY TABLE temp1 (
                   ID_Student varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL

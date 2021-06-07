@@ -101,6 +101,11 @@
 
         public function pushData (array $id_account_list, string $id_notification) : void
         {
+            if (empty($id_account_list))
+            {
+                return;
+            }
+
             $sql_of_list =
                 implode(',', array_fill(0, count($id_account_list), '(' . $id_notification . ',?)'));
 

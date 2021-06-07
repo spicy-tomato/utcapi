@@ -10,12 +10,12 @@
             $connect = $db->connect();
 
             $faculty_class = new FacultyClass($connect);
-            $data1         = $faculty_class->getAllFacultyClass();
-            $data2         = $faculty_class->getAcademicYear();
+            $data1         = $faculty_class->getAcademicYear();
+            $data2         = $faculty_class->getAllFacultyClass($data1);
 
             $response['status_code']              = 200;
-            $response['content']['all_class']     = $data1;
-            $response['content']['academic_year'] = $data2;
+            $response['content']['academic_year'] = $data1;
+            $response['content']['all_class']     = $data2;
 
         } catch (Error | Exception $error) {
             printError($error);

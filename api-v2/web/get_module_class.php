@@ -10,7 +10,10 @@
             $connect = $db->connect();
 
             $module_class = new ModuleClass($connect);
-            $response     = $module_class->getAll();
+            $data         = $module_class->getAllModuleClass();
+
+            $response['status_code'] = 200;
+            $response['content']     = $data;
 
         } catch (Error | Exception $error) {
             printError($error);
