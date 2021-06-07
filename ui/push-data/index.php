@@ -29,7 +29,7 @@
 
             <div class=" mt-4">
               <span>Tải lên file điểm danh để phục vụ công việc nhập dữ liệu lớp học vào cở sở dữ liệu</span><br>
-              <span>VD: K60 Công nghệ thông tin 1, K60 Vẫn tải kinh tế 1,...</span><br>
+              <span>VD: K60 Công nghệ thông tin 1, K60 Vận tải kinh tế 1,...</span><br>
               <a href="../push-data/src/data.xls">Tải file mẫu tại đây</a><br>
                 <legend>Tải lên tệp dữ liệu:</legend>
 

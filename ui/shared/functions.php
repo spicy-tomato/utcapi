@@ -52,7 +52,8 @@
 
         echo '
   <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark px-5">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark bg-blue px-5"
+          style="background-color: #172d56!important">
       <a href="' . $home_link . '" class="navbar-brand">Trang chủ</a>
       <div class="collapse navbar-collapse d-flex justify-content-between">
         <ul class="navbar-nav">
