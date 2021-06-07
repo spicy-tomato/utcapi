@@ -25,7 +25,7 @@
 
             $this->ch = curl_init();
 
-            $this->getAccessToken();
+            $this->_getAccessToken();
             $this->loginQLDT();
         }
 
@@ -34,7 +34,7 @@
             return $this->status;
         }
 
-        private function getAccessToken ()
+        private function _getAccessToken ()
         {
             file_get_contents($this->url);
             $response_header = explode(' ', $http_response_header[3]);
@@ -52,7 +52,7 @@
             $form_login_request['txtUserName'] = $this->student_id;
             $form_login_request['txtPassword'] = $this->qldt_password;
 
-            $response = $this->postRequest($this->url_login, $form_login_request);
+            $response = $this->_postRequest($this->url_login, $form_login_request);
 
             $html = new simple_html_dom();
             $html->load($response);
@@ -75,8 +75,8 @@
                 $this->is_all = true;
             }
 
-            $this->getFormRequireDataOfStudentModuleScore();
-            $data = $this->getDataModuleScore();
+            $this->_getFormRequireDataOfStudentModuleScore();
+            $data = $this->_getDataModuleScore();
             $data = $this->_formatModuleScoreData($data);
 
             curl_close($this->ch);
@@ -84,9 +84,9 @@
             return $data;
         }
 
-        private function getFormRequireDataOfStudentModuleScore ()
+        private function _getFormRequireDataOfStudentModuleScore ()
         {
-            $response = $this->getRequest($this->url_student_mark);
+            $response = $this->_getRequest($this->url_student_mark);
 
             $html = new simple_html_dom();
             $html->load($response);
@@ -116,13 +116,13 @@
 
         }
 
-        private function getDataModuleScore ()
+        private function _getDataModuleScore ()
         {
             $data = null;
 
             foreach ($this->semester_arr as $semester) {
                 $this->form_crawl_request['drpHK'] = $semester;
-                $response                          = $this->postRequest($this->url_student_mark, $this->form_crawl_request);
+                $response                          = $this->_postRequest($this->url_student_mark, $this->form_crawl_request);
 
                 $html = new simple_html_dom();
                 $html->load($response);
@@ -173,7 +173,7 @@
             return $data;
         }
 
-        private function postRequest ($url, $post_form)
+        private function _postRequest ($url, $post_form)
         {
             curl_setopt($this->ch, CURLOPT_URL, $url);
             curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
@@ -187,7 +187,7 @@
             return $response;
         }
 
-        private function getRequest ($url)
+        private function _getRequest ($url)
         {
             curl_setopt($this->ch, CURLOPT_URL, $url);
             curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
@@ -201,8 +201,8 @@
         public function getStudentExamSchedule ($semester) : array
         {
             $this->semester_arr = $semester;
-            $this->getFormRequireDataOfStudentExamSchedule();
-            $data = $this->getDataExamSchedule();
+            $this->_getFormRequireDataOfStudentExamSchedule();
+            $data = $this->_getDataExamSchedule();
 
             curl_close($this->ch);
 
@@ -216,9 +216,9 @@
             return $data;
         }
 
-        private function getFormRequireDataOfStudentExamSchedule ()
+        private function _getFormRequireDataOfStudentExamSchedule ()
         {
-            $response = $this->getRequest($this->url_student_exam_schedule);
+            $response = $this->_getRequest($this->url_student_exam_schedule);
 
             $html = new simple_html_dom();
             $html->load($response);
@@ -244,14 +244,14 @@
             $this->semester_arr = $data;
         }
 
-        private function getDataExamSchedule ()
+        private function _getDataExamSchedule ()
         {
             $data = null;
 
             foreach ($this->semester_arr as $semester_key => $semester_value) {
                 $this->form_crawl_request['drpSemester'] = $semester_value;
 
-                $response = $this->postRequest($this->url_student_exam_schedule, $this->form_crawl_request);
+                $response = $this->_postRequest($this->url_student_exam_schedule, $this->form_crawl_request);
                 $html     = new simple_html_dom();
                 $html->load($response);
                 $exam_type_by_shtmldom = $html->find('select[id=drpDotThi] option');
@@ -277,7 +277,7 @@
                         $this->form_crawl_request['__VIEWSTATE']       = $html->find('input[name=__VIEWSTATE]', 0)->value;
                         $this->form_crawl_request['__EVENTVALIDATION'] = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
 
-                        $response = $this->postRequest($this->url_student_exam_schedule, $this->form_crawl_request);
+                        $response = $this->_postRequest($this->url_student_exam_schedule, $this->form_crawl_request);
                         $html->load($response);
 
                         $this->form_crawl_request['__EVENTTARGET'] = 'drpSemester';

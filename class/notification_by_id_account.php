@@ -88,7 +88,7 @@
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 if (!empty($record)) {
-                    $record = $this->modifyResponse($record);
+                    $record = $this->_modifyResponse($record);
                 }
 
                 return $record;
@@ -124,7 +124,7 @@
             }
         }
 
-        private function modifyResponse ($arr) : array
+        private function _modifyResponse ($arr) : array
         {
             $data = [];
 

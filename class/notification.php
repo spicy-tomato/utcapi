@@ -42,7 +42,15 @@
 
         public function create () : string
         {
-            $sql_query = $this->_queryWithTime();
+            $sql_query =
+                'INSERT INTO
+                    ' . self::notification_table . '
+                    (Title, Content, Typez, ID_Sender, 
+                    Time_Create, Time_Start, Time_End)
+                VALUES
+                    (:title, :content, :typez, :id_sender, 
+                    :time_create, :time_start, :time_end) 
+                ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -61,21 +69,6 @@
             } catch (PDOException $error) {
                 throw $error;
             }
-        }
-
-        private function _queryWithTime () : string
-        {
-            $sql_query =
-                'INSERT INTO
-                    ' . self::notification_table . '
-                    (Title, Content, Typez, ID_Sender, 
-                    Time_Create, Time_Start, Time_End)
-                VALUES
-                    (:title, :content, :typez, :id_sender, 
-                    :time_create, :time_start, :time_end) 
-                ';
-
-            return $sql_query;
         }
 
         private function _getIdNotification () : string

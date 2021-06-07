@@ -21,7 +21,7 @@
 
         if (empty($arr_fix_schedules)) {
             $response['status_code'] = 200;
-            $response['content']     = 'No Request Found';
+            $response['content']     = 'No Data Change';
             response($response, true);
         }
 
