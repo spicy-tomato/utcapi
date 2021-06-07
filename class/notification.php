@@ -4,7 +4,6 @@
     class Notification
     {
         private const notification_table = 'Notification';
-        private const notification_account_table = 'Notification_Account';
 
         private PDO $connect;
         private string $title;
