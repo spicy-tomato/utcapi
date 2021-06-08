@@ -2,10 +2,10 @@
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/notification.php';
+    include_once dirname(__DIR__, 2) . '/class/helper.php';
     include_once dirname(__DIR__, 2) . '/class/notification_by_id_account.php';
     include_once dirname(__DIR__, 2) . '/class/device.php';
     include_once dirname(__DIR__, 2) . '/class/firebase_notification.php';
-    include_once dirname(__DIR__, 2) . '/class/helper.php';
     set_error_handler('exceptions_error_handler');
 
     $data = json_decode(file_get_contents('php://input'), true);

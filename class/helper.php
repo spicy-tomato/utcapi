@@ -133,6 +133,7 @@
         {
             if (empty($id_student_list))
             {
+                $this->id_account_list = [];
                 return;
             }
 

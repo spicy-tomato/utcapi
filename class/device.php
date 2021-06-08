@@ -18,6 +18,11 @@
 
         public function getTokenByIdStudent ($id_student_list) : array
         {
+            if (empty($id_student_list))
+            {
+                return [];
+            }
+
             $sql_query_1 = '
                 CREATE TEMPORARY TABLE temp3 (
                   ID_Student varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
