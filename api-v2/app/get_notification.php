@@ -13,6 +13,9 @@
             $db      = new Database(true);
             $connect = $db->connect();
 
+            $data_version         = new DataVersion($connect, $_GET['id_student']);
+            $notification_version = $data_version->getDataVersion('Notification');
+
             $notification_by_id_account = new NotificationByIDAccount($connect);
             $data                       = $notification_by_id_account->getAll($_GET['id_account']);
 
@@ -20,8 +23,10 @@
                 $response['status_code'] = 204;
             }
             else {
-                $response['status_code'] = 200;
-                $response['content']     = $data;
+                $response['status_code']             = 200;
+                $response['content']['data']         = $data;
+                $response['content']['data_version'] = $notification_version;
+
             }
 
         } catch (Error | Exception $error) {

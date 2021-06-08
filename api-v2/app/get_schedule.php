@@ -17,6 +17,9 @@
             $account    = new Account($connect);
             $permission = $account->getAccountPermission($_GET['id']);
 
+            $data_version     = new DataVersion($connect, $_GET['id']);
+            $schedule_version = $data_version->getDataVersion('Schedule');
+
             switch ($permission) {
                 case '0';
                     {
@@ -43,8 +46,9 @@
             }
             else {
                 if (!isset($response['status_code'])) {
-                    $response['status_code'] = 200;
-                    $response['content']     = $data;
+                    $response['status_code']             = 200;
+                    $response['content']['data']         = $data;
+                    $response['content']['data_version'] = $schedule_version;
                 }
             }
 
