@@ -59,15 +59,14 @@
             $id_notification = $notification->create();
             $notification_by_id_account->pushData($id_account_list, $id_notification);
             $firebase_notification->send();
-            //            if ($changes['Time_Accept_Request'] == $arr_fix_schedules[count($arr_fix_schedules) - 1]['Time_Accept_Request']) {
-            //                file_put_contents('last_schedule_fixed.txt', $changes['Time_Accept_Request']);
-            //
-            //                EnvIO::loadEnv();
-            //                $root_folder   = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
-            //                $file_location = $_SERVER['DOCUMENT_ROOT'] . $root_folder . '/api-v2/web/cron_jobs/last_schedule_fixed.txt';
-            //
-            //                $aws->uploadFile('last_schedule_fixed.txt', $file_location, 'cron-jobs/');
-            //            }
+            if ($changes['Time_Accept_Request'] == $arr_fix_schedules[count($arr_fix_schedules) - 1]['Time_Accept_Request']) {
+                EnvIO::loadEnv();
+                $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
+
+                file_put_contents('last_schedule_fixed.txt', $changes['Time_Accept_Request']);
+                $file_location = $_SERVER['DOCUMENT_ROOT'] . $root_folder . '/api-v2/web/cron_jobs/last_schedule_fixed.txt';
+//                $aws->uploadFile('last_schedule_fixed.txt', $file_location, 'cron-jobs/');
+            }
 
             $response['status_code'] = 200;
             $response['content']     = 'OK';
