@@ -41,10 +41,7 @@
                 $this->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $this->connect->exec('set names utf8');
             } catch (PDOException $error) {
-                printError($error);
-                echo $error->getMessage();
-
-                exit(-1);
+                throw $error;
             }
 
             return $this->connect;
