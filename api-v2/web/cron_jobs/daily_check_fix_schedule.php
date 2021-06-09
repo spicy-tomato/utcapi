@@ -61,7 +61,7 @@
             $firebase_notification      = new FirebaseNotification($info, $token_list);
 
             $id_notification = $notification->create();
-            $notification_by_id_account->pushData($id_account_list, $id_notification);
+//            $notification_by_id_account->pushData($id_account_list, $id_notification);
             $firebase_notification->send();
             if ($changes['Time_Accept_Request'] == $arr_fix_schedules[count($arr_fix_schedules) - 1]['Time_Accept_Request']) {
                 EnvIO::loadEnv();
