@@ -46,7 +46,7 @@
         $info['sender']     = $changes['ID'];
         $info['time_start'] = '';
         $info['time_end']   = '';
-
+var_dump($changes['ID_Module_Class']);
         try {
             $helper = new Helper($connect);
             $helper->getListFromModuleClassList([$changes['ID_Module_Class']]);
@@ -73,7 +73,7 @@
             }
 
             $response['status_code'] = 200;
-            $response['content']     = 'OK';
+            $response['content']     = 'OKkkkkk';
 
         } catch (Error | Exception | MessagingException | FirebaseException $error) {
             printError($error);
