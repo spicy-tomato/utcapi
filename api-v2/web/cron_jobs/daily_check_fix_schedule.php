@@ -75,7 +75,7 @@
 
                 file_put_contents('last_schedule_fixed.txt', $changes['Time_Accept_Request']);
                 $file_location = $_SERVER['DOCUMENT_ROOT'] . $root_folder . '/api-v2/web/cron_jobs/last_schedule_fixed.txt';
-                //                $aws->uploadFile('last_schedule_fixed.txt', $file_location, 'cron-jobs/');
+                $aws->uploadFile('last_schedule_fixed.txt', $file_location, 'cron-jobs/');
             }
 
             $response['status_code'] = 200;

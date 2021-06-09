@@ -1,5 +1,4 @@
 <?php
-    include_once dirname(__DIR__) . '/shared/functions.php';
 
     class Notification
     {
@@ -16,14 +15,14 @@
 
         public function __construct (PDO $connect, array $info)
         {
-            $this->connect         = $connect;
-            $this->title           = $info['title'];
-            $this->content         = $info['content'];
-            $this->typez           = $info['typez'];
-            $this->sender          = $info['sender'];
-            $this->time_create     = $this->_getDateNow();
-            $this->time_start      = $info['time_start'] != '' ? $info['time_start'] . ' 00:00:00.00' : null;
-            $this->time_end        = $info['time_end'] != '' ? $info['time_end'] . ' 23:59:59.00' : null;
+            $this->connect     = $connect;
+            $this->title       = $info['title'];
+            $this->content     = $info['content'];
+            $this->typez       = $info['typez'];
+            $this->sender      = $info['sender'];
+            $this->time_create = $this->_getDateNow();
+            $this->time_start  = $info['time_start'] != '' ? $info['time_start'] . ' 00:00:00.00' : null;
+            $this->time_end    = $info['time_end'] != '' ? $info['time_end'] . ' 23:59:59.00' : null;
         }
 
         private function _getDateNow () : string

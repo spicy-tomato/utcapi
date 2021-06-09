@@ -1,4 +1,5 @@
 <?php
+
     include_once dirname(__DIR__, 3) . '/config/db.php';
     include_once dirname(__DIR__, 3) . '/shared/functions.php';
     include_once dirname(__DIR__, 3) . '/class/module_score.php';

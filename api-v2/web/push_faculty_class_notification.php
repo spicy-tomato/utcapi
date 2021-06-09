@@ -1,4 +1,5 @@
 <?php
+    require dirname(__DIR__) . '/vendor/autoload.php';
 
     use Kreait\Firebase\Exception\FirebaseException;
     use Kreait\Firebase\Exception\MessagingException;

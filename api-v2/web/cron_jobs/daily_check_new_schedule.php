@@ -30,7 +30,7 @@
 
         file_put_contents('last_semester.txt', $newest_semester);
         $file_location = $_SERVER['DOCUMENT_ROOT'] . $root_folder . '/api-v2/web/cron_jobs/last_semester.txt';
-//        $aws->uploadFile('last_semester.txt', $file_location, 'cron-jobs/');
+        $aws->uploadFile('last_semester.txt', $file_location, 'cron-jobs/');
 
         $response['status_code'] = 200;
         $response['content']     = 'OK';
