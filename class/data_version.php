@@ -3,11 +3,13 @@
     class DataVersion
     {
         private const data_version_table = 'Data_Version';
+        private const participate_table = 'Participate';
+        private const module_class_table = 'Module_Class';
 
         private PDO $connect;
         private string $id_student;
 
-        public function __construct (PDO $connect, $id_student)
+        public function __construct (PDO $connect, $id_student = '')
         {
             $this->connect    = $connect;
             $this->id_student = $id_student;
@@ -27,6 +29,30 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $this->id_student]);
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+        public function updateAllScheduleVersion ($newest_semester)
+        {
+            $sql_query = '
+                    UPDATE ' . self::data_version_table . ' dv, 
+                            (SELECT DISTINCT
+                                p.ID_Student 
+                            FROM ' . self::participate_table . ' p, 
+                                 ' . self::module_class_table . ' mc
+                            WHERE 
+                                p.ID_Module_Class = mc.ID_Module_Class AND 
+                                mc.School_Year = :newest_semester) temp3
+                    SET Schedule = Schedule + 1
+                    WHERE temp3.ID_Student = dv.ID_Student
+                    ';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([':newest_semester' => $newest_semester]);
 
             } catch (PDOException $error) {
                 throw $error;

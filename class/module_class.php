@@ -13,7 +13,7 @@
 
         public function getAllModuleClass () : array
         {
-            $latest_semester = $this->_getLatestSemester();
+            $latest_semester = $this->getLatestSemester();
             $first_semester  = '';
             $second_semester = '';
 
@@ -70,7 +70,7 @@
             }
         }
 
-        private function _getLatestSemester ()
+        public function getLatestSemester ()
         {
             $sql_query = 'SELECT MAX(School_Year) latest_semester from ' . self::module_table;
 
