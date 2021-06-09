@@ -18,7 +18,7 @@
 
         public function getTokenByIdStudent ($id_student_list) : array
         {
-            if (empty($id_student_list))
+            if (empty($id_student_list[0]))
             {
                 return [];
             }

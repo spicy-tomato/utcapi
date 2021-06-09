@@ -36,7 +36,6 @@
 
         response($response, true);
     }
-    var_dump($arr_fix_schedules);
 
     foreach ($arr_fix_schedules as $changes) {
         $info['title']      = 'Thay đổi lịch học môn ' . $changes['Module_Name'];
@@ -47,8 +46,13 @@
         $info['sender']     = $changes['ID'];
         $info['time_start'] = '';
         $info['time_end']   = '';
-var_dump($changes['ID_Module_Class']);
+
+        $post_form['info']       = $info;
+        $post_form['class_list'] = [$changes['ID_Module_Class']];
+
         try {
+            $connect = $db->connect();
+
             $helper = new Helper($connect);
             $helper->getListFromModuleClassList([$changes['ID_Module_Class']]);
             $id_student_list = $helper->getIdStudentList();
@@ -62,8 +66,9 @@ var_dump($changes['ID_Module_Class']);
             $firebase_notification      = new FirebaseNotification($info, $token_list);
 
             $id_notification = $notification->create();
-//            $notification_by_id_account->pushData($id_account_list, $id_notification);
+            $notification_by_id_account->pushData($id_account_list, $id_notification);
             $firebase_notification->send();
+
             if ($changes['Time_Accept_Request'] == $arr_fix_schedules[count($arr_fix_schedules) - 1]['Time_Accept_Request']) {
                 EnvIO::loadEnv();
                 $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
@@ -74,7 +79,7 @@ var_dump($changes['ID_Module_Class']);
             }
 
             $response['status_code'] = 200;
-            $response['content']     = 'OKkkkkk';
+            $response['content']     = 'OK';
 
         } catch (Error | Exception | MessagingException | FirebaseException $error) {
             printError($error);
