@@ -45,7 +45,7 @@
         {
             try {
                 $result = $this->s3->getObject([
-                    'Bucket' => 'utcapi-file-upload',
+                    'Bucket' => $this->bucket_name,
                     'Key' => $folder . $file_name,
                     'Body' => 'this is the body!',
                 ]);
