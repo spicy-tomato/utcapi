@@ -36,6 +36,7 @@
 
         response($response, true);
     }
+    var_dump($arr_fix_schedules);
 
     foreach ($arr_fix_schedules as $changes) {
         $info['title']      = 'Thay đổi lịch học môn ' . $changes['Module_Name'];
