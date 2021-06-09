@@ -1,4 +1,8 @@
 <?php
+
+    use Kreait\Firebase\Exception\FirebaseException;
+    use Kreait\Firebase\Exception\MessagingException;
+
     include_once dirname(__DIR__, 3) . '/config/db.php';
     include_once dirname(__DIR__, 3) . '/shared/functions.php';
     include_once dirname(__DIR__, 3) . '/class/fix_schedule.php';
@@ -65,13 +69,13 @@
 
                 file_put_contents('last_schedule_fixed.txt', $changes['Time_Accept_Request']);
                 $file_location = $_SERVER['DOCUMENT_ROOT'] . $root_folder . '/api-v2/web/cron_jobs/last_schedule_fixed.txt';
-//                $aws->uploadFile('last_schedule_fixed.txt', $file_location, 'cron-jobs/');
+                //                $aws->uploadFile('last_schedule_fixed.txt', $file_location, 'cron-jobs/');
             }
 
             $response['status_code'] = 200;
             $response['content']     = 'OK';
 
-        } catch (Error | Exception $error) {
+        } catch (Error | Exception | MessagingException | FirebaseException $error) {
             printError($error);
             $response['status_code'] = 500;
         }

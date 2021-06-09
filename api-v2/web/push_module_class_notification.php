@@ -1,4 +1,8 @@
 <?php
+
+    use Kreait\Firebase\Exception\FirebaseException;
+    use Kreait\Firebase\Exception\MessagingException;
+
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/notification.php';
@@ -37,7 +41,7 @@
             $response['status_code'] = 200;
             $response['content']     = 'OK';
 
-        } catch (Error | Exception $error) {
+        } catch (Error | Exception | MessagingException | FirebaseException $error) {
             printError($error);
             $response['status_code'] = 500;
         }
