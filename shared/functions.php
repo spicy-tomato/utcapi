@@ -14,7 +14,7 @@
         }
     }
 
-    function printError (Exception $error)
+    function printError ($error)
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $date    = date('d/m/Y H:i:s');

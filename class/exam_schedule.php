@@ -1,5 +1,4 @@
 <?php
-    include_once dirname(__DIR__) . '/shared/functions.php';
 
     class ExamSchedule
     {
@@ -114,7 +113,7 @@
                 'UPDATE
                     ' . self::exam_schedule_table . '
                 SET  
-                    Date_Start = :date_start, Time_Start = :time_Start, 
+                    Date_Start = :date_start, Time_Start = :time_Start, Method = :method,
                     Identification_Number = :identification_number, Room = :room
                 WHERE 
                     Semester = :semester AND
@@ -129,6 +128,7 @@
                     ':id_module' => $value[2],
                     ':date_start' => $value[5],
                     ':time_Start' => $value[6],
+                    ':method' => $value[7],
                     ':identification_number' => $value[8],
                     ':room' => $value[9]
                 ]);
@@ -202,19 +202,10 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $this->id_student]);
-
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $record = $this->_formatExamScheduleResponse($record);
 
-                if (empty($record)) {
-                    $data['status_code'] = 204;
-                }
-                else {
-                    $data['status_code']     = 200;
-                    $data['content']['data'] = $record;
-                }
-
-                return $data;
+                return $record;
 
             } catch (PDOException $error) {
                 throw $error;

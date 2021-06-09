@@ -1,4 +1,5 @@
 <?php
+
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/academic_year.php';
@@ -12,7 +13,7 @@
             $academic_year = new AcademicYear($connect);
             $response      = $academic_year->getAcademicYear();
 
-        } catch (Exception $error) {
+        } catch (Error | Exception $error) {
             printError($error);
             $response['status_code'] = 500;
         }

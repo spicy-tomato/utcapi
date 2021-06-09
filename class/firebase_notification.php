@@ -25,6 +25,10 @@
             $this->_initFactory();
         }
 
+        /**
+         * @throws MessagingException
+         * @throws FirebaseException
+         */
         public function send ()
         {
             $db      = new Database(true);
@@ -38,10 +42,11 @@
                 try {
                     $this->messaging->send($message);
                 } catch (MessagingException | FirebaseException $error) {
-                    printError($error);
-
                     if ($error->getCode() == 0) {
                         $device->deleteOldToken($token);
+                    }
+                    else {
+                        throw $error;
                     }
                 }
             }

@@ -124,13 +124,18 @@
 
         public function getAccountListFromStudentList () : array
         {
-            $this->_getAccountListFromStudentList($this->id_student_list);
+            $this->_getAccountListFromStudentList();
 
             return $this->id_account_list;
         }
 
-        private function _getAccountListFromStudentList ($id_student_list)
+        private function _getAccountListFromStudentList ()
         {
+            if (empty($this->id_student_list[0])) {
+                $this->id_account_list = [];
+                return;
+            }
+
             $sql_query_1 = '
                 CREATE TEMPORARY TABLE temp1 (
                   ID_Student varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
@@ -138,7 +143,7 @@
                 ';
 
             $sql_of_list =
-                implode(',', array_fill(0, count($id_student_list), '(?)'));
+                implode(',', array_fill(0, count($this->id_student_list), '(?)'));
 
             $sql_query_2 =
                 'INSERT INTO temp1
@@ -163,7 +168,7 @@
                 $stmt->execute();
 
                 $stmt = $this->connect->prepare($sql_query_2);
-                $stmt->execute($id_student_list);
+                $stmt->execute($this->id_student_list);
 
                 $stmt = $this->connect->prepare($sql_query_3);
                 $stmt->execute();
