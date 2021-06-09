@@ -1,4 +1,5 @@
 <?php
+
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/device.php';
@@ -17,7 +18,7 @@
             $token    = new Device($connect, $data['id_student'], $data['token']);
             $response = $token->upsertToken();
 
-        } catch (Exception $error) {
+        } catch (Error | Exception $error) {
             printError($error);
             $response['status_code'] = 500;
         }

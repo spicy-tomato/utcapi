@@ -1,5 +1,4 @@
 <?php
-    include_once dirname(__DIR__) . '/shared/functions.php';
 
     class Account
     {

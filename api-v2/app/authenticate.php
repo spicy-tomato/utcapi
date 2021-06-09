@@ -1,4 +1,5 @@
 <?php
+
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/account.php';
@@ -39,9 +40,9 @@
                 }
             }
 
-        } catch (Exception $error) {
+        } catch (Error | Exception $error) {
             printError($error);
-            $response['status_code']        = 500;
+            $response['status_code'] = 500;
         }
     }
     else {

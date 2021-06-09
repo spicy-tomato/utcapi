@@ -1,5 +1,4 @@
 <?php
-    include_once dirname(__DIR__) . '/shared/functions.php';
 
     class NotificationByIDAccount
     {
@@ -87,17 +86,11 @@
                 $stmt->execute([':id_account' => $id_account]);
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                if (empty($record)) {
-                    $data['status_code'] = 204;
-                }
-                else {
-                    $record = $this->modifyResponse($record);
-
-                    $data['status_code']     = 200;
-                    $data['content']['data'] = $record;
+                if (!empty($record)) {
+                    $record = $this->_modifyResponse($record);
                 }
 
-                return $data;
+                return $record;
 
             } catch (PDOException $error) {
                 throw $error;
@@ -107,6 +100,11 @@
 
         public function pushData (array $id_account_list, string $id_notification) : void
         {
+            if (empty($id_account_list))
+            {
+                return;
+            }
+
             $sql_of_list =
                 implode(',', array_fill(0, count($id_account_list), '(' . $id_notification . ',?)'));
 
@@ -130,7 +128,7 @@
             }
         }
 
-        private function modifyResponse ($arr) : array
+        private function _modifyResponse ($arr) : array
         {
             $data = [];
 

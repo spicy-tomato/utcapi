@@ -1,4 +1,5 @@
 <?php
+
     include_once dirname(__DIR__, 3) . '/config/db.php';
     include_once dirname(__DIR__, 3) . '/shared/functions.php';
     include_once dirname(__DIR__, 3) . '/class/module_score.php';
@@ -25,34 +26,36 @@
 
             $crawl = new CrawlQLDTData($data['id_student'], $data['qldt_password']);
 
-            if (isset($crawl_data[0])) {
-                if ($crawl_data[0] == -1) {
+            switch ($crawl->getStatus()) {
+                case -1:
                     $response['status_code'] = 500;
-                }
-                else {
+                    break;
+
+                case 0:
                     $response['status_code'] = 401;
                     $response['content']     = 'Invalid Password';
-                }
+                    break;
+
+                case 1:
+                    $module_score = new ModuleScore($connect_extra, $data['id_student']);
+                    $crawl_data   = $crawl->getStudentModuleScore($data['all']);
+
+                    if ($data['all'] == 'true') {
+                        $module_score->pushAllData($crawl_data);
+                    }
+                    else {
+                        $module_score->pushData($crawl_data);
+                    }
+
+                    $data_version = new DataVersion($connect_main, $data['id_student']);
+                    $data_version->updateDataVersion('Module_Score');
+
+                    $response['status_code'] = 200;
+                    $response['content']     = 'OK';
+                    break;
             }
-            else {
-                $module_score = new ModuleScore($connect_extra, $data['id_student']);
-                $crawl_data   = $crawl->getStudentModuleScore($data['all']);
 
-                if ($data['all'] == 'true') {
-                    $module_score->pushAllData($crawl_data);
-                }
-                else {
-                    $module_score->pushData($crawl_data);
-                }
-
-                $data_version = new DataVersion($connect_main, $data['id_student']);
-                $data_version->updateDataVersion('Module_Score');
-
-                $response['status_code'] = 200;
-                $response['content']     = 'OK';
-            }
-
-        } catch (Exception $error) {
+        } catch (Error | Exception $error) {
             printError($error);
             $response['status_code'] = 500;
         }

@@ -1,4 +1,5 @@
 <?php
+
     include_once dirname(__DIR__, 2) . '/utils/env_io.php';
 
     EnvIO::loadEnv();
@@ -35,12 +36,12 @@
         $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
 
         $home_link      = $root_folder . '/ui/home';
-        $form1_link     = $root_folder . '/ui/forms/department-class';
+        $form1_link     = $root_folder . '/ui/forms/faculty-class';
         $form2_link     = $root_folder . '/ui/forms/module-class';
         $push_data_link = $root_folder . '/ui/push-data';
         $log_out_link   = $root_folder . '/ui/home/logout.php';
 
-        if (stripos($_SERVER['REQUEST_URI'], 'department-class') !== false) {
+        if (stripos($_SERVER['REQUEST_URI'], 'faculty-class') !== false) {
             $nav1_class .= $current_nav;
         }
         elseif (stripos($_SERVER['REQUEST_URI'], 'module-class') !== false) {
@@ -52,7 +53,8 @@
 
         echo '
   <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark px-5">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark bg-blue px-5"
+          style="background-color: #172d56!important">
       <a href="' . $home_link . '" class="navbar-brand">Trang chủ</a>
       <div class="collapse navbar-collapse d-flex justify-content-between">
         <ul class="navbar-nav">
