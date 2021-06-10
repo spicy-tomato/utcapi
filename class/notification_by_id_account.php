@@ -5,6 +5,7 @@
         private const notification_account_table = 'Notification_Account';
         private const account_table = 'Account';
         private const notification_table = 'Notification';
+        private const notification_delete_table = 'Notification_Delete';
         private const other_department_table = 'Other_Department';
         private const department_table = 'Department';
         private const faculty_table = 'Faculty';
@@ -17,7 +18,7 @@
             $this->connect = $connect;
         }
 
-        public function getAll ($id_account) : array
+        public function getAllNotification ($id_account, $id_notification = '1') : array
         {
             $sql_query = '
                     SELECT
@@ -31,6 +32,7 @@
                          ' . self::account_table . ' a  
                     WHERE
                         na.ID_Account = :id_account AND 
+                        n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
                         od.ID = n.ID_Sender AND 
                         a.id = n.ID_Sender 
@@ -46,6 +48,7 @@
                          ' . self::account_table . ' a    
                     WHERE
                         na.ID_Account = :id_account AND 
+                        n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
                         f.ID = n.ID_Sender AND 
                         a.id = n.ID_Sender 
@@ -61,6 +64,7 @@
                          ' . self::account_table . ' a    
                     WHERE
                         na.ID_Account = :id_account AND 
+                        n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
                         t.ID = n.ID_Sender AND 
                         a.id = n.ID_Sender
@@ -76,6 +80,7 @@
                          ' . self::account_table . ' a    
                     WHERE
                         na.ID_Account = :id_account AND 
+                        n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
                         d.ID = n.ID_Sender AND 
                         a.id = n.ID_Sender 
@@ -83,7 +88,10 @@
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':id_account' => $id_account]);
+                $stmt->execute([
+                    ':id_account' => $id_account,
+                    ':id_notification' => $id_notification
+                ]);
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 if (!empty($record)) {
@@ -97,6 +105,28 @@
             }
         }
 
+        public function getDeletedNotification() : array
+        {
+            $sql_query = '
+                SELECT
+                    ID_Notification
+                FROM
+                    ' . self::notification_delete_table . ' nd
+                WHERE
+                    nd.Time_Delete >= DATE_SUB(NOW(), INTERVAL 3 WEEK )
+                ';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+                return $record;
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
 
         public function pushData (array $id_account_list, string $id_notification) : void
         {
