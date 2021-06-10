@@ -34,8 +34,8 @@
                         na.ID_Account = :id_account AND 
                         n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
-                        od.ID = n.ID_Sender AND 
-                        a.id = n.ID_Sender 
+                        od.ID_Account = n.ID_Sender AND 
+                        a.id = n.ID_Sender
                 UNION
                     SELECT
                         n.*, 
@@ -50,7 +50,7 @@
                         na.ID_Account = :id_account AND 
                         n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
-                        f.ID = n.ID_Sender AND 
+                        f.ID_Account = n.ID_Sender AND 
                         a.id = n.ID_Sender 
                 UNION
                     SELECT
@@ -66,7 +66,7 @@
                         na.ID_Account = :id_account AND 
                         n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
-                        t.ID = n.ID_Sender AND 
+                        t.ID_Account = n.ID_Sender AND 
                         a.id = n.ID_Sender
                 UNION
                     SELECT
@@ -82,7 +82,7 @@
                         na.ID_Account = :id_account AND 
                         n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
-                        d.ID = n.ID_Sender AND 
+                        d.ID_Account = n.ID_Sender AND 
                         a.id = n.ID_Sender 
                     ';
 
@@ -148,6 +148,7 @@
             $this->connect->beginTransaction();
             try {
                 $stmt = $this->connect->prepare($sql_query);
+
                 $stmt->execute($id_account_list);
 
                 $this->connect->commit();

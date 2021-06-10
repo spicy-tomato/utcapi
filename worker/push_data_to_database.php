@@ -10,7 +10,7 @@
                     INSERT IGNORE INTO Student 
                     (
                         ID_Student, Student_Name, DoB_Student, ID_Class, 
-                        ID_Card_Number, Phone_Number_Student, Address_Student, ID 
+                        ID_Card_Number, Phone_Number_Student, Address_Student, ID_Acount 
                     ) 
                         VALUES ";
 
