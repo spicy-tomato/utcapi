@@ -61,7 +61,8 @@
             $device     = new Device($connect);
             $token_list = $device->getTokenByIdStudent($id_student_list);
 
-            $notification               = new Notification($connect, $info);
+            $notification = new Notification($connect);
+            $notification->setUpData($info);
             $notification_by_id_account = new NotificationByIDAccount($connect);
             $firebase_notification      = new FirebaseNotification($info, $token_list);
 

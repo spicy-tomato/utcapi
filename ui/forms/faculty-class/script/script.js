@@ -1,5 +1,6 @@
-import {postDataAndRaiseAlert} from '../../alerts.js'
-import {getSender, fetchData, autoFillTemplate, resetInputDate, changeStatusButton} from '../../shared_function.js'
+import {autoFillTemplate, resetInputDate, changeStatusButton} from '../../shared_form_functions.js'
+import {getSender, fetchData} from '../../../script/shared_functions.js'
+import {postDataAndRaiseAlert} from '../../../script/alerts.js'
 
 let sender
 let allClass = []
@@ -64,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     addEventForAcademicYearAndFaculty()
 
-    sender = await getSender()
+    sender = await getSender(2)
 })
 
 /*_____________INITIALIZATION____________________________________*/
@@ -474,7 +475,7 @@ async function trySendNotification() {
 
     const baseUrl = '../../../api-v2/web/push_faculty_class_notification.php'
 
-    let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField)
+    let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField, 'Tạo thông báo mới', '../../home/')
 
     if (madeRequest) {
         document.getElementById('submit_btn').removeEventListener('click', trySendNotification)
