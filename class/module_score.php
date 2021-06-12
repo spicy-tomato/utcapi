@@ -39,36 +39,36 @@
 
         public function pushAllData ($data)
         {
-            foreach ($data as $semester => $module) {
+            foreach ($data as $school_year => $module) {
                 foreach ($module as $value) {
                     try {
-                        $this->_insert($semester, $value);
+                        $this->_insert($school_year, $value);
 
                     } catch (PDOException $error) {
                         if ($error->getCode() == 23000) {
-                            $this->_updateData($semester, $value);
+                            $this->_updateData($school_year, $value);
                         }
                         else {
                             throw $error;
                         }
                     }
                 }
-                unset($data[$semester]);
+                unset($data[$school_year]);
             }
         }
 
-        private function _insert ($semester, $value)
+        private function _insert ($school_year, $value)
         {
             $sql_query =
                 'INSERT INTO
                     ' . self::module_score_table . ' 
                 (
-                Semester, ID_Module, Module_Name, Credit, ID_Student,
+                School_Year, ID_Module, Module_Name, Credit, ID_Student,
                 Evaluation, Process_Score, Test_Score, Theoretical_Score
                 )
                 VALUES
                 (
-                :semester, :id_module, :module_name, :credit, :id_student,
+                :school_year, :id_module, :module_name, :credit, :id_student,
                 :evaluation, :process_score, :test_score, :theoretical_score
                 )';
 
@@ -76,7 +76,7 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
-                    ':semester' => $semester,
+                    ':school_year' => $school_year,
                     ':id_module' => $value[0],
                     ':module_name' => $value[1],
                     ':credit' => $value[2],
@@ -101,14 +101,14 @@
                     Evaluation = :evaluation, Process_Score = :process_score, 
                     Test_Score = :test_score, Theoretical_Score = :theoretical_score
                 WHERE 
-                    Semester = :semester AND
+                    School_Year = :school_year AND
                     ID_Module = :id_module AND
                     ID_Student = :id_student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
-                    ':semester' => $semester,
+                    ':school_year' => $semester,
                     ':id_module' => $value[0],
                     ':id_student' => $value[4],
                     ':evaluation' => $value[3],
@@ -126,7 +126,7 @@
         {
             $sql_query =
                 'SELECT
-                    Semester, Module_Name, Credit, Evaluation, 
+                    School_Year, Module_Name, Credit, Evaluation, 
                     Process_Score, Test_Score, Theoretical_Score
                 FROM
                     ' . self::module_score_table . '
@@ -151,7 +151,7 @@
         {
             $sql_query =
                 'SELECT DISTINCT 
-                    Semester
+                    School_Year
                 FROM
                     ' . self::module_score_table . '
                 WHERE
@@ -162,7 +162,7 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $this->id_student]);
                 $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
-                $record = $this->_formatSemester($record);
+                $record = $this->_formatSchoolYear($record);
 
                 return $record;
 
@@ -171,16 +171,16 @@
             }
         }
 
-        public function getRecentLatestSemester () : array
+        public function getRecentLatestSchoolYear () : array
         {
             $sql_query = '
                 SELECT 
-                   Semester 
+                   School_Year 
                 FROM ' . self::module_score_table . ' 
                 WHERE
                     ID_Student = :id_student
                 ORDER BY 
-                    Semester DESC 
+                    School_Year DESC 
                 LIMIT 0,1';
 
 
@@ -188,7 +188,7 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $this->id_student]);
                 $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
-                $record = $this->_formatSemester($record);
+                $record = $this->_formatSchoolYear($record);
 
                 return $record;
 
@@ -197,7 +197,7 @@
             }
         }
 
-        private function _formatSemester ($data) : array
+        private function _formatSchoolYear ($data) : array
         {
             $formatted_data = [];
             foreach ($data as $item) {

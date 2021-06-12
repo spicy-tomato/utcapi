@@ -8,7 +8,7 @@
     {
         private string $student_id;
         private string $qldt_password;
-        private array $semester_arr = [];
+        private array $school_year_arr = [];
         private array $form_crawl_request = [];
         private string $url = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.Info/Login.aspx';
         private string $url_login = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/';
@@ -98,12 +98,12 @@
 
             $elements = $html->find('select[name=drpHK] option');
             if (!$this->is_all) {
-                $latest_semester = $elements[count($elements) - 1]->innertext;
-                if (strlen(trim($latest_semester, ' ')) == 7) {
-                    $this->semester_arr[] = $elements[count($elements) - 2]->innertext;
+                $latest_school_year = $elements[count($elements) - 1]->innertext;
+                if (strlen(trim($latest_school_year, ' ')) == 7) {
+                    $this->school_year_arr[] = $elements[count($elements) - 2]->innertext;
                 }
                 else {
-                    $this->semester_arr[] = $latest_semester;
+                    $this->school_year_arr[] = $latest_school_year;
                 }
 
                 return;
@@ -111,7 +111,7 @@
 
             unset($elements[0]);
             foreach ($elements as $e) {
-                $this->semester_arr[] = $e->innertext;
+                $this->school_year_arr[] = $e->innertext;
             }
 
         }
@@ -120,8 +120,8 @@
         {
             $data = null;
 
-            foreach ($this->semester_arr as $semester) {
-                $this->form_crawl_request['drpHK'] = $semester;
+            foreach ($this->school_year_arr as $school_year) {
+                $this->form_crawl_request['drpHK'] = $school_year;
                 $response                          = $this->_postRequest($this->url_student_mark, $this->form_crawl_request);
 
                 $html = new simple_html_dom();
@@ -129,7 +129,7 @@
                 $tr = $html->find('table[id=tblStudentMark] tr');
 
                 for ($j = 1; $j < count($tr) - 1; $j++) {
-                    $arr = [];
+                    $arr                      = [];
 
                     $td    = explode('<br><br>', $tr[$j]->children(1)->innertext);
                     $arr[] = $td[1] ?? $td[0];
@@ -152,8 +152,8 @@
 
                     if (count($tr[$j]->children()) == 11) {
                         $arr[]             = null;
-                        $arr[]             = null;
-                        $data[$semester][] = $arr;
+                        $arr[]                = null;
+                        $data[$school_year][] = $arr;
 
                         continue;
                     }
@@ -166,7 +166,7 @@
                     $temp_score = $td[1] ?? $td[0];
                     $arr[]      = $temp_score == '&nbsp;' ? null : $temp_score;
 
-                    $data[$semester][] = $arr;
+                    $data[$school_year][] = $arr;
                 }
             }
 
@@ -200,14 +200,14 @@
 
         public function getStudentExamSchedule ($semester) : array
         {
-            $this->semester_arr = $semester;
+            $this->school_year_arr = $semester;
             $this->_getFormRequireDataOfStudentExamSchedule();
             $data = $this->_getDataExamSchedule();
 
             curl_close($this->ch);
 
             if (empty($data)) {
-                foreach ($this->semester_arr as $key => $value) {
+                foreach ($this->school_year_arr as $key => $value) {
                     $data[$key] = [];
                     break;
                 }
@@ -232,7 +232,7 @@
             $data     = [];
             $flag     = false;
             for ($i = 0; $i < count($elements); $i++) {
-                if (in_array($elements[$i]->innertext, $this->semester_arr)) {
+                if (in_array($elements[$i]->innertext, $this->school_year_arr)) {
                     $data[$elements[$i]->innertext] = $elements[$i]->value;
                     if (!$flag) {
                         $data[$elements[$i - 1]->innertext] = $elements[$i - 1]->value;
@@ -241,15 +241,15 @@
                 }
             }
 
-            $this->semester_arr = $data;
+            $this->school_year_arr = $data;
         }
 
         private function _getDataExamSchedule ()
         {
             $data = null;
 
-            foreach ($this->semester_arr as $semester_key => $semester_value) {
-                $this->form_crawl_request['drpSemester'] = $semester_value;
+            foreach ($this->school_year_arr as $school_year_key => $school_year_value) {
+                $this->form_crawl_request['drpSemester'] = $school_year_value;
 
                 $response = $this->_postRequest($this->url_student_exam_schedule, $this->form_crawl_request);
                 $html     = new simple_html_dom();
@@ -315,7 +315,7 @@
                         $temp_room = $this->_formatWrongWord($tr[$j]->children(8)->innertext);
                         $arr[]     = $this->_formatStringDataCrawled($temp_room);
 
-                        $data[$semester_key][] = $arr;
+                        $data[$school_year_key][] = $arr;
                     }
                 }
 
@@ -353,36 +353,36 @@
 
         private function _formatModuleScoreData ($data) : array
         {
-            $num_of_semester = count($this->semester_arr);
+            $num_of_school_year = count($this->school_year_arr);
 
-            if (strlen(trim($this->semester_arr[0], ' ')) == 7) {
-                foreach ($data[$this->semester_arr[0]] as &$module) {
+            if (strlen(trim($this->school_year_arr[0], ' ')) == 7) {
+                foreach ($data[$this->school_year_arr[0]] as &$module) {
                     $module[3] = 'DAT';
                     $score     = $module[5] != null ? $module[5] : ($module[6] != null ? $module[6] : $module[7]);
                     $module[5] = $score;
                     $module[6] = $score;
                     $module[7] = $score;
 
-                    $data[$this->semester_arr[1]][] = $module;
+                    $data[$this->school_year_arr[1]][] = $module;
                 }
-                unset($data[$this->semester_arr[0]]);
+                unset($data[$this->school_year_arr[0]]);
             }
 
-            if (strlen(trim($this->semester_arr[$num_of_semester - 1], ' ')) == 7) {
-                foreach ($data[$this->semester_arr[$num_of_semester - 1]] as &$module) {
+            if (strlen(trim($this->school_year_arr[$num_of_school_year - 1], ' ')) == 7) {
+                foreach ($data[$this->school_year_arr[$num_of_school_year - 1]] as &$module) {
                     $module[3] = 'DAT';
                     $score     = $module[5] != null ? $module[5] : ($module[6] != null ? $module[6] : $module[7]);
                     $module[5] = $score;
                     $module[6] = $score;
                     $module[7] = $score;
 
-                    $data[$this->semester_arr[0]][] = $module;
+                    $data[$this->school_year_arr[0]][] = $module;
                 }
-                unset($data[$this->semester_arr[$num_of_semester - 1]]);
+                unset($data[$this->school_year_arr[$num_of_school_year - 1]]);
             }
 
-            foreach ($data as &$semester) {
-                foreach ($semester as &$module) {
+            foreach ($data as &$school_year) {
+                foreach ($school_year as &$module) {
                     $module[1] = $this->_formatStringDataCrawled($module[1]);
                 }
             }

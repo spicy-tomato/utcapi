@@ -48,7 +48,7 @@
                         $exam_schedule->pushAllData($crawl_data);
                     }
                     else {
-                        $semester   = $module_score->getRecentLatestSemester();
+                        $semester   = $module_score->getRecentLatestSchoolYear();
                         $crawl_data = $crawl->getStudentExamSchedule($semester);
 
                         if (count($crawl_data) == 2) {
