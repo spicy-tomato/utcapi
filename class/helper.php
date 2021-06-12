@@ -153,14 +153,14 @@
 
             $sql_query_3 = '
                 SELECT 
-                    ID
+                    ID_Account
                 FROM 
                      temp1 t 
                          LEFT OUTER JOIN
                      ' . self::student_table . ' s
                         ON t.ID_Student = s.ID_Student
                 WHERE
-                    ID IS NOT NULL
+                    ID_Account IS NOT NULL
                 ';
 
             try {

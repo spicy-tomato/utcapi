@@ -20,7 +20,7 @@
             $sql_query = '
                 SELECT
                     fix.Time_Accept_Request, md.Module_Name, sch.ID_Module_Class, 
-                    fix.Day_Fix, sch.Day_Schedules, sch.Shift_Schedules, sch.ID_Room, t.ID
+                    fix.Day_Fix, sch.Day_Schedules, sch.Shift_Schedules, sch.ID_Room, t.ID_Account
                 FROM
                     ' . self::fix_table . ' fix,
                     ' . self::schedules_table . ' sch,

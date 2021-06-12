@@ -18,14 +18,25 @@
             $notification_version = $data_version->getDataVersion('Notification');
 
             $notification_by_id_account = new NotificationByIDAccount($connect);
-            $data                       = $notification_by_id_account->getAll($_GET['id_account']);
 
-            if (empty($data)) {
+            $data  = [];
+            $data2 = [];
+
+            if (isset($_GET['id_notification'])) {
+                $data  = $notification_by_id_account->getAllNotification($_GET['id_account'], $_GET['id_notification']);
+                $data2 = $notification_by_id_account->getDeletedNotification();
+            }
+            else {
+                $data = $notification_by_id_account->getAllNotification($_GET['id_account']);
+            }
+
+            if (empty($data) && empty($data2)) {
                 $response['status_code'] = 204;
             }
             else {
                 $response['status_code']             = 200;
                 $response['content']['data']         = $data;
+                $response['content']['index_del']    = $data2;
                 $response['content']['data_version'] = $notification_version;
 
             }

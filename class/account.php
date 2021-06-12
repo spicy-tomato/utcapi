@@ -46,7 +46,7 @@
                 FROM 
                      ' . $table_name . '
                 WHERE 
-                    ID = :id
+                    ID_Account = :id
                 ';
 
             try {
@@ -104,8 +104,8 @@
                          ' . self::teacher_table . ' t,
                          ' . self::account_table . ' a  
                     WHERE
-                        ((s.ID_Student = :id AND s.ID = a.id) OR
-                        (t.ID_Teacher = :id AND t.ID = a.id)) 
+                        ((s.ID_Student = :id AND s.ID_Account = a.id) OR
+                        (t.ID_Teacher = :id AND t.ID_Account = a.id)) 
                     LIMIT 1
                     ';
 
