@@ -63,7 +63,7 @@
 
             if ($response['status_code'] == 200) {
                 $_SESSION['account_owner'] = $response['content']['account_owner'];
-                $_SESSION['id_account']    = $response['content']['ID'];
+                $_SESSION['id_account']    = $response['content']['ID_Account'];
 
                 header('Location: ../../ui/home');
             }
