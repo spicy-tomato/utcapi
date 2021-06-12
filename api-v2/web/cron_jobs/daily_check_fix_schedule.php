@@ -43,7 +43,7 @@
         $info['content']    .= ' sang ca ' . $changes['Shift_Schedules'] . ' ngày ' . convertDate($changes['Day_Schedules']);
         $info['content']    .= ' tại phòng ' . $changes['ID_Room'];
         $info['typez']      = 'study';
-        $info['sender']     = $changes['ID'];
+        $info['sender']     = $changes['ID_Account'];
         $info['time_start'] = '';
         $info['time_end']   = '';
 

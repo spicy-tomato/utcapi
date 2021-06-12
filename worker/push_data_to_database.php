@@ -10,7 +10,7 @@
                     INSERT IGNORE INTO Student 
                     (
                         ID_Student, Student_Name, DoB_Student, ID_Class, 
-                        ID_Card_Number, Phone_Number_Student, Address_Student, ID 
+                        ID_Card_Number, Phone_Number_Student, Address_Student, ID_Account 
                     ) 
                         VALUES ";
 
@@ -101,7 +101,7 @@
                     $sql = self::student_sql . "(";
 
                     if (!$this->isAccountExist($arr["ID_Student"])) {
-                        $arr['ID'] = $this->autoCreateStudentAccount($arr['ID_Student'], $arr['DoB']);
+                        $arr['ID_Account'] = $this->autoCreateStudentAccount($arr['ID_Student'], $arr['DoB']);
                     }
                     break;
 
