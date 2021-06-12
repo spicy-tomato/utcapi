@@ -15,29 +15,28 @@
 
         public function pushData ($data)
         {
-            $recent_latest_semester = $this->_getRecentLatestSemester();
+            $recent_latest_school_year = $this->_getRecentLatestSchoolYear();
 
-            foreach ($data as $semester => $module) {
-                if ($this->_formatSemester($semester) < $recent_latest_semester) {
-                    $this->_deleteBySemester($recent_latest_semester);
+            foreach ($data as $school_year => $module) {
+                if ($this->_formatSchoolYear($school_year) < $recent_latest_school_year) {
+                    $this->_deleteBySchoolYear($recent_latest_school_year);
 
                     return;
                 }
-                if ($this->_formatSemester($semester) == $recent_latest_semester &&
+                if ($this->_formatSchoolYear($school_year) == $recent_latest_school_year &&
                     empty($module)) {
 
-                    $this->_deleteBySemester($this->_formatSemester($semester));
-
+                    $this->_deleteBySchoolYear($this->_formatSchoolYear($school_year));
                     return;
                 }
 
                 foreach ($module as $value) {
                     try {
-                        $this->_insert($semester, $value);
+                        $this->_insert($school_year, $value);
 
                     } catch (PDOException $error) {
                         if ($error->getCode() == 23000) {
-                            $this->_updateData($semester, $value);
+                            $this->_updateData($school_year, $value);
                         }
                         else {
                             throw $error;
@@ -77,19 +76,19 @@
                 INSERT INTO
                     ' . self::exam_schedule_table . ' 
                 (
-                Semester, Examination, ID_Student, ID_Module, Module_Name, Credit,
+                School_Year, Examination, ID_Student, ID_Module, Module_Name, Credit,
                 Date_Start, Time_Start, Method, Identification_Number, Room
                 )
                 VALUES
                 (
-                :semester, :examination, :id_student, :id_module, :module_name, :credit,
+                :school_year, :examination, :id_student, :id_module, :module_name, :credit,
                 :date_start, :time_Start, :method, :identification_number, :room
                 )';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
-                    ':semester' => $this->_formatSemester($semester),
+                    ':school_year' => $this->_formatSchoolYear($semester),
                     ':examination' => $value[0],
                     ':id_student' => $value[1],
                     ':id_module' => $value[2],
@@ -116,14 +115,14 @@
                     Date_Start = :date_start, Time_Start = :time_Start, Method = :method,
                     Identification_Number = :identification_number, Room = :room
                 WHERE 
-                    Semester = :semester AND
+                    School_Year = :school_year AND
                     ID_Student = :id_student AND
                     ID_Module = :id_module';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
-                    ':semester' => $this->_formatSemester($semester),
+                    ':school_year' => $this->_formatSchoolYear($semester),
                     ':id_student' => $value[1],
                     ':id_module' => $value[2],
                     ':date_start' => $value[5],
@@ -138,21 +137,21 @@
             }
         }
 
-        private function _deleteBySemester ($semester)
+        private function _deleteBySchoolYear ($school_year)
         {
             $sql_query = '
                 DELETE
                 FROM
                     ' . self::exam_schedule_table . '
                 WHERE
-                    Semester = :semester AND
+                    School_Year = :school_year AND
                     ID_Student = :id_student
                 ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
-                    ':semester' => $semester,
+                    ':school_year' => $school_year,
                     ':id_student' => $this->id_student
                 ]);
 
@@ -161,16 +160,16 @@
             }
         }
 
-        private function _getRecentLatestSemester ()
+        private function _getRecentLatestSchoolYear ()
         {
             $sql_query = '
                 SELECT 
-                   Semester 
+                   School_Year 
                 FROM ' . self::exam_schedule_table . ' 
                 WHERE
                     ID_Student = :id_student
                 ORDER BY 
-                    Semester DESC 
+                    School_Year DESC 
                 LIMIT 0,1';
 
             try {
@@ -189,7 +188,7 @@
         {
             $sql_query =
                 'SELECT
-                    Semester, Module_Name, Credit, Date_Start,
+                    School_Year, Module_Name, Credit, Date_Start,
                     Time_Start, Method, Identification_Number, Room
                 FROM
                     ' . self::exam_schedule_table . '
@@ -212,12 +211,12 @@
             }
         }
 
-        private function _formatSemester ($semester) : string
+        private function _formatSchoolYear ($school_year) : string
         {
-            $semester_split = explode('_', $semester);
-            $semester       = $semester_split[1] . '_' . $semester_split[2] . '_' . $semester_split[0];
+            $semester_split = explode('_', $school_year);
+            $school_year    = $semester_split[1] . '_' . $semester_split[2] . '_' . $semester_split[0];
 
-            return $semester;
+            return $school_year;
         }
 
         private function _formatExamScheduleResponse ($data)

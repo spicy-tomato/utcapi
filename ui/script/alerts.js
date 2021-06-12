@@ -1,12 +1,12 @@
-import { postData } from './shared_function.js'
+import { postData } from './shared_functions.js'
 
-function raiseSuccess() {
+function raiseSuccess(okMessage ,linkHome) {
     alertify.confirm('Thêm thông báo thành công!')
         .setHeader('<i class="fas fa-info-circle"></i> Thông tin')
         .setting({
             'labels':
                 {
-                    ok: 'Tạo thông báo mới',
+                    ok: okMessage,
                     cancel: 'Về trang chủ'
                 },
             'defaultFocusOff': true,
@@ -14,23 +14,23 @@ function raiseSuccess() {
             'movable': false,
             'pinnable': false,
             'onok': () => window.location.reload(),
-            'oncancel': () => window.location.replace(('../../home/'))
+            'oncancel': () => window.location.replace((linkHome))
         })
 }
 
 export function raiseEmptyFieldError(field) {
-    alertify.error(`Trường "${ field }" không được để trống!`)
+    alertify.error(`"${ field }" không được để trống!`)
         .delay(3)
         .dismissOthers()
 }
 
-function raiseBackEndError() {
+export function raiseBackEndError() {
     alertify.error('Có lỗi đã xảy ra, hãy thử lại sau!')
         .delay(3)
         .dismissOthers()
 }
 
-export async function postDataAndRaiseAlert(url, data, invalidFieldFunc) {
+export async function postDataAndRaiseAlert(url, data, invalidFieldFunc, okMessage, linkHome) {
     let invalidField = invalidFieldFunc(data)
 
     if (invalidField !== null) {
@@ -39,8 +39,8 @@ export async function postDataAndRaiseAlert(url, data, invalidFieldFunc) {
     }
 
     const response = await postData(url, data)
-    if (response.toString() === 'OK') {
-        raiseSuccess()
+    if (response.status === 200) {
+        raiseSuccess(okMessage, linkHome)
     }
     else {
         raiseBackEndError()

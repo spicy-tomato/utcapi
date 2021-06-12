@@ -1,5 +1,6 @@
-import {postDataAndRaiseAlert} from '../../alerts.js'
-import {getSender, fetchData, autoFillTemplate, resetInputDate, changeStatusButton} from '../../shared_function.js'
+import {autoFillTemplate, resetInputDate, changeStatusButton} from '../../shared_form_functions.js'
+import {getSender, fetchData} from '../../../script/shared_functions.js'
+import {postDataAndRaiseAlert} from '../../../script/alerts.js'
 
 let moduleClassIdList = []
 let sender
@@ -44,7 +45,7 @@ const templateNoti = {
 document.addEventListener('DOMContentLoaded', async () => {
     const CustomSelectionAdapter = $.fn.select2.amd.require('select2/selection/customSelectionAdapter')
 
-    sender = await getSender()
+    sender = await getSender(2)
 
     await loadData()
 
@@ -127,7 +128,7 @@ async function trySendNotification() {
 
     const baseUrl = '../../../api-v2/web/push_module_class_notification.php'
 
-    let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField)
+    let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField, 'Tạo thông báo mới', '../../home/')
 
     if (madeRequest) {
         document.getElementById('submit_btn').removeEventListener('click', trySendNotification)

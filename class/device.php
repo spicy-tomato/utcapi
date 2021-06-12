@@ -67,6 +67,7 @@
 
         public function upsertToken () : array
         {
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
             $current_time = date('Y-m-d H:i:s');
 
             $sql_query =

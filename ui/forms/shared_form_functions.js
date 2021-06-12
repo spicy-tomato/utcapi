@@ -1,38 +1,7 @@
-export async function getSender() {
-    try {
-        const baseUrl = '../../shared/session.php?var=id_account'
-        const init = {
-            method: 'GET',
-            cache: 'no-cache'
-        }
-
-        const response = await fetch(baseUrl, init)
-        const responseJson = await response.json()
-
-        return responseJson
-
-    } catch (e) {
-        console.log(e)
-    }
-}
-
 export function autoFillTemplate(templateNoti) {
     title.value = templateNoti.title
     type.selectedIndex = templateNoti.typez
     content.value = templateNoti.content
-}
-
-//  Get data from database
-export async function fetchData(url) {
-    const init = {
-        method: 'GET',
-        cache: 'no-cache'
-    }
-
-    let response = await fetch(url, init)
-    let responseJson = await response.json()
-
-    return responseJson
 }
 
 export async function postData(url, data) {

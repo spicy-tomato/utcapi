@@ -1,0 +1,57 @@
+#main-area {
+    display: flex;
+}
+
+#left-area {
+    width: 90%;
+}
+
+#right-area {
+    margin-left: 2%;
+    width: 8%;
+}
+
+p {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+th {
+    text-align: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #04AA6D;
+    color: white;
+}
+
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+td {
+    word-wrap: break-word !important;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+.title {
+    width: 25%;
+}
+
+.content {
+    width: 75%;
+}
+
+.label {
+    width: 100%;
+    padding: 15px;
+    cursor: pointer;
+}
+
+button {
+    position: sticky;
+    top: 140px;
+}
