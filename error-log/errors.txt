@@ -24,3 +24,8 @@ Code: 42000
 SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '14:42:52)' at line 4
 C:\xampp\htdocs\utcapi\class\notification_delete.php  29
 =====================================================
+12/06/2021 23:00:08
+Code: 0
+Return value of CrawlQLDTData::getStudentExamSchedule() must be of the type array, null returned
+C:\xampp\htdocs\utcapi\class\crawl_qldt_data.php  216
+=====================================================

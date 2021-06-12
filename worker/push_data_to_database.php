@@ -14,14 +14,6 @@
                     ) 
                         VALUES ";
 
-        private const module_sql = "
-                    INSERT INTO Module 
-                    (
-                        ID_Module, Module_Name, Credit, Semester, Theory, 
-                        Practice, Exercise, Project, Optionz, ID_Department
-                    ) 
-                    VALUES ";
-
         private const module_class_sql = "
                     INSERT INTO Module_Class 
                     (
@@ -31,7 +23,7 @@
                         VALUES ";
 
         private const participate_sql = "
-                    INSERT INTO Participate 
+                    INSERT IGNORE INTO Participate 
                     (
                         ID_Module_Class, ID_Student, Process_Score, Test_Score, 
                         Theoretical_Score, Status_Studying
@@ -103,10 +95,6 @@
                     if (!$this->isAccountExist($arr["ID_Student"])) {
                         $arr['ID_Account'] = $this->autoCreateStudentAccount($arr['ID_Student'], $arr['DoB']);
                     }
-                    break;
-
-                case "Module";
-                    $sql = self::module_sql . "(";
                     break;
 
                 case "Module_Class";

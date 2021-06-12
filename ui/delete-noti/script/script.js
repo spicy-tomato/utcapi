@@ -41,14 +41,18 @@ function createScrollList() {
         let colTag1 = createColumn()
         let colTag2 = createColumn()
         let colTag3 = createColumn()
+        let colTag4 = createColumn()
 
         colTag1.append(createCheckBox(e.ID_Notification))
         colTag2.append(createLabel(e.Title, e.ID_Notification))
         colTag3.append(createLabel(e.Content, e.ID_Notification))
+        colTag4.append(createLabel(formatDate(e.Time_Create), e.ID_Notification))
 
         rowTag.appendChild(colTag1)
         rowTag.appendChild(colTag2)
         rowTag.appendChild(colTag3)
+        rowTag.appendChild(colTag4)
+
         selectTag.appendChild(rowTag)
         if (i === 12) {
             rowTag.id = 'observe'
@@ -57,6 +61,15 @@ function createScrollList() {
         i++
     }
 }
+
+function formatDate(date) {
+    let arr = date.split(' ')
+    let arr2 = arr[0].split('-')
+    let formatedDate = arr2[2] + '-' + arr2[1] + '-' + arr2[0] + ' ' + arr[1]
+
+    return formatedDate
+}
+
 
 function createCheckBox(index) {
     let checkbox = document.createElement('input')

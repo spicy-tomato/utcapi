@@ -188,7 +188,7 @@
         {
             $sql_query =
                 'SELECT
-                    School_Year, Module_Name, Credit, Date_Start,
+                    ID, School_Year, Module_Name, Credit, Date_Start,
                     Time_Start, Method, Identification_Number, Room
                 FROM
                     ' . self::exam_schedule_table . '
@@ -222,6 +222,7 @@
         private function _formatExamScheduleResponse ($data)
         {
             foreach ($data as &$value) {
+                $value['ID']                    = intval($value['ID']);
                 $value['Credit']                = intval($value['Credit']);
                 $value['Identification_Number'] = intval($value['Identification_Number']);
                 $date_split                     = explode('-', $value['Date_Start']);

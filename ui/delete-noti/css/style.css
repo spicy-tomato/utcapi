@@ -42,7 +42,11 @@ tr:hover {
 }
 
 .content {
-    width: 75%;
+    width: 70%;
+}
+
+.time-create {
+    width: 5%;
 }
 
 .label {

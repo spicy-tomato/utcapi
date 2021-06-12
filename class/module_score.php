@@ -63,12 +63,12 @@
                 'INSERT INTO
                     ' . self::module_score_table . ' 
                 (
-                School_Year, ID_Module, Module_Name, Credit, ID_Student,
+                School_Year, ID_Student, ID_Module, Module_Name, Credit,
                 Evaluation, Process_Score, Test_Score, Theoretical_Score
                 )
                 VALUES
                 (
-                :school_year, :id_module, :module_name, :credit, :id_student,
+                :school_year, :id_student, :id_module, :module_name, :credit,
                 :evaluation, :process_score, :test_score, :theoretical_score
                 )';
 
@@ -126,7 +126,7 @@
         {
             $sql_query =
                 'SELECT
-                    School_Year, Module_Name, Credit, Evaluation, 
+                    ID, School_Year, Module_Name, Credit, Evaluation, 
                     Process_Score, Test_Score, Theoretical_Score
                 FROM
                     ' . self::module_score_table . '
@@ -211,6 +211,7 @@
         private function _formatScoreResponse ($data)
         {
             foreach ($data as &$value) {
+                $value['ID']                = intval($value['ID']);
                 $value['Credit']            = intval($value['Credit']);
                 $value['Process_Score']     = floatval($value['Process_Score']);
                 $value['Test_Score']        = is_null($value['Test_Score']) ? $value['Test_Score'] : floatval($value['Test_Score']);
