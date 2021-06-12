@@ -30,16 +30,18 @@
         $nav1_class  = 'nav-link';
         $nav2_class  = 'nav-link';
         $nav3_class  = 'nav-link';
+        $nav4_class  = 'nav-link';
         $current_nav = ' active';
 
         EnvIO::loadEnv();
         $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
 
-        $home_link      = $root_folder . '/ui/home';
-        $form1_link     = $root_folder . '/ui/forms/faculty-class';
-        $form2_link     = $root_folder . '/ui/forms/module-class';
-        $push_data_link = $root_folder . '/ui/push-data';
-        $log_out_link   = $root_folder . '/ui/home/logout.php';
+        $home_link        = $root_folder . '/ui/home';
+        $form1_link       = $root_folder . '/ui/forms/faculty-class';
+        $form2_link       = $root_folder . '/ui/forms/module-class';
+        $delete_noti_link = $root_folder . '/ui/delete-noti';
+        $push_data_link   = $root_folder . '/ui/push-data';
+        $log_out_link     = $root_folder . '/ui/home/logout.php';
 
         if (stripos($_SERVER['REQUEST_URI'], 'faculty-class') !== false) {
             $nav1_class .= $current_nav;
@@ -47,8 +49,11 @@
         elseif (stripos($_SERVER['REQUEST_URI'], 'module-class') !== false) {
             $nav2_class .= $current_nav;
         }
-        elseif (stripos($_SERVER['REQUEST_URI'], 'push-data') !== false) {
+        elseif (stripos($_SERVER['REQUEST_URI'], 'delete-noti') !== false) {
             $nav3_class .= $current_nav;
+        }
+        elseif (stripos($_SERVER['REQUEST_URI'], 'push-data') !== false) {
+            $nav4_class .= $current_nav;
         }
 
         echo '
@@ -65,7 +70,10 @@
             <a href="' . $form2_link . '" class="' . $nav2_class . '">Lớp học phần</a>
           </li>
           <li class="navbar-item">
-            <a href="' . $push_data_link . '" class="' . $nav3_class . '">Nhập dữ liệu</a>
+            <a href="' . $delete_noti_link . '" class="' . $nav3_class . '">Xóa thông báo</a>
+          </li>
+          <li class="navbar-item">
+            <a href="' . $push_data_link . '" class="' . $nav4_class . '">Nhập dữ liệu</a>
           </li>
         </ul>
 

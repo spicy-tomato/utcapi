@@ -13,9 +13,13 @@
         private ?string $time_start;
         private ?string $time_end;
 
-        public function __construct (PDO $connect, array $info)
+        public function __construct (PDO $connect)
         {
-            $this->connect     = $connect;
+            $this->connect = $connect;
+        }
+
+        public function setUpData (array $info)
+        {
             $this->title       = $info['title'];
             $this->content     = $info['content'];
             $this->typez       = $info['typez'];
@@ -63,6 +67,54 @@
                 $id_notification = $this->_getIdNotification();
 
                 return $id_notification;
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+        public function getNotificationForSender ($id_sender, $num) : array
+        {
+            $sql_query =
+                'SELECT
+                    ID_Notification, Title, Content
+                FROM
+                    ' . self::notification_table . '
+                WHERE  
+                    ID_Sender = :id_sender
+                ORDER BY 
+                    ID_Notification DESC
+                LIMIT 
+                    ' . $num . ',15';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([':id_sender' => $id_sender]);
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                return $record;
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+        public function deleteNotification ($index_arr)
+        {
+            var_dump($index_arr);
+
+            $sql_of_list = implode(',', array_fill(0, count($index_arr), '?'));
+
+            $sql_query =
+                'DELETE
+                FROM
+                    ' . self::notification_table . '
+                WHERE  
+                    ID_Notification IN (' . $sql_of_list . ')';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute($index_arr);
 
             } catch (PDOException $error) {
                 throw $error;

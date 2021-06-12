@@ -24,7 +24,7 @@
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
       <!-- custom input date -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
-      <link rel="stylesheet" href="../alert.css">
+      <link rel="stylesheet" href="../../css/alert.css">
     ');
 ?>
 
