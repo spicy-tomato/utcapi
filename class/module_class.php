@@ -47,6 +47,8 @@
                          LEFT OUTER JOIN
                      ' . self::module_table . ' mc
                         ON t.School_Year = mc.School_Year
+                WHERE 
+                    ID_Module_Class IS NOT NULL
                 ORDER BY
                     ID_Module_Class
                 ';
