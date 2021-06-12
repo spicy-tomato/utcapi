@@ -35,7 +35,7 @@
                         n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
                         od.ID_Account = n.ID_Sender AND 
-                        a.id = n.ID_Sender
+                        a.id = n.ID_Sender 
                 UNION
                     SELECT
                         n.*, 
@@ -148,7 +148,6 @@
             $this->connect->beginTransaction();
             try {
                 $stmt = $this->connect->prepare($sql_query);
-
                 $stmt->execute($id_account_list);
 
                 $this->connect->commit();

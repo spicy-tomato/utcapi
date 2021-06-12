@@ -23,7 +23,7 @@
                     VALUES ";
 
         private const module_class_sql = "
-                    INSERT IGNORE INTO Module_Class 
+                    INSERT INTO Module_Class 
                     (
                         ID_Module_Class, Module_Class_Name, Number_Plan, 
                         Number_Reality, School_Year, ID_Module, ID_Teacher
@@ -31,7 +31,7 @@
                         VALUES ";
 
         private const participate_sql = "
-                    INSERT IGNORE INTO Participate 
+                    INSERT INTO Participate 
                     (
                         ID_Module_Class, ID_Student, Process_Score, Test_Score, 
                         Theoretical_Score, Status_Studying
@@ -39,7 +39,7 @@
                         VALUES ";
 
         private const schedule_sql = "
-                    INSERT IGNORE INTO Schedules 
+                    INSERT INTO Schedules 
                     (
                         ID_Module_Class, ID_Room, Shift_Schedules, 
                         Day_Schedules, Number_Student
@@ -71,7 +71,7 @@
                                 (?,?,?, null, ?)";
 
             $stmt = $this->connect->prepare($sql);
-            $stmt->execute(array($id_student, null, password_hash($dob, PASSWORD_DEFAULT), 0));
+            $stmt->execute(array($id_student, null, md5($dob), 0));
 
             return $this->connect->lastInsertId();
         }
@@ -101,9 +101,7 @@
                     $sql = self::student_sql . "(";
 
                     if (!$this->isAccountExist($arr["ID_Student"])) {
-                        $arr['ID'] = $this->autoCreateStudentAccount($arr['ID_Student'], $arr['DoB']);
-                    } else {
-                        return  '';
+                        $arr['ID_Account'] = $this->autoCreateStudentAccount($arr['ID_Student'], $arr['DoB']);
                     }
                     break;
 
@@ -142,13 +140,8 @@
 
         public function pushData ($table_name)
         {
-            echo  count($this->data);
             foreach ($this->data as $arr) {
                 $sql = $this->_createSQL($arr, $table_name);
-                if ($sql == '') {
-                    continue;
-                }
-
                 try {
                     $stmt = $this->connect->prepare($sql);
                     $stmt->execute();
