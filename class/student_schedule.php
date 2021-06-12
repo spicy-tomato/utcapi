@@ -51,6 +51,7 @@
         private function _formatResponse ($data)
         {
             foreach ($data as &$e) {
+                $e['ID_Schedules']    = intval($e['ID_Schedules']);
                 $e['Shift_Schedules'] = intval($e['Shift_Schedules']);
             }
 
