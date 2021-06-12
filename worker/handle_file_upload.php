@@ -14,7 +14,7 @@
 
             if ($response != null) {
 
-                $db      = new Database();
+                $db      = new Database(true);
                 $connect = $db->connect();
 
                 $read_file    = new ReadFIle();
