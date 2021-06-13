@@ -10,6 +10,10 @@
             $this->connect = $connect;
         }
 
+        public function insert($class_list)
+        {
+
+        }
         public function getAcademicYear () : array
         {
             $sql_query = '

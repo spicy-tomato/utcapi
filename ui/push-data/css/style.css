@@ -1,0 +1,19 @@
+p {
+    font-weight: 500;
+}
+
+button {
+    margin-left: 18px;
+    margin-bottom: 3px;
+}
+
+#notice {
+    color: red;
+}
+
+.custom-file-upload {
+    border: 1px solid #1c1616;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}

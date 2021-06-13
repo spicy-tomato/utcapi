@@ -3,7 +3,7 @@
     include_once dirname(__DIR__, 3) . '/shared/functions.php';
     include_once dirname(__DIR__, 3) . '/class/module_class.php';
     include_once dirname(__DIR__, 3) . '/class/data_version.php';
-    include_once dirname(__DIR__, 3) . '/worker/amazon_s3.php';
+    include_once dirname(__DIR__, 3) . '/class/amazon_s3.php';
     set_error_handler('exceptions_error_handler');
 
     try {

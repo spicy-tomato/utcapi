@@ -171,4 +171,25 @@
                 throw $error;
             }
         }
+
+        public function autoCreateStudentAccount ($id_student, $dob) : string
+        {
+            $sql_query =
+                'INSERT INTO ' . self::account_table . ' 
+                (
+                     username, email, password, qldt_password, permission
+                ) 
+                VALUES 
+                (
+                     :username, null, :password, null, 0
+                )';
+
+            $stmt = $this->connect->prepare($sql_query);
+            $stmt->execute([
+                ':username' => $id_student,
+                ':password' => password_hash($dob, PASSWORD_DEFAULT)
+            ]);
+
+            return $this->connect->lastInsertId();
+        }
     }
