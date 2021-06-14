@@ -18,18 +18,21 @@
             $account = new Account($this->connect);
 
             foreach ($student_list as $student) {
-                if ($this->isStudentExist($student['ID_Student'])) {
-                    continue;
-                }
+                try {
+                    $student['ID_Account'] = $account->autoCreateStudentAccount($student['ID_Student'], $student['DoB']);
+                    $this->_insert($student);
 
-                $student['ID_Account'] = $account->autoCreateStudentAccount($student['ID_Student'], $student['DoB']);
-                $this->_insert($student);
+                } catch (PDOException $error) {
+                    if ($error->getCode() == 23000) {
+                        continue;
+                    }
+                    throw $error;
+                }
             }
         }
 
         private function _insert ($student)
         {
-            var_dump($student['ID_Class']);
             $sql_query =
                 'INSERT IGNORE INTO ' . self::student_table . ' 
                 (
@@ -51,28 +54,6 @@
                     ':id_class' => $student['ID_Class'],
                     ':id_account' => $student['ID_Account']
                 ]);
-
-            } catch (PDOException $error) {
-                throw $error;
-            }
-        }
-
-        private function isStudentExist ($id_student) : bool
-        {
-            $sql_query =
-                    'SELECT 
-                        ID_Student
-                    FROM 
-                        ' . self::student_table . '
-                    WHERE 
-                        ID_Student = :id_student';
-
-            try {
-                $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':id_student' => $id_student]);
-                $record = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                return (bool)$record;
 
             } catch (PDOException $error) {
                 throw $error;

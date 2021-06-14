@@ -13,30 +13,35 @@
 
         public function insert ($participate_list)
         {
-            $sql_query =
-                'INSERT IGNORE INTO ' . self::participate_table . ' 
+            $arr         = [];
+            $part_of_sql = '';
+            $sql_query   =
+                'INSERT INTO ' . self::participate_table . ' 
                 (
                     ID_Module_Class, ID_Student, Process_Score, Test_Score, 
                     Theoretical_Score, Status_Studying
                 ) 
-                VALUES
-                (
-                    :id_module_class, :id_student, null, null, null, null
-                )
-                ON DUPLICATE KEY UPDATE
-                    ID_Module_Class = :id_module_class';
+                VALUES ';
 
             foreach ($participate_list as $participate) {
-                try {
-                    $stmt = $this->connect->prepare($sql_query);
-                    $stmt->execute([
-                        ':id_module_class' => $participate['ID_Module_Class'],
-                        ':id_student' => $participate['ID_Student']
-                    ]);
+                $arr[] = $participate['ID_Module_Class'];
+                $arr[] = $participate['ID_Student'];
+                $arr[] = $participate['Process_Score'];
+                $arr[] = $participate['Test_Score'];
+                $arr[] = $participate['Theoretical_Score'];
+                $arr[] = $participate['Status_Studying'];
 
-                } catch (PDOException $error) {
-                    throw $error;
-                }
+                $part_of_sql .= '(?,?,?,?,?,?),';
+            }
+            $part_of_sql = rtrim($part_of_sql, ',');
+            $sql_query   .= $part_of_sql . ' ON DUPLICATE KEY UPDATE ID_Module_Class = ID_Module_Class';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute($arr);
+
+            } catch (PDOException $error) {
+                throw $error;
             }
         }
     }

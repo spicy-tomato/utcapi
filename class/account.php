@@ -46,12 +46,12 @@
                 FROM 
                      ' . $table_name . '
                 WHERE 
-                    ID_Account = :id
+                    ID_Account = :id_account
                 ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':id' => $id_account]);
+                $stmt->execute([':id_account' => $id_account]);
 
                 $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -184,12 +184,18 @@
                      :username, null, :password, null, 0
                 )';
 
-            $stmt = $this->connect->prepare($sql_query);
-            $stmt->execute([
-                ':username' => $id_student,
-                ':password' => password_hash($dob, PASSWORD_DEFAULT)
-            ]);
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([
+                    ':username' => $id_student,
+                    ':password' => password_hash($dob, PASSWORD_DEFAULT)
+                ]);
 
-            return $this->connect->lastInsertId();
+                return $this->connect->lastInsertId();
+
+            } catch (PDOException $error) {
+                throw $error;
+
+            }
         }
     }

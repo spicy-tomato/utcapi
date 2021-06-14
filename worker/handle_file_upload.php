@@ -7,6 +7,7 @@
     include_once dirname(__DIR__) . '/class/student.php';
     include_once dirname(__DIR__) . '/class/participate.php';
     set_error_handler('exceptions_error_handler');
+    ini_set('max_execution_time', '300');
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
@@ -29,7 +30,7 @@
                     $data          = $read_file->getData($file_name);
 
 //                    $student->insert($data['student_json']);
-//                    $participate->insert($data['participate_json']);
+                    $participate->insert($data['participate_json']);
 
                     $aws->uploadFile($file_name, $file_location, 'data/');
 
