@@ -28,17 +28,21 @@
         <form action="" autocomplete="off" enctype="multipart/form-data" onsubmit="return false">
 
             <div class=" mt-4">
-              <span>Tải lên file điểm danh để phục vụ công việc nhập dữ liệu lớp học vào cở sở dữ liệu</span><br>
-              <span>VD: K60 Công nghệ thông tin 1, K60 Vận tải kinh tế 1,...</span><br>
+              <span>Tải lên file điểm danh để phục vụ công việc nhập dữ liệu bảng lớp học, sinh viên và bảng tham gia vào cơ sở dữ liệu</span><br>
               <a href="../push-data/src/data.xls">Tải file mẫu tại đây</a><br>
-                <legend>Tải lên tệp dữ liệu:</legend>
-
-                <input id="fileUpload" type="file" name="fileUpload" accept="application/vnd.ms-excel" multiple/>
+              <span id="notice">*Lưu ý: Tính năng này được khuyến khích chỉ nên tải 1 đến 2 file một lần mỗi 1 tiếng</span><br><br>
+              <legend>Tải lên tệp dữ liệu ở đây:</legend>
+                            <label for="fileUpload" class="custom-file-upload">
+                              <i class="fa fa-cloud-upload"></i> Tải tệp
+                            </label>
+                <input id="fileUpload" type="file" name="fileUpload" accept="application/vnd.ms-excel" style="display:none;" multiple/>
                 <button type="button"
                         class="btn btn-primary"
                         name="button"
                         id="submit_btn">Gửi
                 </button>
+                <p>Các tệp đã được chọn:</p>
+                <div id="file-list"></div>
             </div>
 
         </form>

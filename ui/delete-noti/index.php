@@ -34,6 +34,7 @@
             <th></th>
             <th class="title">Tiêu đề</th>
             <th class="content">Nội dung</th>
+            <th class="time-create">Thời gian gửi</th>
           </tr>
         </table>
       </div>
@@ -41,7 +42,7 @@
         <button type="button"
                 class="btn btn-primary"
                 name="button"
-                id="submit_btn">Gửi
+                id="submit_btn">Xóa
         </button>
       </div>
     </main>

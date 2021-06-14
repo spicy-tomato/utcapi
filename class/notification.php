@@ -77,7 +77,7 @@
         {
             $sql_query =
                 'SELECT
-                    ID_Notification, Title, Content
+                    ID_Notification, Title, Content, Time_Create
                 FROM
                     ' . self::notification_table . '
                 WHERE  

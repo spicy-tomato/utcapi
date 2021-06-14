@@ -1,6 +1,6 @@
-
 document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('submit_btn').addEventListener('click', uploadFile)
+    document.getElementById('fileUpload').addEventListener('change', listFileName)
 })
 
 /*--------------------------------------*/
@@ -15,7 +15,7 @@ async function uploadFile() {
     let formData = new FormData();
 
     for (let i = 0; i < fileUpload.files.length; i++) {
-        formData.append('file'+i, fileUpload.files[i]);
+        formData.append('file' + i, fileUpload.files[i]);
     }
     let responseAsJson = await fetch('../../worker/handle_file_upload.php', {
         method: 'POST',
@@ -30,6 +30,18 @@ async function uploadFile() {
     else {
         raiseBackEndError()
     }
+}
+
+function listFileName() {
+    let divTag = document.querySelector('#file-list')
+    divTag.innerHTML = ''
+
+    let innerHtml = ''
+    for (let i = 0; i < fileUpload.files.length; i++) {
+        innerHtml += '<span>' + fileUpload.files[i].name + '</span><br>'
+    }
+
+    divTag.innerHTML = innerHtml
 }
 
 /*---------------------------------------*/
