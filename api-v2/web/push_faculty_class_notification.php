@@ -8,6 +8,7 @@
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/helper.php';
     include_once dirname(__DIR__, 2) . '/class/device.php';
+    include_once dirname(__DIR__, 2) . '/class/data_version.php';
     include_once dirname(__DIR__, 2) . '/class/notification.php';
     include_once dirname(__DIR__, 2) . '/class/firebase_notification.php';
     include_once dirname(__DIR__, 2) . '/class/notification_by_id_account.php';
