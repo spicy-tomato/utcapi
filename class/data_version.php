@@ -5,6 +5,8 @@
         private const data_version_table = 'Data_Version';
         private const participate_table = 'Participate';
         private const module_class_table = 'Module_Class';
+        private const notification_account_table = 'Notification_Account';
+        private const student_table = 'Student';
 
         private PDO $connect;
         private string $id_student;
@@ -39,20 +41,52 @@
         {
             $sql_query = '
                     UPDATE ' . self::data_version_table . ' dv, 
-                            (SELECT DISTINCT
+                            (
+                            SELECT DISTINCT
                                 p.ID_Student 
                             FROM ' . self::participate_table . ' p, 
                                  ' . self::module_class_table . ' mc
                             WHERE 
                                 p.ID_Module_Class = mc.ID_Module_Class AND 
-                                mc.School_Year = :newest_semester) temp3
-                    SET Schedule = Schedule + 1
-                    WHERE temp3.ID_Student = dv.ID_Student
+                                mc.School_Year = :newest_semester
+                            ) temp3
+                    SET 
+                        Schedule = Schedule + 1
+                    WHERE 
+                        temp3.ID_Student = dv.ID_Student
                     ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':newest_semester' => $newest_semester]);
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+        public function updateAllNotificationVersion ($id_notification)
+        {
+            $sql_query = '
+                UPDATE data_version dv,
+                    (
+                    SELECT
+                        s.ID_Student
+                    FROM student s,
+                         notification_account na
+                    WHERE
+                        na.ID_Notification = :id_notification AND
+                        s.ID_Account = na.ID_Account
+                    ) temp3
+                SET
+                    Schedule = Schedule + 1
+                WHERE
+                    temp3.ID_Student = dv.ID_Student;
+                    ';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([':id_notification' => $id_notification]);
 
             } catch (PDOException $error) {
                 throw $error;

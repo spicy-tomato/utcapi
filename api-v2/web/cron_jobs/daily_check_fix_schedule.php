@@ -5,13 +5,14 @@
 
     include_once dirname(__DIR__, 3) . '/config/db.php';
     include_once dirname(__DIR__, 3) . '/shared/functions.php';
+    include_once dirname(__DIR__, 3) . '/class/helper.php';
+    include_once dirname(__DIR__, 3) . '/class/device.php';
+    include_once dirname(__DIR__, 3) . '/class/amazon_s3.php';
     include_once dirname(__DIR__, 3) . '/class/fix_schedule.php';
     include_once dirname(__DIR__, 3) . '/class/notification.php';
-    include_once dirname(__DIR__, 3) . '/class/helper.php';
-    include_once dirname(__DIR__, 3) . '/class/notification_by_id_account.php';
-    include_once dirname(__DIR__, 3) . '/class/device.php';
+    include_once dirname(__DIR__, 3) . '/class/data_version.php';
     include_once dirname(__DIR__, 3) . '/class/firebase_notification.php';
-    include_once dirname(__DIR__, 3) . '/class/amazon_s3.php';
+    include_once dirname(__DIR__, 3) . '/class/notification_by_id_account.php';
     set_error_handler('exceptions_error_handler');
 
     try {
@@ -65,9 +66,11 @@
             $notification->setUpData($info);
             $notification_by_id_account = new NotificationByIDAccount($connect);
             $firebase_notification      = new FirebaseNotification($info, $token_list);
+            $data_version               = new DataVersion($connect);
 
             $id_notification = $notification->create();
             $notification_by_id_account->pushData($id_account_list, $id_notification);
+            $data_version->updateAllNotificationVersion($id_notification);
             $firebase_notification->send();
 
             if ($changes['Time_Accept_Request'] == $arr_fix_schedules[count($arr_fix_schedules) - 1]['Time_Accept_Request']) {
