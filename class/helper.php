@@ -54,6 +54,7 @@
                          LEFT OUTER JOIN
                      ' . self::participate_table . ' p
                         ON t.ID_Module_Class = p.ID_Module_Class
+                WHERE ID_Student IS NOT NULL
                 ';
 
             try {
@@ -103,6 +104,7 @@
                          LEFT OUTER JOIN
                      ' . self::student_table . ' s
                         ON t.ID_Class = s.ID_Class
+                WHERE ID_Student IS NOT NULL
                 ';
 
             try {
@@ -133,6 +135,7 @@
         {
             if (empty($this->id_student_list[0])) {
                 $this->id_account_list = [];
+                echo 111111;
                 return;
             }
 
