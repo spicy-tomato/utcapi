@@ -34,7 +34,7 @@
         private function _insert ($student)
         {
             $sql_query =
-                'INSERT IGNORE INTO ' . self::student_table . ' 
+                'INSERT INTO ' . self::student_table . ' 
                 (
                     ID_Student, Student_Name, DoB_Student, ID_Class, 
                     ID_Card_Number, Phone_Number_Student, Address_Student, ID_Account 
