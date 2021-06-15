@@ -11,6 +11,10 @@
     width: 38%;
 }
 
+#notice {
+    color: red;
+}
+
 .input-date {
     position: relative;
     width: 160px; height: 35px; font-size: 18px;
@@ -48,6 +52,10 @@
 .disable {
     background-color: gray;
     border-color: gray;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 button {
