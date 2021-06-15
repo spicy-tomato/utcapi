@@ -39,7 +39,7 @@
             $firebase_notification      = new FirebaseNotification($data['info'], $token_list);
             $data_version               = new DataVersion($connect);
 
-            $id_notification = $notification->create();
+            $id_notification = $notification->insert();
             $notification_by_id_account->pushData($id_account_list, $id_notification);
             $data_version->updateAllNotificationVersion($id_notification);
             $firebase_notification->send();

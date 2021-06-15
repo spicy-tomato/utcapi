@@ -32,13 +32,13 @@
             $device     = new Device($connect);
             $token_list = $device->getTokenByIdStudent($id_student_list);
 
-            $notification = new Notification($connect);
-            $notification->setUpData($data['info']);
+            $notification               = new Notification($connect);
             $notification_by_id_account = new NotificationByIDAccount($connect);
             $firebase_notification      = new FirebaseNotification($data['info'], $token_list);
             $data_version               = new DataVersion($connect);
 
-            $id_notification = $notification->create();
+            $notification->setUpData($data['info']);
+            $id_notification = $notification->insert();
             $notification_by_id_account->pushData($id_account_list, $id_notification);
             $data_version->updateAllNotificationVersion($id_notification);
             $firebase_notification->send();

@@ -1,10 +1,10 @@
 <?php
     include_once dirname(__DIR__) . '/config/db.php';
     include_once dirname(__DIR__) . '/shared/functions.php';
-    include_once dirname(__DIR__) . '/class/handle_file.php';
+    include_once dirname(__DIR__) . '/class/student.php';
     include_once dirname(__DIR__) . '/class/read_file.php';
     include_once dirname(__DIR__) . '/class/amazon_s3.php';
-    include_once dirname(__DIR__) . '/class/student.php';
+    include_once dirname(__DIR__) . '/class/handle_file.php';
     include_once dirname(__DIR__) . '/class/participate.php';
     set_error_handler('exceptions_error_handler');
     ini_set('max_execution_time', '300');
@@ -19,12 +19,12 @@
                 $db      = new Database(true);
                 $connect = $db->connect();
 
-                $read_file    = new ReadFIle();
-                $aws          = new AWS();
-                $student      = new Student($connect);
-                $participate  = new Participate($connect);
+                $read_file   = new ReadFIle();
+                $aws         = new AWS();
+                $student     = new Student($connect);
+                $participate = new Participate($connect);
 
-                $location     = dirname(__DIR__) . '/file_upload/';
+                $location = dirname(__DIR__) . '/file_upload/';
                 foreach ($response as $file_name) {
                     $file_location = $location . $file_name;
                     $data          = $read_file->getData($file_name);

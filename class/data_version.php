@@ -5,8 +5,6 @@
         private const data_version_table = 'Data_Version';
         private const participate_table = 'Participate';
         private const module_class_table = 'Module_Class';
-        private const notification_account_table = 'Notification_Account';
-        private const student_table = 'Student';
 
         private PDO $connect;
         private string $id_student;
@@ -79,7 +77,7 @@
                         s.ID_Account = na.ID_Account
                     ) temp3
                 SET
-                    Schedule = Schedule + 1
+                    Notification = Notification + 1
                 WHERE
                     temp3.ID_Student = dv.ID_Student;
                     ';
