@@ -1,4 +1,4 @@
-import {autoFillTemplate, resetInputDate, changeStatusButton} from '../../shared_form_functions.js'
+import {autoFillTemplate, resetInputDate, changeStatusButton} from '../../script/shared_form_functions.js'
 import {getSender, fetchData} from '../../../script/shared_functions.js'
 import {postDataAndRaiseAlert} from '../../../script/alerts.js'
 

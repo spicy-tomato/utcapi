@@ -16,6 +16,7 @@
       <!-- AlertifyJS Theme -->
       <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
       <link rel="stylesheet" href="../css/alert.css">
+      <link rel="stylesheet" href="../css/style.css">
       <link rel="stylesheet" href="css/style.css">
       <link rel="stylesheet" href="css/custom-confirm.css">
     ');
@@ -31,10 +32,12 @@
         <p>Lịch sử những thông báo đã được gửi sẽ được hiển thị toàn bộ dưới đây:</p>
         <table id="noti-select">
           <tr>
-            <th></th>
+            <th class="check"></th>
             <th class="title">Tiêu đề</th>
             <th class="content">Nội dung</th>
             <th class="time-create">Thời gian gửi</th>
+            <th class="time-start">Thời gian bắt đầu</th>
+            <th class="time-end">Thời gian kết thúc</th>
           </tr>
         </table>
       </div>

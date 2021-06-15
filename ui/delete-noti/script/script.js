@@ -24,7 +24,7 @@ let observer = new IntersectionObserver(async function (e) {
 })
 
 async function lazyLoad() {
-    data = await fetchData('../../api-v2/web/get_notification_for_sender.php?id_sender=' + sender + '&num=' + num)
+    data = await fetchData('../../api-v2/web/get_notification.php?id_sender=' + sender + '&num=' + num)
     num += 15
     if (data === '') {
         return;
@@ -38,22 +38,29 @@ function createScrollList() {
     let selectTag = document.getElementById('noti-select')
     for (const e of data) {
         let rowTag = createRow()
-        let colTag1 = createColumn()
-        let colTag2 = createColumn()
-        let colTag3 = createColumn()
-        let colTag4 = createColumn()
+        let colTag1 = createColumn('check')
+        let colTag2 = createColumn('title')
+        let colTag3 = createColumn('content')
+        let colTag4 = createColumn('time-create')
+        let colTag5 = createColumn('time-start')
+        let colTag6 = createColumn('time-end')
 
         colTag1.append(createCheckBox(e.ID_Notification))
         colTag2.append(createLabel(e.Title, e.ID_Notification))
         colTag3.append(createLabel(e.Content, e.ID_Notification))
         colTag4.append(createLabel(formatDate(e.Time_Create), e.ID_Notification))
+        colTag5.append(createLabel(formatDate(e.Time_Start), e.ID_Notification))
+        colTag6.append(createLabel(formatDate(e.Time_End), e.ID_Notification))
 
         rowTag.appendChild(colTag1)
         rowTag.appendChild(colTag2)
         rowTag.appendChild(colTag3)
         rowTag.appendChild(colTag4)
+        rowTag.appendChild(colTag5)
+        rowTag.appendChild(colTag6)
 
         selectTag.appendChild(rowTag)
+
         if (i === 12) {
             rowTag.id = 'observe'
             observer.observe(rowTag)
@@ -63,9 +70,13 @@ function createScrollList() {
 }
 
 function formatDate(date) {
+    if (date === '') {
+        return ''
+    }
     let arr = date.split(' ')
     let arr2 = arr[0].split('-')
-    let formatedDate = arr2[2] + '-' + arr2[1] + '-' + arr2[0] + ' ' + arr[1]
+    let arr3 = arr[1].split('.')
+    let formatedDate = arr2[2] + '-' + arr2[1] + '-' + arr2[0] + ' ' + arr3[0]
 
     return formatedDate
 }
@@ -96,8 +107,10 @@ function createRow() {
 }
 
 function createColumn(_class) {
-    return document.createElement('td')
+    let tag = document.createElement('td')
+    tag.className = _class
 
+    return tag
 }
 
 function checkBoxEvent() {

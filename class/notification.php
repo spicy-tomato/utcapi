@@ -77,7 +77,9 @@
         {
             $sql_query =
                 'SELECT
-                    ID_Notification, Title, Content, Time_Create
+                    ID_Notification, Title, Content, 
+                    Time_Create, IFNULL(Time_Start, \'\') Time_Start, 
+                    IFNULL(Time_End, \'\') Time_End
                 FROM
                     ' . self::notification_table . '
                 WHERE  

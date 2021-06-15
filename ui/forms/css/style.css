@@ -1,0 +1,55 @@
+#form {
+    display: flex;
+}
+
+#left-form {
+    width: 60%;
+}
+
+#right-form {
+    margin-left: 2%;
+    width: 38%;
+}
+
+.input-date {
+    position: relative;
+    width: 160px; height: 35px; font-size: 18px;
+    color: white;
+}
+
+.input-date:before {
+    position: absolute;
+    top: 3px; left: 3px;
+    content: attr(data-date);
+    display: inline-block;
+    color: black;
+}
+
+.input-date::-webkit-clear-button{
+    display: none;
+}
+
+.input-date::-webkit-inner-spin-button{
+    display: none;
+}
+
+.input-date::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    color: black;
+    opacity: 1;
+}
+
+.select_date {
+    width: 22%;
+}
+
+.disable {
+    background-color: gray;
+    border-color: gray;
+}
+
+button {
+    margin-bottom: 6px;
+}
