@@ -121,7 +121,7 @@
             </div>
             <div class="form-group mt-4">
               <label for="content"><legend>Nội dung:</legend></label><br>
-              <span id="notice">*Nếu nội dung thông báo có đường dẫn tệp, hãy bao đường dẫn đó với thẻ <<...>>| VD: <<[Đường dẫn]>> <a></a></span>
+              <span id="notice">*Nếu nội dung thông báo có đường dẫn tệp, hãy bao đường dẫn đó với thẻ &lt;a&gt;...&lt;/a&gt;<br> VD: &lt;a&gt;[Đường dẫn]&lt;/a&gt;</span>
               <textarea cols="30" rows="10" class="form-control" id="content"></textarea>
             </div>
           </div>
