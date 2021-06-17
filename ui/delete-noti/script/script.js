@@ -44,12 +44,11 @@ function createScrollList() {
         let colTag4 = createColumn('time-create')
         let colTag5 = createColumn('time-start')
         let colTag6 = createColumn('time-end')
-        console.log(e.Content)
+
         let extractedContent = extractContent(e.Content)
 
         colTag1.append(createCheckBox(e.ID_Notification))
         colTag2.append(createLabel(e.Title, e.ID_Notification))
-        // colTag3.append(createLabel(e.Content, e.ID_Notification))
         colTag3.append(createLabel(extractedContent[0], e.ID_Notification))
         colTag4.append(createLabel(formatDate(e.Time_Create), e.ID_Notification))
         colTag5.append(createLabel(formatDate(e.Time_Start), e.ID_Notification))
