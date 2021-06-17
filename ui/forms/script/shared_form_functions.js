@@ -48,10 +48,12 @@ export function attachLink() {
     aTag.innerHTML = getFileName(textLink.value)
     aTag.href = textLink.value;
     aTag.className = textLink.value
+
     let iTag = document.createElement('i')
     iTag.id = textLink.value
     iTag.className = 'far fa-window-close'
     iTag.addEventListener('click', remove)
+
     let brTag = document.createElement('br')
 
     textLink.value = ''
@@ -73,8 +75,8 @@ function getFileName(link)
 function remove() {
     let textArea = document.getElementById('content');
     textArea.value = textArea.value.replace('\n<a>'+this.id+'</a>', '')
-
     let aTag = document.getElementsByClassName(this.id)[0]
+
     aTag.remove()
     this.nextSibling.remove()
     this.remove()
