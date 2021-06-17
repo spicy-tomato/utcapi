@@ -134,7 +134,7 @@ function extractContent(content) {
     if (pos === -1) {
         return [content, '']
     }
-    let newContent = content.substr(0, pos - 2)
+    let newContent = content.substr(0, pos - 1)
     let link = content.substr(pos)
 
     return [newContent, link]
