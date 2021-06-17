@@ -15,6 +15,31 @@
             $this->id_student = $id_student;
         }
 
+        public function insert ($id_student_list)
+        {
+            if (empty($id_student_list)) {
+                return;
+            }
+
+            $part_of_sql = implode(',', array_fill(0, count($id_student_list), '(?, 1, 1, 0, 0)'));
+
+            $sql_query = '
+                    INSERT INTO
+                        ' . self::data_version_table . ' 
+                        (ID_Student, Schedule, Notification, Module_Score, Exam_Schedule)
+                    VALUES
+                        ' . $part_of_sql . '
+                    ';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute($id_student_list);
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
         public function updateDataVersion ($type)
         {
             $sql_query = '

@@ -31,33 +31,21 @@
             response($response, true);
         }
 
-    } catch (Exception $error) {
-        printError($error);
-        $response['status_code'] = 500;
+        foreach ($arr_fix_schedules as $changes) {
+            $info['title']      = 'Thay đổi lịch học môn ' . $changes['Module_Name'];
+            $info['content']    = $info['title'] . ' từ ngày ' . convertDate($changes['Day_Fix']);
+            $info['content']    .= ' sang ca ' . $changes['Shift_Schedules'] . ' ngày ' . convertDate($changes['Day_Schedules']);
+            $info['content']    .= ' tại phòng ' . $changes['ID_Room'];
+            $info['typez']      = 'study';
+            $info['sender']     = $changes['ID_Account'];
+            $info['time_start'] = '';
+            $info['time_end']   = '';
 
-        response($response, true);
-    }
+            $post_form['info'] = $info;
 
-    foreach ($arr_fix_schedules as $changes) {
-        $info['title']      = 'Thay đổi lịch học môn ' . $changes['Module_Name'];
-        $info['content']    = $info['title'] . ' từ ngày ' . convertDate($changes['Day_Fix']);
-        $info['content']    .= ' sang ca ' . $changes['Shift_Schedules'] . ' ngày ' . convertDate($changes['Day_Schedules']);
-        $info['content']    .= ' tại phòng ' . $changes['ID_Room'];
-        $info['typez']      = 'study';
-        $info['sender']     = $changes['ID_Account'];
-        $info['time_start'] = '';
-        $info['time_end']   = '';
-
-        $post_form['info']       = $info;
-        $post_form['class_list'] = [$changes['ID_Module_Class']];
-
-        try {
-            $connect = $db->connect();
-
-            $helper = new Helper($connect);
-            $helper->getListFromModuleClassList([$changes['ID_Module_Class']]);
-            $id_student_list = $helper->getIdStudentList();
-            $id_account_list = $helper->getAccountListFromStudentList();
+            $helper          = new Helper($connect);
+            $id_student_list = $helper->getListFromModuleClassList([$changes['ID_Module_Class']]);
+            $id_account_list = $helper->getAccountListFromStudentList($id_student_list);
 
             $device     = new Device($connect);
             $token_list = $device->getTokenByIdStudent($id_student_list);
@@ -81,14 +69,13 @@
                 $file_location = $_SERVER['DOCUMENT_ROOT'] . $root_folder . '/api-v2/web/cron_jobs/last_schedule_fixed.txt';
                 $aws->uploadFile('last_schedule_fixed.txt', $file_location, 'cron-jobs/');
             }
-
-            $response['status_code'] = 200;
-            $response['content']     = 'OK';
-
-        } catch (Error | Exception | MessagingException | FirebaseException $error) {
-            printError($error);
-            $response['status_code'] = 500;
         }
+        $response['status_code'] = 200;
+        $response['content']     = 'OK';
+
+    } catch (Error | Exception | MessagingException | FirebaseException $error) {
+        printError($error);
+        $response['status_code'] = 500;
     }
 
     response($response, true);

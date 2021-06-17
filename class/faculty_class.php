@@ -1,8 +1,11 @@
 <?php
 
+    include_once dirname(__DIR__) . '/utils/env_io.php';
+
     class FacultyClass
     {
         private const class_table = 'Class';
+
         private PDO $connect;
 
         public function __construct (PDO $connect)
@@ -10,10 +13,26 @@
             $this->connect = $connect;
         }
 
-        public function insert($class_list)
+        public function insert ($id_class)
         {
+            $sql_query = '
+                    INSERT INTO
+                        ' . self::class_table . '
+                        (ID_Class, Academic_Year, Class_Name, ID_Faculty) 
+                    VALUES
+                        (:id_class, :academic_year, :class_name, :id_faculty)
+                    ON DUPLICATE KEY UPDATE ID_Class = ID_Class
+                    ';
 
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute($this->_getDataOfClass($id_class));
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
         }
+
         public function getAcademicYear () : array
         {
             $sql_query = '
@@ -84,5 +103,35 @@
             } catch (PDOException $error) {
                 throw $error;
             }
+        }
+
+        private function _getDataOfClass ($id_class)
+        {
+            $id_class      = preg_replace('/\s+/', '', $id_class);
+            $arr           = explode('.', $id_class);
+            $academic_year = $arr[0];
+
+            unset($arr[0]);
+            $class = '';
+            foreach ($arr as $a) {
+                $class .= $a . '.';
+            }
+            $class = rtrim($class, '.');
+
+            $num = substr($class, strlen($class) - 1, 1);
+            if (is_numeric($num)) {
+                $data_info                = EnvIO::$faculty_class_info[substr($class, 0, strlen($class) - 1)];
+                $name_academic_year       = substr_replace($academic_year, 'hóa ', 1, 0);
+                $data_info[':class_name'] = $data_info[':class_name'] . ' ' . $num . ' - ' . $name_academic_year;
+            }
+            else {
+                $data_info                = EnvIO::$faculty_class_info[$class];
+                $name_academic_year       = substr_replace($academic_year, 'hóa ', 1, 0);
+                $data_info[':class_name'] = $data_info[':class_name'] . ' - ' . $name_academic_year;
+            }
+            $data_info[':id_class']      = $id_class;
+            $data_info[':academic_year'] = $academic_year;
+
+            return $data_info;
         }
     }

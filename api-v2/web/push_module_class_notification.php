@@ -25,10 +25,9 @@
             $db      = new Database(true);
             $connect = $db->connect();
 
-            $helper = new Helper($connect);
-            $helper->getListFromModuleClassList($data['class_list']);
-            $id_student_list = $helper->getIdStudentList();
-            $id_account_list = $helper->getAccountListFromStudentList();
+            $helper          = new Helper($connect);
+            $id_student_list = $helper->getListFromModuleClassList($data['class_list']);
+            $id_account_list = $helper->getAccountListFromStudentList($id_student_list);
 
             $device     = new Device($connect);
             $token_list = $device->getTokenByIdStudent($id_student_list);
