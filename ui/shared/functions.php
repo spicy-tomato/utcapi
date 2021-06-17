@@ -121,8 +121,17 @@
             </div>
             <div class="form-group mt-4">
               <label for="content"><legend>Nội dung:</legend></label><br>
-              <span id="notice">*Nếu nội dung thông báo có đường dẫn tệp, hãy bao đường dẫn đó với thẻ &lt;a&gt;...&lt;/a&gt;<br> VD: &lt;a&gt;[Đường dẫn]&lt;/a&gt;</span>
+              <span id="notice">*Nếu nội dung thông báo có đường dẫn tệp, 
+                hãy thao tác trực tiếp ở phần dưới trong trường hợp muốn thêm sửa xóa
+                thay vì sửa trực tiếp ở phần nội dung.
+            </span>
               <textarea cols="30" rows="10" class="form-control" id="content"></textarea>
+            </div>
+            <div class="form-group mt-4">
+              <label for="attach-link"><legend>Đính kèm link: (Enter để xác nhận)</legend></label><br>
+              <input type="text" class="form-control" id="attach-link">
+            </div>
+            <div id="link-area" class="form-group mt-4">
             </div>
           </div>
           <div id="right-form" class="form-group mt-4">

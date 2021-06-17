@@ -54,8 +54,12 @@
     border-color: gray;
 }
 
-.pointer {
+.pointer, .fa-window-close {
     cursor: pointer;
+}
+
+.fa-window-close {
+    margin-left: 2px;
 }
 
 button {

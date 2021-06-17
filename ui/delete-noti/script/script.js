@@ -44,13 +44,21 @@ function createScrollList() {
         let colTag4 = createColumn('time-create')
         let colTag5 = createColumn('time-start')
         let colTag6 = createColumn('time-end')
+        console.log(e.Content)
+        let extractedContent = extractContent(e.Content)
 
         colTag1.append(createCheckBox(e.ID_Notification))
         colTag2.append(createLabel(e.Title, e.ID_Notification))
-        colTag3.append(createLabel(e.Content, e.ID_Notification))
+        // colTag3.append(createLabel(e.Content, e.ID_Notification))
+        colTag3.append(createLabel(extractedContent[0], e.ID_Notification))
         colTag4.append(createLabel(formatDate(e.Time_Create), e.ID_Notification))
         colTag5.append(createLabel(formatDate(e.Time_Start), e.ID_Notification))
         colTag6.append(createLabel(formatDate(e.Time_End), e.ID_Notification))
+
+        if (extractedContent[1] !== '')
+        {
+            attachLink(colTag3, extractedContent[1])
+        }
 
         rowTag.appendChild(colTag1)
         rowTag.appendChild(colTag2)
@@ -120,6 +128,38 @@ function checkBoxEvent() {
     else {
         selectedNoti.splice(selectedNoti.lastIndexOf(this.value), 1)
     }
+}
+
+function extractContent(content) {
+    let pos = content.search('<a>')
+    if (pos === -1) {
+        return [content, '']
+    }
+    let newContent = content.substr(0, pos - 2)
+    let link = content.substr(pos)
+
+    return [newContent, link]
+}
+
+function attachLink(tdTag, link) {
+    let arrLink = link.match(/<a>.+<\/a>/)
+    for (let singleLink of arrLink) {
+        singleLink = singleLink.replace('<a>', '')
+        singleLink = singleLink.replace('</a>', '')
+        let aTag = document.createElement('a')
+        aTag.href = singleLink
+        aTag.innerHTML = getFileName(singleLink)
+        tdTag.append(aTag)
+    }
+}
+
+function getFileName(link)
+{
+    let decodedLink = decodeURI(link);
+    let arrPath = decodedLink.split('/')
+    let fileName = arrPath[arrPath.length-1]
+
+    return fileName;
 }
 
 /*--------------------------------------*/
