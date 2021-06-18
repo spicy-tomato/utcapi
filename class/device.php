@@ -17,8 +17,7 @@
 
         public function getTokenByIdStudent ($id_student_list) : array
         {
-            if (empty($id_student_list[0]))
-            {
+            if (empty($id_student_list[0])) {
                 return [];
             }
 
@@ -99,18 +98,26 @@
             }
         }
 
-        public function deleteOldToken ($old_token)
+        public function deleteOldTokens ($invalid_token_list)
         {
+            if (empty($invalid_token_list)) {
+                return;
+            }
+
+            $sql_of_list =
+                implode(',', array_fill(0, count($invalid_token_list), '?'));
+
             $sql_query = '
                 DELETE
                 FROM
                      ' . self::device_table . '
-                WHERE Device_Token = :old_token
+                WHERE 
+                    Device_Token IN (' . $sql_of_list . ')
                 ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':old_token' => $old_token]);
+                $stmt->execute($invalid_token_list);
 
             } catch (PDOException $error) {
                 throw $error;

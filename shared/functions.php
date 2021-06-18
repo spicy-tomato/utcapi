@@ -18,11 +18,11 @@
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $date    = date('d/m/Y H:i:s');
-        $message = $date . "\n";
-        $message .= "Code: " . $error->getCode() . "\n";
-        $message .= $error->getMessage() . "\n";
-        $message .= $error->getFile() . "  " . $error->getLine() . "\n";
-        $message .= "=====================================================\n";
+        $message = $date . PHP_EOL;
+        $message .= 'Code: ' . $error->getCode() . PHP_EOL;
+        $message .= $error->getMessage() . PHP_EOL;
+        $message .= $error->getFile() . '  ' . $error->getLine() . PHP_EOL;
+        $message .= '=====================================================' . PHP_EOL;
 
         EnvIO::loadEnv();
         $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
@@ -102,3 +102,8 @@
 
         return $codes[$status_code];
     }
+
+//    $a = [1, 2, 3, 4];
+//    $b = [6, 7, 8, 9];
+//    $c = array_merge($a, $b);
+//    var_dump($c);

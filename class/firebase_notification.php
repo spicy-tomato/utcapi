@@ -1,14 +1,15 @@
 <?php
+
     require dirname(__DIR__) . '/vendor/autoload.php';
     include_once dirname(__DIR__) . '/shared/functions.php';
     include_once dirname(__DIR__) . '/class/device.php';
 
-    use Kreait\Firebase\Exception\FirebaseException;
-    use Kreait\Firebase\Exception\MessagingException;
     use Kreait\Firebase\Factory;
     use Kreait\Firebase\Messaging;
     use Kreait\Firebase\Messaging\CloudMessage;
     use Kreait\Firebase\Messaging\Notification;
+    use Kreait\Firebase\Exception\FirebaseException;
+    use Kreait\Firebase\Exception\MessagingException;
 
     class FirebaseNotification
     {
@@ -35,21 +36,32 @@
             $connect = $db->connect();
             $device  = new Device($connect);
 
-            foreach ($this->token_list as $token) {
-                $message = CloudMessage::withTarget('token', $token)
-                    ->withNotification($this->notification);
+            $invalid_tokens = [];
+            $tokens_num     = count($this->token_list);
+            $recent_index   = 0;
 
+            $message = CloudMessage::withTarget('token', 'all')
+                                ->withNotification($this->notification);
+
+            while ($recent_index < $tokens_num) {
                 try {
-                    $this->messaging->send($message);
+                    $arr_length         = $recent_index + 500 <= $tokens_num ? 500 : $tokens_num - $recent_index;
+                    $token_prepare_list = array_slice($this->token_list, $recent_index, $arr_length);
+
+                    $report       = $this->messaging->sendMulticast($message, $token_prepare_list);
+                    $recent_index += $arr_length;
+
+                    if ($report->hasFailures()) {
+                        $temp_invalid_tokens = array_merge($report->invalidTokens(), $report->unknownTokens());
+                        $invalid_tokens      = array_merge($invalid_tokens, $temp_invalid_tokens);
+                    }
+
                 } catch (MessagingException | FirebaseException $error) {
-                    if ($error->getCode() == 0) {
-                        $device->deleteOldToken($token);
-                    }
-                    else {
-                        throw $error;
-                    }
+                    throw $error;
                 }
             }
+
+            $device->deleteOldTokens($invalid_tokens);
         }
 
         private function _setInfo (array $info)
