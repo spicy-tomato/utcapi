@@ -6,6 +6,7 @@ let sender
 let allClass = []
 let selectedClass = []
 let allAcademicYears = []
+let allFaculties = ['CK', 'CNTT', 'CT', 'DDT', 'KTXD', 'VTKT']
 let academicYears = []
 let faculties = []
 
@@ -198,11 +199,11 @@ function getConditions() {
 
     if ($('#all_academic_year').is(':checked')) {
         if ($('#all_faculty').is(':checked')) {
-            academicYears = ['K54', 'K55', 'K56', 'K57', 'K58', 'K59', 'K60']
-            faculties = ['CK', 'CNTT', 'CT', 'DDT', 'KTXD', 'VTKT']
+            academicYears = allAcademicYears
+            faculties = allFaculties
         }
         else {
-            academicYears = ['K54', 'K55', 'K56', 'K57', 'K58', 'K59', 'K60']
+            academicYears = allAcademicYears
 
             for (let i = 0; i < facultyCheckboxes.length; i++) {
                 if (facultyCheckboxes[i].checked) {
@@ -213,7 +214,7 @@ function getConditions() {
     }
     else {
         if ($('#all_faculty').is(':checked')) {
-            faculties = ['CK', 'CNTT', 'CT', 'DDT', 'KTXD', 'VTKT']
+            faculties = allFaculties
 
             for (let i = 0; i < academicYearCheckboxes.length; i++) {
                 if (academicYearCheckboxes[i].checked) {

@@ -6,8 +6,8 @@
 
     use Kreait\Firebase\Factory;
     use Kreait\Firebase\Messaging;
+    use Kreait\Firebase\Messaging\AndroidConfig;
     use Kreait\Firebase\Messaging\CloudMessage;
-    use Kreait\Firebase\Messaging\Notification;
     use Kreait\Firebase\Exception\FirebaseException;
     use Kreait\Firebase\Exception\MessagingException;
 
@@ -15,14 +15,14 @@
     {
         private Messaging $messaging;
         private array $token_list;
-        private Notification $notification;
+        private AndroidConfig $config;
         private string $credentials_path;
 
         public function __construct (array $info, array $token_list)
         {
             $this->credentials_path = dirname(__DIR__) . '/config/firebase_credentials.json';
-            $this->_setInfo($info);
-            $this->token_list = $token_list;
+            $this->token_list       = $token_list;
+            $this->_setConfig($info);
             $this->_initFactory();
         }
 
@@ -41,7 +41,7 @@
             $recent_index   = 0;
 
             $message = CloudMessage::withTarget('token', 'all')
-                                ->withNotification($this->notification);
+                ->withAndroidConfig($this->config);
 
             while ($recent_index < $tokens_num) {
                 try {
@@ -64,18 +64,21 @@
             $device->deleteOldTokens($invalid_tokens);
         }
 
-        private function _setInfo (array $info)
+        private function _setConfig (array $info)
         {
-            $this->notification = Notification::create(
-                $info['title'],
-                $info['content']
-            );
+            $this->config = AndroidConfig::fromArray([
+                'ttl' => '172800s',
+                'priority' => 'high',
+                'notification' => [
+                    'title' => $info['title'],
+                    'body' => $info['content'],
+                ],
+            ]);
         }
 
         private function _initFactory ()
         {
-            $factory = new Factory();
-
+            $factory         = new Factory();
             $factory         = $factory->withServiceAccount($this->credentials_path);
             $this->messaging = $factory->createMessaging();
         }
