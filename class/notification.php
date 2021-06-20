@@ -140,7 +140,10 @@
                 $stmt->execute();
                 $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-                array_walk($record, 'intval');
+                foreach ($record as &$value) {
+                    $value = intval($value);
+                }
+                
                 return $record;
 
             } catch (PDOException $error) {
