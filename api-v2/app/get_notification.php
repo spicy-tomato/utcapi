@@ -37,10 +37,10 @@
                 $response['status_code'] = 204;
             }
             else {
-                $response['status_code']             = 200;
-                $response['content']['data']         = $data;
-                $response['content']['index_del']    = $data2;
-                $response['content']['data_version'] = $notification_version;
+                $response['status_code']                  = 200;
+                $response['content']['data']              = $data;
+                $response['content']['data']['index_del'] = $data2;
+                $response['content']['data_version']      = $notification_version;
 
             }
 
