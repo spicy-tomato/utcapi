@@ -10,8 +10,8 @@
     include_once dirname(__DIR__, 2) . '/class/device.php';
     include_once dirname(__DIR__, 2) . '/class/data_version.php';
     include_once dirname(__DIR__, 2) . '/class/notification.php';
+    include_once dirname(__DIR__, 2) . '/class/notification_account.php';
     include_once dirname(__DIR__, 2) . '/class/firebase_notification.php';
-    include_once dirname(__DIR__, 2) . '/class/notification_by_id_account.php';
 
     set_error_handler('exceptions_error_handler');
 
@@ -34,12 +34,12 @@
 
             $notification = new Notification($connect);
             $notification->setUpData($data['info']);
-            $notification_by_id_account = new NotificationByIDAccount($connect);
+            $notification_account = new NotificationAccount($connect);
             $firebase_notification      = new FirebaseNotification($data['info'], $token_list);
             $data_version               = new DataVersion($connect);
 
             $id_notification = $notification->insert();
-            $notification_by_id_account->pushData($id_account_list, $id_notification);
+            $notification_account->pushData($id_account_list, $id_notification);
             $data_version->updateAllNotificationVersion($id_notification);
             $firebase_notification->send();
 

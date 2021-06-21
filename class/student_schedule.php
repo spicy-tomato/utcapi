@@ -3,6 +3,7 @@
     class StudentSchedule
     {
         private const module_class_table = 'Module_Class';
+        private const teacher_table = 'Teacher';
         private const schedule_table = 'Schedules';
         private const participate_table = 'Participate';
 
@@ -19,16 +20,22 @@
         {
             $sql_query =
                 'SELECT
-                    sdu.ID_Schedules, mdcls.Module_Class_Name, sdu.ID_Module_Class, 
-                    sdu.ID_Room, sdu.Shift_Schedules, sdu.Day_Schedules
+                    sdu.ID_Schedules, mc_t.Module_Class_Name, sdu.ID_Module_Class, 
+                    sdu.ID_Room, sdu.Shift_Schedules, sdu.Day_Schedules, mc_t.Name_Teacher
                 FROM
                     ' . self::schedule_table . ' sdu,
                     ' . self::participate_table . ' par,
-                    ' . self::module_class_table . ' mdcls
+                    (SELECT 
+                        ID_Module_Class, Module_Class_Name, Name_Teacher
+                    FROM 
+                        '.self::module_class_table .' mc
+                            LEFT JOIN 
+                        '.self::teacher_table .' t
+                        ON mc.ID_Teacher = t.ID_Teacher) mc_t
                 WHERE
                     par.ID_Student = :id_student AND
                     sdu.ID_Module_Class = par.ID_Module_Class AND
-                    mdcls.ID_Module_Class = sdu.ID_Module_Class
+                    mc_t.ID_Module_Class = sdu.ID_Module_Class
                 ORDER BY
                     sdu.Shift_Schedules';
 

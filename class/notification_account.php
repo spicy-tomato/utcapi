@@ -1,11 +1,10 @@
 <?php
 
-    class NotificationByIDAccount
+    class NotificationAccount
     {
         private const notification_account_table = 'Notification_Account';
         private const account_table = 'Account';
         private const notification_table = 'Notification';
-        private const notification_delete_table = 'Notification_Delete';
         private const other_department_table = 'Other_Department';
         private const department_table = 'Department';
         private const faculty_table = 'Faculty';

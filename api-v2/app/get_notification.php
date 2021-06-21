@@ -3,8 +3,8 @@
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/data_version.php';
+    include_once dirname(__DIR__, 2) . '/class/notification_account.php';
     include_once dirname(__DIR__, 2) . '/class/notification.php';
-    include_once dirname(__DIR__, 2) . '/class/notification_by_id_account.php';
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
@@ -16,19 +16,19 @@
             $connect = $db->connect();
 
             $data_version               = new DataVersion($connect, $_GET['id_student']);
-            $notification_by_id_account = new NotificationByIDAccount($connect);
+            $notification_account = new NotificationAccount($connect);
 
             $data  = [];
             $data2 = [];
 
             if (isset($_GET['id_notification'])) {
-                $data = $notification_by_id_account->getAllNotification($_GET['id_account'], $_GET['id_notification']);
+                $data = $notification_account->getAllNotification($_GET['id_account'], $_GET['id_notification']);
 
                 $notification = new Notification($connect);
                 $data2        = $notification->getDeletedNotification();
             }
             else {
-                $data = $notification_by_id_account->getAllNotification($_GET['id_account']);
+                $data = $notification_account->getAllNotification($_GET['id_account']);
             }
 
             $notification_version = $data_version->getDataVersion('Notification');
