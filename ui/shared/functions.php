@@ -20,7 +20,7 @@
           <title>' . $title . '</title>
           ' . $otherTags . '
           <link rel="stylesheet" href="css/style.css">
-          <link rel="stylesheet" href="' . $root_folder . '/ui/css/style.css">
+          <link rel="stylesheet" href="' . $root_folder . '/ui/forms/css/style.css">
         </head>';
     }
 
@@ -103,8 +103,8 @@
     function shared_form () : void
     {
         echo '
-        <div class="form__">
-          <div class="left">
+        <div id="form">
+          <div id="left-form">
             <div class="form-group">
               <label for="title"><legend>Tiêu đề:</legend></label>
               <input type="text" class="form-control" id="title">
@@ -120,11 +120,21 @@
               </select>
             </div>
             <div class="form-group mt-4">
-              <label for="content"><legend>Nội dung:</legend></label>
+              <label for="content"><legend>Nội dung:</legend></label><br>
+              <span id="notice">*Nếu nội dung thông báo có đường dẫn tệp, 
+                hãy thao tác trực tiếp ở phần dưới trong trường hợp muốn thêm hoặc xóa
+                thay vì sửa trực tiếp ở phần nội dung.
+            </span>
               <textarea cols="30" rows="10" class="form-control" id="content"></textarea>
             </div>
+            <div class="form-group mt-4">
+              <label for="attach-link"><legend>Đính kèm link: (Enter để xác nhận)</legend></label><br>
+              <input type="text" class="form-control" id="attach-link">
+            </div>
+            <div id="link-area" class="form-group mt-4">
+            </div>
           </div>
-          <div class="right form-group mt-4">
+          <div id="right-form" class="form-group mt-4">
             <div class="template">
               <label for="title"><legend>Một số mẫu thông báo:</legend></label><br>
               <select class="template" id="template">

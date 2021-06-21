@@ -42,7 +42,7 @@
             return $temp_date;
         }
 
-        public function create () : string
+        public function insert () : string
         {
             $sql_query =
                 'INSERT INTO
@@ -77,11 +77,14 @@
         {
             $sql_query =
                 'SELECT
-                    ID_Notification, Title, Content, Time_Create
+                    ID_Notification, Title, Content, 
+                    Time_Create, IFNULL(Time_Start, \'\') Time_Start, 
+                    IFNULL(Time_End, \'\') Time_End
                 FROM
                     ' . self::notification_table . '
                 WHERE  
-                    ID_Sender = :id_sender
+                    ID_Sender = :id_sender AND
+                    Is_Delete != 1
                 ORDER BY 
                     ID_Notification DESC
                 LIMIT 
@@ -99,22 +102,49 @@
             }
         }
 
-        public function deleteNotification ($index_arr)
+        public function setDeleteNotification ($index_arr)
         {
-            var_dump($index_arr);
-
             $sql_of_list = implode(',', array_fill(0, count($index_arr), '?'));
 
             $sql_query =
-                'DELETE
-                FROM
+                'UPDATE
                     ' . self::notification_table . '
+                SET
+                    Is_Delete = 1
                 WHERE  
                     ID_Notification IN (' . $sql_of_list . ')';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute($index_arr);
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+        public function getDeletedNotification () : array
+        {
+            $sql_query = '
+                SELECT
+                    ID_Notification
+                FROM
+                    ' . self::notification_table . '
+                WHERE
+                    Is_Delete = 1 AND
+                    Time_Create >= DATE_SUB(NOW(), INTERVAL 3 WEEK )
+                ';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+                foreach ($record as &$value) {
+                    $value = intval($value);
+                }
+                
+                return $record;
 
             } catch (PDOException $error) {
                 throw $error;

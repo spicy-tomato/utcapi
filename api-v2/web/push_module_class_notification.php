@@ -10,8 +10,8 @@
     include_once dirname(__DIR__, 2) . '/class/device.php';
     include_once dirname(__DIR__, 2) . '/class/data_version.php';
     include_once dirname(__DIR__, 2) . '/class/notification.php';
+    include_once dirname(__DIR__, 2) . '/class/notification_account.php';
     include_once dirname(__DIR__, 2) . '/class/firebase_notification.php';
-    include_once dirname(__DIR__, 2) . '/class/notification_by_id_account.php';
 
     set_error_handler('exceptions_error_handler');
 
@@ -25,22 +25,21 @@
             $db      = new Database(true);
             $connect = $db->connect();
 
-            $helper = new Helper($connect);
-            $helper->getListFromModuleClassList($data['class_list']);
-            $id_student_list = $helper->getIdStudentList();
-            $id_account_list = $helper->getAccountListFromStudentList();
+            $helper          = new Helper($connect);
+            $id_student_list = $helper->getListFromModuleClassList($data['class_list']);
+            $id_account_list = $helper->getAccountListFromStudentList($id_student_list);
 
             $device     = new Device($connect);
             $token_list = $device->getTokenByIdStudent($id_student_list);
 
             $notification = new Notification($connect);
             $notification->setUpData($data['info']);
-            $notification_by_id_account = new NotificationByIDAccount($connect);
+            $notification_account = new NotificationAccount($connect);
             $firebase_notification      = new FirebaseNotification($data['info'], $token_list);
             $data_version               = new DataVersion($connect);
 
-            $id_notification = $notification->create();
-            $notification_by_id_account->pushData($id_account_list, $id_notification);
+            $id_notification = $notification->insert();
+            $notification_account->pushData($id_account_list, $id_notification);
             $data_version->updateAllNotificationVersion($id_notification);
             $firebase_notification->send();
 

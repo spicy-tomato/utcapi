@@ -1,11 +1,10 @@
 <?php
 
-    class NotificationByIDAccount
+    class NotificationAccount
     {
         private const notification_account_table = 'Notification_Account';
         private const account_table = 'Account';
         private const notification_table = 'Notification';
-        private const notification_delete_table = 'Notification_Delete';
         private const other_department_table = 'Other_Department';
         private const department_table = 'Department';
         private const faculty_table = 'Faculty';
@@ -35,7 +34,8 @@
                         n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
                         od.ID_Account = n.ID_Sender AND 
-                        a.id = n.ID_Sender 
+                        a.id = n.ID_Sender AND 
+                        n.Is_Delete = 0     
                 UNION
                     SELECT
                         n.*, 
@@ -51,7 +51,8 @@
                         n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
                         f.ID_Account = n.ID_Sender AND 
-                        a.id = n.ID_Sender 
+                        a.id = n.ID_Sender AND 
+                        n.Is_Delete = 0
                 UNION
                     SELECT
                         n.*, 
@@ -67,7 +68,8 @@
                         n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
                         t.ID_Account = n.ID_Sender AND 
-                        a.id = n.ID_Sender
+                        a.id = n.ID_Sender AND 
+                        n.Is_Delete = 0
                 UNION
                     SELECT
                         n.*, 
@@ -83,7 +85,8 @@
                         n.ID_Notification > :id_notification AND
                         n.ID_Notification = na.ID_Notification AND
                         d.ID_Account = n.ID_Sender AND 
-                        a.id = n.ID_Sender 
+                        a.id = n.ID_Sender AND 
+                        n.Is_Delete = 0
                     ';
 
             try {
@@ -105,33 +108,9 @@
             }
         }
 
-        public function getDeletedNotification() : array
-        {
-            $sql_query = '
-                SELECT
-                    ID_Notification
-                FROM
-                    ' . self::notification_delete_table . ' nd
-                WHERE
-                    nd.Time_Delete >= DATE_SUB(NOW(), INTERVAL 3 WEEK )
-                ';
-
-            try {
-                $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute();
-                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-                return $record;
-
-            } catch (PDOException $error) {
-                throw $error;
-            }
-        }
-
         public function pushData (array $id_account_list, string $id_notification) : void
         {
-            if (empty($id_account_list))
-            {
+            if (empty($id_account_list)) {
                 return;
             }
 

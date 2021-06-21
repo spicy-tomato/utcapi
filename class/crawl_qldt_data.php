@@ -129,7 +129,7 @@
                 $tr = $html->find('table[id=tblStudentMark] tr');
 
                 for ($j = 1; $j < count($tr) - 1; $j++) {
-                    $arr                      = [];
+                    $arr = [];
 
                     $td    = explode('<br><br>', $tr[$j]->children(1)->innertext);
                     $arr[] = $td[1] ?? $td[0];
@@ -147,11 +147,12 @@
                     $td    = explode('<br><br>', $tr[$j]->children(9)->innertext);
                     $arr[] = $td[1] ?? $td[0];
 
-                    $td    = explode('<br><br>', $tr[$j]->children(10)->innertext);
-                    $arr[] = $td[1] ?? $td[0];
+                    $td         = explode('<br><br>', $tr[$j]->children(10)->innertext);
+                    $temp_score = $td[1] ?? $td[0];
+                    $arr[]      = $temp_score == '&nbsp;' ? null : $temp_score;
 
                     if (count($tr[$j]->children()) == 11) {
-                        $arr[]             = null;
+                        $arr[]                = null;
                         $arr[]                = null;
                         $data[$school_year][] = $arr;
 
@@ -161,6 +162,13 @@
                     $td         = explode('<br><br>', $tr[$j]->children(11)->innertext);
                     $temp_score = $td[1] ?? $td[0];
                     $arr[]      = $temp_score == '&nbsp;' ? null : $temp_score;
+
+                    if (count($tr[$j]->children()) == 12) {
+                        $arr[]                = null;
+                        $data[$school_year][] = $arr;
+
+                        continue;
+                    }
 
                     $td         = explode('<br><br>', $tr[$j]->children(12)->innertext);
                     $temp_score = $td[1] ?? $td[0];

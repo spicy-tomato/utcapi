@@ -5,8 +5,6 @@
         private const data_version_table = 'Data_Version';
         private const participate_table = 'Participate';
         private const module_class_table = 'Module_Class';
-        private const notification_account_table = 'Notification_Account';
-        private const student_table = 'Student';
 
         private PDO $connect;
         private string $id_student;
@@ -15,6 +13,31 @@
         {
             $this->connect    = $connect;
             $this->id_student = $id_student;
+        }
+
+        public function insert ($id_student_list)
+        {
+            if (empty($id_student_list)) {
+                return;
+            }
+
+            $part_of_sql = implode(',', array_fill(0, count($id_student_list), '(?, 1, 1, 0, 0)'));
+
+            $sql_query = '
+                    INSERT INTO
+                        ' . self::data_version_table . ' 
+                        (ID_Student, Schedule, Notification, Module_Score, Exam_Schedule)
+                    VALUES
+                        ' . $part_of_sql . '
+                    ';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute($id_student_list);
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
         }
 
         public function updateDataVersion ($type)
@@ -79,7 +102,7 @@
                         s.ID_Account = na.ID_Account
                     ) temp3
                 SET
-                    Schedule = Schedule + 1
+                    Notification = Notification + 1
                 WHERE
                     temp3.ID_Student = dv.ID_Student;
                     ';

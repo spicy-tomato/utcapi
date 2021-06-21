@@ -1,19 +1,25 @@
 #main-area {
+    width: 100%;
     display: flex;
 }
 
 #left-area {
-    width: 90%;
+    width: 93%;
 }
 
 #right-area {
     margin-left: 2%;
-    width: 8%;
+    width: 5%;
 }
 
 p {
     font-size: 20px;
     font-weight: 500;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
 }
 
 th {
@@ -29,33 +35,59 @@ td, th {
     padding: 8px;
 }
 
-td {
-    word-wrap: break-word !important;
+td.time-create {
+    text-align: center;
 }
 
 tr:hover {
     background-color: #ddd;
 }
 
+.check {
+    width: 2%;
+}
+
 .title {
-    width: 25%;
+    width: 18%;
 }
 
 .content {
-    width: 70%;
+    width: 52%;
 }
 
 .time-create {
-    width: 5%;
+    width: 8%;
+    text-align: center;
+}
+
+.time-start {
+    width: 10%;
+    text-align: center;
+}
+
+.time-end {
+    width: 10%;
+    text-align: center;
 }
 
 .label {
+    word-wrap: break-word !important;
     width: 100%;
-    padding: 15px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+input[type='checkbox'] {
     cursor: pointer;
 }
 
 button {
     position: sticky;
     top: 140px;
+}
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1800px;
+    }
 }

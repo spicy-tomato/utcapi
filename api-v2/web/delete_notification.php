@@ -2,8 +2,8 @@
 
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
+    include_once dirname(__DIR__, 2) . '/class/data_version.php';
     include_once dirname(__DIR__, 2) . '/class/notification.php';
-    include_once dirname(__DIR__, 2) . '/class/notification_delete.php';
 
     $data = json_decode(file_get_contents('php://input'), true);
 
@@ -15,10 +15,12 @@
             $connect = $db->connect();
 
             $notification = new Notification($connect);
-            $notification->deleteNotification($data);
+            $data_version = new DataVersion($connect);
 
-            $notification_delete = new NotificationDelete($connect);
-            $notification_delete->insert($data);
+            $notification->setDeleteNotification($data);
+            foreach ($data as $id_notification) {
+                $data_version->updateAllNotificationVersion($id_notification);
+            }
 
             $response['status_code'] = 200;
             $response['content']     = 'OK';

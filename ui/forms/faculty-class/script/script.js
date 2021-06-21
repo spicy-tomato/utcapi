@@ -1,4 +1,4 @@
-import {autoFillTemplate, resetInputDate, changeStatusButton} from '../../shared_form_functions.js'
+import {autoFillTemplate, resetInputDate, changeStatusButton, listerEnterKey} from '../../script/shared_form_functions.js'
 import {getSender, fetchData} from '../../../script/shared_functions.js'
 import {postDataAndRaiseAlert} from '../../../script/alerts.js'
 
@@ -6,6 +6,7 @@ let sender
 let allClass = []
 let selectedClass = []
 let allAcademicYears = []
+let allFaculties = ['CK', 'CNTT', 'CT', 'DDT', 'KTXD', 'VTKT']
 let academicYears = []
 let faculties = []
 
@@ -56,6 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('all_faculty').addEventListener('click', tickAllForAcademicYearAndFaculty)
     document.getElementById('submit_btn').addEventListener('click', trySendNotification)
     document.getElementById('template').addEventListener('change', fillForms)
+    document.getElementById('attach-link').addEventListener('keyup', listerEnterKey)
     document.getElementsByName('reset_button')[0].addEventListener('click', resetInputDate)
     document.getElementsByName('reset_button')[0].addEventListener('click', changeStatusButton)
     document.getElementsByName('reset_button')[1].addEventListener('click', resetInputDate)
@@ -92,13 +94,13 @@ function createAcademicYearCheckAll() {
 
     let input = document.createElement('input')
     input.type = 'checkbox'
-    input.className = 'academic_year form-check-input academic-year-faculty'
+    input.className = 'academic_year form-check-input academic-year-faculty pointer'
     input.id = 'all_academic_year'
     input.value = 'all'
 
     let label = document.createElement('label')
     label.htmlFor = 'all_academic_year'
-    label.className = 'form-check-label'
+    label.className = 'pointer form-check-label'
     label.innerHTML = 'Chọn tất cả'
 
     div.appendChild(input)
@@ -113,14 +115,14 @@ function createAcademicCheckBox(value) {
 
     let input = document.createElement('input')
     input.type = 'checkbox'
-    input.className = 'academic_year form-check-input academic-year-faculty'
+    input.className = 'academic_year form-check-input academic-year-faculty pointer'
     input.id = value
     input.name = 'academic_year'
     input.value = value
 
     let label = document.createElement('label')
     label.htmlFor = value
-    label.className = 'form-check-label'
+    label.className = 'pointer form-check-label'
     label.innerHTML = value
 
     div.appendChild(input)
@@ -197,11 +199,11 @@ function getConditions() {
 
     if ($('#all_academic_year').is(':checked')) {
         if ($('#all_faculty').is(':checked')) {
-            academicYears = ['K54', 'K55', 'K56', 'K57', 'K58', 'K59', 'K60']
-            faculties = ['CK', 'CNTT', 'CT', 'DDT', 'KTXD', 'VTKT']
+            academicYears = allAcademicYears
+            faculties = allFaculties
         }
         else {
-            academicYears = ['K54', 'K55', 'K56', 'K57', 'K58', 'K59', 'K60']
+            academicYears = allAcademicYears
 
             for (let i = 0; i < facultyCheckboxes.length; i++) {
                 if (facultyCheckboxes[i].checked) {
@@ -212,7 +214,7 @@ function getConditions() {
     }
     else {
         if ($('#all_faculty').is(':checked')) {
-            faculties = ['CK', 'CNTT', 'CT', 'DDT', 'KTXD', 'VTKT']
+            faculties = allFaculties
 
             for (let i = 0; i < academicYearCheckboxes.length; i++) {
                 if (academicYearCheckboxes[i].checked) {
@@ -360,7 +362,7 @@ function createCheckAllTag(academicYear, faculty) {
 
     let checkbox = document.createElement('input')
     checkbox.type = 'checkbox'
-    checkbox.className = academicYear + faculty + ` form-check-input`
+    checkbox.className = academicYear + faculty + ` form-check-input pointer`
     checkbox.id = academicYear + faculty
     checkbox.value = 'all'
     checkbox.addEventListener('click', tickAllForClass)
@@ -368,7 +370,7 @@ function createCheckAllTag(academicYear, faculty) {
 
     let label = document.createElement('label')
     label.htmlFor = academicYear + faculty
-    label.className = 'form-check-label text-nowrap'
+    label.className = 'pointer form-check-label text-nowrap'
     label.innerHTML = 'Chọn tất cả'
 
     tag.appendChild(checkbox)
@@ -383,7 +385,7 @@ function createClassTag(_class, academicYear, faculty) {
 
     let checkbox = document.createElement('input')
     checkbox.type = 'checkbox'
-    checkbox.className = academicYear + faculty + ` form-check-input class-checkbox`
+    checkbox.className = academicYear + faculty + ` form-check-input class-checkbox pointer`
     checkbox.id = _class
     checkbox.name = academicYear + faculty
     checkbox.value = _class
@@ -391,7 +393,7 @@ function createClassTag(_class, academicYear, faculty) {
 
     let label = document.createElement('label')
     label.htmlFor = _class
-    label.className = 'form-check-label text-nowrap'
+    label.className = 'pointer form-check-label text-nowrap'
     label.innerHTML = _class
 
     tag.appendChild(checkbox)

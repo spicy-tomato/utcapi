@@ -6,30 +6,18 @@
         private const student_table = 'Student';
 
         private PDO $connect;
-        private array $id_student_list;
-        private array $id_account_list;
 
         public function __construct (PDO $connect)
         {
             $this->connect = $connect;
         }
 
-        public function setIdStudentList (array $student_id_list) : void
+        public function getListFromModuleClassList ($class_list) : array
         {
-            $this->id_student_list = $student_id_list;
+            return $this->_getListFromModuleClass($class_list);
         }
 
-        public function getIdStudentList () : array
-        {
-            return $this->id_student_list;
-        }
-
-        public function getListFromModuleClassList ($class_list) : void
-        {
-            $this->_getListFromModuleClass($class_list);
-        }
-
-        private function _getListFromModuleClass ($class_list) : void
+        private function _getListFromModuleClass ($class_list) : array
         {
             $sql_query_1 = '
                 CREATE TEMPORARY TABLE temp (
@@ -66,20 +54,21 @@
 
                 $stmt = $this->connect->prepare($sql_query_3);
                 $stmt->execute();
-                $record                = $stmt->fetchAll(PDO::FETCH_COLUMN);
-                $this->id_student_list = $record;
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+                return $record;
 
             } catch (PDOException $error) {
                 throw $error;
             }
         }
 
-        public function getListFromDepartmentClass ($class_list)
+        public function getListFromFacultyClass ($class_list) : array
         {
-            $this->_getListFromDepartmentClass($class_list);
+            return $this->_getListFromFacultyClass($class_list);
         }
 
-        private function _getListFromDepartmentClass ($class_list) : void
+        private function _getListFromFacultyClass ($class_list) : array
         {
             $sql_query_1 = '
                 CREATE TEMPORARY TABLE temp (
@@ -116,27 +105,24 @@
 
                 $stmt = $this->connect->prepare($sql_query_3);
                 $stmt->execute();
-                $record                = $stmt->fetchAll(PDO::FETCH_COLUMN);
-                $this->id_student_list = $record;
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+                return $record;
 
             } catch (PDOException $error) {
                 throw $error;
             }
         }
 
-        public function getAccountListFromStudentList () : array
+        public function getAccountListFromStudentList ($id_student_list) : array
         {
-            $this->_getAccountListFromStudentList();
-
-            return $this->id_account_list;
+            return $this->_getAccountListFromStudentList($id_student_list);
         }
 
-        private function _getAccountListFromStudentList ()
+        private function _getAccountListFromStudentList ($id_student_list) : array
         {
-            if (empty($this->id_student_list[0])) {
-                $this->id_account_list = [];
-                echo 111111;
-                return;
+            if (empty($id_student_list[0])) {
+                return [];
             }
 
             $sql_query_1 = '
@@ -146,7 +132,7 @@
                 ';
 
             $sql_of_list =
-                implode(',', array_fill(0, count($this->id_student_list), '(?)'));
+                implode(',', array_fill(0, count($id_student_list), '(?)'));
 
             $sql_query_2 =
                 'INSERT INTO temp1
@@ -171,12 +157,13 @@
                 $stmt->execute();
 
                 $stmt = $this->connect->prepare($sql_query_2);
-                $stmt->execute($this->id_student_list);
+                $stmt->execute($id_student_list);
 
                 $stmt = $this->connect->prepare($sql_query_3);
                 $stmt->execute();
-                $record                = $stmt->fetchAll(PDO::FETCH_COLUMN);
-                $this->id_account_list = $record;
+                $record = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+                return $record;
 
             } catch (PDOException $error) {
                 throw $error;

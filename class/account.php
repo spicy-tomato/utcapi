@@ -172,7 +172,7 @@
             }
         }
 
-        public function autoCreateStudentAccount ($id_student, $dob) : string
+        public function autoCreateStudentAccount ($id_student, $dob)
         {
             $sql_query =
                 'INSERT INTO ' . self::account_table . ' 
@@ -191,7 +191,28 @@
                     ':password' => password_hash($dob, PASSWORD_DEFAULT)
                 ]);
 
-                return $this->connect->lastInsertId();
+            } catch (PDOException $error) {
+                throw $error;
+
+            }
+        }
+
+        public function bindIDAccountToStudent ()
+        {
+            $sql_query = '
+                UPDATE 
+                    ' . self::student_table . ',
+                    ' . self::account_table . '
+                SET 
+                    ID_Account = id
+                WHERE 
+                    ID_Student = username AND 
+                    ID_Account IS NULL
+              ';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute();
 
             } catch (PDOException $error) {
                 throw $error;

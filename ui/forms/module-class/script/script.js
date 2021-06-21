@@ -1,4 +1,4 @@
-import {autoFillTemplate, resetInputDate, changeStatusButton} from '../../shared_form_functions.js'
+import {autoFillTemplate, resetInputDate, changeStatusButton, listerEnterKey} from '../../script/shared_form_functions.js'
 import {getSender, fetchData} from '../../../script/shared_functions.js'
 import {postDataAndRaiseAlert} from '../../../script/alerts.js'
 
@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('submit_btn').addEventListener('click', trySendNotification)
     document.getElementById('template').addEventListener('change', fillForms)
+    document.getElementById('attach-link').addEventListener('keyup', listerEnterKey)
     document.getElementsByName('reset_button')[0].addEventListener('click', resetInputDate)
     document.getElementsByName('reset_button')[0].addEventListener('click', changeStatusButton)
     document.getElementsByName('reset_button')[1].addEventListener('click', resetInputDate)
@@ -111,6 +112,7 @@ function getInvalidField(data) {
 /*_________________________________________________*/
 
 async function trySendNotification() {
+    a()
     let timeStartRsBtClass = document.getElementsByClassName('time-start')[0].classList[3]
     let timeEndRsBtClass = document.getElementsByClassName('time-end')[0].classList[3]
 
