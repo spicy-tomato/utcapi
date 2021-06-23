@@ -11,7 +11,6 @@ async function uploadFile() {
         return
     }
 
-    let response;
     let formData = new FormData();
 
     for (let i = 0; i < fileUpload.files.length; i++) {
@@ -22,13 +21,20 @@ async function uploadFile() {
         body: formData
     });
 
-    response = responseAsJson.json();
+    let divTag = document.getElementById('file-exception');
+    divTag.innerHTML = ''
 
-    if (await response === 'OK') {
+    if (responseAsJson.status === 200) {
         raiseSuccess()
     }
+    else if (responseAsJson.status === 201) {
+        let response = await responseAsJson.json()
+
+        displayFileException(response)
+        raiseBackEndError(false, 3)
+    }
     else {
-        raiseBackEndError()
+        raiseBackEndError(true, 7)
     }
 }
 
@@ -42,6 +48,23 @@ function listFileName() {
     }
 
     divTag.innerHTML = innerHtml
+}
+
+function displayFileException(fileNameList)
+{
+    let divTag = document.getElementById('file-exception');
+
+    for (const fileName of fileNameList) {
+        let aTag = document.createElement('a')
+        aTag.innerHTML = fileName
+        aTag.href = 'src/'+fileName;
+        aTag.setAttribute('download', '');
+
+        let brTag = document.createElement('br')
+
+        divTag.append(aTag)
+        divTag.append(brTag)
+    }
 }
 
 /*---------------------------------------*/
@@ -70,8 +93,16 @@ function raiseEmptyFieldError() {
         .dismissOthers()
 }
 
-function raiseBackEndError() {
-    alertify.error('Có lỗi đã xảy ra, hãy thử lại sau!')
-        .delay(3)
+function raiseBackEndError(pureError, ttl) {
+    let error = ''
+    if (pureError) {
+        error = 'Có lỗi đã xảy ra, hãy thử lại sau!';
+    }
+    else {
+        error = 'Có ngoại lệ xảy ra trong quá trình nhập dữ liệu. ' +
+                'Chi tiết ngoại lệ của mỗi file tải lên sẽ được ghi rõ trong các file hiển thị ở web với tên file tương ứng';
+    }
+    alertify.error(error)
+        .delay(ttl)
         .dismissOthers()
 }

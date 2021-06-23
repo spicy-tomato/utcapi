@@ -172,7 +172,12 @@
             }
         }
 
-        public function autoCreateStudentAccount ($id_student, $dob)
+        public function autoCreateStudentAccount ($sql_data, $part_of_sql)
+        {
+            $this->_autoCreateStudentAccount($part_of_sql, $sql_data);
+        }
+
+        private function _autoCreateStudentAccount ($part_of_sql, $sql_data)
         {
             $sql_query =
                 'INSERT INTO ' . self::account_table . ' 
@@ -180,20 +185,16 @@
                      username, email, password, qldt_password, permission
                 ) 
                 VALUES 
-                (
-                     :username, null, :password, null, 0
-                )';
+                    ' . $part_of_sql . '
+                ON DUPLICATE KEY UPDATE username = username
+                ';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([
-                    ':username' => $id_student,
-                    ':password' => password_hash($dob, PASSWORD_DEFAULT)
-                ]);
+                $stmt->execute($sql_data);
 
             } catch (PDOException $error) {
                 throw $error;
-
             }
         }
 

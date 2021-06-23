@@ -15,21 +15,19 @@
             $this->id_student = $id_student;
         }
 
-        public function insert ($id_student_list)
+        public function insert ($id_student_list, $part_of_sql)
         {
             if (empty($id_student_list)) {
                 return;
             }
 
-            $part_of_sql = implode(',', array_fill(0, count($id_student_list), '(?, 1, 1, 0, 0)'));
-
-            $sql_query = '
-                    INSERT INTO
+            $sql_query =
+                    'INSERT INTO
                         ' . self::data_version_table . ' 
                         (ID_Student, Schedule, Notification, Module_Score, Exam_Schedule)
                     VALUES
                         ' . $part_of_sql . '
-                    ';
+                    ON DUPLICATE KEY UPDATE ID_Student = ID_Student';;
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

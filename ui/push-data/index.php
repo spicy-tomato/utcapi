@@ -23,31 +23,36 @@
 <body>
 <div class="container">
 
-    <?php shared_navbar(); ?>
+    <?php
+        shared_navbar(); ?>
 
-    <main>
-        <form action="" autocomplete="off" enctype="multipart/form-data" onsubmit="return false">
+  <main>
+    <form action="" autocomplete="off" enctype="multipart/form-data" onsubmit="return false">
 
-            <div class=" mt-4">
-              <span>Tải lên file điểm danh để phục vụ công việc nhập dữ liệu bảng lớp học, sinh viên và bảng tham gia vào cơ sở dữ liệu</span><br>
-              <a href="../push-data/src/data.xls">Tải file mẫu tại đây</a><br>
-              <span id="notice">*Lưu ý: Tính năng này được khuyến khích chỉ nên tải 1 đến 2 file một lần mỗi 1 tiếng</span><br><br>
-              <legend>Tải lên tệp dữ liệu ở đây:</legend>
-                            <label for="fileUpload" class="custom-file-upload">
-                              <i class="fa fa-cloud-upload"></i> Tải tệp
-                            </label>
-                <input id="fileUpload" type="file" name="fileUpload" accept="application/vnd.ms-excel" style="display:none;" multiple/>
-                <button type="button"
-                        class="btn btn-primary"
-                        name="button"
-                        id="submit_btn">Gửi
-                </button>
-                <p>Các tệp đã được chọn:</p>
-                <div id="file-list"></div>
-            </div>
+      <div class=" mt-4">
+        <span>Tải lên file điểm danh để phục vụ công việc nhập dữ liệu bảng lớp học, sinh viên và bảng tham gia vào cơ sở dữ liệu</span><br>
+        <a href="src/data.xls">Tải file mẫu tại đây</a><br>
+        <span
+            id="notice">*Lưu ý: Tính năng này được khuyến khích chỉ nên tải 1 đến 2 file một lần mỗi 1 tiếng</span><br><br>
+        <legend>Tải lên tệp dữ liệu ở đây:</legend>
+        <label for="fileUpload" class="custom-file-upload">
+          <i class="fa fa-cloud-upload"></i> Tải tệp
+        </label>
+        <input id="fileUpload" type="file" name="fileUpload" accept="application/vnd.ms-excel" style="display:none;"
+               multiple/>
+        <button type="button"
+                class="btn btn-primary"
+                name="button"
+                id="submit_btn">Gửi
+        </button>
+        <p>Các tệp đã được chọn:</p>
+        <div id="file-list"></div><br>
+        <p>File cùng tên chứa thông tin chi tiết ngoại lệ xảy ra trong quá trình import:</p>
+        <div id="file-exception"></div>
+      </div>
 
-        </form>
-    </main>
+    </form>
+  </main>
 </div>
 <script src="script/script.js" type="module"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"

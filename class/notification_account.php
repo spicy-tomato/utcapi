@@ -17,7 +17,7 @@
             $this->connect = $connect;
         }
 
-        public function getAllNotification ($id_account, $id_notification = '1') : array
+        public function getAllNotification ($id_account, $id_notification = '0') : array
         {
             $sql_query = '
                     SELECT
