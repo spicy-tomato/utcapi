@@ -44,10 +44,14 @@
                     $sql_data = $faculty_class->extractData($data['student_json']);
 
                     $faculty_class->insert();
+
                     $account->autoCreateStudentAccount($sql_data['account']['arr'], $sql_data['account']['sql']);
                     $student->insert($sql_data['student']['arr'], $sql_data['student']['sql']);
                     $account->bindIDAccountToStudent();
-                    $data_version->insert($sql_data['data_version']['arr'], $sql_data['data_version']['sql']);
+
+                    $data_version->insert($sql_data['data_version']['arr'], $sql_data['data_version']['sql1']);
+                    $data_version->updateAllScheduleVersionNew($sql_data['data_version']['arr'], $sql_data['data_version']['sql2']);
+
                     $isDuplicate = $participate->insert($data['participate_json']);
 
                     if (!empty($data['exception_json'])) {
@@ -70,7 +74,6 @@
                     }
                     if ($flag) {
                         $aws->uploadFile($new_file_name, $file_location, 'data/');
-                        echo 111;
                     }
                 }
 

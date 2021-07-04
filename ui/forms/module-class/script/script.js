@@ -112,7 +112,6 @@ function getInvalidField(data) {
 /*_________________________________________________*/
 
 async function trySendNotification() {
-    a()
     let timeStartRsBtClass = document.getElementsByClassName('time-start')[0].classList[3]
     let timeEndRsBtClass = document.getElementsByClassName('time-end')[0].classList[3]
 
@@ -125,10 +124,11 @@ async function trySendNotification() {
             time_end: timeEndRsBtClass === 'disable' ? '' : $('#time-end').val(),
             sender: sender
         },
-        class_list: getClassList()
+        class_list: getClassList(),
+        target: 'mc'
     }
 
-    const baseUrl = '../../../api-v2/web/push_module_class_notification.php'
+    const baseUrl = '../../../api-v2/web/push_notification.php'
 
     let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField, 'Tạo thông báo mới', '../../home/')
 

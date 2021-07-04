@@ -22,12 +22,14 @@
             }
 
             $sql_query =
-                    'INSERT INTO
-                        ' . self::data_version_table . ' 
-                        (ID_Student, Schedule, Notification, Module_Score, Exam_Schedule)
-                    VALUES
-                        ' . $part_of_sql . '
-                    ON DUPLICATE KEY UPDATE ID_Student = ID_Student';;
+                'INSERT INTO
+                    ' . self::data_version_table . ' 
+                    (
+                        ID_Student, Schedule, Notification, Module_Score, Exam_Schedule
+                    )
+                VALUES
+                    ' . $part_of_sql . '
+                ON DUPLICATE KEY UPDATE ID_Student = ID_Student';;
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -58,24 +60,44 @@
             }
         }
 
-        public function updateAllScheduleVersion ($newest_semester)
+        public function updateAllScheduleVersionNew ($id_student_list, $part_of_sql)
         {
-            $sql_query = '
-                    UPDATE ' . self::data_version_table . ' dv, 
-                            (
-                            SELECT DISTINCT
-                                p.ID_Student 
-                            FROM ' . self::participate_table . ' p, 
-                                 ' . self::module_class_table . ' mc
-                            WHERE 
-                                p.ID_Module_Class = mc.ID_Module_Class AND 
-                                mc.School_Year = :newest_semester
-                            ) temp3
-                    SET 
-                        Schedule = Schedule + 1
-                    WHERE 
-                        temp3.ID_Student = dv.ID_Student
-                    ';
+            $sql_query =
+                'UPDATE 
+                    ' . self::data_version_table . '
+                SET 
+                    Schedule = Schedule + 1
+                WHERE 
+                    ID_Student IN (' . $part_of_sql . ')';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute($id_student_list);
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+        public function updateAllScheduleVersionFix ($newest_semester)
+        {
+            $sql_query =
+                'UPDATE 
+                    ' . self::data_version_table . ' dv, 
+                        (
+                        SELECT DISTINCT
+                            p.ID_Student  
+                        FROM 
+                            ' . self::participate_table . ' p, 
+                            ' . self::module_class_table . ' mc
+                        WHERE 
+                            p.ID_Module_Class = mc.ID_Module_Class AND 
+                            mc.School_Year = :newest_semester
+                        ) temp3
+                SET 
+                    Schedule = Schedule + 1
+                WHERE 
+                    temp3.ID_Student = dv.ID_Student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

@@ -23,7 +23,7 @@
         }
 
         $data_version = new DataVersion($connect);
-        $data_version->updateAllScheduleVersion($newest_semester);
+        $data_version->updateAllScheduleVersionFix($newest_semester);
 
         EnvIO::loadEnv();
         $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';

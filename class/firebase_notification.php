@@ -21,7 +21,7 @@
         public function __construct (array $info, array $token_list)
         {
             $this->credentials_path = dirname(__DIR__) . '/config/firebase_credentials.json';
-            $this->token_list       = $token_list;
+            $this->token_list       = array_chunk($token_list, 500);
             $this->_setConfig($info);
             $this->_initFactory();
         }
@@ -37,19 +37,13 @@
             $device  = new Device($connect);
 
             $invalid_tokens = [];
-            $tokens_num     = count($this->token_list);
-            $recent_index   = 0;
 
             $message = CloudMessage::withTarget('token', 'all')
                 ->withAndroidConfig($this->config);
 
-            while ($recent_index < $tokens_num) {
+            foreach ($this->token_list as $tokens) {
                 try {
-                    $arr_length         = $recent_index + 500 <= $tokens_num ? 500 : $tokens_num - $recent_index;
-                    $token_prepare_list = array_slice($this->token_list, $recent_index, $arr_length);
-
-                    $report       = $this->messaging->sendMulticast($message, $token_prepare_list);
-                    $recent_index += $arr_length;
+                    $report = $this->messaging->sendMulticast($message, $tokens);
 
                     if ($report->hasFailures()) {
                         $temp_invalid_tokens = array_merge($report->invalidTokens(), $report->unknownTokens());

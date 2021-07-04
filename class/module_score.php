@@ -15,25 +15,27 @@
 
         public function pushData ($data)
         {
-            foreach ($data as $semester => $module) {
+            foreach ($data as $school_year => $module) {
                 foreach ($module as $value) {
                     try {
                         if ($value[0] == 'ANHA1.4' || $value[0] == 'ANHA2.4') {
                             continue;
                         }
 
-                        $this->_insert($semester, $value);
+                        $this->_insert($school_year, $value);
 
                     } catch (PDOException $error) {
-                        if ($error->getCode() == 23000) {
-                            $this->_updateData($semester, $value);
+                        if ($error->getCode() == 23000 &&
+                            $error->errorInfo[1] == 1062) {
+
+                            $this->_update($school_year, $value);
                         }
                         else {
                             throw $error;
                         }
                     }
                 }
-                unset($data[$semester]);
+                unset($data[$school_year]);
             }
         }
 
@@ -45,8 +47,10 @@
                         $this->_insert($school_year, $value);
 
                     } catch (PDOException $error) {
-                        if ($error->getCode() == 23000) {
-                            $this->_updateData($school_year, $value);
+                        if ($error->getCode() == 23000 &&
+                            $error->errorInfo[1] == 1062) {
+
+                            $this->_update($school_year, $value);
                         }
                         else {
                             throw $error;
@@ -92,7 +96,7 @@
             }
         }
 
-        private function _updateData ($semester, $value)
+        private function _update ($semester, $value)
         {
             $sql_query =
                 'UPDATE

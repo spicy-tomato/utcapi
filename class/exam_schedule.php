@@ -36,7 +36,7 @@
 
                     } catch (PDOException $error) {
                         if ($error->getCode() == 23000) {
-                            $this->_updateData($school_year, $value);
+                            $this->_update($school_year, $value);
                         }
                         else {
                             throw $error;
@@ -58,7 +58,7 @@
                     } catch (PDOException $error) {
                         if ($error->getCode() == 23000) {
                             if (count($data) == $sum) {
-                                $this->_updateData($semester, $value);
+                                $this->_update($semester, $value);
                             }
                         }
                         else {
@@ -106,7 +106,7 @@
             }
         }
 
-        private function _updateData ($semester, $value)
+        private function _update ($semester, $value)
         {
             $sql_query =
                 'UPDATE

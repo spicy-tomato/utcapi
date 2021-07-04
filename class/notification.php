@@ -20,8 +20,8 @@
 
         public function setUpData (array $info)
         {
-            $this->title       = $info['title'];
-            $this->content     = $info['content'];
+            $this->title       = $this->_formatString($info['title']);
+            $this->content     = $this->_formatString($info['content']);
             $this->typez       = $info['typez'];
             $this->sender      = $info['sender'];
             $this->time_create = $this->_getDateNow();
@@ -37,9 +37,9 @@
             $arr  = explode(' ', $temp_date);
             $arr2 = explode('/', $arr[0]);
 
-            $temp_date = $arr2[2] . '/' . $arr2[1] . '/' . $arr2[0] . ' ' . $arr[1];
+            $date = $arr2[2] . '/' . $arr2[1] . '/' . $arr2[0] . ' ' . $arr[1];
 
-            return $temp_date;
+            return $date;
         }
 
         public function insert () : string
@@ -143,7 +143,7 @@
                 foreach ($record as &$value) {
                     $value = intval($value);
                 }
-                
+
                 return $record;
 
             } catch (PDOException $error) {
@@ -154,5 +154,13 @@
         private function _getIdNotification () : string
         {
             return $this->connect->lastInsertId();
+        }
+
+        private function _formatString ($str) : string
+        {
+            $str = preg_replace('/[ ]+/', ' ', $str);
+            $str = trim($str, ' ');
+
+            return $str;
         }
     }

@@ -16,6 +16,8 @@
 
         public function insert ()
         {
+            $this->class_info_list = array_unique($this->class_info_list, SORT_REGULAR);
+
             $sql_data    = [];
             $part_of_sql = implode(',',
                 array_fill(0, count($this->class_info_list), '(?,?,?,?)'));
@@ -128,9 +130,10 @@
             $sql_account_data      = [];
             $sql_data_version_data = [];
 
-            $part_of_sql_student      = '';
-            $part_of_sql_account      = '';
-            $part_of_sql_data_version = '';
+            $part_of_sql_student        = '';
+            $part_of_sql_account        = '';
+            $part_of_sql_data_version_1 = '';
+            $part_of_sql_data_version_2 = '';
 
             foreach ($student_list as &$student) {
                 $class_info              = $this->_getDataOfClass($student['ID_Class']);
@@ -147,19 +150,21 @@
                 $sql_account_data[]  = password_hash($student['DoB'], PASSWORD_DEFAULT);
                 $part_of_sql_account .= '(?,null,?,null,0),';
 
-                $sql_data_version_data[]  = $student['ID_Student'];
-                $part_of_sql_data_version .= '(?,1,1,0,0),';
+                $sql_data_version_data[]    = $student['ID_Student'];
+                $part_of_sql_data_version_1 .= '(?,0,0,0,0),';
+                $part_of_sql_data_version_2 .= '?,';
+
             }
 
-            $this->class_info_list = array_unique($this->class_info_list, SORT_REGULAR);
+            $part_of_sql_student        = rtrim($part_of_sql_student, ',');
+            $part_of_sql_account        = rtrim($part_of_sql_account, ',');
+            $part_of_sql_data_version_1 = rtrim($part_of_sql_data_version_1, ',');
+            $part_of_sql_data_version_2 = rtrim($part_of_sql_data_version_2, ',');
 
-            $part_of_sql_student      = rtrim($part_of_sql_student, ',');
-            $part_of_sql_account      = rtrim($part_of_sql_account, ',');
-            $part_of_sql_data_version = rtrim($part_of_sql_data_version, ',');
-
-            $data['student']['sql']      = $part_of_sql_student;
-            $data['account']['sql']      = $part_of_sql_account;
-            $data['data_version']['sql'] = $part_of_sql_data_version;
+            $data['student']['sql']       = $part_of_sql_student;
+            $data['account']['sql']       = $part_of_sql_account;
+            $data['data_version']['sql1'] = $part_of_sql_data_version_1;
+            $data['data_version']['sql2'] = $part_of_sql_data_version_2;
 
             $data['student']['arr']      = $sql_student_data;
             $data['account']['arr']      = $sql_account_data;
