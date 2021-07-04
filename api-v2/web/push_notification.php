@@ -23,9 +23,15 @@
         try {
             $db      = new Database(true);
             $connect = $db->connect();
+            $helper  = new Helper($connect);
 
-            $helper          = new Helper($connect);
-            $id_student_list = $helper->getListFromFacultyClass($data['class_list']);
+            if ($data['target'] == 'fc') {
+                $id_student_list = $helper->getListFromFacultyClass($data['class_list']);
+            }
+            else {
+                $id_student_list = $helper->getListFromModuleClassList($data['class_list']);
+            }
+
             $id_account_list = $helper->getAccountListFromStudentList($id_student_list);
 
             $device     = new Device($connect);
