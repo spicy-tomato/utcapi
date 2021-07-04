@@ -42,14 +42,13 @@
 
         public function updateDataVersion ($type)
         {
-            $sql_query = '
-                    UPDATE
-                        ' . self::data_version_table . ' 
-                    SET
-                        ' . $type . ' = ' . $type . ' + 1
-                    WHERE
-                        ID_Student = :id_student
-                    ';
+            $sql_query =
+                'UPDATE
+                    ' . self::data_version_table . ' 
+                SET
+                    ' . $type . ' = ' . $type . ' + 1
+                WHERE
+                    ID_Student = :id_student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -110,8 +109,8 @@
 
         public function updateAllNotificationVersion ($id_notification)
         {
-            $sql_query = '
-                UPDATE data_version dv,
+            $sql_query =
+                'UPDATE data_version dv,
                     (
                     SELECT
                         s.ID_Student
@@ -124,8 +123,7 @@
                 SET
                     Notification = Notification + 1
                 WHERE
-                    temp3.ID_Student = dv.ID_Student;
-                    ';
+                    temp3.ID_Student = dv.ID_Student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -144,8 +142,7 @@
                 FROM
                     ' . self::data_version_table . '
                 WHERE
-                    ID_Student = :id_student
-                ';
+                    ID_Student = :id_student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -167,8 +164,7 @@
                 FROM
                     ' . self::data_version_table . '
                 WHERE
-                    ID_Student = :id_student
-                ';
+                    ID_Student = :id_student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

@@ -67,13 +67,13 @@
                 'INSERT INTO
                     ' . self::module_score_table . ' 
                 (
-                School_Year, ID_Student, ID_Module, Module_Name, Credit,
-                Evaluation, Process_Score, Test_Score, Theoretical_Score
+                    School_Year, ID_Student, ID_Module, Module_Name, Credit,
+                    Evaluation, Process_Score, Test_Score, Theoretical_Score
                 )
                 VALUES
                 (
-                :school_year, :id_student, :id_module, :module_name, :credit,
-                :evaluation, :process_score, :test_score, :theoretical_score
+                    :school_year, :id_student, :id_module, :module_name, :credit,
+                    :evaluation, :process_score, :test_score, :theoretical_score
                 )';
 
 
@@ -135,8 +135,7 @@
                 FROM
                     ' . self::module_score_table . '
                 WHERE
-                    ID_Student = :id_student
-                ';
+                    ID_Student = :id_student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -159,8 +158,7 @@
                 FROM
                     ' . self::module_score_table . '
                 WHERE
-                    ID_Student = :id_student
-                ';
+                    ID_Student = :id_student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -177,10 +175,11 @@
 
         public function getRecentLatestSchoolYear () : array
         {
-            $sql_query = '
-                SELECT 
+            $sql_query =
+                'SELECT 
                    School_Year 
-                FROM ' . self::module_score_table . ' 
+                FROM 
+                     ' . self::module_score_table . ' 
                 WHERE
                     ID_Student = :id_student
                 ORDER BY 

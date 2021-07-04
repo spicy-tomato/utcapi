@@ -72,8 +72,8 @@
 
         private function _insert ($semester, $value)
         {
-            $sql_query = '
-                INSERT INTO
+            $sql_query =
+                'INSERT INTO
                     ' . self::exam_schedule_table . ' 
                 (
                 School_Year, Examination, ID_Student, ID_Module, Module_Name, Credit,
@@ -139,14 +139,13 @@
 
         private function _deleteBySchoolYear ($school_year)
         {
-            $sql_query = '
-                DELETE
+            $sql_query =
+                'DELETE
                 FROM
                     ' . self::exam_schedule_table . '
                 WHERE
                     School_Year = :school_year AND
-                    ID_Student = :id_student
-                ';
+                    ID_Student = :id_student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -162,8 +161,8 @@
 
         private function _getRecentLatestSchoolYear ()
         {
-            $sql_query = '
-                SELECT 
+            $sql_query =
+                'SELECT 
                    School_Year 
                 FROM ' . self::exam_schedule_table . ' 
                 WHERE
@@ -195,8 +194,7 @@
                 WHERE
                     ID_Student = :id_student
                 ORDER BY
-                    Date_Start
-                ';
+                    Date_Start';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

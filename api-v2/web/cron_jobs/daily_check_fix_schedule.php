@@ -50,14 +50,14 @@
             $device     = new Device($connect);
             $token_list = $device->getTokenByIdStudent($id_student_list);
 
-            $notification = new Notification($connect);
-            $notification->setUpData($info);
-            $notification_account = new NotificationAccount($connect);
-            $firebase_notification      = new FirebaseNotification($info, $token_list);
-            $data_version               = new DataVersion($connect);
+            $notification          = new Notification($connect);
+            $notification_account  = new NotificationAccount($connect);
+            $firebase_notification = new FirebaseNotification($info, $token_list);
+            $data_version          = new DataVersion($connect);
 
+            $notification->setUpData($info);
             $id_notification = $notification->insert();
-            $notification_account->pushData($id_account_list, $id_notification);
+            $notification_account->insert($id_account_list, $id_notification);
             $data_version->updateAllNotificationVersion($id_notification);
             $firebase_notification->send();
 

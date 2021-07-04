@@ -36,11 +36,13 @@
         {
             $sql_query =
                 'INSERT INTO
-                        ' . self::class_table . '
-                        (ID_Class, Academic_Year, Class_Name, ID_Faculty) 
-                    VALUES
-                        ' . $part_of_sql . '
-                    ON DUPLICATE KEY UPDATE ID_Class = ID_Class';
+                    ' . self::class_table . '
+                (
+                    ID_Class, Academic_Year, Class_Name, ID_Faculty
+                ) 
+                VALUES
+                    ' . $part_of_sql . '
+                ON DUPLICATE KEY UPDATE ID_Class = ID_Class';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -53,14 +55,14 @@
 
         public function getAcademicYear () : array
         {
-            $sql_query = '
-                    SELECT DISTINCT
-                        Academic_Year
-                    FROM ' . self::class_table . ' 
-                    ORDER BY 
-                        Academic_Year DESC 
-                    LIMIT 9
-                    ';
+            $sql_query =
+                'SELECT DISTINCT
+                    Academic_Year
+                FROM 
+                    ' . self::class_table . ' 
+                ORDER BY 
+                    Academic_Year DESC 
+                LIMIT 9';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -76,11 +78,10 @@
 
         public function getAllFacultyClass ($academic_year) : array
         {
-            $sql_query_1 = '
-                CREATE TEMPORARY TABLE temp (
+            $sql_query_1 =
+                'CREATE TEMPORARY TABLE temp (
                   Academic_Year varchar(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
-                ';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci';
 
             $sql_of_list =
                 implode(',', array_fill(0, count($academic_year), '(?)'));
@@ -102,8 +103,7 @@
                 ORDER BY 
                     Academic_Year ASC,
                     ID_Faculty ASC,
-                    ID_Class ASC
-                ';
+                    ID_Class ASC';
 
             try {
                 $stmt = $this->connect->prepare($sql_query_1);

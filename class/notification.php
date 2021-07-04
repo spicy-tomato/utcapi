@@ -47,12 +47,15 @@
             $sql_query =
                 'INSERT INTO
                     ' . self::notification_table . '
-                    (Title, Content, Typez, ID_Sender, 
-                    Time_Create, Time_Start, Time_End)
+                (
+                    Title, Content, Typez, ID_Sender, 
+                    Time_Create, Time_Start, Time_End
+                )
                 VALUES
-                    (:title, :content, :typez, :id_sender, 
-                    :time_create, :time_start, :time_end) 
-                ';
+                (
+                    :title, :content, :typez, :id_sender, 
+                    :time_create, :time_start, :time_end
+                )';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -125,15 +128,14 @@
 
         public function getDeletedNotification () : array
         {
-            $sql_query = '
-                SELECT
+            $sql_query =
+                'SELECT
                     ID_Notification
                 FROM
                     ' . self::notification_table . '
                 WHERE
                     Is_Delete = 1 AND
-                    Time_Create >= DATE_SUB(NOW(), INTERVAL 3 WEEK )
-                ';
+                    Time_Create >= DATE_SUB(NOW(), INTERVAL 3 WEEK)';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

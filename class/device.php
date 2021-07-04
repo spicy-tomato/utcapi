@@ -21,11 +21,10 @@
                 return [];
             }
 
-            $sql_query_1 = '
-                CREATE TEMPORARY TABLE temp3 (
+            $sql_query_1 =
+                'CREATE TEMPORARY TABLE temp3 (
                   ID_Student varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
-                ';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci';
 
             $sql_of_list =
                 implode(',', array_fill(0, count($id_student_list), '(?)'));
@@ -36,15 +35,14 @@
                 VALUES
                     ' . $sql_of_list;
 
-            $sql_query_3 = '
-                SELECT
+            $sql_query_3 =
+                'SELECT
                     Device_Token
                 FROM
                      temp3 t
                          RIGHT OUTER JOIN
                      ' . self::device_table . ' d
-                        ON t.ID_Student = d.ID_Student
-                ';
+                        ON t.ID_Student = d.ID_Student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query_1);
@@ -77,8 +75,7 @@
                     (:token, :id_student, :current_time)
                 ON DUPLICATE KEY UPDATE
                     ID_Student = :id_student,
-                    Last_Use = :current_time
-                 ';
+                    Last_Use = :current_time';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -107,13 +104,12 @@
             $sql_of_list =
                 implode(',', array_fill(0, count($invalid_token_list), '?'));
 
-            $sql_query = '
-                DELETE
+            $sql_query =
+                'DELETE
                 FROM
                      ' . self::device_table . '
                 WHERE 
-                    Device_Token IN (' . $sql_of_list . ')
-                ';
+                    Device_Token IN (' . $sql_of_list . ')';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

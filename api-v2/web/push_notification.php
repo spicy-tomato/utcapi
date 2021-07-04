@@ -44,7 +44,7 @@
 
             $notification->setUpData($data['info']);
             $id_notification = $notification->insert();
-            $notification_account->pushData($id_account_list, $id_notification);
+            $notification_account->insert($id_account_list, $id_notification);
             $data_version->updateAllNotificationVersion($id_notification);
             $firebase_notification->send();
 
