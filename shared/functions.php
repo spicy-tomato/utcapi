@@ -26,7 +26,21 @@
 
         EnvIO::loadEnv();
         $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
-        file_put_contents($_SERVER['DOCUMENT_ROOT'] . $root_folder . '/error-log/errors.txt', $message, FILE_APPEND);
+        file_put_contents($_SERVER['DOCUMENT_ROOT'] . $root_folder . '/error-log/errors.txt',
+            $message, FILE_APPEND);
+    }
+
+    function printFileImportException ($file_name, $module_class_list, $title)
+    {
+        $message = $title . PHP_EOL;
+        foreach ($module_class_list as $module_class) {
+            $message .= $module_class . PHP_EOL;
+        }
+
+        EnvIO::loadEnv();
+        $root_folder = $_ENV['LOCAL_ROOT_PROJECT'] ?? '';
+        file_put_contents($_SERVER['DOCUMENT_ROOT'] . $root_folder . '/ui/push-data/src/' . $file_name,
+            $message);
     }
 
     function convertDate ($date) : string
@@ -103,7 +117,7 @@
         return $codes[$status_code];
     }
 
-//    $a = [1, 2, 3, 4];
-//    $b = [6, 7, 8, 9];
-//    $c = array_merge($a, $b);
-//    var_dump($c);
+    //    $a = [1, 2, 3, 4];
+    //    $b = [6, 7, 8, 9];
+    //    $c = array_merge($a, $b);
+    //    var_dump($c);

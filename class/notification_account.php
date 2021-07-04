@@ -17,10 +17,10 @@
             $this->connect = $connect;
         }
 
-        public function getAllNotification ($id_account, $id_notification = '1') : array
+        public function getAllNotification ($id_account, $id_notification = '0') : array
         {
-            $sql_query = '
-                    SELECT
+            $sql_query =
+                    'SELECT
                         n.*,
                         od.Other_Department_Name, 
                         a.permission 
@@ -86,8 +86,7 @@
                         n.ID_Notification = na.ID_Notification AND
                         d.ID_Account = n.ID_Sender AND 
                         a.id = n.ID_Sender AND 
-                        n.Is_Delete = 0
-                    ';
+                        n.Is_Delete = 0';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -108,7 +107,7 @@
             }
         }
 
-        public function pushData (array $id_account_list, string $id_notification) : void
+        public function insert (array $id_account_list, string $id_notification) : void
         {
             if (empty($id_account_list)) {
                 return;

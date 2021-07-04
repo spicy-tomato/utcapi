@@ -17,8 +17,8 @@
 
         public function getFixedSchedules ($last_time_accepted) : array
         {
-            $sql_query = '
-                SELECT
+            $sql_query =
+                'SELECT
                     fix.Time_Accept_Request, md.Module_Name, sch.ID_Module_Class, 
                     fix.Day_Fix, sch.Day_Schedules, sch.Shift_Schedules, sch.ID_Room, t.ID_Account
                 FROM
@@ -36,8 +36,7 @@
                     fix.Time_Accept_Request IS NOT NULL AND 
                     fix.Status_Fix = \'Chấp nhận\'
                 ORDER BY 
-                    fix.Time_Accept_Request
-                ';
+                    fix.Time_Accept_Request';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);

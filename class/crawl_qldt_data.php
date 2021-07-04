@@ -113,7 +113,6 @@
             foreach ($elements as $e) {
                 $this->school_year_arr[] = $e->innertext;
             }
-
         }
 
         private function _getDataModuleScore ()
@@ -135,7 +134,8 @@
                     $arr[] = $td[1] ?? $td[0];
 
                     $td    = explode('<br><br>', $tr[$j]->children(2)->innertext);
-                    $arr[] = $td[1] ?? $td[0];
+                    $str   = $td[1] ?? $td[0];
+                    $arr[] = $this->_formatStringDataCrawled($str);
 
                     $td    = explode('<br><br>', $tr[$j]->children(3)->innertext);
                     $arr[] = $td[1] ?? $td[0];
@@ -387,12 +387,6 @@
                     $data[$this->school_year_arr[0]][] = $module;
                 }
                 unset($data[$this->school_year_arr[$num_of_school_year - 1]]);
-            }
-
-            foreach ($data as &$school_year) {
-                foreach ($school_year as &$module) {
-                    $module[1] = $this->_formatStringDataCrawled($module[1]);
-                }
             }
 
             return $data;

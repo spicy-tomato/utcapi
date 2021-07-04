@@ -472,10 +472,11 @@ async function trySendNotification() {
             time_end: timeEndRsBtClass === 'disable' ? '' : $('#time-end').val(),
             sender: sender
         },
-        class_list: selectedClass
+        class_list: selectedClass,
+        target: 'fc'
     }
 
-    const baseUrl = '../../../api-v2/web/push_faculty_class_notification.php'
+    const baseUrl = '../../../api-v2/web/push_notification.php'
 
     let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField, 'Tạo thông báo mới', '../../home/')
 

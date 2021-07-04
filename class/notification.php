@@ -20,8 +20,8 @@
 
         public function setUpData (array $info)
         {
-            $this->title       = $info['title'];
-            $this->content     = $info['content'];
+            $this->title       = $this->_formatString($info['title']);
+            $this->content     = $this->_formatString($info['content']);
             $this->typez       = $info['typez'];
             $this->sender      = $info['sender'];
             $this->time_create = $this->_getDateNow();
@@ -37,9 +37,9 @@
             $arr  = explode(' ', $temp_date);
             $arr2 = explode('/', $arr[0]);
 
-            $temp_date = $arr2[2] . '/' . $arr2[1] . '/' . $arr2[0] . ' ' . $arr[1];
+            $date = $arr2[2] . '/' . $arr2[1] . '/' . $arr2[0] . ' ' . $arr[1];
 
-            return $temp_date;
+            return $date;
         }
 
         public function insert () : string
@@ -47,12 +47,15 @@
             $sql_query =
                 'INSERT INTO
                     ' . self::notification_table . '
-                    (Title, Content, Typez, ID_Sender, 
-                    Time_Create, Time_Start, Time_End)
+                (
+                    Title, Content, Typez, ID_Sender, 
+                    Time_Create, Time_Start, Time_End
+                )
                 VALUES
-                    (:title, :content, :typez, :id_sender, 
-                    :time_create, :time_start, :time_end) 
-                ';
+                (
+                    :title, :content, :typez, :id_sender, 
+                    :time_create, :time_start, :time_end
+                )';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -125,15 +128,14 @@
 
         public function getDeletedNotification () : array
         {
-            $sql_query = '
-                SELECT
+            $sql_query =
+                'SELECT
                     ID_Notification
                 FROM
                     ' . self::notification_table . '
                 WHERE
                     Is_Delete = 1 AND
-                    Time_Create >= DATE_SUB(NOW(), INTERVAL 3 WEEK )
-                ';
+                    Time_Create >= DATE_SUB(NOW(), INTERVAL 3 WEEK)';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -143,7 +145,7 @@
                 foreach ($record as &$value) {
                     $value = intval($value);
                 }
-                
+
                 return $record;
 
             } catch (PDOException $error) {
@@ -154,5 +156,13 @@
         private function _getIdNotification () : string
         {
             return $this->connect->lastInsertId();
+        }
+
+        private function _formatString ($str) : string
+        {
+            $str = preg_replace('/[ ]+/', ' ', $str);
+            $str = trim($str, ' ');
+
+            return $str;
         }
     }

@@ -3,17 +3,9 @@ class Participate:
         self,
         ID_Module_Class,
         ID_Student,
-        Process_Score=None,
-        Test_Score=None,
-        Theoretical_Score=None,
-        Status_Studying=None,
     ) -> None:
         self.ID_Module_Class = ID_Module_Class
         self.ID_Student = ID_Student
-        self.Process_Score = Process_Score
-        self.Test_Score = Test_Score
-        self.Theoretical_Score = Theoretical_Score
-        self.Status_Studying = Status_Studying
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, Participate):
@@ -44,4 +36,3 @@ class Participate:
 
     def __hash__(self) -> int:
         return hash(self.ID_Student + self.ID_Module_Class)
-

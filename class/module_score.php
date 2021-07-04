@@ -15,25 +15,27 @@
 
         public function pushData ($data)
         {
-            foreach ($data as $semester => $module) {
+            foreach ($data as $school_year => $module) {
                 foreach ($module as $value) {
                     try {
                         if ($value[0] == 'ANHA1.4' || $value[0] == 'ANHA2.4') {
                             continue;
                         }
 
-                        $this->_insert($semester, $value);
+                        $this->_insert($school_year, $value);
 
                     } catch (PDOException $error) {
-                        if ($error->getCode() == 23000) {
-                            $this->_updateData($semester, $value);
+                        if ($error->getCode() == 23000 &&
+                            $error->errorInfo[1] == 1062) {
+
+                            $this->_update($school_year, $value);
                         }
                         else {
                             throw $error;
                         }
                     }
                 }
-                unset($data[$semester]);
+                unset($data[$school_year]);
             }
         }
 
@@ -45,8 +47,10 @@
                         $this->_insert($school_year, $value);
 
                     } catch (PDOException $error) {
-                        if ($error->getCode() == 23000) {
-                            $this->_updateData($school_year, $value);
+                        if ($error->getCode() == 23000 &&
+                            $error->errorInfo[1] == 1062) {
+
+                            $this->_update($school_year, $value);
                         }
                         else {
                             throw $error;
@@ -63,13 +67,13 @@
                 'INSERT INTO
                     ' . self::module_score_table . ' 
                 (
-                School_Year, ID_Student, ID_Module, Module_Name, Credit,
-                Evaluation, Process_Score, Test_Score, Theoretical_Score
+                    School_Year, ID_Student, ID_Module, Module_Name, Credit,
+                    Evaluation, Process_Score, Test_Score, Theoretical_Score
                 )
                 VALUES
                 (
-                :school_year, :id_student, :id_module, :module_name, :credit,
-                :evaluation, :process_score, :test_score, :theoretical_score
+                    :school_year, :id_student, :id_module, :module_name, :credit,
+                    :evaluation, :process_score, :test_score, :theoretical_score
                 )';
 
 
@@ -92,7 +96,7 @@
             }
         }
 
-        private function _updateData ($semester, $value)
+        private function _update ($semester, $value)
         {
             $sql_query =
                 'UPDATE
@@ -131,8 +135,7 @@
                 FROM
                     ' . self::module_score_table . '
                 WHERE
-                    ID_Student = :id_student
-                ';
+                    ID_Student = :id_student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -155,8 +158,7 @@
                 FROM
                     ' . self::module_score_table . '
                 WHERE
-                    ID_Student = :id_student
-                ';
+                    ID_Student = :id_student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
@@ -173,10 +175,11 @@
 
         public function getRecentLatestSchoolYear () : array
         {
-            $sql_query = '
-                SELECT 
+            $sql_query =
+                'SELECT 
                    School_Year 
-                FROM ' . self::module_score_table . ' 
+                FROM 
+                     ' . self::module_score_table . ' 
                 WHERE
                     ID_Student = :id_student
                 ORDER BY 

@@ -19,11 +19,10 @@
 
         private function _getListFromModuleClass ($class_list) : array
         {
-            $sql_query_1 = '
-                CREATE TEMPORARY TABLE temp (
+            $sql_query_1 =
+                'CREATE TEMPORARY TABLE temp (
                   ID_Module_Class varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
-                ';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci';
 
             $sql_of_list =
                 implode(',', array_fill(0, count($class_list), '(?)'));
@@ -34,16 +33,16 @@
                 VALUES
                     ' . $sql_of_list;
 
-            $sql_query_3 = '
-                SELECT 
+            $sql_query_3 =
+                'SELECT 
                     ID_Student
                 FROM 
                      temp t 
                          LEFT OUTER JOIN
                      ' . self::participate_table . ' p
                         ON t.ID_Module_Class = p.ID_Module_Class
-                WHERE ID_Student IS NOT NULL
-                ';
+                WHERE 
+                    ID_Student IS NOT NULL';
 
             try {
                 $stmt = $this->connect->prepare($sql_query_1);
@@ -70,11 +69,10 @@
 
         private function _getListFromFacultyClass ($class_list) : array
         {
-            $sql_query_1 = '
-                CREATE TEMPORARY TABLE temp (
+            $sql_query_1 =
+                'CREATE TEMPORARY TABLE temp (
                   ID_Class varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
-                ';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci';
 
             $sql_of_list =
                 implode(',', array_fill(0, count($class_list), '(?)'));
@@ -85,16 +83,16 @@
                 VALUES
                     ' . $sql_of_list;
 
-            $sql_query_3 = '
-                SELECT 
+            $sql_query_3 =
+                'SELECT 
                     ID_Student
                 FROM 
                      temp t 
                          LEFT OUTER JOIN
                      ' . self::student_table . ' s
                         ON t.ID_Class = s.ID_Class
-                WHERE ID_Student IS NOT NULL
-                ';
+                WHERE 
+                    ID_Student IS NOT NULL';
 
             try {
                 $stmt = $this->connect->prepare($sql_query_1);
@@ -125,11 +123,10 @@
                 return [];
             }
 
-            $sql_query_1 = '
-                CREATE TEMPORARY TABLE temp1 (
+            $sql_query_1 =
+                'CREATE TEMPORARY TABLE temp1 (
                   ID_Student varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
-                ';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci';
 
             $sql_of_list =
                 implode(',', array_fill(0, count($id_student_list), '(?)'));
@@ -140,8 +137,8 @@
                 VALUES
                     ' . $sql_of_list;
 
-            $sql_query_3 = '
-                SELECT 
+            $sql_query_3 =
+                'SELECT 
                     ID_Account
                 FROM 
                      temp1 t 
@@ -149,8 +146,7 @@
                      ' . self::student_table . ' s
                         ON t.ID_Student = s.ID_Student
                 WHERE
-                    ID_Account IS NOT NULL
-                ';
+                    ID_Account IS NOT NULL';
 
             try {
                 $stmt = $this->connect->prepare($sql_query_1);

@@ -27,11 +27,10 @@
                     $second_semester = $latest_semester;
             }
 
-            $sql_query_1 = '
-                CREATE TEMPORARY TABLE temp(
+            $sql_query_1 =
+                'CREATE TEMPORARY TABLE temp(
                      School_Year varchar(4) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
-                ) ENGINE = InnoDB default CHARSET = utf8 COLLATE = utf8_unicode_ci
-                ';
+                ) ENGINE = InnoDB default CHARSET = utf8 COLLATE = utf8_unicode_ci';
 
             $sql_query_2 =
                 'INSERT INTO temp
@@ -39,8 +38,8 @@
                 VALUES
                     (?),(?)';
 
-            $sql_query_3 = '
-                SELECT
+            $sql_query_3 =
+                'SELECT
                     ID_Module_Class, Module_Class_Name
                 FROM
                      temp t
@@ -50,8 +49,7 @@
                 WHERE 
                     ID_Module_Class IS NOT NULL
                 ORDER BY
-                    ID_Module_Class
-                ';
+                    ID_Module_Class';
 
             try {
                 $stmt = $this->connect->prepare($sql_query_1);
