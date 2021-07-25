@@ -2,8 +2,8 @@
 
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
-    include_once dirname(__DIR__, 2) . '/class/data_version.php';
     include_once dirname(__DIR__, 2) . '/class/notification.php';
+    include_once dirname(__DIR__, 2) . '/class/data_version_student.php';
     include_once dirname(__DIR__, 2) . '/class/notification_account.php';
 
     set_error_handler('exceptions_error_handler');
@@ -16,7 +16,7 @@
             $db      = new Database(true);
             $connect = $db->connect();
 
-            $data_version         = new DataVersion($connect, $_GET['id_student']);
+            $data_version_student = new DataVersionStudent($connect, $_GET['id_student']);
             $notification_account = new NotificationAccount($connect);
 
             $data  = [];
@@ -32,7 +32,7 @@
                 $data = $notification_account->getAllNotification($_GET['id_account']);
             }
 
-            $notification_version = $data_version->getDataVersion('Notification');
+            $notification_version = $data_version_student->getDataVersion('Notification');
 
             if (empty($data) && empty($data2)) {
                 $response['status_code'] = 204;

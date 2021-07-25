@@ -1,7 +1,6 @@
 <?php
 
     include_once 'account.php';
-    include_once 'data_version.php';
 
     class Student
     {

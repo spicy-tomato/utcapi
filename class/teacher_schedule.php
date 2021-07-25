@@ -19,7 +19,7 @@
         {
             $sql_query =
                 'SELECT
-                    mdcls.Module_Class_Name, sdu.ID_Module_Class, 
+                    sdu.ID_Schedules, mdcls.Module_Class_Name, sdu.ID_Module_Class, 
                     sdu.ID_Room, sdu.Shift_Schedules, sdu.Day_Schedules
                 FROM
                     ' . self::teacher_table . ' tea, 
@@ -28,7 +28,8 @@
                 WHERE
                     tea.ID_Teacher = :teacher_id AND 
                     mdcls.ID_Teacher = :teacher_id AND 
-                    sdu.ID_Module_Class = mdcls.ID_Module_Class 
+                    sdu.ID_Module_Class = mdcls.ID_Module_Class AND
+                    sdu.Day_Schedules >= DATE_SUB(NOW(), INTERVAL 1 YEAR)
                 ORDER BY
                     sdu.Shift_Schedules';
 
@@ -51,6 +52,7 @@
         private function _formatResponse ($data)
         {
             foreach ($data as &$e) {
+                $e['ID_Schedules']    = intval($e['ID_Schedules']);
                 $e['Shift_Schedules'] = intval($e['Shift_Schedules']);
             }
 

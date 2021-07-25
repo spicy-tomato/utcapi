@@ -1,8 +1,8 @@
 <?php
 
-    class DataVersion
+    class DataVersionStudent
     {
-        private const data_version_table = 'Data_Version';
+        private const data_version_student_table = 'Data_Version_Student';
         private const participate_table = 'Participate';
         private const module_class_table = 'Module_Class';
 
@@ -23,7 +23,7 @@
 
             $sql_query =
                 'INSERT INTO
-                    ' . self::data_version_table . ' 
+                    ' . self::data_version_student_table . ' 
                     (
                         ID_Student, Schedule, Notification, Module_Score, Exam_Schedule
                     )
@@ -44,7 +44,7 @@
         {
             $sql_query =
                 'UPDATE
-                    ' . self::data_version_table . ' 
+                    ' . self::data_version_student_table . ' 
                 SET
                     ' . $type . ' = ' . $type . ' + 1
                 WHERE
@@ -63,7 +63,7 @@
         {
             $sql_query =
                 'UPDATE 
-                    ' . self::data_version_table . '
+                    ' . self::data_version_student_table . '
                 SET 
                     Schedule = Schedule + 1
                 WHERE 
@@ -82,17 +82,17 @@
         {
             $sql_query =
                 'UPDATE 
-                    ' . self::data_version_table . ' dv, 
-                        (
-                        SELECT DISTINCT
-                            p.ID_Student  
-                        FROM 
-                            ' . self::participate_table . ' p, 
-                            ' . self::module_class_table . ' mc
-                        WHERE 
-                            p.ID_Module_Class = mc.ID_Module_Class AND 
-                            mc.School_Year = :newest_semester
-                        ) temp3
+                    ' . self::data_version_student_table . ' dv, 
+                    (
+                    SELECT DISTINCT
+                        p.ID_Student  
+                    FROM 
+                        ' . self::participate_table . ' p, 
+                        ' . self::module_class_table . ' mc
+                    WHERE 
+                        p.ID_Module_Class = mc.ID_Module_Class AND 
+                        mc.School_Year = :newest_semester
+                    ) temp3
                 SET 
                     Schedule = Schedule + 1
                 WHERE 
@@ -110,7 +110,8 @@
         public function updateAllNotificationVersion ($id_notification)
         {
             $sql_query =
-                'UPDATE data_version dv,
+                'UPDATE 
+                    ' . self::data_version_student_table . ' dv,
                     (
                     SELECT
                         s.ID_Student
@@ -140,7 +141,7 @@
                 'SELECT
                     ' . $type . '
                 FROM
-                    ' . self::data_version_table . '
+                    ' . self::data_version_student_table . '
                 WHERE
                     ID_Student = :id_student';
 
@@ -162,7 +163,7 @@
                 'SELECT
                     Schedule, Notification, Exam_Schedule, Module_Score
                 FROM
-                    ' . self::data_version_table . '
+                    ' . self::data_version_student_table . '
                 WHERE
                     ID_Student = :id_student';
 

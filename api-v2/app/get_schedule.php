@@ -1,11 +1,12 @@
 <?php
 
     include_once dirname(__DIR__, 2) . '/config/db.php';
-    include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/account.php';
+    include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/student_schedule.php';
     include_once dirname(__DIR__, 2) . '/class/teacher_schedule.php';
-    include_once dirname(__DIR__, 2) . '/class/data_version.php';
+    include_once dirname(__DIR__, 2) . '/class/data_version_student.php';
+    include_once dirname(__DIR__, 2) . '/class/data_version_teacher.php';
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
@@ -18,14 +19,14 @@
             $account    = new Account($connect);
             $permission = $account->getAccountPermission($_GET['id']);
 
-            $data_version     = new DataVersion($connect, $_GET['id']);
-            $schedule_version = $data_version->getDataVersion('Schedule');
-
             switch ($permission) {
                 case '0';
                     {
                         $schedules = new StudentSchedule($connect, $_GET['id']);
                         $data      = $schedules->getAllSchedule();
+
+                        $data_version_student = new DataVersionStudent($connect, $_GET['id']);
+                        $schedule_version     = $data_version_student->getDataVersion('Schedule');
 
                         break;
                     }
@@ -34,6 +35,9 @@
                     {
                         $schedules = new TeacherSchedule($connect, $_GET['id']);
                         $data      = $schedules->getAllSchedule();
+
+                        $data_version_teacher = new DataVersionTeacher($connect, $_GET['id']);
+                        $schedule_version     = $data_version_teacher->getDataVersion('Schedule');
 
                         break;
                     }

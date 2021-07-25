@@ -34,7 +34,7 @@ async function uploadFile() {
         raiseBackEndError(false, 3)
     }
     else {
-        raiseBackEndError(true, 7)
+        raiseBackEndError(true, 10)
     }
 }
 
