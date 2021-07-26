@@ -35,7 +35,7 @@
                 WHERE
                     par.ID_Student = :id_student AND
                     sdu.ID_Module_Class = par.ID_Module_Class AND
-                    mc_t.ID_Module_Class = sdu.ID_Module_Class
+                    mc_t.ID_Module_Class = sdu.ID_Module_Class AND
                     sdu.Day_Schedules >= DATE_SUB(NOW(), INTERVAL 1 YEAR)
                 ORDER BY
                     sdu.Shift_Schedules';
