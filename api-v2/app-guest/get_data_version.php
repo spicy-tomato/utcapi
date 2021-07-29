@@ -9,7 +9,7 @@
         isset($_GET['id_guest'])) {
 
         try {
-            $db      = new Database(true);
+            $db      = new Database(false);
             $connect = $db->connect();
 
             $guest_info   = new GuestInfo($connect);
