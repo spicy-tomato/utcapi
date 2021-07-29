@@ -27,8 +27,6 @@
                     break;
 
                 case 1:
-                    $response['status_code'] = 200;
-
                     $info               = $crawl->getStudentInfo();
                     $info['id_student'] = $data['username'];
                     $info['password']   = md5($data['password']);
@@ -38,6 +36,9 @@
 
                     $guest_info = new GuestInfo($connect);
                     $guest_info->insert($info);
+
+                    $response['status_code'] = 200;
+                    $response['content']     = $guest_info->getGuestInfo($info['id_student']);
 
                     break;
             }

@@ -5,6 +5,7 @@
     class FacultyClass
     {
         private const class_table = 'Class';
+        private const faculty_table = 'Faculty';
 
         private PDO $connect;
         private array $class_info_list = [];
@@ -113,6 +114,29 @@
                 $stmt->execute($academic_year);
 
                 $stmt = $this->connect->prepare($sql_query_3);
+                $stmt->execute();
+                $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                return $record;
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+        public function getAllFaculty () : array
+        {
+            $sql_query = '
+                SELECT 
+                    ID_Faculty, Faculty_Name
+                FROM 
+                     ' . self::faculty_table . '
+                WHERE 
+                    ID_Faculty NOT IN (\'GDTC\', \'GDQP\', \'LLCT\')';
+
+            try {
+
+                $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute();
                 $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

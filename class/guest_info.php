@@ -42,6 +42,29 @@
             }
         }
 
+        public function getGuestInfo ($id_student) : array
+        {
+            $sql_query =
+                'SELECT
+                    ID as ID_Guest, ID_Student, Student_Name
+                FROM 
+                    ' . self::guest_info_table . '  
+                WHERE 
+                    ID_Student = :id_student';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute([':id_student' => $id_student]);
+                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                return $data;
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+
         public function getQLDTPassword ($id_student)
         {
             $sql_query =
