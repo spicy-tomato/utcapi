@@ -49,7 +49,7 @@
             $firebase_notification->send();
 
             $response['status_code'] = 200;
-            $response['content']     = 'OK';
+            $response['content']     = $id_notification;
 
         } catch (Error | Exception | MessagingException | FirebaseException $error) {
             printError($error);

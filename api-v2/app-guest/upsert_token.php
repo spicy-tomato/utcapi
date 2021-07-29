@@ -2,25 +2,22 @@
 
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
-    include_once dirname(__DIR__, 2) . '/class/data_version_student.php';
-    include_once dirname(__DIR__, 2) . '/class/notification.php';
+    include_once dirname(__DIR__, 2) . '/class/guest_info.php';
+
+    set_error_handler('exceptions_error_handler');
 
     $data = json_decode(file_get_contents('php://input'), true);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
-        !empty($data)) {
+        isset($data['id_student']) &&
+        isset($data['token'])) {
 
         try {
             $db      = new Database(true);
             $connect = $db->connect();
 
-            $notification         = new Notification($connect);
-            $data_version_student = new DataVersionStudent($connect);
-
-            $notification->setDeleteNotification($data);
-            foreach ($data as $id_notification) {
-                $data_version_student->updateAllNotificationVersion($id_notification);
-            }
+            $guest_info = new GuestInfo($connect);
+            $guest_info->upsertToken($data['id_student'], $data['token']);
 
             $response['status_code'] = 200;
             $response['content']     = 'OK';

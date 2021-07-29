@@ -16,6 +16,7 @@
         private string $url_student_exam_schedule = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/';
         private int $status = 1;
         private bool $is_all = false;
+        private $home_page;
         private $ch;
 
         public function __construct (string $student_id, string $qldt_password)
@@ -67,6 +68,24 @@
                     $this->status = 0;
                 }
             }
+            else {
+                $this->home_page = $response;
+            }
+        }
+
+        public function getStudentInfo () : array
+        {
+            $html = new simple_html_dom();
+            $html->load($this->home_page);
+
+            $info = $html->find('span[id=lblStudent]', 0)->innertext;
+
+            $info_list             = explode(' - ', $info);
+            $data['student_name']  = $info_list[1];
+            $data['academic_year'] = $info_list[3];
+            $data['id_faculty']    = $info_list[3];
+
+            return $data;
         }
 
         public function getStudentModuleScore ($flag) : array

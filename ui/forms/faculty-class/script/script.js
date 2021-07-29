@@ -1,4 +1,9 @@
-import {autoFillTemplate, resetInputDate, changeStatusButton, listerEnterKey} from '../../script/shared_form_functions.js'
+import {
+    autoFillTemplate,
+    resetInputDate,
+    changeStatusButton,
+    listerEnterKey
+} from '../../script/shared_form_functions.js'
 import {getSender, fetchData} from '../../../script/shared_functions.js'
 import {postDataAndRaiseAlert} from '../../../script/alerts.js'
 
@@ -463,10 +468,13 @@ async function trySendNotification() {
     let timeStartRsBtClass = document.getElementsByClassName('time-start')[0].classList[3]
     let timeEndRsBtClass = document.getElementsByClassName('time-end')[0].classList[3]
 
+    let title = $('#title').val()
+    let content = $('#content').val()
+
     const data = {
         info: {
-            title: $('#title').val(),
-            content: $('#content').val(),
+            title: title,
+            content: content,
             typez: $('#type').val(),
             time_start: timeStartRsBtClass === 'disable' ? '' : $('#time-start').val(),
             time_end: timeEndRsBtClass === 'disable' ? '' : $('#time-end').val(),
@@ -476,13 +484,36 @@ async function trySendNotification() {
         target: 'fc'
     }
 
+
     const baseUrl = '../../../api-v2/web/push_notification.php'
+    const guestURL = '../../../api-v2/web-guest/push_notification.php'
 
-    let madeRequest = await postDataAndRaiseAlert(baseUrl, data, getInvalidField, 'Tạo thông báo mới', '../../home/')
+    let idNotification = await postDataAndRaiseAlert(baseUrl, data, getInvalidField, 'Tạo thông báo mới', '../../home/')
 
-    if (madeRequest) {
+    const dataGuest = {
+        info: {
+            title: title,
+            content: content,
+        },
+        id_notification: idNotification,
+        faculty: faculties,
+        academic_year: academicYears,
+    }
+
+    if (idNotification) {
+        await postData(guestURL, dataGuest)
         document.getElementById('submit_btn').removeEventListener('click', trySendNotification)
     }
+}
+
+async function postData(url, data) {
+    const init = {
+        method: 'POST',
+        cache: 'no-cache',
+        body: JSON.stringify(data)
+    }
+
+    await fetch(url, init)
 }
 
 function fillForms() {

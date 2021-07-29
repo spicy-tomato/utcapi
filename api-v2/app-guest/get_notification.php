@@ -2,36 +2,43 @@
 
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
+    include_once dirname(__DIR__, 2) . '/class/guest_info.php';
     include_once dirname(__DIR__, 2) . '/class/notification.php';
-    include_once dirname(__DIR__, 2) . '/class/data_version_student.php';
-    include_once dirname(__DIR__, 2) . '/class/notification_account.php';
+    include_once dirname(__DIR__, 2) . '/class/notification_guest.php';
+
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
-        isset($_GET['id_student']) &&
-        isset($_GET['id_account'])) {
+        isset($_GET['id_guest'])) {
 
         try {
-            $db      = new Database(true);
-            $connect = $db->connect();
+            $db           = new Database(true);
+            $connect_main = $db->connect();
 
-            $data_version_student = new DataVersionStudent($connect, $_GET['id_student']);
-            $notification_account = new NotificationAccount($connect);
+            $db            = new Database(false);
+            $connect_extra = $db->connect();
+
+            $guest_info         = new GuestInfo($connect_extra);
+            $notification_guest = new NotificationGuest($connect_extra);
 
             $data  = [];
             $data2 = [];
 
             if (isset($_GET['id_notification'])) {
-                $data = $notification_account->getAllNotification($_GET['id_account'], $_GET['id_notification']);
+                $id_notification_list = $notification_guest->getIDNotification($_GET['id_guest']);
+                $notification_guest->setConnect($connect_main);
+                $data = $notification_guest->getAllNotification($id_notification_list, $_GET['id_notification']);
 
-                $notification = new Notification($connect);
+                $notification = new Notification($connect_main);
                 $data2        = $notification->getDeletedNotification();
             }
             else {
-                $data = $notification_account->getAllNotification($_GET['id_account']);
+                $id_notification_list = $notification_guest->getIDNotification($_GET['id_guest']);
+                $notification_guest->setConnect($connect_main);
+                $data = $notification_guest->getAllNotification($id_notification_list);
             }
 
-            $notification_version = $data_version_student->getDataVersion('Notification');
+            $notification_version = $guest_info->getNotificationVersion($_GET['id_guest']);
 
             if (empty($data) && empty($data2)) {
                 $response['status_code'] = 204;

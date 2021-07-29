@@ -3,14 +3,16 @@
     class ModuleScore
     {
         private const module_score_table = 'Module_Score';
-
+        private const module_score_guest_table = 'Module_Score_Guest';
+        private string $table_name;
         private PDO $connect;
         private string $id_student;
 
-        public function __construct (PDO $connect, $id_student)
+        public function __construct (PDO $connect, $id_student, $isGuest)
         {
             $this->connect    = $connect;
             $this->id_student = $id_student;
+            $this->table_name = $isGuest ? self::module_score_guest_table : self::module_score_table;
         }
 
         public function pushData ($data)
@@ -65,7 +67,7 @@
         {
             $sql_query =
                 'INSERT INTO
-                    ' . self::module_score_table . ' 
+                    ' . $this->table_name . ' 
                 (
                     School_Year, ID_Student, ID_Module, Module_Name, Credit,
                     Evaluation, Process_Score, Test_Score, Theoretical_Score
@@ -100,7 +102,7 @@
         {
             $sql_query =
                 'UPDATE
-                    ' . self::module_score_table . '
+                    ' . $this->table_name . '
                 SET  
                     Evaluation = :evaluation, Process_Score = :process_score, 
                     Test_Score = :test_score, Theoretical_Score = :theoretical_score
@@ -133,7 +135,7 @@
                     ID, School_Year, Module_Name, Credit, Evaluation, 
                     Process_Score, Test_Score, Theoretical_Score
                 FROM
-                    ' . self::module_score_table . '
+                    ' . $this->table_name . '
                 WHERE
                     ID_Student = :id_student';
 
@@ -156,7 +158,7 @@
                 'SELECT DISTINCT 
                     School_Year
                 FROM
-                    ' . self::module_score_table . '
+                    ' . $this->table_name . '
                 WHERE
                     ID_Student = :id_student';
 
@@ -179,7 +181,7 @@
                 'SELECT 
                    School_Year 
                 FROM 
-                     ' . self::module_score_table . ' 
+                     ' . $this->table_name . ' 
                 WHERE
                     ID_Student = :id_student
                 ORDER BY 

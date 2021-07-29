@@ -13,7 +13,7 @@
             $db      = new Database(false);
             $connect = $db->connect();
 
-            $module_score = new ModuleScore($connect, $_GET['id_student'], false);
+            $module_score = new ModuleScore($connect, $_GET['id_student'], true);
             $data         = $module_score->getScore();
 
             if (empty($data)) {

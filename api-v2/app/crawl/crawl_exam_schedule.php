@@ -38,8 +38,8 @@
                     break;
 
                 case 1:
-                    $module_score  = new ModuleScore($connect_extra, $data['id_student']);
-                    $exam_schedule = new ExamSchedule($connect_extra, $data['id_student']);
+                    $module_score  = new ModuleScore($connect_extra, $data['id_student'], false);
+                    $exam_schedule = new ExamSchedule($connect_extra, $data['id_student'], false);
 
                     if ($data['all'] == 'true') {
                         $semester   = $module_score->getAllRecentSemester();
