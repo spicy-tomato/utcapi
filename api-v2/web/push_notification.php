@@ -8,7 +8,7 @@
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
     include_once dirname(__DIR__, 2) . '/class/helper.php';
     include_once dirname(__DIR__, 2) . '/class/device.php';
-    include_once dirname(__DIR__, 2) . '/class/data_version.php';
+    include_once dirname(__DIR__, 2) . '/class/data_version_student.php';
     include_once dirname(__DIR__, 2) . '/class/notification.php';
     include_once dirname(__DIR__, 2) . '/class/notification_account.php';
     include_once dirname(__DIR__, 2) . '/class/firebase_notification.php';
@@ -40,16 +40,16 @@
             $notification          = new Notification($connect);
             $notification_account  = new NotificationAccount($connect);
             $firebase_notification = new FirebaseNotification($data['info'], $token_list);
-            $data_version          = new DataVersion($connect);
+            $data_version_student  = new DataVersionStudent($connect);
 
             $notification->setUpData($data['info']);
             $id_notification = $notification->insert();
             $notification_account->insert($id_account_list, $id_notification);
-            $data_version->updateAllNotificationVersion($id_notification);
+            $data_version_student->updateAllNotificationVersion($id_notification);
             $firebase_notification->send();
 
             $response['status_code'] = 200;
-            $response['content']     = 'OK';
+            $response['content']     = $id_notification;
 
         } catch (Error | Exception | MessagingException | FirebaseException $error) {
             printError($error);

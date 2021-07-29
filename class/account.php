@@ -94,7 +94,7 @@
         public function getIDAccount ($id) : string
         {
             $sql_query =
-                    'SELECT
+                'SELECT
                         a.id
                     FROM
                          ' . self::student_table . ' s,
@@ -120,7 +120,7 @@
         public function updateQLDTPasswordOfStudentAccount ($id, $qldt_password) : array
         {
             $sql_query =
-                    'UPDATE
+                'UPDATE
                          ' . self::account_table . '
                     SET 
                         qldt_password = :qldt_password
@@ -130,7 +130,7 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
-                    'id' => $id,
+                    ':id' => $id,
                     ':qldt_password' => $qldt_password
                 ]);
 
@@ -147,7 +147,7 @@
         public function getQLDTPasswordOfStudentAccount ($id) : string
         {
             $sql_query =
-                    'SELECT
+                'SELECT
                         qldt_password
                     FROM
                          ' . self::account_table . ' a  

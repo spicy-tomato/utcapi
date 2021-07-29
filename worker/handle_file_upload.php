@@ -8,6 +8,7 @@
     include_once dirname(__DIR__) . '/class/participate.php';
     include_once dirname(__DIR__) . '/class/handle_file.php';
     include_once dirname(__DIR__) . '/class/faculty_class.php';
+    include_once dirname(__DIR__) . '/class/data_version_student.php';
     set_error_handler('exceptions_error_handler');
     ini_set('max_execution_time', '300');
 
@@ -26,11 +27,11 @@
                 $aws       = new AWS();
                 $read_file = new ReadFIle();
 
-                $account       = new Account($connect);
-                $student       = new Student($connect);
-                $participate   = new Participate($connect);
-                $data_version  = new DataVersion($connect);
-                $faculty_class = new FacultyClass($connect);
+                $account              = new Account($connect);
+                $student              = new Student($connect);
+                $participate          = new Participate($connect);
+                $faculty_class        = new FacultyClass($connect);
+                $data_version_student = new DataVersionStudent($connect);
 
                 $exception_file_name_list     = [];
                 $duplicate_key_file_name_list = [];
@@ -49,8 +50,8 @@
                     $student->insert($sql_data['student']['arr'], $sql_data['student']['sql']);
                     $account->bindIDAccountToStudent();
 
-                    $data_version->insert($sql_data['data_version']['arr'], $sql_data['data_version']['sql1']);
-                    $data_version->updateAllScheduleVersionNew($sql_data['data_version']['arr'], $sql_data['data_version']['sql2']);
+                    $data_version_student->insert($sql_data['data_version']['arr'], $sql_data['data_version']['sql1']);
+                    $data_version_student->updateAllScheduleVersionNew($sql_data['data_version']['arr'], $sql_data['data_version']['sql2']);
 
                     $isDuplicate = $participate->insert($data['participate_json']);
 
@@ -105,4 +106,3 @@
     }
 
     response($response, true);
-

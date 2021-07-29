@@ -2,7 +2,7 @@
 
     include_once dirname(__DIR__, 2) . '/config/db.php';
     include_once dirname(__DIR__, 2) . '/shared/functions.php';
-    include_once dirname(__DIR__, 2) . '/class/module_score.php';
+    include_once dirname(__DIR__, 2) . '/class/exam_schedule.php';
     include_once dirname(__DIR__, 2) . '/class/data_version_student.php';
     set_error_handler('exceptions_error_handler');
 
@@ -13,8 +13,8 @@
             $db      = new Database(false);
             $connect = $db->connect();
 
-            $module_score = new ModuleScore($connect, $_GET['id_student'], false);
-            $data         = $module_score->getScore();
+            $exam_schedule = new ExamSchedule($connect, $_GET['id_student'], true);
+            $data          = $exam_schedule->getExamSchedule();
 
             if (empty($data)) {
                 $response['status_code'] = 204;

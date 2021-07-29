@@ -1,6 +1,6 @@
-import { postData } from './shared_functions.js'
+import {postData} from './shared_functions.js'
 
-function raiseSuccess(okMessage ,linkHome) {
+function raiseSuccess(okMessage, linkHome) {
     alertify.confirm('Thêm thông báo thành công!')
         .setHeader('<i class="fas fa-info-circle"></i> Thông tin')
         .setting({
@@ -19,7 +19,7 @@ function raiseSuccess(okMessage ,linkHome) {
 }
 
 export function raiseEmptyFieldError(field) {
-    alertify.error(`"${ field }" không được để trống!`)
+    alertify.error(`"${field}" không được để trống!`)
         .delay(3)
         .dismissOthers()
 }
@@ -46,5 +46,5 @@ export async function postDataAndRaiseAlert(url, data, invalidFieldFunc, okMessa
         raiseBackEndError()
     }
 
-    return true
+    return await response.json()
 }

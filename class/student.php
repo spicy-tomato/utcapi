@@ -1,7 +1,6 @@
 <?php
 
     include_once 'account.php';
-    include_once 'data_version.php';
 
     class Student
     {
@@ -22,7 +21,8 @@
         private function _insert ($part_of_sql, $sql_data)
         {
             $sql_query =
-                'INSERT INTO ' . self::student_table . ' 
+                'INSERT INTO 
+                    ' . self::student_table . ' 
                 (
                     ID_Student, Student_Name, DoB_Student, ID_Class, 
                     ID_Card_Number, Phone_Number_Student, Address_Student

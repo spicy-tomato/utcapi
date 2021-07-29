@@ -1,8 +1,8 @@
 <?php
 
-    class DataVersion
+    class DataVersionStudent
     {
-        private const data_version_table = 'Data_Version';
+        private const data_version_table = 'Data_Version_Student';
         private const participate_table = 'Participate';
         private const module_class_table = 'Module_Class';
 
@@ -24,9 +24,9 @@
             $sql_query =
                 'INSERT INTO
                     ' . self::data_version_table . ' 
-                    (
-                        ID_Student, Schedule, Notification, Module_Score, Exam_Schedule
-                    )
+                (
+                    ID_Student, Schedule, Notification, Module_Score, Exam_Schedule
+                )
                 VALUES
                     ' . $part_of_sql . '
                 ON DUPLICATE KEY UPDATE ID_Student = ID_Student';;
@@ -83,7 +83,7 @@
             $sql_query =
                 'UPDATE 
                     ' . self::data_version_table . ' dv, 
-                        (
+                    (
                         SELECT DISTINCT
                             p.ID_Student  
                         FROM 
@@ -92,7 +92,7 @@
                         WHERE 
                             p.ID_Module_Class = mc.ID_Module_Class AND 
                             mc.School_Year = :newest_semester
-                        ) temp3
+                    ) temp3
                 SET 
                     Schedule = Schedule + 1
                 WHERE 
@@ -110,7 +110,8 @@
         public function updateAllNotificationVersion ($id_notification)
         {
             $sql_query =
-                'UPDATE data_version dv,
+                'UPDATE 
+                    ' . self::data_version_table . ' dv,
                     (
                     SELECT
                         s.ID_Student

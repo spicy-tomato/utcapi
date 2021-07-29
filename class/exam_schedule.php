@@ -3,14 +3,17 @@
     class ExamSchedule
     {
         private const exam_schedule_table = 'Exam_Schedule';
+        private const exam_schedule_guest_table = 'Exam_Schedule_Guest';
 
+        private string $table_name;
         private PDO $connect;
         private string $id_student;
 
-        public function __construct (PDO $connect, $id_student)
+        public function __construct (PDO $connect, $id_student, $isGuest)
         {
             $this->connect    = $connect;
             $this->id_student = $id_student;
+            $this->table_name = $isGuest ? self::exam_schedule_guest_table : self::exam_schedule_table;
         }
 
         public function pushData ($data)
@@ -74,7 +77,7 @@
         {
             $sql_query =
                 'INSERT INTO
-                    ' . self::exam_schedule_table . ' 
+                    ' . $this->table_name . ' 
                 (
                 School_Year, Examination, ID_Student, ID_Module, Module_Name, Credit,
                 Date_Start, Time_Start, Method, Identification_Number, Room
@@ -110,7 +113,7 @@
         {
             $sql_query =
                 'UPDATE
-                    ' . self::exam_schedule_table . '
+                    ' . $this->table_name . '
                 SET  
                     Date_Start = :date_start, Time_Start = :time_Start, Method = :method,
                     Identification_Number = :identification_number, Room = :room
@@ -142,7 +145,7 @@
             $sql_query =
                 'DELETE
                 FROM
-                    ' . self::exam_schedule_table . '
+                    ' . $this->table_name . '
                 WHERE
                     School_Year = :school_year AND
                     ID_Student = :id_student';
@@ -164,7 +167,7 @@
             $sql_query =
                 'SELECT 
                    School_Year 
-                FROM ' . self::exam_schedule_table . ' 
+                FROM ' . $this->table_name . ' 
                 WHERE
                     ID_Student = :id_student
                 ORDER BY 
@@ -190,7 +193,7 @@
                     ID, School_Year, Module_Name, Credit, Date_Start,
                     Time_Start, Method, Identification_Number, Room
                 FROM
-                    ' . self::exam_schedule_table . '
+                    ' . $this->table_name . '
                 WHERE
                     ID_Student = :id_student
                 ORDER BY

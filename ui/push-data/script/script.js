@@ -34,7 +34,7 @@ async function uploadFile() {
         raiseBackEndError(false, 3)
     }
     else {
-        raiseBackEndError(true, 7)
+        raiseBackEndError(true, 10)
     }
 }
 
@@ -50,14 +50,13 @@ function listFileName() {
     divTag.innerHTML = innerHtml
 }
 
-function displayFileException(fileNameList)
-{
+function displayFileException(fileNameList) {
     let divTag = document.getElementById('file-exception');
 
     for (const fileName of fileNameList) {
         let aTag = document.createElement('a')
         aTag.innerHTML = fileName
-        aTag.href = 'src/'+fileName;
+        aTag.href = 'src/' + fileName;
         aTag.setAttribute('download', '');
 
         let brTag = document.createElement('br')
@@ -100,7 +99,7 @@ function raiseBackEndError(pureError, ttl) {
     }
     else {
         error = 'Có ngoại lệ xảy ra trong quá trình nhập dữ liệu. ' +
-                'Chi tiết ngoại lệ của mỗi file tải lên sẽ được ghi rõ trong các file hiển thị ở web với tên file tương ứng';
+            'Chi tiết ngoại lệ của mỗi file tải lên sẽ được ghi rõ trong các file hiển thị ở web với tên file tương ứng';
     }
     alertify.error(error)
         .delay(ttl)
