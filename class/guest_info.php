@@ -144,7 +144,7 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_guest' => $id_guest]);
-                $data = $stmt->fetch(PDO::FETCH_COLUMN);
+                $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 return $data;
 
