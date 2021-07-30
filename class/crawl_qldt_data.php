@@ -19,7 +19,7 @@
         private $home_page;
         private $ch;
 
-        public function __construct (string $student_id, string $qldt_password)
+        public function __construct(string $student_id, string $qldt_password)
         {
             $this->student_id    = $student_id;
             $this->qldt_password = $qldt_password;
@@ -30,12 +30,12 @@
             $this->loginQLDT();
         }
 
-        public function getStatus () : int
+        public function getStatus() : int
         {
             return $this->status;
         }
 
-        private function _getAccessToken ()
+        private function _getAccessToken()
         {
             file_get_contents($this->url);
             $response_header = explode(' ', $http_response_header[3]);
@@ -47,7 +47,7 @@
             $this->url_student_exam_schedule .= $access_token . '/StudentViewExamList.aspx';
         }
 
-        public function loginQLDT ()
+        public function loginQLDT()
         {
             $form_login_request                = EnvIO::$form_login_request;
             $form_login_request['txtUserName'] = $this->student_id;
@@ -63,32 +63,41 @@
                 $flag2 = $html->find('input[id=txtUserName]', 0);
                 if (empty($flag2)) {
                     $this->status = -1;
-                }
-                else {
+                } else {
                     $this->status = 0;
                 }
-            }
-            else {
+            } else {
                 $this->home_page = $response;
             }
         }
 
-        public function getStudentInfo () : array
+        public function getStudentInfo() : array
         {
             $html = new simple_html_dom();
             $html->load($this->home_page);
 
             $info = $html->find('span[id=lblStudent]', 0)->innertext;
 
-            $info_list             = explode(' - ', $info);
+            $info_list = explode(' - ', $info);
+
             $data['student_name']  = $info_list[1];
             $data['academic_year'] = $info_list[3];
-            $data['id_faculty']    = $info_list[3];
+
+            $str_length = 0;
+            foreach (EnvIO::$faculties as $faculty => $arr) {
+                foreach ($arr as $a) {
+                    if (strpos($info_list[2], $a) != false &&
+                        strlen($a) > $str_length) {
+                        $data['id_faculty'] = $faculty;
+                        $str_length         = strlen($a);
+                    }
+                }
+            }
 
             return $data;
         }
 
-        public function getStudentModuleScore ($flag) : array
+        public function getStudentModuleScore($flag) : array
         {
             if ($flag == 'true') {
                 $this->is_all = true;
@@ -103,7 +112,7 @@
             return $data;
         }
 
-        private function _getFormRequireDataOfStudentModuleScore ()
+        private function _getFormRequireDataOfStudentModuleScore()
         {
             $response = $this->_getRequest($this->url_student_mark);
 
@@ -120,8 +129,7 @@
                 $latest_school_year = $elements[count($elements) - 1]->innertext;
                 if (strlen(trim($latest_school_year, ' ')) == 7) {
                     $this->school_year_arr[] = $elements[count($elements) - 2]->innertext;
-                }
-                else {
+                } else {
                     $this->school_year_arr[] = $latest_school_year;
                 }
 
@@ -134,7 +142,7 @@
             }
         }
 
-        private function _getDataModuleScore ()
+        private function _getDataModuleScore()
         {
             $data = null;
 
@@ -200,7 +208,7 @@
             return $data;
         }
 
-        private function _postRequest ($url, $post_form)
+        private function _postRequest($url, $post_form)
         {
             curl_setopt($this->ch, CURLOPT_URL, $url);
             curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
@@ -214,7 +222,7 @@
             return $response;
         }
 
-        private function _getRequest ($url)
+        private function _getRequest($url)
         {
             curl_setopt($this->ch, CURLOPT_URL, $url);
             curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
@@ -225,7 +233,7 @@
             return $response;
         }
 
-        public function getStudentExamSchedule ($semester) : array
+        public function getStudentExamSchedule($semester) : array
         {
             $this->school_year_arr = $semester;
             $this->_getFormRequireDataOfStudentExamSchedule();
@@ -243,7 +251,7 @@
             return $data;
         }
 
-        private function _getFormRequireDataOfStudentExamSchedule ()
+        private function _getFormRequireDataOfStudentExamSchedule()
         {
             $response = $this->_getRequest($this->url_student_exam_schedule);
 
@@ -271,7 +279,7 @@
             $this->school_year_arr = $data;
         }
 
-        private function _getDataExamSchedule ()
+        private function _getDataExamSchedule()
         {
             $data = null;
 
@@ -351,7 +359,7 @@
             return $data;
         }
 
-        private function _formatWrongWord ($str)
+        private function _formatWrongWord($str)
         {
             $str = preg_replace('/Kê/', 'Kế', $str);
             $str = preg_replace('/hoach/', 'hoạch', $str);
@@ -360,7 +368,7 @@
             return $str;
         }
 
-        private function _formatStringDataCrawled ($str) : string
+        private function _formatStringDataCrawled($str) : string
         {
             $str = preg_replace('/\s+/', ' ', $str);
             $str = str_replace('- ', '-', $str);
@@ -370,7 +378,7 @@
             return $str;
         }
 
-        private function _formatDateDataCrawled ($date) : string
+        private function _formatDateDataCrawled($date) : string
         {
             $date_split = explode('/', $date);
             $date       = $date_split[2] . '-' . $date_split[1] . '-' . $date_split[0];
@@ -378,7 +386,7 @@
             return $date;
         }
 
-        private function _formatModuleScoreData ($data) : array
+        private function _formatModuleScoreData($data) : array
         {
             $num_of_school_year = count($this->school_year_arr);
 

@@ -38,6 +38,99 @@
             'QTDNBCVT' => [':class_name' => 'Lớp Quản trị doanh nghiệp bưu chính viễn thông', ':id_faculty' => 'VTKT']
         ];
 
+        public static array $faculties = [
+            'CT' => [
+                'Kỹ thuật xây dựng Cầu - Đường bộ',
+                'Kỹ thuật xây dựng Đường bộ',
+                'Kỹ thuật Giao thông đường bộ',
+                'Kỹ thuật xây dựng Đường sắt đô thị',
+                'Kỹ thuật xây dựng Đường sắt',
+                'Kỹ thuật xây dựng Cầu hầm',
+                'Kỹ thuật xây dựng Đường hầm - Metro',
+                'Kỹ thuật xây dựng Cầu - Đường sắt',
+                'Địa kỹ thuật xây dựng Công trình giao thông',
+                'Công trình Giao thông đô thị',
+                'Kỹ thuật xây dựng Đường ô tô & Sân bay',
+                'Kỹ thuật xây dựng Cầu đường ô tô & Sân bay',
+                'Công trình Giao thông công chính',
+                'Tự động hóa Thiết kế cầu đường',
+                'Kỹ thuật GIS và Trắc địa CTGT',
+                'Kỹ thuật xây dựng Công trình thủy'],
+
+            'QLXD' => [
+                'Kinh tế xây dựng Công trình giao thông',
+                'Kinh tế quản lý khai thác cầu đường',
+                'Quản lý xây dựng'],
+
+            'VTKT' => [
+                'Kinh tế vận tải du lịch',
+                'Kinh tế vận tải hàng không',
+                'Kinh tế vận tải ô tô',
+                'Kinh tế vận tải đường sắt',
+                'Kinh tế vận tải thủy bộ',
+                'Điều khiển các quá trình vận tải',
+                'Khai thác và quản lý đường sắt đô thị',
+                'Tổ chức quản lý khai thác cảng hàng không',
+                'Vận tải đa phương thức',
+                'Vận tải đường sắt',
+                'Vận tải kinh tế đường bộ và thành phố',
+                'Vận tải thương mại quốc tế',
+                'Quy hoạch và quản lý GTVT đô thị',
+                'Vận tải và kinh tế đường sắt',
+                'Logistics',
+                'Quản trị doanh nghiệp vận tải',
+                'Quản trị doanh nghiệp xây dựng',
+                'Quản trị kinh doanh GTVT',
+                'Quản trị doanh nghiệp Bưu chính viễn thông',
+                'Quản trị Logistics',
+                'Kế toán',
+                'Kinh tế Bưu chính viễn thông'],
+
+            'KTXD' => [
+                'Xây dựng dân dụng và Công nghiệp',
+                'Kết cấu xây dựng',
+                'Kỹ thuật hạ tầng đô thị',
+                'Vật liệu và Công nghiệp xây dựng'],
+
+            'DDT' => [
+                'Trang thiết bị trong Công nghiệp và Giao thông',
+                'Hệ thống điện Giao thông và Công nghiệp',
+                'Kỹ thuật điều khiển và Tự động hóa GT',
+                'Kỹ thuật tín hiệu Đường sắt',
+                'Tự động hóa',
+                'Thông tin tín hiệu',
+                'Kỹ thuật điện tử và Tin học công nghiệp',
+                'Kỹ thuật thông tin và truyền thông',
+                'Kỹ thuật viễn thông'],
+
+            'CK' => [
+                'Đầu máy toa xe',
+                'Cơ giới hóa xây dựng cầu đường',
+                'Cơ khí giao thông công chính',
+                'Đầu máy',
+                'Kỹ thuật Máy động lực',
+                'Máy xây dựng',
+                'Tàu điện Metro',
+                'Thiết bị mặt đất Cảng hàng không',
+                'Toa xe',
+                'Công nghệ chế tạo cơ khí',
+                'Cơ điện tử',
+                'Tự động hóa thiết kế cơ khí',
+                'Kỹ thuật ô tô',
+                'Kỹ thuật nhiệt lạnh',
+                'Điều hòa không khí và thông gió công trình XD'],
+
+            'CNTT' => [
+                'Công nghệ thông tin'],
+
+            'MT&ATGT' => [
+                'Kỹ thuật An toàn giao thông',
+                'Kỹ thuật môi trường'],
+
+            'KHCB' => [
+                'Toán ứng dụng']
+        ];
+
         public static array $form_login_request = [
             '__EVENTTARGET' => '',
             '__EVENTARGUMENT' => '',
@@ -94,7 +187,7 @@
             'hidDangKyChungChiThuocHeRieng' => ''
         ];
 
-        public static function loadEnv ()
+        public static function loadEnv()
         {
             try {
                 $dotenv = Dotenv::createMutable(dirname(__DIR__));
