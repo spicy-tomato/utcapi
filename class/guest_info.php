@@ -46,7 +46,7 @@
         {
             $sql_query =
                 'SELECT
-                    ID as ID_Guest, ID_Student, Student_Name
+                    ID as ID_Guest, ID_Student, Student_Name, Permission
                 FROM 
                     ' . self::guest_info_table . '  
                 WHERE 
@@ -56,6 +56,9 @@
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([':id_student' => $id_student]);
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                $data['ID_Guest'] = intval($data['ID_Guest']);
+                $data['Permission'] = intval($data['Permission']);
 
                 return $data;
 
