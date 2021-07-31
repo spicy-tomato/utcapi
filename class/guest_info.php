@@ -131,7 +131,7 @@
             }
         }
 
-        public function getNotificationVersion ($id_guest)
+        public function getNotificationVersion ($id_student)
         {
             $sql_query =
                 'SELECT
@@ -139,11 +139,11 @@
                 FROM
                     ' . self::guest_info_table . '
                 WHERE
-                    ID = :id_guest';
+                    ID_Student = :id_student';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':id_guest' => $id_guest]);
+                $stmt->execute([':id_student' => $id_student]);
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 return $data;

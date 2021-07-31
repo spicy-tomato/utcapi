@@ -6,14 +6,14 @@
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
-        isset($_GET['id_guest'])) {
+        isset($_GET['id_student'])) {
 
         try {
             $db      = new Database(false);
             $connect = $db->connect();
 
             $guest_info   = new GuestInfo($connect);
-            $data_version = $guest_info->getNotificationVersion($_GET['id_guest']);
+            $data_version = $guest_info->getNotificationVersion($_GET['id_student']);
 
             $response['status_code'] = 200;
             $response['content']     = $data_version;

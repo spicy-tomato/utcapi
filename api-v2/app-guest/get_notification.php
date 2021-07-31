@@ -9,7 +9,7 @@
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
-        isset($_GET['id_guest'])) {
+        isset($_GET['id_student'])) {
 
         try {
             $db           = new Database(true);
@@ -25,7 +25,7 @@
             $data2 = [];
 
             if (isset($_GET['id_notification'])) {
-                $id_notification_list = $notification_guest->getIDNotification($_GET['id_guest']);
+                $id_notification_list = $notification_guest->getIDNotification($_GET['id_student']);
                 $notification_guest->setConnect($connect_main);
                 $data = $notification_guest->getAllNotification($id_notification_list, $_GET['id_notification']);
 
@@ -33,12 +33,12 @@
                 $data2        = $notification->getDeletedNotification();
             }
             else {
-                $id_notification_list = $notification_guest->getIDNotification($_GET['id_guest']);
+                $id_notification_list = $notification_guest->getIDNotification($_GET['id_student']);
                 $notification_guest->setConnect($connect_main);
                 $data = $notification_guest->getAllNotification($id_notification_list);
             }
 
-            $notification_version = $guest_info->getNotificationVersion($_GET['id_guest']);
+            $notification_version = $guest_info->getNotificationVersion($_GET['id_student']);
 
             if (empty($data) && empty($data2)) {
                 $response['status_code'] = 204;

@@ -25,13 +25,15 @@
 
         function getAllNotification ($id_notification_list, $id_notification = '0') : array
         {
+            if (empty($id_notification_list)) {
+                return [];
+            }
 
             $sql_of_list =
                 implode(',', array_fill(0, count($id_notification_list), '?'));
 
             $id_notification_list = array_merge($id_notification_list, [$id_notification]);
-            for ($i = 0; $i < 2; $i++)
-            {
+            for ($i = 0; $i < 2; $i++) {
                 $id_notification_list = array_merge($id_notification_list, $id_notification_list);
             }
 
@@ -145,19 +147,21 @@
             }
         }
 
-        public function getIDNotification ($id_guest) : array
+        public function getIDNotification ($id_student) : array
         {
             $sql_query =
                 'SELECT
                     ID_Notification
                 FROM
-                    ' . self::notification_guest_table . '
+                    ' . self::notification_guest_table . ' ng,
+                    guest_info gi
                 WHERE
-                    ID_Guest = :id_guest';
+                    ID_Student = :id_student AND
+                    ng.ID_Guest = gi.ID';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
-                $stmt->execute([':id_guest' => $id_guest]);
+                $stmt->execute([':id_student' => $id_student]);
                 $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
                 return $data;
