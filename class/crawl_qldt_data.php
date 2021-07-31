@@ -8,6 +8,7 @@
     {
         private string $student_id;
         private string $qldt_password;
+        private string $major = '';
         private array $school_year_arr = [];
         private array $form_crawl_request = [];
         private string $url = 'https://qldt.utc.edu.vn/CMCSoft.IU.Web.Info/Login.aspx';
@@ -19,7 +20,7 @@
         private $home_page;
         private $ch;
 
-        public function __construct(string $student_id, string $qldt_password)
+        public function __construct (string $student_id, string $qldt_password)
         {
             $this->student_id    = $student_id;
             $this->qldt_password = $qldt_password;
@@ -30,12 +31,12 @@
             $this->loginQLDT();
         }
 
-        public function getStatus() : int
+        public function getStatus () : int
         {
             return $this->status;
         }
 
-        private function _getAccessToken()
+        private function _getAccessToken ()
         {
             file_get_contents($this->url);
             $response_header = explode(' ', $http_response_header[3]);
@@ -47,7 +48,7 @@
             $this->url_student_exam_schedule .= $access_token . '/StudentViewExamList.aspx';
         }
 
-        public function loginQLDT()
+        public function loginQLDT ()
         {
             $form_login_request                = EnvIO::$form_login_request;
             $form_login_request['txtUserName'] = $this->student_id;
@@ -63,21 +64,28 @@
                 $flag2 = $html->find('input[id=txtUserName]', 0);
                 if (empty($flag2)) {
                     $this->status = -1;
-                } else {
+                }
+                else {
                     $this->status = 0;
                 }
-            } else {
+            }
+            else {
                 $this->home_page = $response;
+
+                $response = mb_convert_encoding($response, 'HTML-ENTITIES', "UTF-8");
+                $dom      = new DOMDocument();
+                @$dom->loadHTML($response);
+                $field_content = $dom->getElementById('drpField')->childNodes->item(1)->textContent;
+                $this->major   = explode(' - ', $field_content)[1];
             }
         }
 
-        public function getStudentInfo() : array
+        public function getStudentInfo () : array
         {
             $html = new simple_html_dom();
             $html->load($this->home_page);
 
             $info = $html->find('span[id=lblStudent]', 0)->innertext;
-
             $info_list = explode(' - ', $info);
 
             $data['student_name']  = $info_list[1];
@@ -97,7 +105,7 @@
             return $data;
         }
 
-        public function getStudentModuleScore($flag) : array
+        public function getStudentModuleScore ($flag) : array
         {
             if ($flag == 'true') {
                 $this->is_all = true;
@@ -112,7 +120,7 @@
             return $data;
         }
 
-        private function _getFormRequireDataOfStudentModuleScore()
+        private function _getFormRequireDataOfStudentModuleScore ()
         {
             $response = $this->_getRequest($this->url_student_mark);
 
@@ -123,13 +131,17 @@
             $this->form_crawl_request['__VIEWSTATE']       = $html->find('input[name=__VIEWSTATE]', 0)->value;
             $this->form_crawl_request['__EVENTVALIDATION'] = $html->find('input[name=__EVENTVALIDATION]', 0)->value;
             $this->form_crawl_request['hidStudentId']      = $html->find('input[id=hidStudentId]', 0)->value;
+            $this->form_crawl_request['drpField']          = $html->find('select[name=drpField] option', 0)->value;
+            $this->form_crawl_request['hidFieldId']        = $html->find('input[id=hidFieldId]', 0)->value;
+            $this->form_crawl_request['hidFieldName']      = $this->major;
 
             $elements = $html->find('select[name=drpHK] option');
             if (!$this->is_all) {
                 $latest_school_year = $elements[count($elements) - 1]->innertext;
                 if (strlen(trim($latest_school_year, ' ')) == 7) {
                     $this->school_year_arr[] = $elements[count($elements) - 2]->innertext;
-                } else {
+                }
+                else {
                     $this->school_year_arr[] = $latest_school_year;
                 }
 
@@ -142,15 +154,15 @@
             }
         }
 
-        private function _getDataModuleScore()
+        private function _getDataModuleScore ()
         {
             $data = null;
 
             foreach ($this->school_year_arr as $school_year) {
                 $this->form_crawl_request['drpHK'] = $school_year;
-                $response                          = $this->_postRequest($this->url_student_mark, $this->form_crawl_request);
-
-                $html = new simple_html_dom();
+                $response
+                                                   = $this->_postRequest($this->url_student_mark, $this->form_crawl_request);
+                $html                              = new simple_html_dom();
                 $html->load($response);
                 $tr = $html->find('table[id=tblStudentMark] tr');
 
@@ -208,7 +220,7 @@
             return $data;
         }
 
-        private function _postRequest($url, $post_form)
+        private function _postRequest ($url, $post_form)
         {
             curl_setopt($this->ch, CURLOPT_URL, $url);
             curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
@@ -222,7 +234,7 @@
             return $response;
         }
 
-        private function _getRequest($url)
+        private function _getRequest ($url)
         {
             curl_setopt($this->ch, CURLOPT_URL, $url);
             curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
@@ -233,7 +245,7 @@
             return $response;
         }
 
-        public function getStudentExamSchedule($semester) : array
+        public function getStudentExamSchedule ($semester) : array
         {
             $this->school_year_arr = $semester;
             $this->_getFormRequireDataOfStudentExamSchedule();
@@ -251,7 +263,7 @@
             return $data;
         }
 
-        private function _getFormRequireDataOfStudentExamSchedule()
+        private function _getFormRequireDataOfStudentExamSchedule ()
         {
             $response = $this->_getRequest($this->url_student_exam_schedule);
 
@@ -279,7 +291,7 @@
             $this->school_year_arr = $data;
         }
 
-        private function _getDataExamSchedule()
+        private function _getDataExamSchedule ()
         {
             $data = null;
 
@@ -359,7 +371,7 @@
             return $data;
         }
 
-        private function _formatWrongWord($str)
+        private function _formatWrongWord ($str)
         {
             $str = preg_replace('/Kê/', 'Kế', $str);
             $str = preg_replace('/hoach/', 'hoạch', $str);
@@ -368,7 +380,7 @@
             return $str;
         }
 
-        private function _formatStringDataCrawled($str) : string
+        private function _formatStringDataCrawled ($str) : string
         {
             $str = preg_replace('/\s+/', ' ', $str);
             $str = str_replace('- ', '-', $str);
@@ -378,7 +390,7 @@
             return $str;
         }
 
-        private function _formatDateDataCrawled($date) : string
+        private function _formatDateDataCrawled ($date) : string
         {
             $date_split = explode('/', $date);
             $date       = $date_split[2] . '-' . $date_split[1] . '-' . $date_split[0];
@@ -386,7 +398,7 @@
             return $date;
         }
 
-        private function _formatModuleScoreData($data) : array
+        private function _formatModuleScoreData ($data) : array
         {
             $num_of_school_year = count($this->school_year_arr);
 

@@ -43,6 +43,8 @@
                         $module_score->pushData($crawl_data);
                     }
 
+                    $guest_info->updateDataVersion('Module_Score_Version');
+
                     $response['status_code'] = 200;
                     $response['content']     = 'OK';
                     break;

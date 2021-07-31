@@ -138,7 +138,9 @@
         {
             $sql_query =
                 'SELECT
-                    Notification_Data_Version
+                    Notification_Data_Version,
+                    Module_Score_Version,
+                    Exam_Schedule_Version
                 FROM
                     ' . self::guest_info_table . '
                 WHERE
@@ -150,6 +152,23 @@
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 return $data;
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
+
+        public function updateDataVersion ($type)
+        {
+            $sql_query =
+                'UPDATE
+                    ' . self::guest_info_table . '
+                SET
+                    ' . $type . ' = ' . $type . ' + 1';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute();
 
             } catch (PDOException $error) {
                 throw $error;
