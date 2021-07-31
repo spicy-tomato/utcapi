@@ -6,7 +6,7 @@
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
-        isset($_GET['id_student'])) {
+        isset($_GET['id'])) {
 
         try {
             $db      = new Database(false);
