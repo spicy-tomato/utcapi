@@ -57,8 +57,8 @@
                 $stmt->execute([':id_student' => $id_student]);
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                $data['ID_Account'] = intval($data['ID_Account']);
-                $data['Permission'] = intval($data['Permission']);
+//                $data['ID_Account'] = intval($data['ID_Account']);
+//                $data['Permission'] = intval($data['Permission']);
 
                 return $data;
 
