@@ -13,7 +13,7 @@
             $connect = $db->connect();
 
             $guest_info   = new GuestInfo($connect);
-            $data_version = $guest_info->getNotificationVersion($_GET['id_student']);
+            $data_version = $guest_info->getNotificationVersion($_GET['id']);
 
             $data_version['Notification_Data_Version'] = intval($data_version['Notification_Data_Version']);
             $data_version['Module_Score_Version']      = intval($data_version['Module_Score_Version']);
