@@ -54,7 +54,8 @@
         {
             $sql_query =
                 'DROP TEMPORARY TABLE temp;
-                 DROP TEMPORARY TABLE temp1';
+                 DROP TEMPORARY TABLE temp1
+                 DROP TEMPORARY TABLE temp3';
 
             try {
                 $stmt = $this->connect->prepare($sql_query);
