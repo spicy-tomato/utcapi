@@ -54,7 +54,7 @@
                         $exam_schedule->pushData($crawl_data);
                     }
 
-                    $guest_info->updateDataVersion('Exam_Schedule_Version');
+                    $guest_info->updateDataVersion('Exam_Schedule_Data_Version');
 
                     $response['status_code'] = 200;
                     $response['content']     = 'OK';
