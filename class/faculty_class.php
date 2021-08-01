@@ -171,9 +171,9 @@
                 $sql_student_data[]  = $student['ID_Class'];
                 $part_of_sql_student .= '(?,?,?,?,null,null,null),';
 
-                $sql_account_data[]  = $student['ID_Student'];
-                $sql_account_data[]  = password_hash($student['DoB'], PASSWORD_DEFAULT);
-                $part_of_sql_account .= '(?,null,?,null,0),';
+//                $sql_account_data[]  = $student['ID_Student'];
+//                $sql_account_data[]  = password_hash($student['DoB'], PASSWORD_DEFAULT);
+//                $part_of_sql_account .= '(?,null,?,null,0),';
 
                 $sql_data_version_data[]    = $student['ID_Student'];
                 $part_of_sql_data_version_1 .= '(?,0,0,0,0),';
