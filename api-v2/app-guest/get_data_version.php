@@ -15,9 +15,9 @@
             $guest_info   = new GuestInfo($connect);
             $data_version = $guest_info->getNotificationVersion($_GET['id']);
 
-            $data_version['Notification_Data_Version'] = intval($data_version['Notification_Data_Version']);
-            $data_version['Module_Score_Version']      = intval($data_version['Module_Score_Version']);
-            $data_version['Exam_Schedule_Version']     = intval($data_version['Exam_Schedule_Version']);
+            $data_version['Notification']  = intval($data_version['Notification']);
+            $data_version['Module_Score']  = intval($data_version['Module_Score']);
+            $data_version['Exam_Schedule'] = intval($data_version['Exam_Schedule']);
 
             $response['status_code'] = 200;
             $response['content']     = $data_version;

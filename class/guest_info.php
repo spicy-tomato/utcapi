@@ -138,9 +138,9 @@
         {
             $sql_query =
                 'SELECT
-                    Notification_Data_Version,
-                    Module_Score_Version,
-                    Exam_Schedule_Version
+                    Notification_Data_Version as Notification,
+                    Module_Score_Data_Version as Module_Score,
+                    Exam_Schedule_Data_Version as Exam_Schedule
                 FROM
                     ' . self::guest_info_table . '
                 WHERE
