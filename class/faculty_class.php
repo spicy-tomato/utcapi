@@ -156,48 +156,43 @@
             $sql_data_version_data = [];
 
             $part_of_sql_student        = '';
-            $part_of_sql_account        = '';
             $part_of_sql_data_version_1 = '';
             $part_of_sql_data_version_2 = '';
-            $i = 0;
-            foreach ($student_list as &$student) {
-//                $class_info              = $this->_getDataOfClass($student['ID_Class']);
-//                $this->class_info_list[] = $class_info;
-//                $student['ID_Class']     = $class_info[':id_class'];
-//
-//                $sql_student_data[]  = $student['ID_Student'];
-//                $sql_student_data[]  = $student['Student_Name'];
-//                $sql_student_data[]  = $student['DoB'];
-//                $sql_student_data[]  = $student['ID_Class'];
-//                $part_of_sql_student .= '(?,?,?,?,null,null,null),';
 
-                $sql_account_data[]  = $student['ID_Student'];
-                $sql_account_data[]  = password_hash($student['DoB'], PASSWORD_DEFAULT);
-                $part_of_sql_account .= '(?,null,?,null,0),';
-                $i++;
-                if ($i == 100)
-                {
-                    break;
-                }
-//                $sql_data_version_data[]    = $student['ID_Student'];
-//                $part_of_sql_data_version_1 .= '(?,0,0,0,0),';
-//                $part_of_sql_data_version_2 .= '?,';
+            foreach ($student_list as &$student) {
+                $class_info              = $this->_getDataOfClass($student['ID_Class']);
+                $this->class_info_list[] = $class_info;
+                $student['ID_Class']     = $class_info[':id_class'];
+
+                $sql_student_data[]  = $student['ID_Student'];
+                $sql_student_data[]  = $student['Student_Name'];
+                $sql_student_data[]  = $student['DoB'];
+                $sql_student_data[]  = $student['ID_Class'];
+                $part_of_sql_student .= '(?,?,?,?,null,null,null),';
+
+                $arr['id_student'] = $student['ID_Student'];
+                $arr['dob']        = $student['DoB'];
+                $sql_account_data[] = $arr;
+
+                $sql_data_version_data[]    = $student['ID_Student'];
+                $part_of_sql_data_version_1 .= '(?,0,0,0,0),';
+                $part_of_sql_data_version_2 .= '?,';
 
             }
+            $sql_account_data = array_chunk($sql_account_data, 100);
 
             $part_of_sql_student        = rtrim($part_of_sql_student, ',');
-            $part_of_sql_account        = rtrim($part_of_sql_account, ',');
             $part_of_sql_data_version_1 = rtrim($part_of_sql_data_version_1, ',');
             $part_of_sql_data_version_2 = rtrim($part_of_sql_data_version_2, ',');
 
             $data['student']['sql']       = $part_of_sql_student;
-            $data['account']['sql']       = $part_of_sql_account;
             $data['data_version']['sql1'] = $part_of_sql_data_version_1;
             $data['data_version']['sql2'] = $part_of_sql_data_version_2;
 
             $data['student']['arr']      = $sql_student_data;
             $data['account']['arr']      = $sql_account_data;
             $data['data_version']['arr'] = $sql_data_version_data;
+
 
             return $data;
         }

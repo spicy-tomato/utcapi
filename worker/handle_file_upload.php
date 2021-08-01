@@ -1,7 +1,6 @@
 <?php
     include_once dirname(__DIR__) . '/config/db.php';
     include_once dirname(__DIR__) . '/shared/functions.php';
-    include_once dirname(__DIR__) . '/class/account.php';
     include_once dirname(__DIR__) . '/class/student.php';
     include_once dirname(__DIR__) . '/class/read_file.php';
     include_once dirname(__DIR__) . '/class/amazon_s3.php';
@@ -27,7 +26,6 @@
                 $aws       = new AWS();
                 $read_file = new ReadFIle();
 
-                $account              = new Account($connect);
                 $student              = new Student($connect);
                 $participate          = new Participate($connect);
                 $faculty_class        = new FacultyClass($connect);
@@ -35,6 +33,7 @@
 
                 $exception_file_name_list     = [];
                 $duplicate_key_file_name_list = [];
+                $student_list                 = [];
 
                 $location = dirname(__DIR__) . '/file_upload/';
                 foreach ($file_upload as $old_file_name => $new_file_name) {
@@ -42,52 +41,50 @@
                     $data          = $read_file->getData($new_file_name);
                     $flag          = true;
 
-                    $sql_data = $faculty_class->extractData($data['student_json']);
+                    $sql_data     = $faculty_class->extractData($data['student_json']);
+                    $student_list = $sql_data['account']['arr'];
 
-//                    $faculty_class->insert();
+                    $faculty_class->insert();
+                    $student->insert($sql_data['student']['arr'], $sql_data['student']['sql']);
 
-                    $account->autoCreateStudentAccount($sql_data['account']['arr'], $sql_data['account']['sql']);
-//                    $student->insert($sql_data['student']['arr'], $sql_data['student']['sql']);
-                    $account->bindIDAccountToStudent();
+                    $data_version_student->insert($sql_data['data_version']['arr'], $sql_data['data_version']['sql1']);
+                    $data_version_student->updateAllScheduleVersionNew($sql_data['data_version']['arr'], $sql_data['data_version']['sql2']);
 
-//                    $data_version_student->insert($sql_data['data_version']['arr'], $sql_data['data_version']['sql1']);
-//                    $data_version_student->updateAllScheduleVersionNew($sql_data['data_version']['arr'], $sql_data['data_version']['sql2']);
-//
-//                    $isDuplicate = $participate->insert($data['participate_json']);
-//
-//                    if (!empty($data['exception_json'])) {
-//                        $file_name = '1-' . $old_file_name . '.txt';
-//                        $title     = 'File excel cùng tên hiện tại có chứa lớp học ko có mã lớp học phần đi kèm:';
-//                        printFileImportException($file_name, $data['exception_json'], $title);
-//
-//                        $exception_file_name_list[] = $file_name;
-//
-//                        $flag = false;
-//                    }
-//                    if (!$isDuplicate) {
-//                        $file_name = '2-' . $old_file_name . '.txt';
-//                        $title     = 'Cơ sở dữ liệu hiện tại không có một vài mã lớp học phần trong file excel cùng tên này';
-//                        printFileImportException($file_name, [], $title);
-//
-//                        $duplicate_key_file_name_list[] = $file_name;
-//
-//                        $flag = false;
-//                    }
-//                    if ($flag) {
+                    $isDuplicate = $participate->insert($data['participate_json']);
+
+                    if (!empty($data['exception_json'])) {
+                        $file_name = '1-' . $old_file_name . '.txt';
+                        $title     = 'File excel cùng tên hiện tại có chứa lớp học ko có mã lớp học phần đi kèm:';
+                        printFileImportException($file_name, $data['exception_json'], $title);
+
+                        $exception_file_name_list[] = $file_name;
+
+                        $flag = false;
+                    }
+                    if (!$isDuplicate) {
+                        $file_name = '2-' . $old_file_name . '.txt';
+                        $title     = 'Cơ sở dữ liệu hiện tại không có một vài mã lớp học phần trong file excel cùng tên này';
+                        printFileImportException($file_name, [], $title);
+
+                        $duplicate_key_file_name_list[] = $file_name;
+
+                        $flag = false;
+                    }
+                    if ($flag) {
 //                        $aws->uploadFile($new_file_name, $file_location, 'data/');
-//                    }
+                    }
                 }
 
-//                if (empty($duplicate_key_file_name_list) &&
-//                    empty($exception_file_name_list)) {
-//
-//                    $response['status_code'] = 200;
-//                    $response['content']     = 'OK';
-//                }
-//                else {
-//                    $response['status_code'] = 201;
-//                    $response['content']     = array_merge($exception_file_name_list, $duplicate_key_file_name_list);
-//                }
+                if (empty($duplicate_key_file_name_list) &&
+                    empty($exception_file_name_list)) {
+
+                    $response['status_code'] = 200;
+                    $response['content']     = $student_list;
+                }
+                else {
+                    $response['status_code'] = 201;
+                    $response['content']     = array_merge($exception_file_name_list, array_merge($duplicate_key_file_name_list, [$student_list]));
+                }
             }
             else {
                 $response['status_code'] = 204;

@@ -1,3 +1,5 @@
+let fileNameError = []
+let group = [];
 document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('submit_btn').addEventListener('click', uploadFile)
     document.getElementById('fileUpload').addEventListener('change', listFileName)
@@ -6,6 +8,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 /*--------------------------------------*/
 
 async function uploadFile() {
+    let divTag = document.getElementById('file-exception');
+    divTag.innerHTML = ''
+
     if (fileUpload.files.length === 0) {
         raiseEmptyFieldError()
         return
@@ -16,25 +21,57 @@ async function uploadFile() {
     for (let i = 0; i < fileUpload.files.length; i++) {
         formData.append('file' + i, fileUpload.files[i]);
     }
-    let responseAsJson = await fetch('../../worker/handle_file_upload.php', {
+    let responseAsJson1 = await fetch('../../worker/handle_file_upload.php', {
         method: 'POST',
         body: formData
     });
+    let status1 = responseAsJson1.status
 
-    let divTag = document.getElementById('file-exception');
-    divTag.innerHTML = ''
-
-    if (responseAsJson.status === 200) {
-        raiseSuccess()
+    if (status1 !== 200 && status1 !== 201) {
+        raiseBackEndError(true, 3)
+        return
     }
-    else if (responseAsJson.status === 201) {
-        let response = await responseAsJson.json()
 
-        displayFileException(response)
-        raiseBackEndError(false, 3)
+    if (status1 === 201) {
+        let response = await responseAsJson1.json()
+        group = response[response.length - 1]
+        response.pop()
+        fileNameError = response
+    }
+
+    if (status1 === 200) {
+        group = await responseAsJson1.json()
+    }
+
+    let flag = true
+    for (const arr of group) {
+        let responseAsJson = await fetch('../../api-v2/web/create_student_account.php', {
+            method: 'POST',
+            body: JSON.stringify(arr)
+        });
+
+        if (responseAsJson.status !== 200) {
+            flag = false
+            break;
+        }
+    }
+
+    if (!flag) {
+        raiseBackEndError(true, 3)
+        return
+    }
+
+    if (fileNameError.length === 0) {
+        if (flag) {
+            raiseSuccess()
+            return;
+        }
+        raiseBackEndError(true, 3)
     }
     else {
-        raiseBackEndError(true, 10)
+        raiseBackEndError(false, 10)
+        displayFileException(fileNameError)
+        fileNameError = []
     }
 }
 
@@ -50,10 +87,10 @@ function listFileName() {
     divTag.innerHTML = innerHtml
 }
 
-function displayFileException(fileNameList) {
+function displayFileException() {
     let divTag = document.getElementById('file-exception');
 
-    for (const fileName of fileNameList) {
+    for (const fileName of fileNameError) {
         let aTag = document.createElement('a')
         aTag.innerHTML = fileName
         aTag.href = 'src/' + fileName;
