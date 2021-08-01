@@ -1,6 +1,7 @@
 <?php
 
     include_once dirname(__DIR__) . '/utils/env_io.php';
+    ini_set('max_execution_time', '300');
 
     class FacultyClass
     {

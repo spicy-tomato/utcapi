@@ -1,5 +1,6 @@
 <?php
     include_once dirname(__DIR__) . '/shared/functions.php';
+    ini_set('max_execution_time', '300');
 
     class ReadFIle
     {
