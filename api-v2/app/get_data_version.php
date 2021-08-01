@@ -8,21 +8,21 @@
     set_error_handler('exceptions_error_handler');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
-        isset($_GET['id_student'])) {
+        isset($_GET['id'])) {
 
         try {
             $db      = new Database(true);
             $connect = $db->connect();
 
             $account    = new Account($connect);
-            $permission = $account->getAccountPermission($_GET['id_student']);
+            $permission = $account->getAccountPermission($_GET['id']);
 
             $response['status_code'] = 200;
 
             switch ($permission) {
                 case '0';
                     {
-                        $data_version_student = new DataVersionStudent($connect, $_GET['id_student']);
+                        $data_version_student = new DataVersionStudent($connect, $_GET['id']);
                         $response['content']  = $data_version_student->getAllDataVersion();
 
                         break;
@@ -30,7 +30,7 @@
 
                 case '1':
                     {
-                        $data_version_teacher = new DataVersionTeacher($connect, $_GET['id_student']);
+                        $data_version_teacher = new DataVersionTeacher($connect, $_GET['id']);
                         $response['content']  = $data_version_teacher->getAllDataVersion();
 
                         break;
