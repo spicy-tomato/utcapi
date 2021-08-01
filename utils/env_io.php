@@ -40,6 +40,7 @@
 
         public static array $faculties = [
             'CT' => [
+                'Kỹ thuật xây dựng công trình giao thông (59)',
                 'Kỹ thuật xây dựng Cầu - Đường bộ',
                 'Kỹ thuật xây dựng Đường bộ',
                 'Kỹ thuật Giao thông đường bộ',

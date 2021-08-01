@@ -11,7 +11,7 @@ let sender
 let allClass = []
 let selectedClass = []
 let allAcademicYears = []
-let allFaculties = ['CK', 'CNTT', 'CT', 'DDT', 'KTXD', 'VTKT']
+let allFaculties = ['CK', 'CNTT', 'CT', 'DDT', 'DTQT', 'KHCB', 'KTXD', 'MT&ATGT', 'QLXD', 'VTKT', 'KHOAKHAC']
 let academicYears = []
 let faculties = []
 

@@ -64,12 +64,32 @@
             <label for="DDT" class="pointer form-check-label">Điện điện tử</label>
           </div>
           <div class="form-check form-check-inline">
+            <input type="checkbox" class="faculty pointer  form-check-input academic-year-faculty" name="faculty" value="DTQT" id="DTQT">
+            <label for="DTQT" class="pointer form-check-label">Đào tạo quốc tế</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="faculty pointer  form-check-input academic-year-faculty" name="faculty" value="KHCB" id="KHCB">
+            <label for="KHCB" class="pointer form-check-label">Khoa học cơ bản</label>
+          </div>
+          <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty pointer  form-check-input academic-year-faculty" name="faculty" value="KTXD" id="KTXD">
             <label for="KTXD" class="pointer form-check-label">Kỹ thuật xây dựng</label>
           </div>
           <div class="form-check form-check-inline">
+            <input type="checkbox" class="faculty pointer  form-check-input academic-year-faculty" name="faculty" value="MT&ATGT" id="MT&ATGT">
+            <label for="MT&ATGT" class="pointer form-check-label">Môi trường và an toàn giao thông</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="faculty pointer  form-check-input academic-year-faculty" name="faculty" value="QLXD" id="QLXD">
+            <label for="QLXD" class="pointer form-check-label">Quản lý xây dựng</label>
+          </div>
+          <div class="form-check form-check-inline">
             <input type="checkbox" class="faculty pointer  form-check-input academic-year-faculty" name="faculty" value="VTKT" id="VTKT">
             <label for="VTKT" class="pointer form-check-label">Vận tải kinh tế</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="faculty pointer  form-check-input academic-year-faculty" name="faculty" value="KHOAKHAC" id="KHOAKHAC">
+            <label for="KHOAKHAC" class="pointer form-check-label">Khoa khác</label>
           </div>
         </div>
 
