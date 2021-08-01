@@ -41,8 +41,8 @@
                     $file_location = $location . $new_file_name;
                     $data          = $read_file->getData($new_file_name);
                     $flag          = true;
-//
-//                    $sql_data = $faculty_class->extractData($data['student_json']);
+
+                    $sql_data = $faculty_class->extractData($data['student_json']);
 //
 //                    $faculty_class->insert();
 //
