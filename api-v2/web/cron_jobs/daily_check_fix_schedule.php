@@ -22,8 +22,8 @@
         $db      = new Database(true);
         $connect = $db->connect();
 
-        $changes           = new FixSchedule($connect);
-        $arr_fix_schedules = $changes->getFixedSchedules($last_time_accepted);
+        $fix_schedule      = new FixSchedule($connect);
+        $arr_fix_schedules = $fix_schedule->getFixedSchedules($last_time_accepted);
 
         if (empty($arr_fix_schedules)) {
             $response['status_code'] = 200;
@@ -69,6 +69,7 @@
                 $file_location = $_SERVER['DOCUMENT_ROOT'] . $root_folder . '/api-v2/web/cron_jobs/last_schedule_fixed.txt';
                 $aws->uploadFile('last_schedule_fixed.txt', $file_location, 'cron-jobs/');
             }
+            $fix_schedule->deleteTemporaryTable();
         }
         $response['status_code'] = 200;
         $response['content']     = 'OK';

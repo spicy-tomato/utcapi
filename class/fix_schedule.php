@@ -49,4 +49,18 @@
                 throw $error;
             }
         }
+
+        public function deleteTemporaryTable ()
+        {
+            $sql_query =
+                'DROP TEMPORARY TABLE temp';
+
+            try {
+                $stmt = $this->connect->prepare($sql_query);
+                $stmt->execute();
+
+            } catch (PDOException $error) {
+                throw $error;
+            }
+        }
     }
