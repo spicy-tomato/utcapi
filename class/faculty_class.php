@@ -159,7 +159,7 @@
             $part_of_sql_account        = '';
             $part_of_sql_data_version_1 = '';
             $part_of_sql_data_version_2 = '';
-
+            $i = 0;
             foreach ($student_list as &$student) {
 //                $class_info              = $this->_getDataOfClass($student['ID_Class']);
 //                $this->class_info_list[] = $class_info;
@@ -174,7 +174,11 @@
                 $sql_account_data[]  = $student['ID_Student'];
                 $sql_account_data[]  = password_hash($student['DoB'], PASSWORD_DEFAULT);
                 $part_of_sql_account .= '(?,null,?,null,0),';
-
+                $i++;
+                if ($i == 100)
+                {
+                    break;
+                }
 //                $sql_data_version_data[]    = $student['ID_Student'];
 //                $part_of_sql_data_version_1 .= '(?,0,0,0,0),';
 //                $part_of_sql_data_version_2 .= '?,';
