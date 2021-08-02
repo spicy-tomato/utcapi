@@ -170,8 +170,8 @@
                 $sql_student_data[]  = $student['ID_Class'];
                 $part_of_sql_student .= '(?,?,?,?,null,null,null),';
 
-                $arr['id_student'] = $student['ID_Student'];
-                $arr['dob']        = $student['DoB'];
+                $arr['id_student']  = $student['ID_Student'];
+                $arr['dob']         = $student['DoB'];
                 $sql_account_data[] = $arr;
 
                 $sql_data_version_data[]    = $student['ID_Student'];

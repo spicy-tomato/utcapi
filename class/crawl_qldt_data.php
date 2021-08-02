@@ -85,7 +85,7 @@
             $html = new simple_html_dom();
             $html->load($this->home_page);
 
-            $info = $html->find('span[id=lblStudent]', 0)->innertext;
+            $info      = $html->find('span[id=lblStudent]', 0)->innertext;
             $info_list = explode(' - ', $info);
 
             $data['student_name']  = $info_list[1];
@@ -123,6 +123,7 @@
         private function _getFormRequireDataOfStudentModuleScore ()
         {
             $response = $this->_getRequest($this->url_student_mark);
+            //echo $response;
 
             $html = new simple_html_dom();
             $html->load($response);
@@ -160,9 +161,9 @@
 
             foreach ($this->school_year_arr as $school_year) {
                 $this->form_crawl_request['drpHK'] = $school_year;
-                $response
-                                                   = $this->_postRequest($this->url_student_mark, $this->form_crawl_request);
-                $html                              = new simple_html_dom();
+                $response                          = $this->_postRequest($this->url_student_mark, $this->form_crawl_request);
+
+                $html = new simple_html_dom();
                 $html->load($response);
                 $tr = $html->find('table[id=tblStudentMark] tr');
 
@@ -186,9 +187,21 @@
                     $td    = explode('<br><br>', $tr[$j]->children(9)->innertext);
                     $arr[] = $td[1] ?? $td[0];
 
-                    $td         = explode('<br><br>', $tr[$j]->children(10)->innertext);
-                    $temp_score = $td[1] ?? $td[0];
-                    $arr[]      = $temp_score == '&nbsp;' ? null : $temp_score;
+                    //-------------------------------------------------------------
+                    $temp_data = $tr[$j]->children(10)->innertext;
+                    $td3       = explode('<br><br><br>', $temp_data);
+                    $td2       = explode('<br><br>', $temp_data);
+                    $td1       = explode('<br>', $temp_data);
+
+                    $temp_score = $td3[1] ?? $td3[0];
+                    if (strpos($temp_score, '<br>') !== false) {
+                        $temp_score = $td2[1] ?? $td2[0];
+                    }
+                    if (strpos($temp_score, '<br>') !== false) {
+                        $temp_score = $td1[1] ?? $td1[0];
+                    }
+                    $arr[] = $temp_score == '&nbsp;' ? null : $temp_score;
+                    //------------------------------------------------------------
 
                     if (count($tr[$j]->children()) == 11) {
                         $arr[]                = null;
@@ -198,9 +211,21 @@
                         continue;
                     }
 
-                    $td         = explode('<br><br>', $tr[$j]->children(11)->innertext);
-                    $temp_score = $td[1] ?? $td[0];
-                    $arr[]      = $temp_score == '&nbsp;' ? null : $temp_score;
+                    //-------------------------------------------------------------
+                    $temp_data = $tr[$j]->children(11)->innertext;
+                    $td3       = explode('<br><br><br>', $temp_data);
+                    $td2       = explode('<br><br>', $temp_data);
+                    $td1       = explode('<br>', $temp_data);
+
+                    $temp_score = $td3[1] ?? $td3[0];
+                    if (strpos($temp_score, '<br>') !== false) {
+                        $temp_score = $td2[1] ?? $td2[0];
+                    }
+                    if (strpos($temp_score, '<br>') !== false) {
+                        $temp_score = $td1[1] ?? $td1[0];
+                    }
+                    $arr[] = $temp_score == '&nbsp;' ? null : $temp_score;
+                    //------------------------------------------------------------
 
                     if (count($tr[$j]->children()) == 12) {
                         $arr[]                = null;
@@ -209,9 +234,21 @@
                         continue;
                     }
 
-                    $td         = explode('<br><br>', $tr[$j]->children(12)->innertext);
-                    $temp_score = $td[1] ?? $td[0];
-                    $arr[]      = $temp_score == '&nbsp;' ? null : $temp_score;
+                    //-------------------------------------------------------------
+                    $temp_data = $tr[$j]->children(12)->innertext;
+                    $td3       = explode('<br><br><br>', $temp_data);
+                    $td2       = explode('<br><br>', $temp_data);
+                    $td1       = explode('<br>', $temp_data);
+
+                    $temp_score = $td3[1] ?? $td3[0];
+                    if (strpos($temp_score, '<br>') !== false) {
+                        $temp_score = $td2[1] ?? $td2[0];
+                    }
+                    if (strpos($temp_score, '<br>') !== false) {
+                        $temp_score = $td1[1] ?? $td1[0];
+                    }
+                    $arr[] = $temp_score == '&nbsp;' ? null : $temp_score;
+                    //------------------------------------------------------------
 
                     $data[$school_year][] = $arr;
                 }
