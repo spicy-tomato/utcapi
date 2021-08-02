@@ -123,7 +123,6 @@
         private function _getFormRequireDataOfStudentModuleScore ()
         {
             $response = $this->_getRequest($this->url_student_mark);
-            //echo $response;
 
             $html = new simple_html_dom();
             $html->load($response);

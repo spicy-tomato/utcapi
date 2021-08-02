@@ -20,7 +20,7 @@
             $guest_info            = new GuestInfo($connect_extra);
             $data['qldt_password'] = $guest_info->getQLDTPassword($data['id_student']);
 
-            $crawl = new CrawlQLDTData('191101118', 'a0e08c86bce8c8448f4ecea27fd42e0a');
+            $crawl = new CrawlQLDTData($data['id_student'], $data['qldt_password']);
 
             switch ($crawl->getStatus()) {
                 case -1:
