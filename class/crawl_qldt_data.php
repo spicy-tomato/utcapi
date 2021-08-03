@@ -186,7 +186,7 @@
                     $td    = explode('<br><br>', $tr[$j]->children(9)->innertext);
                     $arr[] = $td[1] ?? $td[0];
 
-                    //-------------------------------------------------------------
+                    //------------------Process Score-------------------------------------------
                     $temp_data = $tr[$j]->children(10)->innertext;
                     $td3       = explode('<br><br><br>', $temp_data);
                     $td2       = explode('<br><br>', $temp_data);
@@ -199,18 +199,21 @@
                     if (strpos($temp_score, '<br>') !== false) {
                         $temp_score = $td1[1] ?? $td1[0];
                     }
-                    $arr[] = $temp_score == '&nbsp;' ? null : $temp_score;
-                    //------------------------------------------------------------
 
                     if (count($tr[$j]->children()) == 11) {
                         $arr[]                = null;
                         $arr[]                = null;
+                        $arr[]                = $temp_score == '&nbsp;' ? null : $temp_score;
                         $data[$school_year][] = $arr;
 
                         continue;
                     }
 
-                    //-------------------------------------------------------------
+                    $arr[] = $temp_score == '&nbsp;' ? null : $temp_score;
+                    //------------------------------------------------------------
+
+
+                    //------------------Test Score-------------------------------------------
                     $temp_data = $tr[$j]->children(11)->innertext;
                     $td3       = explode('<br><br><br>', $temp_data);
                     $td2       = explode('<br><br>', $temp_data);
@@ -233,7 +236,7 @@
                         continue;
                     }
 
-                    //-------------------------------------------------------------
+                    //------------------Theoretical Score-------------------------------------------
                     $temp_data = $tr[$j]->children(12)->innertext;
                     $td3       = explode('<br><br><br>', $temp_data);
                     $td2       = explode('<br><br>', $temp_data);
@@ -436,34 +439,28 @@
 
         private function _formatModuleScoreData ($data) : array
         {
-            $num_of_school_year = count($this->school_year_arr);
-
-            if (strlen(trim($this->school_year_arr[0], ' ')) == 7) {
-                foreach ($data[$this->school_year_arr[0]] as &$module) {
-                    $module[3] = 'DAT';
-                    $score     = $module[5] != null ? $module[5] : ($module[6] != null ? $module[6] : $module[7]);
-                    $module[5] = $score;
-                    $module[6] = $score;
-                    $module[7] = $score;
-
-                    $data[$this->school_year_arr[1]][] = $module;
+            $temp = [];
+            foreach ($this->school_year_arr as $school_year) {
+                if (strlen(trim($school_year, ' ')) == 7) {
+                    $temp[] = $school_year;
                 }
-                unset($data[$this->school_year_arr[0]]);
             }
 
-            if (strlen(trim($this->school_year_arr[$num_of_school_year - 1], ' ')) == 7) {
-                foreach ($data[$this->school_year_arr[$num_of_school_year - 1]] as &$module) {
-                    $module[3] = 'DAT';
-                    $score     = $module[5] != null ? $module[5] : ($module[6] != null ? $module[6] : $module[7]);
-                    $module[5] = $score;
-                    $module[6] = $score;
-                    $module[7] = $score;
-
-                    $data[$this->school_year_arr[0]][] = $module;
+            sort($temp);
+            foreach ($temp as $e) {
+                foreach ($data[$e] as $module) {
+                    $data[$this->_convertToOfficialSchoolYear(trim($e, ' '))][] = $module;
                 }
-                unset($data[$this->school_year_arr[$num_of_school_year - 1]]);
+                unset($data[$e]);
             }
 
             return $data;
+        }
+
+        private function _convertToOfficialSchoolYear ($shor_school_year) : string
+        {
+            $arr = explode('_', $shor_school_year);
+
+            return '20' . $arr[0] . '_20' . $arr[1] . '_' . $arr[2];
         }
     }

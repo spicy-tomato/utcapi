@@ -78,7 +78,6 @@
                     :evaluation, :process_score, :test_score, :theoretical_score
                 )';
 
-
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
@@ -98,14 +97,16 @@
             }
         }
 
-        private function _update ($semester, $value)
+        private function _update ($school_year, $value)
         {
             $sql_query =
                 'UPDATE
                     ' . $this->table_name . '
                 SET  
-                    Evaluation = :evaluation, Process_Score = :process_score, 
-                    Test_Score = :test_score, Theoretical_Score = :theoretical_score
+                    Evaluation = IFNULL(:evaluation, Evaluation), 
+                    Process_Score = IFNULL(:process_score, Process_Score), 
+                    Test_Score = IFNULL(:test_score, Test_Score), 
+                    Theoretical_Score = IFNULL(:theoretical_score, Theoretical_Score)
                 WHERE 
                     School_Year = :school_year AND
                     ID_Module = :id_module AND
@@ -114,7 +115,7 @@
             try {
                 $stmt = $this->connect->prepare($sql_query);
                 $stmt->execute([
-                    ':school_year' => $semester,
+                    ':school_year' => $school_year,
                     ':id_module' => $value[0],
                     ':id_student' => $value[4],
                     ':evaluation' => $value[3],
